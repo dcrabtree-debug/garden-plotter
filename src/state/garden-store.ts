@@ -61,6 +61,7 @@ interface GardenStore {
   garden: Garden;
   activeTool: CellType;
   selectedMonth: number;
+  selectedHour: number;
   showSunOverlay: boolean;
   showShadowOverlay: boolean;
 
@@ -73,6 +74,7 @@ interface GardenStore {
   renameGarden: (name: string) => void;
   setSunHours: (grid: number[][]) => void;
   setSelectedMonth: (month: number) => void;
+  setSelectedHour: (hour: number) => void;
   toggleSunOverlay: () => void;
   toggleShadowOverlay: () => void;
   resetGarden: () => void;
@@ -86,6 +88,7 @@ export const useGardenStore = create<GardenStore>((set, get) => {
     garden: initial,
     activeTool: 'veg-patch',
     selectedMonth: new Date().getMonth() + 1,
+    selectedHour: 12,
     showSunOverlay: false,
     showShadowOverlay: false,
 
@@ -189,6 +192,7 @@ export const useGardenStore = create<GardenStore>((set, get) => {
     },
 
     setSelectedMonth: (month) => set({ selectedMonth: month }),
+    setSelectedHour: (hour) => set({ selectedHour: hour }),
     toggleSunOverlay: () => set((s) => ({ showSunOverlay: !s.showSunOverlay })),
     toggleShadowOverlay: () => set((s) => ({ showShadowOverlay: !s.showShadowOverlay })),
 

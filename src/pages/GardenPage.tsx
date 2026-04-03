@@ -9,7 +9,10 @@ import type { CellType, GardenFacing } from '../types/planner';
 import type { Plant } from '../types/plant';
 import {
   calculateSunHoursGrid,
+  sunPosition,
+  shadowProjection,
   sunriseSet,
+  facingAngle,
   midMonthDay,
   toLocalHour,
   formatTime,
@@ -112,9 +115,9 @@ function ZoneGuide() {
 
 export function GardenPage() {
   const {
-    garden, activeTool, selectedMonth, showSunOverlay,
+    garden, activeTool, selectedMonth, selectedHour, showSunOverlay, showShadowOverlay,
     setTool, paintCell, updateConfig, renameGarden,
-    setSunHours, setSelectedMonth, toggleSunOverlay,
+    setSunHours, setSelectedMonth, setSelectedHour, toggleSunOverlay, toggleShadowOverlay,
     resetGarden, clearPaint,
   } = useGardenStore();
 
@@ -162,6 +165,51 @@ export function GardenPage() {
     const maxWidth = 800;
     return Math.min(Math.floor(maxWidth / cols), 28);
   }, [cols]);
+
+  // Real-time shadow grid for the selected hour
+  const shadowGrid = useMemo(() => {
+    if (!showShadowOverlay) return null;
+    const day = midMonthDay(selectedMonth);
+    const pos = sunPosition(selectedMonth, day, selectedHour, config.latitude, config.longitude);
+    if (pos.elevation <= 0) {
+      // Sun below horizon — everything in shadow
+      return Array.from({ length: rows }, () => new Array(cols).fill(true));
+    }
+    const gardenAngle = facingAngle(config.facing);
+    const houseShadow = shadowProjection(config.houseWallHeightM, pos.elevation, pos.azimuth);
+    const fenceShadow = shadowProjection(config.fenceHeightM, pos.elevation, pos.azimuth);
+    const gardenWidthM = cols * config.cellSizeM;
+
+    const grid: boolean[][] = Array.from({ length: rows }, () => new Array(cols).fill(false));
+    for (let row = 0; row < rows; row++) {
+      for (let col = 0; col < cols; col++) {
+        const cx = (col + 0.5) * config.cellSizeM;
+        const cy = (row + 0.5) * config.cellSizeM;
+        let inShadow = false;
+
+        if (houseShadow) {
+          const relAz = ((pos.azimuth - gardenAngle + 360) % 360);
+          const reachY = houseShadow.length * Math.cos((relAz - 180) * (Math.PI / 180));
+          if (reachY > 0 && cy < reachY) inShadow = true;
+        }
+        if (fenceShadow && !inShadow) {
+          const relAz = ((pos.azimuth - gardenAngle + 360) % 360);
+          const leftReach = fenceShadow.length * Math.sin((relAz - 90) * (Math.PI / 180));
+          if (leftReach > 0 && cx < leftReach) inShadow = true;
+          const rightReach = fenceShadow.length * Math.sin((relAz + 90) * (Math.PI / 180));
+          if (rightReach > 0 && (gardenWidthM - cx) < rightReach) inShadow = true;
+        }
+        grid[row][col] = inShadow;
+      }
+    }
+    return grid;
+  }, [showShadowOverlay, selectedMonth, selectedHour, config, rows, cols]);
+
+  // Sun position for the arrow indicator
+  const currentSunPos = useMemo(() => {
+    if (!showShadowOverlay) return null;
+    return sunPosition(selectedMonth, midMonthDay(selectedMonth), selectedHour, config.latitude, config.longitude);
+  }, [showShadowOverlay, selectedMonth, selectedHour, config.latitude, config.longitude]);
 
   // Veg-suitable plants for the plant panel
   const inGroundPlants = useMemo(
@@ -310,7 +358,7 @@ export function GardenPage() {
         <div>
           <h3 className="text-[10px] font-semibold text-stone-500 uppercase tracking-wide mb-1.5">Overlays</h3>
           <div className="space-y-1.5">
-            <label className="flex items-center gap-2 text-xs text-stone-600 cursor-pointer">
+            <label className="flex items-center gap-2 text-xs text-stone-600 dark:text-stone-400 cursor-pointer">
               <input
                 type="checkbox"
                 checked={showSunOverlay}
@@ -318,6 +366,15 @@ export function GardenPage() {
                 className="rounded border-stone-300"
               />
               Sun hours heatmap
+            </label>
+            <label className="flex items-center gap-2 text-xs text-stone-600 dark:text-stone-400 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={showShadowOverlay}
+                onChange={toggleShadowOverlay}
+                className="rounded border-stone-300"
+              />
+              Real-time shadow
             </label>
           </div>
           <label className="text-[10px] text-stone-500 block mt-2">
@@ -332,6 +389,32 @@ export function GardenPage() {
               ))}
             </select>
           </label>
+          {showShadowOverlay && (
+            <label className="text-[10px] text-stone-500 block mt-2">
+              Time of day
+              <div className="flex items-center gap-2 mt-0.5">
+                <input
+                  type="range"
+                  min={5}
+                  max={21}
+                  step={0.5}
+                  value={selectedHour}
+                  onChange={(e) => setSelectedHour(Number(e.target.value))}
+                  className="flex-1 accent-amber-500"
+                />
+                <span className="text-xs font-medium text-stone-700 dark:text-stone-300 min-w-[40px] text-right">
+                  {formatTime(selectedHour)}
+                </span>
+              </div>
+              {currentSunPos && (
+                <div className="text-[9px] text-stone-400 mt-1">
+                  {currentSunPos.elevation > 0
+                    ? `Sun: ${currentSunPos.elevation.toFixed(1)}° elev, ${currentSunPos.azimuth.toFixed(0)}° az`
+                    : 'Sun below horizon'}
+                </div>
+              )}
+            </label>
+          )}
         </div>
 
         {/* Solar + Soil panels */}
@@ -396,16 +479,18 @@ export function GardenPage() {
           {cells.map((row, ri) => (
             <div key={ri} className="flex" style={{ height: cellSize }}>
               {row.map((cell, ci) => {
-                let bg = CELL_COLORS[cell.type];
-
-                // Sun overlay
-                if (showSunOverlay && cell.sunHours !== null) {
-                  const zone = classifySunZone(cell.sunHours);
-                  bg = SUN_ZONE_COLORS[zone];
-                }
-
+                const bg = CELL_COLORS[cell.type];
                 const hasPlant = cell.plantSlug !== null;
                 const plant = hasPlant ? plantMap.get(cell.plantSlug!) : null;
+
+                // Overlay colors (transparent, layered on top)
+                let sunOverlayColor: string | null = null;
+                if (showSunOverlay && cell.sunHours !== null) {
+                  const zone = classifySunZone(cell.sunHours);
+                  sunOverlayColor = SUN_ZONE_COLORS[zone];
+                }
+
+                const isInShadow = showShadowOverlay && shadowGrid?.[ri]?.[ci];
 
                 return (
                   <div
@@ -416,6 +501,7 @@ export function GardenPage() {
                       backgroundColor: bg,
                       fontSize: cellSize * 0.55,
                       lineHeight: `${cellSize}px`,
+                      position: 'relative',
                     }}
                     className={`
                       border-r border-b border-stone-200/30 cursor-crosshair
@@ -425,8 +511,8 @@ export function GardenPage() {
                     `}
                     title={
                       plant
-                        ? `${plant.commonName}${cell.sunHours !== null ? ` | ${cell.sunHours}h sun` : ''}`
-                        : `${cell.type}${cell.sunHours !== null ? ` | ${cell.sunHours}h sun` : ''}`
+                        ? `${plant.commonName}${cell.sunHours !== null ? ` | ${cell.sunHours}h sun` : ''}${isInShadow ? ' | In shadow' : ''}`
+                        : `${cell.type}${cell.sunHours !== null ? ` | ${cell.sunHours}h sun` : ''}${isInShadow ? ' | In shadow' : ''}`
                     }
                     onMouseDown={() => {
                       setIsPainting(true);
@@ -440,9 +526,33 @@ export function GardenPage() {
                       if (hasPlant && plant) setSelectedPlant(plant);
                     }}
                   >
-                    {plant && <span style={{ pointerEvents: 'none' }}>{plant.emoji}</span>}
+                    {/* Semi-transparent sun hours overlay */}
+                    {sunOverlayColor && (
+                      <div
+                        style={{
+                          position: 'absolute', inset: 0,
+                          backgroundColor: sunOverlayColor,
+                          opacity: 0.45,
+                          pointerEvents: 'none',
+                        }}
+                      />
+                    )}
+                    {/* Real-time shadow overlay */}
+                    {isInShadow && (
+                      <div
+                        style={{
+                          position: 'absolute', inset: 0,
+                          backgroundColor: '#1a1a2e',
+                          opacity: 0.35,
+                          pointerEvents: 'none',
+                        }}
+                      />
+                    )}
+                    {/* Plant emoji (always visible on top) */}
+                    {plant && <span style={{ pointerEvents: 'none', position: 'relative', zIndex: 1 }}>{plant.emoji}</span>}
+                    {/* Sun hours label */}
                     {showSunOverlay && !plant && cell.sunHours !== null && cellSize >= 20 && (
-                      <span className="text-[8px] font-bold opacity-60" style={{ pointerEvents: 'none' }}>
+                      <span className="text-[8px] font-bold opacity-70" style={{ pointerEvents: 'none', position: 'relative', zIndex: 1 }}>
                         {cell.sunHours}
                       </span>
                     )}

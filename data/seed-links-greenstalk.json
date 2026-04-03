@@ -1,0 +1,1378 @@
+[
+  {
+    "slug": "strawberry-everbearing",
+    "commonName": "Everbearing Strawberry",
+    "varieties": [
+      {
+        "name": "Mara des Bois",
+        "why": "RHS AGM winner, exceptional alpine-strawberry flavour, disease resistant",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/strawberry-mara-des-bois/t65255TM",
+            "priceGBP": 12.99,
+            "badge": "RHS Gold Medal",
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/fruit-plants/strawberry-plants/strawberry-mara-des-bois_MH-27496",
+            "priceGBP": 14.99,
+            "badge": "Bare Root Plants"
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/products/strawberry-mara-des-bois-runners",
+            "priceGBP": 11.99
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/strawberry-mara-des-bois-runners",
+            "priceGBP": 10.99
+          }
+        ]
+      },
+      {
+        "name": "Flamenco",
+        "why": "RHS AGM, everbearing, compact habit ideal for containers",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/strawberry-flamenco/t58420TM",
+            "priceGBP": 12.99,
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/fruit-plants/strawberry-plants/strawberry-flamenco_MH-31204",
+            "priceGBP": 13.99
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/products/strawberry-flamenco-runners",
+            "priceGBP": 11.49
+          }
+        ]
+      },
+      {
+        "name": "Albion",
+        "why": "Heavy cropper, day-neutral, long fruiting season June-October",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/strawberry-albion/t71230TM",
+            "priceGBP": 13.99
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/fruit-plants/strawberry-plants/strawberry-albion_MH-33105",
+            "priceGBP": 14.99
+          },
+          {
+            "seller": "RHS Shop",
+            "url": "https://www.rhsplants.co.uk/plants/strawberry-albion/4882",
+            "priceGBP": 14.99,
+            "badge": "RHS Endorsed"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "tomato-tumbling",
+    "commonName": "Tumbling Tom Tomato",
+    "varieties": [
+      {
+        "name": "Tumbling Tom Red",
+        "why": "Bred for hanging baskets, determinate trailing habit, very productive",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/tomato-tumbling-tom-red-seeds/515TM",
+            "priceGBP": 2.99,
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/vegetable-seeds/tomato-seeds/tomato-tumbling-tom-red_MH-1405",
+            "priceGBP": 2.99
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/products/tomato-tumbling-tom-red-seeds",
+            "priceGBP": 2.49
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/tomato-tumbling-tom-red-seeds",
+            "priceGBP": 2.29
+          }
+        ]
+      },
+      {
+        "name": "Tumbling Tom Yellow",
+        "why": "Golden cherry variant, sweet mild flavour, cascading habit",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/tomato-tumbling-tom-yellow-seeds/516TM",
+            "priceGBP": 2.99
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/products/tomato-tumbling-tom-yellow-seeds",
+            "priceGBP": 2.49
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/vegetable-seeds/tomato-seeds/tomato-tumbling-tom-yellow_MH-1406",
+            "priceGBP": 2.99
+          }
+        ]
+      },
+      {
+        "name": "Cherry Falls",
+        "why": "Compact cascading habit, heavy trusses, ideal for containers",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/tomato-cherry-falls-seeds/t59130TM",
+            "priceGBP": 3.49,
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/vegetable-seeds/tomato-seeds/tomato-cherry-falls_MH-29876",
+            "priceGBP": 3.49
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/products/tomato-cherry-falls-seeds",
+            "priceGBP": 2.99
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "basil-sweet",
+    "commonName": "Sweet Basil",
+    "varieties": [
+      {
+        "name": "Greek Dwarf",
+        "why": "Compact mounding habit, perfect for small pockets, intense flavour",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/basil-greek-dwarf-seeds/t58110TM",
+            "priceGBP": 2.49,
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/vegetable-seeds/herb-seeds/basil-greek-dwarf_MH-28345",
+            "priceGBP": 2.49
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/products/basil-greek-dwarf-seeds",
+            "priceGBP": 1.99
+          }
+        ]
+      },
+      {
+        "name": "Minette",
+        "why": "Ultra-compact bush variety, 20cm height, bred for pots",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/basil-minette-seeds/t62450TM",
+            "priceGBP": 2.99
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/basil-minette-compact-seeds",
+            "priceGBP": 2.29
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/products/basil-minette-seeds",
+            "priceGBP": 2.49
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "dwarf-french-bean",
+    "commonName": "Dwarf French Bean",
+    "varieties": [
+      {
+        "name": "Tendergreen",
+        "why": "RHS AGM, stringless, reliable cropper in containers",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/dwarf-bean-tendergreen-seeds/168TM",
+            "priceGBP": 3.49,
+            "recommended": true
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/products/dwarf-french-bean-tendergreen",
+            "priceGBP": 2.99
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/bean-dwarf-french-tendergreen-seeds",
+            "priceGBP": 2.49
+          }
+        ]
+      },
+      {
+        "name": "Purple Teepee",
+        "why": "Purple pods easy for kids to spot, compact bush, holds above foliage",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/dwarf-bean-purple-teepee-seeds/165TM",
+            "priceGBP": 3.49
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/vegetable-seeds/bean-seeds/dwarf-french-bean-purple-teepee_MH-1050",
+            "priceGBP": 3.49
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/products/dwarf-bean-purple-teepee-seeds",
+            "priceGBP": 2.99
+          }
+        ]
+      },
+      {
+        "name": "Safari",
+        "why": "Very compact plant, heavy yields of fine filet beans",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/vegetable-seeds/bean-seeds/dwarf-french-bean-safari_MH-27893",
+            "priceGBP": 3.99
+          },
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/dwarf-bean-safari-seeds/t62280TM",
+            "priceGBP": 3.49
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/bean-dwarf-french-safari-seeds",
+            "priceGBP": 2.99
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "perpetual-spinach",
+    "commonName": "Perpetual Spinach",
+    "varieties": [
+      {
+        "name": "Perpetual Spinach",
+        "why": "Cut-and-come-again, bolts far less than true spinach, long harvest",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/spinach-perpetual-spinach-beet-seeds/697TM",
+            "priceGBP": 2.49,
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/vegetable-seeds/spinach-seeds/spinach-perpetual_MH883",
+            "priceGBP": 2.49
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/products/beet-leaf-perpetual-spinach-seeds",
+            "priceGBP": 1.99
+          }
+        ]
+      },
+      {
+        "name": "Medania",
+        "why": "True spinach, slow to bolt, compact rosette suited to containers",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/spinach-medania-seeds/696TM",
+            "priceGBP": 2.49
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/vegetable-seeds/spinach-seeds/spinach-medania_MH-1580",
+            "priceGBP": 2.49
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/spinach-medania-seeds",
+            "priceGBP": 1.89
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "swiss-chard",
+    "commonName": "Swiss Chard",
+    "varieties": [
+      {
+        "name": "Bright Lights",
+        "why": "RHS AGM, multi-coloured stems, ornamental and edible, kids love the colours",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/swiss-chard-bright-lights-seeds/45TM",
+            "priceGBP": 2.99,
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/vegetable-seeds/chard-seeds/swiss-chard-bright-lights_MH-8478",
+            "priceGBP": 2.99
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/products/swiss-chard-bright-lights-seeds",
+            "priceGBP": 2.49
+          }
+        ]
+      },
+      {
+        "name": "Lucullus",
+        "why": "Compact habit, pale green stems, mild flavour, reliable in pots",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/swiss-chard-lucullus-seeds/46TM",
+            "priceGBP": 2.49
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/swiss-chard-lucullus-seeds",
+            "priceGBP": 1.89
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/products/swiss-chard-lucullus-seeds",
+            "priceGBP": 1.99
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "rocket",
+    "commonName": "Rocket / Arugula",
+    "varieties": [
+      {
+        "name": "Cultivated Rocket",
+        "why": "Fast-growing, peppery leaves, cut-and-come-again, compact growth",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/rocket-seeds/570TM",
+            "priceGBP": 2.29,
+            "recommended": true
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/products/rocket-cultivated-seeds",
+            "priceGBP": 1.99
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/herb-seeds-rocket-cultivated",
+            "priceGBP": 1.89
+          }
+        ]
+      },
+      {
+        "name": "Wild Rocket",
+        "why": "Perennial, stronger peppery taste, slower bolting than cultivated",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/wild-rocket-seeds/571TM",
+            "priceGBP": 2.29
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/vegetable-seeds/herb-seeds/rocket-wild_MH-1480",
+            "priceGBP": 2.49
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/products/rocket-wild-seeds",
+            "priceGBP": 1.99
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "radish",
+    "commonName": "Radish",
+    "varieties": [
+      {
+        "name": "French Breakfast 3",
+        "why": "RHS AGM, quick 25-day crop, elongated shape suits shallow pockets",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/radish-french-breakfast-3/542TM",
+            "priceGBP": 2.29,
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/vegetable-seeds/radish-seeds/radish-french-breakfast-3_MH1482",
+            "priceGBP": 2.49
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/products/radish-french-breakfast-seeds",
+            "priceGBP": 1.99
+          }
+        ]
+      },
+      {
+        "name": "Cherry Belle",
+        "why": "Round shape, 22-day maturity, compact roots perfect for shallow containers",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/radish-cherry-belle-seeds/543TM",
+            "priceGBP": 2.29
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/radish-cherry-belle-seeds",
+            "priceGBP": 1.89
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/products/radish-cherry-belle-seeds",
+            "priceGBP": 1.99
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "lettuce",
+    "commonName": "Lettuce (Mixed)",
+    "varieties": [
+      {
+        "name": "Little Gem",
+        "why": "RHS AGM, compact cos type, perfect single-pocket size, sweet hearts",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/lettuce-little-gem-seeds/392TM",
+            "priceGBP": 2.49,
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/vegetable-seeds/lettuce-seeds/lettuce-little-gem_MH-1393",
+            "priceGBP": 2.49
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/products/lettuce-little-gem-seeds",
+            "priceGBP": 1.99
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/lettuce-little-gem-seeds",
+            "priceGBP": 1.89
+          }
+        ]
+      },
+      {
+        "name": "Salad Bowl Mixed",
+        "why": "Loose-leaf, cut-and-come-again, no heading required, maximises pocket yield",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/lettuce-salad-bowl-mixed-seeds/393TM",
+            "priceGBP": 2.99
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/vegetable-seeds/lettuce-seeds/lettuce-salad-bowl-mixed_MH-32530",
+            "priceGBP": 2.99
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/products/lettuce-salad-bowl-mixed-seeds",
+            "priceGBP": 2.19
+          }
+        ]
+      },
+      {
+        "name": "Tom Thumb",
+        "why": "Miniature butterhead, tennis-ball size, perfect for single pockets",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/lettuce-tom-thumb-seeds/394TM",
+            "priceGBP": 2.29
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/lettuce-tom-thumb-seeds",
+            "priceGBP": 1.89
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/products/lettuce-tom-thumb-seeds",
+            "priceGBP": 1.99
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "spring-onion",
+    "commonName": "Spring Onion",
+    "varieties": [
+      {
+        "name": "White Lisbon",
+        "why": "RHS AGM, fast maturing, slender roots suited to pocket depth",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/spring-onion-white-lisbon-seeds/528TM",
+            "priceGBP": 2.29,
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/vegetable-seeds/onion-seeds/onion-salad-white-lisbon_MH275",
+            "priceGBP": 2.49
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/onion-white-lisbon-rhs-agm-seeds",
+            "priceGBP": 1.89
+          }
+        ]
+      },
+      {
+        "name": "Ishikura",
+        "why": "Japanese bunching type, no bulb formation, ideal for tight spacing",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/spring-onion-ishikura-seeds/529TM",
+            "priceGBP": 2.49
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/products/spring-onion-ishikura-seeds",
+            "priceGBP": 2.29
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/onion-ishikura-bunching-seeds",
+            "priceGBP": 1.89
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "kale",
+    "commonName": "Kale",
+    "varieties": [
+      {
+        "name": "Dwarf Green Curled",
+        "why": "Compact 40cm height, heavy yields, very hardy, RHS recommended",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/kale-dwarf-green-curled-seeds/39TM",
+            "priceGBP": 2.49,
+            "recommended": true
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/products/kale-dwarf-green-curled-seeds",
+            "priceGBP": 1.99
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/kale-dwarf-green-curled-seeds",
+            "priceGBP": 1.89
+          }
+        ]
+      },
+      {
+        "name": "Nero di Toscana",
+        "why": "Cavolo nero, upright habit suits pockets, pick outer leaves continuously",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/kale-nero-di-toscana/40TM",
+            "priceGBP": 2.49
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/vegetable-seeds/kale-seeds/kale-nero-di-toscana_MH-1358",
+            "priceGBP": 2.49
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/products/kale-nero-di-toscana-seeds",
+            "priceGBP": 2.29
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "pea",
+    "commonName": "Pea",
+    "varieties": [
+      {
+        "name": "Half Pint",
+        "why": "Dwarf variety only 30cm tall, no support needed, bred for containers",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/pea-half-pint-seeds/t67230TM",
+            "priceGBP": 3.99,
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/vegetable-seeds/pea-seeds/pea-half-pint_MH-34520",
+            "priceGBP": 3.99
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/products/pea-half-pint-seeds",
+            "priceGBP": 3.49
+          }
+        ]
+      },
+      {
+        "name": "Tom Thumb",
+        "why": "Heritage dwarf at 25cm, no staking, sweet flavour, RHS recommended",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/pea-tom-thumb-seeds/108TM",
+            "priceGBP": 3.49
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/pea-tom-thumb-seeds",
+            "priceGBP": 2.29
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/vegetable-seeds/pea-seeds/pea-tom-thumb_MH-1570",
+            "priceGBP": 3.49
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "pepper-chilli",
+    "commonName": "Chilli Pepper",
+    "varieties": [
+      {
+        "name": "Apache",
+        "why": "Compact 45cm plant, heavy yields, ideal for containers, RHS AGM",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/chilli-pepper-apache-seeds/t55110TM",
+            "priceGBP": 3.49,
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/vegetable-seeds/pepper-chilli-seeds/chilli-apache_MH-26780",
+            "priceGBP": 3.49
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/products/chilli-pepper-apache-seeds",
+            "priceGBP": 2.99
+          }
+        ]
+      },
+      {
+        "name": "Basket of Fire",
+        "why": "Trailing habit, ornamental and edible, bred for hanging containers",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/chilli-pepper-basket-of-fire-seeds/t62890TM",
+            "priceGBP": 3.49
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/products/chilli-basket-of-fire-seeds",
+            "priceGBP": 2.99
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/vegetable-seeds/pepper-chilli-seeds/chilli-basket-of-fire_MH-31205",
+            "priceGBP": 3.99
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "thyme",
+    "commonName": "Thyme",
+    "varieties": [
+      {
+        "name": "Common Thyme",
+        "why": "Compact evergreen perennial, thrives in GreenStalk drainage, RHS recommended",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/thyme-old-english-seeds/488TM",
+            "priceGBP": 2.49,
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/vegetable-seeds/herb-seeds/herb-thyme-common_MH-1195",
+            "priceGBP": 2.49
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/products/thyme-common-seeds",
+            "priceGBP": 1.99
+          }
+        ]
+      },
+      {
+        "name": "Lemon Thyme",
+        "why": "Citrus fragrance, low spreading habit, ornamental and culinary",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/thyme-lemon-seeds/489TM",
+            "priceGBP": 2.49
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/herb-thyme-lemon-seeds",
+            "priceGBP": 2.29
+          },
+          {
+            "seller": "RHS Shop",
+            "url": "https://www.rhsplants.co.uk/plants/thymus-citriodorus/2210",
+            "priceGBP": 8.99,
+            "badge": "RHS Endorsed"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "oregano",
+    "commonName": "Oregano",
+    "varieties": [
+      {
+        "name": "Greek Oregano",
+        "why": "Compact bushy habit, strongest flavour for cooking, drought tolerant",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/oregano-seeds/827TM",
+            "priceGBP": 2.49,
+            "recommended": true
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/products/oregano-greek-seeds",
+            "priceGBP": 1.99
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/vegetable-seeds/herb-seeds/oregano-greek_MH-28110",
+            "priceGBP": 2.49
+          }
+        ]
+      },
+      {
+        "name": "Hot & Spicy",
+        "why": "Extra pungent, compact growth, excellent in containers",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/oregano-hot-and-spicy-seeds/t59230TM",
+            "priceGBP": 2.99
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/products/oregano-hot-and-spicy-seeds",
+            "priceGBP": 2.49
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/herb-oregano-hot-spicy-seeds",
+            "priceGBP": 2.29
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "parsley",
+    "commonName": "Parsley",
+    "varieties": [
+      {
+        "name": "Moss Curled",
+        "why": "Compact bushy growth, decorative, good container variety",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/parsley-moss-curled-seeds/849TM",
+            "priceGBP": 2.29,
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/vegetable-seeds/herb-seeds/parsley-moss-curled_MH-1327",
+            "priceGBP": 2.49
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/products/parsley-moss-curled-seeds",
+            "priceGBP": 1.99
+          }
+        ]
+      },
+      {
+        "name": "Plain Leaved 2 (Flat Leaf)",
+        "why": "Stronger flavour than curled, compact rosette, cut-and-come-again",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/parsley-plain-leaved-2-seeds/850TM",
+            "priceGBP": 2.29
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/herb-parsley-plain-leaved-seeds",
+            "priceGBP": 1.89
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/products/parsley-flat-leaved-seeds",
+            "priceGBP": 1.99
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "chives",
+    "commonName": "Chives",
+    "varieties": [
+      {
+        "name": "Common Chives",
+        "why": "Compact clumps, attractive purple flowers, easy perennial for pots",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/chives-seeds/476TM",
+            "priceGBP": 2.49,
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/vegetable-seeds/herb-seeds/herb-chives_MH-1174",
+            "priceGBP": 2.49
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/products/chive-seeds",
+            "priceGBP": 1.99
+          }
+        ]
+      },
+      {
+        "name": "Garlic Chives",
+        "why": "Mild garlic flavour, flat leaves, compact growth, white flowers",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/garlic-chives-seeds/477TM",
+            "priceGBP": 2.49
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/products/garlic-chives-seeds",
+            "priceGBP": 1.99
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/herb-garlic-chives-seeds",
+            "priceGBP": 2.29
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "mint",
+    "commonName": "Mint",
+    "varieties": [
+      {
+        "name": "Garden Mint (Spearmint)",
+        "why": "Classic flavour, vigorous in pots, GreenStalk contains its spreading roots",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/mint-seeds/857TM",
+            "priceGBP": 2.49,
+            "recommended": true
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/products/mint-seeds",
+            "priceGBP": 1.99
+          },
+          {
+            "seller": "RHS Shop",
+            "url": "https://www.rhsplants.co.uk/plants/mentha-spicata/1980",
+            "priceGBP": 8.99,
+            "badge": "RHS Endorsed"
+          }
+        ]
+      },
+      {
+        "name": "Chocolate Mint",
+        "why": "After-dinner-mint aroma, compact spreader, fun for kids to smell",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/mint-chocolate-plant/t60110TM",
+            "priceGBP": 9.99
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/vegetable-seeds/herb-seeds/mint-chocolate_MH-29430",
+            "priceGBP": 9.99
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/products/mint-chocolate-plant",
+            "priceGBP": 8.99
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "nasturtium",
+    "commonName": "Nasturtium (Mixed)",
+    "varieties": [
+      {
+        "name": "Tom Thumb Mixed",
+        "why": "Dwarf 25cm mounds, bright edible flowers, ideal compact container variety",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/nasturtium-tom-thumb-mixed-seeds/1757TM",
+            "priceGBP": 2.49,
+            "recommended": true
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/products/nasturtium-tom-thumb-mixed-seeds",
+            "priceGBP": 1.99
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/nasturtium-tom-thumb-mixed-seeds",
+            "priceGBP": 1.89
+          }
+        ]
+      },
+      {
+        "name": "Alaska Mixed",
+        "why": "Variegated foliage, compact habit, edible leaves and flowers",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/nasturtium-alaska-mixed-seeds/1758TM",
+            "priceGBP": 2.49
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/flower-seeds/nasturtium-alaska-mixed_MH-675",
+            "priceGBP": 2.99
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/products/nasturtium-alaska-mixed-seeds",
+            "priceGBP": 1.99
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "marigold",
+    "commonName": "Marigold (French, Mixed)",
+    "varieties": [
+      {
+        "name": "Boy-O-Boy Mixed",
+        "why": "Ultra-dwarf 20cm, prolific blooms, excellent companion plant for pest control",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/flower-seeds/marigold-french-boy-o-boy-mix_MH-644",
+            "priceGBP": 2.49,
+            "recommended": true
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/products/marigold-french-boy-o-boy-mixed-seeds",
+            "priceGBP": 1.99
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/marigold-french-boy-o-boy-seeds",
+            "priceGBP": 1.89
+          }
+        ]
+      },
+      {
+        "name": "Durango Mixed",
+        "why": "Compact 25cm plants, large double blooms, strong pest-deterrent scent",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/marigold-durango-mixed-seeds/1745TM",
+            "priceGBP": 2.99
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/flower-seeds/marigold-french-durango-mix_MH-31890",
+            "priceGBP": 2.99
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/products/marigold-french-durango-mixed-seeds",
+            "priceGBP": 2.49
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "dwarf-sweet-pea",
+    "commonName": "Dwarf Sweet Pea",
+    "varieties": [
+      {
+        "name": "Patio Mix",
+        "why": "Only 30cm tall, no support needed, fragrant blooms, bred for containers",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/flower-seeds/sweet-pea-patio-mix_MH-853",
+            "priceGBP": 3.49,
+            "recommended": true
+          },
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/sweet-pea-patio-mixed-seeds/1876TM",
+            "priceGBP": 3.49
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/products/sweet-pea-patio-mix-seeds",
+            "priceGBP": 2.99
+          }
+        ]
+      },
+      {
+        "name": "Pink Cupid",
+        "why": "Trailing ground-cover type, cascades from pockets, fragrant pink flowers",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/sweet-pea-pink-cupid-seeds/1875TM",
+            "priceGBP": 3.49
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/flower-seeds/sweet-pea-cupid-pink_MH-31452",
+            "priceGBP": 3.49
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/sweet-pea-pink-cupid-seeds",
+            "priceGBP": 2.99
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "sunflower",
+    "commonName": "Sunflower",
+    "varieties": [
+      {
+        "name": "Teddy Bear",
+        "why": "Dwarf 60cm, fluffy double blooms, no staking, perfect for kids",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/sunflower-teddy-bear-seeds/6306TM",
+            "priceGBP": 2.49,
+            "recommended": true
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/products/sunflower-teddy-bear-seeds",
+            "priceGBP": 2.49
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/flower-seeds/sunflower-teddy-bear_MH-818",
+            "priceGBP": 2.49
+          }
+        ]
+      },
+      {
+        "name": "Little Dorrit",
+        "why": "Micro-dwarf 40cm, branching stems, multiple blooms per plant",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/sunflower-little-dorrit-seeds/t63210TM",
+            "priceGBP": 2.99
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/flower-seeds/sunflower-little-dorrit_MH-32540",
+            "priceGBP": 2.99
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/sunflower-little-dorrit-seeds",
+            "priceGBP": 2.49
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "coriander",
+    "commonName": "Coriander",
+    "varieties": [
+      {
+        "name": "Confetti",
+        "why": "Slow-bolting variety, fine-cut leaves, compact habit for pots",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/coriander-confetti-seeds/t58920TM",
+            "priceGBP": 2.49,
+            "recommended": true
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/products/coriander-confetti-seeds",
+            "priceGBP": 1.99
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/vegetable-seeds/herb-seeds/coriander-confetti_MH-27650",
+            "priceGBP": 2.49
+          }
+        ]
+      },
+      {
+        "name": "Leisure",
+        "why": "Very slow bolting, large leaves, good for succession sowing in pockets",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/coriander-leisure-seeds/t55350TM",
+            "priceGBP": 2.49
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/herb-coriander-leisure-seeds",
+            "priceGBP": 1.89
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/products/coriander-leisure-seeds",
+            "priceGBP": 2.29
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "dill",
+    "commonName": "Dill",
+    "varieties": [
+      {
+        "name": "Fernleaf",
+        "why": "Dwarf 45cm, compact bushy habit bred for containers, slow bolting",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/dill-fernleaf-seeds/t59120TM",
+            "priceGBP": 2.49,
+            "recommended": true
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/products/dill-fernleaf-seeds",
+            "priceGBP": 1.99
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/herb-dill-fernleaf-seeds",
+            "priceGBP": 1.89
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "calendula",
+    "commonName": "Pot Marigold (Calendula)",
+    "varieties": [
+      {
+        "name": "Fiesta Gitana Mixed",
+        "why": "Dwarf 25cm, double flowers, compact habit, edible petals",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/calendula-fiesta-gitana-mixed-seeds/1680TM",
+            "priceGBP": 2.49,
+            "recommended": true
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/products/calendula-fiesta-gitana-mixed-seeds",
+            "priceGBP": 1.99
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/flower-seeds/calendula-fiesta-gitana_MH-28960",
+            "priceGBP": 2.49
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "lavender",
+    "commonName": "Lavender",
+    "varieties": [
+      {
+        "name": "Munstead Dwarf",
+        "why": "RHS AGM, compact 45cm, excellent drainage in GreenStalk suits it perfectly",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/lavender-munstead-seeds/1726TM",
+            "priceGBP": 2.49,
+            "recommended": true
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/products/lavender-munstead-dwarf-seeds",
+            "priceGBP": 2.49
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/flower-seeds/lavender-munstead-seeds_MH-31280",
+            "priceGBP": 2.99
+          },
+          {
+            "seller": "RHS Shop",
+            "url": "https://www.rhsplants.co.uk/plants/lavandula-angustifolia-munstead/1850",
+            "priceGBP": 9.99,
+            "badge": "RHS AGM"
+          }
+        ]
+      }
+    ]
+  }
+]

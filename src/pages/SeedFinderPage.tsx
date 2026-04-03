@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { usePlantDb } from '../data/use-plant-db';
-import { useSeedLinks } from '../data/use-seed-links';
+import { useSeedLinks, type SeedContext, type SeedVariety } from '../data/use-seed-links';
 import { useRegion } from '../data/use-region';
 import { getMonthName, isInWindow } from '../lib/calendar-utils';
 import type { Plant } from '../types/plant';
@@ -109,6 +109,70 @@ const SELLER_INFO_US: Record<string, { name: string; badge: string; note: string
   },
 };
 
+function VarietySection({ variety, sellerInfo, isFirst }: {
+  variety: SeedVariety;
+  sellerInfo: Record<string, { name: string; badge: string; note: string }>;
+  isFirst: boolean;
+}) {
+  const [showAll, setShowAll] = useState(false);
+  const visibleLinks = showAll ? variety.links : variety.links.slice(0, 3);
+
+  return (
+    <div className={`${!isFirst ? 'mt-3 pt-3 border-t border-stone-200/50 dark:border-stone-700/50' : 'mt-3'}`}>
+      <div className="flex items-center gap-2 mb-1.5">
+        <span className="text-xs font-semibold text-stone-700 dark:text-stone-200">{variety.name}</span>
+        {isFirst && (
+          <span className="text-[8px] px-1.5 py-0.5 bg-emerald-200 dark:bg-emerald-800 text-emerald-800 dark:text-emerald-200 rounded font-semibold">RECOMMENDED</span>
+        )}
+      </div>
+      {variety.why && (
+        <p className="text-[10px] text-stone-400 mb-1.5 italic">{variety.why}</p>
+      )}
+      <div className="space-y-1">
+        {visibleLinks.map((link, i) => {
+          const sellerMeta = sellerInfo[link.seller];
+          return (
+            <a
+              key={i}
+              href={link.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`flex items-center gap-2 px-3 py-1.5 rounded-lg border hover:shadow-sm transition-all group ${
+                link.recommended
+                  ? 'bg-emerald-50 dark:bg-emerald-900/20 border-emerald-200 dark:border-emerald-800'
+                  : 'bg-white dark:bg-stone-700 border-stone-200 dark:border-stone-600 hover:border-emerald-300 dark:hover:border-emerald-700'
+              }`}
+            >
+              <span className="text-sm">{link.logo}</span>
+              <div className="flex-1 min-w-0">
+                <div className="text-[11px] font-medium text-stone-700 dark:text-stone-200 group-hover:text-emerald-700 dark:group-hover:text-emerald-400 truncate flex items-center gap-1">
+                  {link.seller}
+                  {link.recommended && (
+                    <span className="text-[7px] px-1 py-0.5 bg-emerald-200 dark:bg-emerald-800 text-emerald-800 dark:text-emerald-200 rounded font-semibold">TOP</span>
+                  )}
+                </div>
+                {sellerMeta && (
+                  <div className="text-[9px] text-stone-400">{sellerMeta.badge}</div>
+                )}
+              </div>
+              <div className="text-[11px] font-bold text-stone-600 dark:text-stone-300">{link.price}</div>
+              <span className="text-stone-300 group-hover:text-emerald-500 transition-colors text-xs">&rarr;</span>
+            </a>
+          );
+        })}
+        {variety.links.length > 3 && !showAll && (
+          <button
+            onClick={() => setShowAll(true)}
+            className="text-[10px] text-stone-400 hover:text-stone-600 dark:hover:text-stone-300 ml-1"
+          >
+            +{variety.links.length - 3} more sellers
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}
+
 function SeedCard({
   plant,
   timing,
@@ -122,7 +186,9 @@ function SeedCard({
   seedProduct: SeedProduct | null;
   sellerInfo: Record<string, { name: string; badge: string; note: string }>;
 }) {
-  const [expanded, setExpanded] = useState(false);
+  const [showVarieties, setShowVarieties] = useState(false);
+  const varieties = seedProduct?.varieties ?? [];
+  const hasMultiple = varieties.length > 1;
 
   return (
     <div
@@ -153,60 +219,31 @@ function SeedCard({
             )}
           </div>
           <p className="text-xs text-stone-500 mt-0.5">{reason}</p>
-          {seedProduct && (
+          {hasMultiple && (
             <p className="text-[10px] text-stone-400 mt-0.5">
-              Variety: <span className="font-medium">{seedProduct.varietyName}</span>
+              {varieties.length} varieties available
             </p>
           )}
         </div>
       </div>
 
-      {/* Buy links */}
-      {seedProduct && seedProduct.links.length > 0 && (
-        <div className="mt-3 space-y-1.5">
-          {seedProduct.links.slice(0, expanded ? undefined : 3).map((link, i) => {
-            const sellerMeta = sellerInfo[link.seller];
-            return (
-              <a
-                key={i}
-                href={link.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`flex items-center gap-2 px-3 py-2 rounded-xl border hover:shadow-sm transition-all group ${
-                  i === 0
-                    ? 'bg-emerald-50 dark:bg-emerald-900/20 border-emerald-200 dark:border-emerald-800 hover:border-emerald-400'
-                    : 'bg-white dark:bg-stone-700 border-stone-200 dark:border-stone-600 hover:border-emerald-300 dark:hover:border-emerald-700'
-                }`}
-              >
-                <span className="text-base">{link.logo}</span>
-                <div className="flex-1 min-w-0">
-                  <div className="text-xs font-medium text-stone-700 dark:text-stone-200 group-hover:text-emerald-700 dark:group-hover:text-emerald-400 truncate flex items-center gap-1">
-                    {link.seller}
-                    {i === 0 && (
-                      <span className="text-[8px] px-1 py-0.5 bg-emerald-200 dark:bg-emerald-800 text-emerald-800 dark:text-emerald-200 rounded font-semibold">TOP PICK</span>
-                    )}
-                  </div>
-                  {sellerMeta && (
-                    <div className="text-[9px] text-stone-400">{sellerMeta.badge}</div>
-                  )}
-                </div>
-                <div className="text-xs font-bold text-stone-600 dark:text-stone-300">{link.price}</div>
-                <span className="text-stone-300 group-hover:text-emerald-500 transition-colors">
-                  &rarr;
-                </span>
-              </a>
-            );
-          })}
-          {seedProduct.links.length > 3 && !expanded && (
-            <button
-              onClick={() => setExpanded(true)}
-              className="text-[10px] text-stone-400 hover:text-stone-600 dark:hover:text-stone-300 ml-1"
-            >
-              +{seedProduct.links.length - 3} more sellers
-            </button>
-          )}
-        </div>
+      {/* Show first variety by default */}
+      {varieties.length > 0 && (
+        <VarietySection variety={varieties[0]} sellerInfo={sellerInfo} isFirst={true} />
       )}
+
+      {/* Additional varieties */}
+      {hasMultiple && !showVarieties && (
+        <button
+          onClick={() => setShowVarieties(true)}
+          className="mt-2 text-[10px] text-emerald-600 dark:text-emerald-400 hover:text-emerald-800 dark:hover:text-emerald-300 font-medium"
+        >
+          Show {varieties.length - 1} more {varieties.length - 1 === 1 ? 'variety' : 'varieties'}
+        </button>
+      )}
+      {showVarieties && varieties.slice(1).map((v, i) => (
+        <VarietySection key={i} variety={v} sellerInfo={sellerInfo} isFirst={false} />
+      ))}
 
       {!seedProduct && timing !== 'not-yet' && (
         <div className="mt-2 text-[10px] text-stone-400">
@@ -221,7 +258,8 @@ export function SeedFinderPage() {
   const region = useRegion();
   const { plants } = usePlantDb(region);
   const isUS = region === 'us';
-  const seedLinks = useSeedLinks(region);
+  const [seedContext, setSeedContext] = useState<SeedContext>('greenstalk');
+  const seedLinks = useSeedLinks(region, seedContext);
   const sellerInfo = isUS ? SELLER_INFO_US : SELLER_INFO_UK;
   const currentMonth = new Date().getMonth() + 1;
   const [selectedMonth, setSelectedMonth] = useState(currentMonth);
@@ -252,13 +290,37 @@ export function SeedFinderPage() {
     <div className="h-full overflow-y-auto">
       <div className="max-w-4xl mx-auto px-4 py-6">
         {/* Header */}
-        <div className="mb-6">
+        <div className="mb-4">
           <h1 className="text-2xl font-bold text-stone-800 dark:text-stone-100">Seed Finder</h1>
           <p className="text-sm text-stone-500 mt-1">
             {isUS
               ? 'What to buy now for your SoCal garden. All sellers are AHS members or USDA-certified.'
               : 'What to buy now for your Surrey garden. All sellers are RHS-endorsed or hold Royal Warrants.'}
           </p>
+        </div>
+
+        {/* GreenStalk / In-Ground tabs */}
+        <div className="flex gap-1 mb-5 bg-stone-100 dark:bg-stone-700 p-1 rounded-xl w-fit">
+          <button
+            onClick={() => setSeedContext('greenstalk')}
+            className={`text-xs px-4 py-2 rounded-lg font-medium transition-colors ${
+              seedContext === 'greenstalk'
+                ? 'bg-white dark:bg-stone-600 text-stone-800 dark:text-stone-100 shadow-sm'
+                : 'text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-300'
+            }`}
+          >
+            <span className="mr-1.5">🌱</span>GreenStalk Varieties
+          </button>
+          <button
+            onClick={() => setSeedContext('inground')}
+            className={`text-xs px-4 py-2 rounded-lg font-medium transition-colors ${
+              seedContext === 'inground'
+                ? 'bg-white dark:bg-stone-600 text-stone-800 dark:text-stone-100 shadow-sm'
+                : 'text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-300'
+            }`}
+          >
+            <span className="mr-1.5">🏡</span>In-Ground Varieties
+          </button>
         </div>
 
         {/* Controls */}

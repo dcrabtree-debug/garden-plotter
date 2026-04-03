@@ -278,9 +278,9 @@ export function GardenPage() {
     return grid;
   }, [showCompanionOverlay, plantToPlace, cells, rows, cols, companionMap]);
 
-  // Veg-suitable plants for the plant panel
+  // Veg-suitable plants for the plant panel — sorted alphabetically
   const inGroundPlants = useMemo(
-    () => plants.filter((p) => p.greenstalkSuitability !== undefined),
+    () => [...plants].sort((a, b) => a.commonName.localeCompare(b.commonName)),
     [plants]
   );
 

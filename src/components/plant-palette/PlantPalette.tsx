@@ -2,10 +2,13 @@ import { useState, useMemo } from 'react';
 import { PlantCard } from './PlantCard';
 import type { Plant, PlantCategory } from '../../types/plant';
 
+type SortMode = 'best-fit' | 'a-z' | 'season';
+
 interface PlantPaletteProps {
   plants: Plant[];
   onSelectPlant: (plant: Plant) => void;
   activePlantSlug?: string | null;
+  context?: 'greenstalk' | 'garden';
 }
 
 const categories: { value: PlantCategory | 'all'; label: string }[] = [
@@ -17,9 +20,22 @@ const categories: { value: PlantCategory | 'all'; label: string }[] = [
   { value: 'legume', label: 'Legumes' },
 ];
 
-export function PlantPalette({ plants, onSelectPlant, activePlantSlug }: PlantPaletteProps) {
+const SUIT_ORDER: Record<string, number> = { ideal: 0, good: 1, marginal: 2, unsuitable: 3 };
+
+function isInSeason(plant: Plant): boolean {
+  const m = new Date().getMonth() + 1;
+  const pw = plant.plantingWindow;
+  const check = (w: [number, number] | null) => {
+    if (!w) return false;
+    return w[0] <= w[1] ? m >= w[0] && m <= w[1] : m >= w[0] || m <= w[1];
+  };
+  return check(pw.sowIndoors) || check(pw.sowOutdoors) || check(pw.transplant);
+}
+
+export function PlantPalette({ plants, onSelectPlant, activePlantSlug, context = 'greenstalk' }: PlantPaletteProps) {
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState<PlantCategory | 'all'>('all');
+  const [sortMode, setSortMode] = useState<SortMode>(context === 'greenstalk' ? 'best-fit' : 'a-z');
 
   const filtered = useMemo(() => {
     let result = plants;
@@ -34,8 +50,24 @@ export function PlantPalette({ plants, onSelectPlant, activePlantSlug }: PlantPa
           p.botanicalName.toLowerCase().includes(q)
       );
     }
+
+    // Sort
+    result = [...result].sort((a, b) => {
+      if (sortMode === 'best-fit' && context === 'greenstalk') {
+        const sa = SUIT_ORDER[a.greenstalkSuitability] ?? 3;
+        const sb = SUIT_ORDER[b.greenstalkSuitability] ?? 3;
+        if (sa !== sb) return sa - sb;
+      }
+      if (sortMode === 'season') {
+        const aIn = isInSeason(a) ? 0 : 1;
+        const bIn = isInSeason(b) ? 0 : 1;
+        if (aIn !== bIn) return aIn - bIn;
+      }
+      return a.commonName.localeCompare(b.commonName);
+    });
+
     return result;
-  }, [plants, search, category]);
+  }, [plants, search, category, sortMode, context]);
 
   return (
     <div className="flex flex-col h-full">
@@ -67,6 +99,25 @@ export function PlantPalette({ plants, onSelectPlant, activePlantSlug }: PlantPa
               }`}
             >
               {cat.label}
+            </button>
+          ))}
+        </div>
+        <div className="flex gap-1 mt-1.5">
+          {([
+            ...(context === 'greenstalk' ? [{ value: 'best-fit' as SortMode, label: '⭐ Best fit' }] : []),
+            { value: 'a-z' as SortMode, label: 'A–Z' },
+            { value: 'season' as SortMode, label: '🌱 In season' },
+          ]).map((s) => (
+            <button
+              key={s.value}
+              onClick={() => setSortMode(s.value)}
+              className={`text-[9px] px-1.5 py-0.5 rounded-full transition-colors ${
+                sortMode === s.value
+                  ? 'bg-stone-600 text-white dark:bg-stone-500'
+                  : 'bg-stone-50 dark:bg-stone-800 text-stone-400 hover:bg-stone-200 dark:hover:bg-stone-700'
+              }`}
+            >
+              {s.label}
             </button>
           ))}
         </div>

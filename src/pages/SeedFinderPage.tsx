@@ -262,8 +262,16 @@ export function SeedFinderPage() {
         return { plant, timing, reason, seedProduct };
       })
       .sort((a, b) => {
+        // Primary: buy timing (buy now → buy soon → not yet)
         const order: Record<BuyTiming, number> = { 'buy-now': 0, 'buy-soon': 1, 'not-yet': 2 };
-        return order[a.timing] - order[b.timing];
+        const timingDiff = order[a.timing] - order[b.timing];
+        if (timingDiff !== 0) return timingDiff;
+        // Secondary: plants with seed data first (actionable)
+        const aHas = a.seedProduct ? 0 : 1;
+        const bHas = b.seedProduct ? 0 : 1;
+        if (aHas !== bHas) return aHas - bHas;
+        // Tertiary: alphabetical
+        return a.plant.commonName.localeCompare(b.plant.commonName);
       });
   }, [plants, selectedMonth, seedLinks]);
 

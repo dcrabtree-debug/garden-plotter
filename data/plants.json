@@ -1,0 +1,557 @@
+[
+  {
+    "slug": "strawberry-everbearing",
+    "commonName": "Everbearing Strawberry",
+    "botanicalName": "Fragaria × ananassa",
+    "category": "fruit",
+    "emoji": "\ud83c\udf53",
+    "sun": "full-sun",
+    "water": "moderate",
+    "spacingCm": 25,
+    "depthCm": 15,
+    "growthHabit": "trailing",
+    "daysToHarvest": [60, 90],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": [3, 4],
+      "transplant": [4, 5],
+      "harvest": [6, 9]
+    },
+    "greenstalkSuitability": "ideal",
+    "greenstalkNotes": "Trailing habit cascades beautifully from top tiers. Elevated position protects from slugs.",
+    "idealTiers": [1, 2],
+    "varieties": [
+      { "name": "Mara des Bois", "notes": "Exceptional flavour, fruits June-Sept", "containerFriendly": true },
+      { "name": "Albion", "notes": "Heavy cropper, disease resistant", "containerFriendly": true }
+    ],
+    "notes": "Plant at top tiers to keep fruit away from slugs. Perfect picking height for children.",
+    "sources": ["https://www.rhs.org.uk/fruit/strawberries/grow-your-own"]
+  },
+  {
+    "slug": "tomato-tumbling",
+    "commonName": "Tumbling Tom Tomato",
+    "botanicalName": "Solanum lycopersicum",
+    "category": "vegetable",
+    "emoji": "\ud83c\udf45",
+    "sun": "full-sun",
+    "water": "high",
+    "spacingCm": 30,
+    "depthCm": 20,
+    "growthHabit": "trailing",
+    "daysToHarvest": [60, 70],
+    "plantingWindow": {
+      "sowIndoors": [2, 3],
+      "sowOutdoors": null,
+      "transplant": [5, 6],
+      "harvest": [7, 9]
+    },
+    "greenstalkSuitability": "ideal",
+    "greenstalkNotes": "Determinate trailing variety bred for containers. Will not snap pockets like indeterminate types.",
+    "idealTiers": [2, 3],
+    "varieties": [
+      { "name": "Tumbling Tom Red", "notes": "Classic cherry tomato, very productive", "containerFriendly": true },
+      { "name": "Cherry Falls", "notes": "Cascading habit, sweet fruit", "containerFriendly": true }
+    ],
+    "notes": "Must use determinate/trailing varieties in GreenStalks. Standard indeterminate tomatoes will snap pockets.",
+    "sources": ["https://www.rhs.org.uk/vegetables/tomatoes/grow-your-own"]
+  },
+  {
+    "slug": "basil-sweet",
+    "commonName": "Sweet Basil",
+    "botanicalName": "Ocimum basilicum",
+    "category": "herb",
+    "emoji": "\ud83c\udf3f",
+    "sun": "full-sun",
+    "water": "moderate",
+    "spacingCm": 20,
+    "depthCm": 10,
+    "growthHabit": "bushy",
+    "daysToHarvest": [50, 75],
+    "plantingWindow": {
+      "sowIndoors": [3, 4],
+      "sowOutdoors": [5, 6],
+      "transplant": [5, 6],
+      "harvest": [6, 9]
+    },
+    "greenstalkSuitability": "ideal",
+    "greenstalkNotes": "Compact root system fits perfectly in pockets. Plant alongside tomatoes for classic companion planting.",
+    "idealTiers": [2, 3],
+    "varieties": [
+      { "name": "Genovese", "notes": "Classic Italian, large leaves", "containerFriendly": true },
+      { "name": "Greek Dwarf", "notes": "Compact mound, ideal for small pockets", "containerFriendly": true }
+    ],
+    "notes": "Tuck into the same pocket as tomatoes. Improves tomato flavour and repels whiteflies.",
+    "sources": ["https://www.rhs.org.uk/herbs/basil/grow-your-own"]
+  },
+  {
+    "slug": "dwarf-french-bean",
+    "commonName": "Dwarf French Bean",
+    "botanicalName": "Phaseolus vulgaris",
+    "category": "legume",
+    "emoji": "\ud83e\uded8",
+    "sun": "full-sun",
+    "water": "moderate",
+    "spacingCm": 15,
+    "depthCm": 15,
+    "growthHabit": "bushy",
+    "daysToHarvest": [55, 65],
+    "plantingWindow": {
+      "sowIndoors": [4, 5],
+      "sowOutdoors": [5, 6],
+      "transplant": null,
+      "harvest": [7, 10]
+    },
+    "greenstalkSuitability": "ideal",
+    "greenstalkNotes": "Compact and highly productive in 10-inch pockets with zero support needed.",
+    "idealTiers": [4, 5],
+    "varieties": [
+      { "name": "Tendergreen", "notes": "Reliable cropper, stringless", "containerFriendly": true },
+      { "name": "Purple Teepee", "notes": "Purple pods easy to spot for picking", "containerFriendly": true }
+    ],
+    "notes": "Lower tiers work well. Fixes nitrogen in soil which benefits neighbouring plants.",
+    "sources": ["https://www.rhs.org.uk/vegetables/french-beans/grow-your-own"]
+  },
+  {
+    "slug": "perpetual-spinach",
+    "commonName": "Perpetual Spinach",
+    "botanicalName": "Beta vulgaris var. cicla",
+    "category": "vegetable",
+    "emoji": "\ud83e\udd6c",
+    "sun": "partial-shade",
+    "water": "moderate",
+    "spacingCm": 20,
+    "depthCm": 15,
+    "growthHabit": "rosette",
+    "daysToHarvest": [50, 60],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": [3, 7],
+      "transplant": null,
+      "harvest": [5, 11]
+    },
+    "greenstalkSuitability": "ideal",
+    "greenstalkNotes": "Cut-and-come-again harvesting maximises yield from a single pocket.",
+    "idealTiers": [1, 2],
+    "varieties": [
+      { "name": "Perpetual Spinach", "notes": "Hardy, bolts less than true spinach", "containerFriendly": true }
+    ],
+    "notes": "Snap off outer leaves only for continuous harvests. Thrives in cooler Surrey spring.",
+    "sources": ["https://www.rhs.org.uk/vegetables/spinach/grow-your-own"]
+  },
+  {
+    "slug": "swiss-chard",
+    "commonName": "Swiss Chard",
+    "botanicalName": "Beta vulgaris subsp. cicla",
+    "category": "vegetable",
+    "emoji": "\ud83e\udd6c",
+    "sun": "partial-shade",
+    "water": "moderate",
+    "spacingCm": 25,
+    "depthCm": 15,
+    "growthHabit": "rosette",
+    "daysToHarvest": [55, 65],
+    "plantingWindow": {
+      "sowIndoors": [3, 4],
+      "sowOutdoors": [4, 7],
+      "transplant": [4, 5],
+      "harvest": [6, 11]
+    },
+    "greenstalkSuitability": "ideal",
+    "greenstalkNotes": "Colourful stems add visual interest. Cut-and-come-again harvesting works perfectly.",
+    "idealTiers": [1, 2],
+    "varieties": [
+      { "name": "Bright Lights", "notes": "Multi-coloured stems, ornamental and edible", "containerFriendly": true },
+      { "name": "Fordhook Giant", "notes": "Large leaves, heavy yields", "containerFriendly": true }
+    ],
+    "notes": "Closely related to perpetual spinach. Stunning rainbow stems from Bright Lights variety.",
+    "sources": ["https://www.rhs.org.uk/vegetables/swiss-chard/grow-your-own"]
+  },
+  {
+    "slug": "thyme",
+    "commonName": "Thyme",
+    "botanicalName": "Thymus vulgaris",
+    "category": "herb",
+    "emoji": "\ud83c\udf3f",
+    "sun": "full-sun",
+    "water": "low",
+    "spacingCm": 20,
+    "depthCm": 10,
+    "growthHabit": "bushy",
+    "daysToHarvest": [80, 100],
+    "plantingWindow": {
+      "sowIndoors": [3, 4],
+      "sowOutdoors": [4, 5],
+      "transplant": [5, 6],
+      "harvest": [1, 12]
+    },
+    "greenstalkSuitability": "ideal",
+    "greenstalkNotes": "GreenStalk drainage mimics Mediterranean conditions these woody herbs prefer.",
+    "idealTiers": [3, 4],
+    "varieties": [
+      { "name": "Common Thyme", "notes": "Best for cooking", "containerFriendly": true },
+      { "name": "Lemon Thyme", "notes": "Citrus notes, good with fish", "containerFriendly": true }
+    ],
+    "notes": "Evergreen perennial. Will persist across seasons in a GreenStalk if protected from hard frost.",
+    "sources": ["https://www.rhs.org.uk/herbs/thyme/grow-your-own"]
+  },
+  {
+    "slug": "oregano",
+    "commonName": "Oregano",
+    "botanicalName": "Origanum vulgare",
+    "category": "herb",
+    "emoji": "\ud83c\udf3f",
+    "sun": "full-sun",
+    "water": "low",
+    "spacingCm": 25,
+    "depthCm": 10,
+    "growthHabit": "bushy",
+    "daysToHarvest": [80, 100],
+    "plantingWindow": {
+      "sowIndoors": [3, 4],
+      "sowOutdoors": [4, 5],
+      "transplant": [5, 6],
+      "harvest": [1, 12]
+    },
+    "greenstalkSuitability": "ideal",
+    "greenstalkNotes": "Thrives in the well-drained conditions of vertical planters.",
+    "idealTiers": [3, 4],
+    "varieties": [
+      { "name": "Greek Oregano", "notes": "Strongest flavour for cooking", "containerFriendly": true }
+    ],
+    "notes": "Hardy perennial. Excellent drainage in GreenStalk suits it perfectly.",
+    "sources": ["https://www.rhs.org.uk/herbs/oregano/grow-your-own"]
+  },
+  {
+    "slug": "parsley",
+    "commonName": "Parsley",
+    "botanicalName": "Petroselinum crispum",
+    "category": "herb",
+    "emoji": "\ud83c\udf3f",
+    "sun": "partial-shade",
+    "water": "moderate",
+    "spacingCm": 20,
+    "depthCm": 15,
+    "growthHabit": "rosette",
+    "daysToHarvest": [70, 90],
+    "plantingWindow": {
+      "sowIndoors": [2, 3],
+      "sowOutdoors": [3, 5],
+      "transplant": [4, 5],
+      "harvest": [5, 12]
+    },
+    "greenstalkSuitability": "good",
+    "greenstalkNotes": "Deeper tap root than other herbs but works well in middle tiers.",
+    "idealTiers": [3, 4],
+    "varieties": [
+      { "name": "Flat Leaf (Italian)", "notes": "Better flavour for cooking", "containerFriendly": true },
+      { "name": "Curly", "notes": "Classic garnish variety", "containerFriendly": true }
+    ],
+    "notes": "Biennial - will bolt in second year. Replace annually for best results.",
+    "sources": ["https://www.rhs.org.uk/herbs/parsley/grow-your-own"]
+  },
+  {
+    "slug": "nasturtium",
+    "commonName": "Nasturtium",
+    "botanicalName": "Tropaeolum majus",
+    "category": "flower",
+    "emoji": "\ud83c\udf3a",
+    "sun": "full-sun",
+    "water": "low",
+    "spacingCm": 25,
+    "depthCm": 10,
+    "growthHabit": "trailing",
+    "daysToHarvest": [50, 65],
+    "plantingWindow": {
+      "sowIndoors": [3, 4],
+      "sowOutdoors": [4, 5],
+      "transplant": [5, 6],
+      "harvest": [6, 10]
+    },
+    "greenstalkSuitability": "ideal",
+    "greenstalkNotes": "Trailing habit cascades from bottom tiers. Sacrificial trap crop draws aphids away from vegetables.",
+    "idealTiers": [5],
+    "varieties": [
+      { "name": "Empress of India", "notes": "Dark leaves, scarlet flowers", "containerFriendly": true },
+      { "name": "Alaska Mix", "notes": "Variegated leaves, multi-colour blooms", "containerFriendly": true }
+    ],
+    "notes": "Entirely edible - peppery flowers and leaves for salads. Acts as trap crop for aphids.",
+    "sources": ["https://www.rhs.org.uk/plants/nasturtiums"]
+  },
+  {
+    "slug": "dwarf-sweet-pea",
+    "commonName": "Dwarf Sweet Pea",
+    "botanicalName": "Lathyrus odoratus",
+    "category": "flower",
+    "emoji": "\ud83c\udf38",
+    "sun": "full-sun",
+    "water": "moderate",
+    "spacingCm": 15,
+    "depthCm": 15,
+    "growthHabit": "bushy",
+    "daysToHarvest": [70, 85],
+    "plantingWindow": {
+      "sowIndoors": [2, 3],
+      "sowOutdoors": [3, 4],
+      "transplant": [4, 5],
+      "harvest": [6, 9]
+    },
+    "greenstalkSuitability": "good",
+    "greenstalkNotes": "Must use dwarf varieties like Cupid. Standard sweet peas need climbing support and are unsuitable.",
+    "idealTiers": [4, 5],
+    "varieties": [
+      { "name": "Cupid", "notes": "True dwarf, cascading habit, fragrant", "containerFriendly": true },
+      { "name": "Bijou Mix", "notes": "Bushy, no support needed, mixed colours", "containerFriendly": true }
+    ],
+    "notes": "Standard sweet peas need vertical nets - only dwarf varieties work in GreenStalks. Beautiful fragrance.",
+    "sources": ["https://www.rhs.org.uk/plants/sweet-peas"]
+  },
+  {
+    "slug": "lettuce",
+    "commonName": "Lettuce",
+    "botanicalName": "Lactuca sativa",
+    "category": "vegetable",
+    "emoji": "\ud83e\udd6c",
+    "sun": "partial-shade",
+    "water": "moderate",
+    "spacingCm": 20,
+    "depthCm": 10,
+    "growthHabit": "rosette",
+    "daysToHarvest": [30, 60],
+    "plantingWindow": {
+      "sowIndoors": [2, 3],
+      "sowOutdoors": [3, 8],
+      "transplant": [3, 8],
+      "harvest": [4, 10]
+    },
+    "greenstalkSuitability": "ideal",
+    "greenstalkNotes": "Shallow roots perfect for pockets. Cut-and-come-again loose leaf varieties maximise harvests.",
+    "idealTiers": [1, 2, 3],
+    "varieties": [
+      { "name": "Salad Bowl", "notes": "Loose leaf, cut-and-come-again", "containerFriendly": true },
+      { "name": "Little Gem", "notes": "Compact cos type", "containerFriendly": true }
+    ],
+    "notes": "Succession sow every 2-3 weeks for continuous supply. Benefits from partial shade in midsummer.",
+    "sources": ["https://www.rhs.org.uk/vegetables/lettuce/grow-your-own"]
+  },
+  {
+    "slug": "chives",
+    "commonName": "Chives",
+    "botanicalName": "Allium schoenoprasum",
+    "category": "herb",
+    "emoji": "\ud83e\uddc5",
+    "sun": "full-sun",
+    "water": "moderate",
+    "spacingCm": 15,
+    "depthCm": 10,
+    "growthHabit": "upright",
+    "daysToHarvest": [60, 90],
+    "plantingWindow": {
+      "sowIndoors": [2, 3],
+      "sowOutdoors": [3, 5],
+      "transplant": [4, 5],
+      "harvest": [3, 11]
+    },
+    "greenstalkSuitability": "ideal",
+    "greenstalkNotes": "Compact clumps fit perfectly. Purple flowers are edible and attract pollinators.",
+    "idealTiers": [3, 4],
+    "varieties": [
+      { "name": "Common Chives", "notes": "Onion flavour, purple flowers", "containerFriendly": true },
+      { "name": "Garlic Chives", "notes": "Mild garlic flavour, white flowers", "containerFriendly": true }
+    ],
+    "notes": "Perennial - comes back each year. Excellent companion to deter aphids.",
+    "sources": ["https://www.rhs.org.uk/herbs/chives/grow-your-own"]
+  },
+  {
+    "slug": "mint",
+    "commonName": "Mint",
+    "botanicalName": "Mentha spicata",
+    "category": "herb",
+    "emoji": "\ud83c\udf3f",
+    "sun": "partial-shade",
+    "water": "high",
+    "spacingCm": 30,
+    "depthCm": 15,
+    "growthHabit": "trailing",
+    "daysToHarvest": [60, 90],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": [3, 5],
+      "transplant": [3, 5],
+      "harvest": [4, 10]
+    },
+    "greenstalkSuitability": "good",
+    "greenstalkNotes": "GreenStalk pockets naturally contain mint's invasive runners - actually an advantage here.",
+    "idealTiers": [4, 5],
+    "varieties": [
+      { "name": "Spearmint", "notes": "Classic mint for drinks and cooking", "containerFriendly": true },
+      { "name": "Peppermint", "notes": "Stronger flavour, good for tea", "containerFriendly": true }
+    ],
+    "notes": "Invasive in ground - GreenStalk pockets actually contain it well. Keep separate from other herbs.",
+    "sources": ["https://www.rhs.org.uk/herbs/mint/grow-your-own"]
+  },
+  {
+    "slug": "marigold",
+    "commonName": "French Marigold",
+    "botanicalName": "Tagetes patula",
+    "category": "flower",
+    "emoji": "\ud83c\udf3b",
+    "sun": "full-sun",
+    "water": "moderate",
+    "spacingCm": 20,
+    "depthCm": 10,
+    "growthHabit": "bushy",
+    "daysToHarvest": [50, 60],
+    "plantingWindow": {
+      "sowIndoors": [3, 4],
+      "sowOutdoors": [5, 6],
+      "transplant": [5, 6],
+      "harvest": [6, 10]
+    },
+    "greenstalkSuitability": "ideal",
+    "greenstalkNotes": "Compact habit perfect for pockets. Strong scent deters whitefly and other pests.",
+    "idealTiers": [3, 4, 5],
+    "varieties": [
+      { "name": "Sparky Mix", "notes": "Dwarf, multi-colour", "containerFriendly": true }
+    ],
+    "notes": "Classic companion plant. Strong scent deters whitefly, aphids, and nematodes.",
+    "sources": ["https://www.rhs.org.uk/plants/marigolds"]
+  },
+  {
+    "slug": "radish",
+    "commonName": "Radish",
+    "botanicalName": "Raphanus sativus",
+    "category": "vegetable",
+    "emoji": "\ud83e\uded1",
+    "sun": "full-sun",
+    "water": "moderate",
+    "spacingCm": 5,
+    "depthCm": 10,
+    "growthHabit": "rosette",
+    "daysToHarvest": [25, 35],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": [3, 9],
+      "transplant": null,
+      "harvest": [4, 10]
+    },
+    "greenstalkSuitability": "ideal",
+    "greenstalkNotes": "Fast crop - can fit 6-8 radishes per pocket. Great for filling gaps between slower plants.",
+    "idealTiers": [1, 2, 3, 4, 5],
+    "varieties": [
+      { "name": "Cherry Belle", "notes": "Classic round red, very fast", "containerFriendly": true },
+      { "name": "French Breakfast", "notes": "Elongated, mild flavour", "containerFriendly": true }
+    ],
+    "notes": "Fastest vegetable - harvest in 4 weeks. Sow in gaps between transplants for bonus crops.",
+    "sources": ["https://www.rhs.org.uk/vegetables/radishes/grow-your-own"]
+  },
+  {
+    "slug": "rocket",
+    "commonName": "Rocket (Arugula)",
+    "botanicalName": "Eruca vesicaria",
+    "category": "vegetable",
+    "emoji": "\ud83e\udd6c",
+    "sun": "partial-shade",
+    "water": "moderate",
+    "spacingCm": 15,
+    "depthCm": 8,
+    "growthHabit": "rosette",
+    "daysToHarvest": [21, 40],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": [3, 9],
+      "transplant": null,
+      "harvest": [4, 10]
+    },
+    "greenstalkSuitability": "ideal",
+    "greenstalkNotes": "Shallow roots ideal for pockets. Cut-and-come-again for weeks of harvests.",
+    "idealTiers": [1, 2, 3],
+    "varieties": [
+      { "name": "Wild Rocket", "notes": "Perennial, stronger peppery flavour", "containerFriendly": true }
+    ],
+    "notes": "Best in cooler months - bolts quickly in midsummer heat. Shade from upper tiers can help.",
+    "sources": ["https://www.rhs.org.uk/vegetables/rocket/grow-your-own"]
+  },
+  {
+    "slug": "spring-onion",
+    "commonName": "Spring Onion",
+    "botanicalName": "Allium cepa",
+    "category": "vegetable",
+    "emoji": "\ud83e\uddc5",
+    "sun": "full-sun",
+    "water": "moderate",
+    "spacingCm": 5,
+    "depthCm": 10,
+    "growthHabit": "upright",
+    "daysToHarvest": [60, 80],
+    "plantingWindow": {
+      "sowIndoors": [2, 3],
+      "sowOutdoors": [3, 7],
+      "transplant": null,
+      "harvest": [5, 10]
+    },
+    "greenstalkSuitability": "ideal",
+    "greenstalkNotes": "Slim upright habit means you can pack 8-10 per pocket. Allium scent deters pests.",
+    "idealTiers": [2, 3, 4],
+    "varieties": [
+      { "name": "White Lisbon", "notes": "Classic variety, very reliable", "containerFriendly": true }
+    ],
+    "notes": "Pack densely in pockets. The allium family scent helps deter carrot fly and aphids.",
+    "sources": ["https://www.rhs.org.uk/vegetables/spring-onions/grow-your-own"]
+  },
+  {
+    "slug": "kale",
+    "commonName": "Kale",
+    "botanicalName": "Brassica oleracea var. sabellica",
+    "category": "vegetable",
+    "emoji": "\ud83e\udd6c",
+    "sun": "full-sun",
+    "water": "moderate",
+    "spacingCm": 30,
+    "depthCm": 20,
+    "growthHabit": "rosette",
+    "daysToHarvest": [55, 75],
+    "plantingWindow": {
+      "sowIndoors": [3, 4],
+      "sowOutdoors": [4, 7],
+      "transplant": [5, 7],
+      "harvest": [7, 2]
+    },
+    "greenstalkSuitability": "good",
+    "greenstalkNotes": "Dwarf varieties fit well. Larger types may outgrow pockets - harvest frequently to manage size.",
+    "idealTiers": [2, 3],
+    "varieties": [
+      { "name": "Dwarf Green Curled", "notes": "Compact, perfect for containers", "containerFriendly": true },
+      { "name": "Red Russian", "notes": "Beautiful purple-red leaves, tender", "containerFriendly": true }
+    ],
+    "notes": "Very hardy - improves with frost. Use dwarf varieties in GreenStalks.",
+    "sources": ["https://www.rhs.org.uk/vegetables/kale/grow-your-own"]
+  },
+  {
+    "slug": "pepper-chilli",
+    "commonName": "Chilli Pepper",
+    "botanicalName": "Capsicum annuum",
+    "category": "vegetable",
+    "emoji": "\ud83c\udf36\ufe0f",
+    "sun": "full-sun",
+    "water": "moderate",
+    "spacingCm": 30,
+    "depthCm": 20,
+    "growthHabit": "bushy",
+    "daysToHarvest": [70, 100],
+    "plantingWindow": {
+      "sowIndoors": [1, 3],
+      "sowOutdoors": null,
+      "transplant": [5, 6],
+      "harvest": [7, 10]
+    },
+    "greenstalkSuitability": "good",
+    "greenstalkNotes": "Compact dwarf varieties work well. Needs warmest position possible in Surrey.",
+    "idealTiers": [2, 3],
+    "varieties": [
+      { "name": "Apache", "notes": "Dwarf, bred for containers, medium heat", "containerFriendly": true },
+      { "name": "Basket of Fire", "notes": "Ornamental and edible, trailing habit", "containerFriendly": true }
+    ],
+    "notes": "Start indoors early (January-February) for UK growing season. Needs maximum sun.",
+    "sources": ["https://www.rhs.org.uk/vegetables/chilli-peppers/grow-your-own"]
+  }
+]

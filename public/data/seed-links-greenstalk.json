@@ -1574,5 +1574,175 @@
         ]
       }
     ]
+  },
+  {
+    "slug": "lemon-balm",
+    "commonName": "Lemon Balm",
+    "varieties": [
+      {
+        "name": "Common Lemon Balm",
+        "why": "Clay-tolerant fragrant herb with intense lemon-mint scent when brushed. Makes excellent herbal tea. Practically indestructible.",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/lemon-balm-seeds/3050TM",
+            "priceGBP": 2.49,
+            "recommended": true
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/products/lemon-balm-seeds",
+            "priceGBP": 2.25
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/herb-seeds/lemon-balm",
+            "priceGBP": 1.99
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "corsican-mint",
+    "commonName": "Corsican Mint",
+    "varieties": [
+      {
+        "name": "Corsican Mint",
+        "why": "Thread-thin emerald carpet with powerful peppermint scent when touched. The only walk-on fragrance plant that tolerates clay.",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Crocus",
+            "url": "https://www.crocus.co.uk/plants/_/mentha-requienii/classid.2000025946/",
+            "priceGBP": 6.99,
+            "badge": "Buy as plug plant",
+            "recommended": true
+          },
+          {
+            "seller": "Herb Farm",
+            "url": "https://www.herbfarm.co.uk/product/corsican-mint/",
+            "priceGBP": 4.5
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "dianthus",
+    "commonName": "Garden Pinks",
+    "varieties": [
+      {
+        "name": "Gran's Favourite",
+        "why": "RHS AGM. White with reddish-purple lacing, warm clove fragrance. Compact habit perfect for GreenStalk tiers. Edible flowers.",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Crocus",
+            "url": "https://www.crocus.co.uk/plants/_/dianthus-grans-favourite/classid.2000002987/",
+            "priceGBP": 7.99,
+            "badge": "RHS AGM",
+            "recommended": true
+          },
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/dianthus-plants",
+            "priceGBP": 8.99
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "scented-geranium",
+    "commonName": "Scented Geranium",
+    "varieties": [
+      {
+        "name": "Attar of Roses",
+        "why": "RHS AGM. Deep rose fragrance from foliage — every brush releases extraordinary perfume. Summer display May-October.",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Crocus",
+            "url": "https://www.crocus.co.uk/plants/_/pelargonium-attar-of-roses/classid.2000038262/",
+            "priceGBP": 6.99,
+            "badge": "RHS AGM",
+            "recommended": true
+          },
+          {
+            "seller": "Herb Farm",
+            "url": "https://www.herbfarm.co.uk/product/rose-geranium/",
+            "priceGBP": 4.95
+          }
+        ]
+      },
+      {
+        "name": "Lemon Crispum",
+        "why": "Intense lemon scent, variegated leaves, compact habit. Perfect for summer GreenStalk display.",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Crocus",
+            "url": "https://www.crocus.co.uk/plants/_/pelargonium-crispum-variegatum/classid.2000038238/",
+            "priceGBP": 6.99,
+            "recommended": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "night-scented-stock",
+    "commonName": "Night-Scented Stock",
+    "varieties": [
+      {
+        "name": "Night-Scented Stock",
+        "why": "Dirt-cheap seeds, extraordinary dusk fragrance. Scatter seeds in any tier near seating areas. The best value fragrance plant.",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/stocks-night-scented/0289TM",
+            "priceGBP": 1.79,
+            "recommended": true
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/products/night-scented-stock-seeds",
+            "priceGBP": 1.99
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/flower-seeds/stock-seeds",
+            "priceGBP": 1.99
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "chamomile",
+    "commonName": "Chamomile",
+    "varieties": [
+      {
+        "name": "Double-Flowered",
+        "why": "Produces flowers for chamomile tea with apple-sweet fragrance. Compact enough for top GreenStalk tiers.",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/chamomile-seeds/0871TM",
+            "priceGBP": 2.49,
+            "recommended": true
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/products/chamomile-seeds",
+            "priceGBP": 2.25
+          }
+        ]
+      }
+    ]
   }
 ]

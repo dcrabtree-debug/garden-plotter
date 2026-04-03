@@ -624,7 +624,7 @@
     "commonName": "Chilli Pepper",
     "varieties": [
       {
-        "name": "Jalape\u00f1o",
+        "name": "Jalapeño",
         "why": "Reliable outdoor variety in UK, medium heat, thick-walled, heavy yields",
         "context": "inground",
         "sellers": [
@@ -2412,6 +2412,242 @@
             "seller": "Thompson & Morgan",
             "url": "https://www.thompson-morgan.com/p/turnip-atlantic-kew-collection-seeds/gwk4822TM",
             "priceGBP": 2.99,
+            "recommended": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "lemon-balm",
+    "commonName": "Lemon Balm",
+    "varieties": [
+      {
+        "name": "Common Lemon Balm",
+        "why": "Genuinely clay-tolerant fragrant herb — one of the few that thrives on heavy Surrey soil. Lemon-mint tea, bee magnet, practically indestructible.",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/lemon-balm-seeds/3050TM",
+            "priceGBP": 2.49,
+            "recommended": true
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/products/lemon-balm-seeds",
+            "priceGBP": 2.25
+          }
+        ]
+      },
+      {
+        "name": "All Gold",
+        "why": "Golden-leaved ornamental variety. Slightly less vigorous but same lemon fragrance with better visual impact.",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Crocus",
+            "url": "https://www.crocus.co.uk/plants/_/melissa-officinalis-all-gold/classid.2000010792/",
+            "priceGBP": 7.99,
+            "recommended": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "corsican-mint",
+    "commonName": "Corsican Mint",
+    "varieties": [
+      {
+        "name": "Corsican Mint",
+        "why": "The best walk-on fragrance for Surrey clay. Thread-thin carpet between stepping stones, powerful peppermint scent when stepped on.",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Crocus",
+            "url": "https://www.crocus.co.uk/plants/_/mentha-requienii/classid.2000025946/",
+            "priceGBP": 6.99,
+            "badge": "Buy as plug plant",
+            "recommended": true
+          },
+          {
+            "seller": "Herb Farm",
+            "url": "https://www.herbfarm.co.uk/product/corsican-mint/",
+            "priceGBP": 4.5
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "dianthus",
+    "commonName": "Garden Pinks",
+    "varieties": [
+      {
+        "name": "Gran's Favourite",
+        "why": "RHS AGM. Old-fashioned clove-scented cottage garden flower. White with reddish-purple lacing. Edible flowers.",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Crocus",
+            "url": "https://www.crocus.co.uk/plants/_/dianthus-grans-favourite/classid.2000002987/",
+            "priceGBP": 7.99,
+            "badge": "RHS AGM",
+            "recommended": true
+          },
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/dianthus-plants",
+            "priceGBP": 8.99
+          }
+        ]
+      },
+      {
+        "name": "Mrs Sinkins",
+        "why": "Heritage variety with legendary clove fragrance. White double flowers. Slightly untidy form but the scent is extraordinary.",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Crocus",
+            "url": "https://www.crocus.co.uk/plants/_/dianthus-mrs-sinkins/classid.2000003001/",
+            "priceGBP": 7.99
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "nicotiana",
+    "commonName": "Woodland Tobacco Plant",
+    "varieties": [
+      {
+        "name": "Nicotiana sylvestris",
+        "why": "RHS AGM. Towering 1.5m white trumpets, intensely jasmine-fragrant at dusk. One of the few fragrant annuals that loves clay soil.",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/nicotiana-sylvestris-seeds/0537TM",
+            "priceGBP": 2.49,
+            "badge": "RHS AGM",
+            "recommended": true
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/products/nicotiana-sylvestris-seeds",
+            "priceGBP": 2.49
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "night-scented-stock",
+    "commonName": "Night-Scented Stock",
+    "varieties": [
+      {
+        "name": "Night-Scented Stock",
+        "why": "Scatter seeds along paths and near seating. Unremarkable by day but at dusk releases one of the most intoxicating fragrances of any garden annual.",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/stocks-night-scented/0289TM",
+            "priceGBP": 1.79,
+            "recommended": true
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/products/night-scented-stock-seeds",
+            "priceGBP": 1.99
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/flower-seeds",
+            "priceGBP": 1.49
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "chamomile",
+    "commonName": "Chamomile",
+    "varieties": [
+      {
+        "name": "Double-Flowered",
+        "why": "Apple-sweet scented flowers for chamomile tea. Traditional 'plant doctor' companion. Raised bed only on clay soil.",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/chamomile-seeds/0871TM",
+            "priceGBP": 2.49,
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/herb-seeds/chamomile",
+            "priceGBP": 2.29
+          }
+        ]
+      },
+      {
+        "name": "Treneague",
+        "why": "Non-flowering ground cover with apple-sweet fragrance when walked on. For fragrant paths in raised beds.",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Crocus",
+            "url": "https://www.crocus.co.uk/plants/_/chamaemelum-nobile-treneague/classid.2000001770/",
+            "priceGBP": 5.99,
+            "badge": "Buy as plugs",
+            "recommended": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "lemon-verbena",
+    "commonName": "Lemon Verbena",
+    "varieties": [
+      {
+        "name": "Common Lemon Verbena",
+        "why": "The most intensely citrus-scented plant you can grow. Electric lemon fragrance when leaves are rubbed. Outstanding herbal tea. Grow against warm south wall.",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Crocus",
+            "url": "https://www.crocus.co.uk/plants/_/aloysia-citrodora/classid.2000000324/",
+            "priceGBP": 12.99,
+            "badge": "Buy as plant",
+            "recommended": true
+          },
+          {
+            "seller": "Herb Farm",
+            "url": "https://www.herbfarm.co.uk/product/lemon-verbena/",
+            "priceGBP": 5.95
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "scented-geranium",
+    "commonName": "Scented Geranium",
+    "varieties": [
+      {
+        "name": "Attar of Roses",
+        "why": "RHS AGM. Deep rose fragrance from foliage. Overwinter indoors. The most rewarding scented-leaf plant you can grow.",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Crocus",
+            "url": "https://www.crocus.co.uk/plants/_/pelargonium-attar-of-roses/classid.2000038262/",
+            "priceGBP": 6.99,
+            "badge": "RHS AGM",
             "recommended": true
           }
         ]

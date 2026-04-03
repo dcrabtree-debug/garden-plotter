@@ -97,7 +97,7 @@ export function getSpacingWarnings(
   const plant = plantMap.get(cell.plantSlug);
   if (!plant) return null;
 
-  const spacingCm = plant.inGround?.plantSpacingCm ?? plant.spacingCm;
+  const spacingCm = plant.spacingCm ?? plant.inGround?.plantSpacingCm;
   if (!spacingCm || spacingCm <= 0) return null;
 
   const cellSizeCm = config.cellSizeM * 100;

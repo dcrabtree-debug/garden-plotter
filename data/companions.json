@@ -1,67 +1,667 @@
 [
-  { "plantA": "tomato-tumbling", "plantB": "basil-sweet", "relationship": "friend", "reason": "Basil repels whiteflies and aphids that attack tomatoes, and may improve tomato flavour", "source": "https://www.rhs.org.uk/companion-planting" },
-  { "plantA": "tomato-tumbling", "plantB": "marigold", "relationship": "friend", "reason": "Marigold scent deters whitefly, a major tomato pest", "source": "https://www.rhs.org.uk/companion-planting" },
-  { "plantA": "tomato-tumbling", "plantB": "nasturtium", "relationship": "friend", "reason": "Nasturtiums act as trap crop, drawing aphids away from tomatoes", "source": "https://www.rhs.org.uk/companion-planting" },
-  { "plantA": "tomato-tumbling", "plantB": "chives", "relationship": "friend", "reason": "Allium scent helps deter aphids from tomatoes", "source": "https://www.rhs.org.uk/companion-planting" },
-  { "plantA": "tomato-tumbling", "plantB": "parsley", "relationship": "friend", "reason": "Parsley attracts hoverflies which eat tomato pests", "source": "https://www.rhs.org.uk/companion-planting" },
-  { "plantA": "tomato-tumbling", "plantB": "dwarf-french-bean", "relationship": "friend", "reason": "Beans fix nitrogen in the soil benefiting heavy-feeding tomatoes", "source": "https://www.rhs.org.uk/companion-planting" },
-  { "plantA": "tomato-tumbling", "plantB": "kale", "relationship": "foe", "reason": "Both are heavy feeders competing for nutrients in small pockets", "source": "https://extension.umn.edu/vegetables/companion-planting" },
-  { "plantA": "tomato-tumbling", "plantB": "mint", "relationship": "foe", "reason": "Mint's invasive roots compete aggressively for space in confined pockets", "source": "https://extension.umn.edu/vegetables/companion-planting" },
-  { "plantA": "strawberry-everbearing", "plantB": "lettuce", "relationship": "friend", "reason": "Lettuce acts as living mulch conserving moisture for strawberries", "source": "https://www.rhs.org.uk/companion-planting" },
-  { "plantA": "strawberry-everbearing", "plantB": "chives", "relationship": "friend", "reason": "Chives deter aphids and may reduce grey mould on strawberries", "source": "https://www.rhs.org.uk/companion-planting" },
-  { "plantA": "strawberry-everbearing", "plantB": "thyme", "relationship": "friend", "reason": "Thyme deters slugs and provides ground cover", "source": "https://www.rhs.org.uk/companion-planting" },
-  { "plantA": "strawberry-everbearing", "plantB": "marigold", "relationship": "friend", "reason": "Marigolds deter pests and attract pollinators for better fruit set", "source": "https://www.rhs.org.uk/companion-planting" },
-  { "plantA": "strawberry-everbearing", "plantB": "kale", "relationship": "foe", "reason": "Brassicas compete for nutrients and may inhibit strawberry growth", "source": "https://extension.umn.edu/vegetables/companion-planting" },
-  { "plantA": "basil-sweet", "plantB": "oregano", "relationship": "friend", "reason": "Mediterranean herbs thrive in similar conditions and complement each other", "source": "https://www.rhs.org.uk/companion-planting" },
-  { "plantA": "basil-sweet", "plantB": "pepper-chilli", "relationship": "friend", "reason": "Basil improves pepper growth and repels aphids, thrips, and mosquitoes", "source": "https://extension.umn.edu/vegetables/companion-planting" },
-  { "plantA": "dwarf-french-bean", "plantB": "nasturtium", "relationship": "friend", "reason": "Nasturtiums draw aphids away from beans as a sacrificial trap crop", "source": "https://www.rhs.org.uk/companion-planting" },
-  { "plantA": "dwarf-french-bean", "plantB": "marigold", "relationship": "friend", "reason": "Marigolds deter bean beetles and other pests", "source": "https://www.rhs.org.uk/companion-planting" },
-  { "plantA": "dwarf-french-bean", "plantB": "radish", "relationship": "friend", "reason": "Radishes break up soil and are harvested before beans need the space", "source": "https://extension.umn.edu/vegetables/companion-planting" },
-  { "plantA": "dwarf-french-bean", "plantB": "chives", "relationship": "foe", "reason": "Alliums can inhibit the growth of beans and other legumes", "source": "https://extension.umn.edu/vegetables/companion-planting" },
-  { "plantA": "dwarf-french-bean", "plantB": "spring-onion", "relationship": "foe", "reason": "Alliums inhibit legume growth", "source": "https://extension.umn.edu/vegetables/companion-planting" },
-  { "plantA": "lettuce", "plantB": "radish", "relationship": "friend", "reason": "Fast radishes mark slow lettuce rows and are harvested before lettuce needs space", "source": "https://www.rhs.org.uk/companion-planting" },
-  { "plantA": "lettuce", "plantB": "chives", "relationship": "friend", "reason": "Chives deter aphids which commonly attack lettuce", "source": "https://www.rhs.org.uk/companion-planting" },
-  { "plantA": "lettuce", "plantB": "mint", "relationship": "friend", "reason": "Mint deters slugs which are a major lettuce pest", "source": "https://www.rhs.org.uk/companion-planting" },
-  { "plantA": "perpetual-spinach", "plantB": "strawberry-everbearing", "relationship": "friend", "reason": "Similar growing conditions, spinach provides shade to strawberry roots", "source": "https://www.rhs.org.uk/companion-planting" },
-  { "plantA": "perpetual-spinach", "plantB": "radish", "relationship": "friend", "reason": "Radishes loosen soil for spinach roots", "source": "https://extension.umn.edu/vegetables/companion-planting" },
-  { "plantA": "swiss-chard", "plantB": "dwarf-french-bean", "relationship": "friend", "reason": "Beans fix nitrogen benefiting leafy chard", "source": "https://extension.umn.edu/vegetables/companion-planting" },
-  { "plantA": "swiss-chard", "plantB": "lettuce", "relationship": "friend", "reason": "Similar growing conditions, good companions in partial shade", "source": "https://www.rhs.org.uk/companion-planting" },
-  { "plantA": "thyme", "plantB": "oregano", "relationship": "friend", "reason": "Both Mediterranean herbs with identical growing requirements", "source": "https://www.rhs.org.uk/herbs" },
-  { "plantA": "parsley", "plantB": "chives", "relationship": "friend", "reason": "Both attract beneficial insects and have compatible growing needs", "source": "https://www.rhs.org.uk/companion-planting" },
-  { "plantA": "nasturtium", "plantB": "kale", "relationship": "friend", "reason": "Nasturtiums trap aphids and caterpillars away from brassicas", "source": "https://www.rhs.org.uk/companion-planting" },
-  { "plantA": "rocket", "plantB": "lettuce", "relationship": "friend", "reason": "Similar growing conditions, both benefit from partial shade in summer", "source": "https://www.rhs.org.uk/companion-planting" },
-  { "plantA": "spring-onion", "plantB": "lettuce", "relationship": "friend", "reason": "Allium scent deters aphids from lettuce", "source": "https://www.rhs.org.uk/companion-planting" },
-  { "plantA": "spring-onion", "plantB": "tomato-tumbling", "relationship": "friend", "reason": "Allium scent helps deter tomato pests", "source": "https://www.rhs.org.uk/companion-planting" },
-  { "plantA": "mint", "plantB": "kale", "relationship": "friend", "reason": "Mint deters cabbage moth and flea beetle from brassicas", "source": "https://www.rhs.org.uk/companion-planting" },
-  { "plantA": "pepper-chilli", "plantB": "tomato-tumbling", "relationship": "friend", "reason": "Same family (Solanaceae) with similar needs, good neighbours", "source": "https://extension.umn.edu/vegetables/companion-planting" },
-  { "plantA": "pepper-chilli", "plantB": "nasturtium", "relationship": "friend", "reason": "Nasturtiums deter aphids from peppers", "source": "https://extension.umn.edu/vegetables/companion-planting" },
-  { "plantA": "marigold", "plantB": "dwarf-french-bean", "relationship": "friend", "reason": "Marigold roots release thiophene which deters soil nematodes", "source": "https://www.rhs.org.uk/companion-planting" },
-
-  { "plantA": "tomato-tumbling", "plantB": "fennel", "relationship": "foe", "reason": "Fennel is allelopathically inhibitory to most vegetables including tomatoes", "source": "https://extension.wvu.edu/lawn-gardening-pests/gardening/garden-management/companion-planting" },
-  { "plantA": "tomato-tumbling", "plantB": "potato-early", "relationship": "foe", "reason": "Both solanaceous crops share disease susceptibility (blight); cross-infection risk", "source": "https://extension.wvu.edu/lawn-gardening-pests/gardening/garden-management/companion-planting" },
-  { "plantA": "tomato-tumbling", "plantB": "potato-maincrop", "relationship": "foe", "reason": "Both solanaceous crops share disease susceptibility (blight); cross-infection risk", "source": "https://extension.wvu.edu/lawn-gardening-pests/gardening/garden-management/companion-planting" },
-  { "plantA": "strawberry-everbearing", "plantB": "bush-bean", "relationship": "friend", "reason": "Different root depths reduce competition; beans fix nitrogen benefiting strawberries", "source": "https://extension.wvu.edu/lawn-gardening-pests/gardening/garden-management/companion-planting" },
-  { "plantA": "strawberry-everbearing", "plantB": "dwarf-french-bean", "relationship": "friend", "reason": "Different root depths reduce competition; beans fix nitrogen benefiting strawberries", "source": "https://extension.wvu.edu/lawn-gardening-pests/gardening/garden-management/companion-planting" },
-  { "plantA": "strawberry-everbearing", "plantB": "borage", "relationship": "friend", "reason": "Attracts pollinators; reported to enhance strawberry flavour and yield", "source": "https://extension.usu.edu/utah4h/research/creating-sustainable-school-and-home-gardens-companion-planting" },
-  { "plantA": "strawberry-everbearing", "plantB": "courgette", "relationship": "foe", "reason": "Mutual inhibition between strawberries and squash family", "source": "https://extension.wvu.edu/lawn-gardening-pests/gardening/garden-management/companion-planting" },
-  { "plantA": "strawberry-everbearing", "plantB": "zucchini", "relationship": "foe", "reason": "Mutual inhibition between strawberries and squash family", "source": "https://extension.wvu.edu/lawn-gardening-pests/gardening/garden-management/companion-planting" },
-  { "plantA": "kale", "plantB": "sage", "relationship": "friend", "reason": "Aromatic pest deterrence against diamondback moth and cabbage looper", "source": "https://extension.umn.edu/planting-and-growing-guides/companion-planting-home-gardens" },
-  { "plantA": "kale", "plantB": "dill", "relationship": "friend", "reason": "Aromatic pest deterrence; attracts beneficial predatory insects", "source": "https://extension.umn.edu/planting-and-growing-guides/companion-planting-home-gardens" },
-  { "plantA": "kale", "plantB": "thyme", "relationship": "friend", "reason": "Reduced diamondback moth in greenhouse trials", "source": "https://extension.umn.edu/planting-and-growing-guides/companion-planting-home-gardens" },
-  { "plantA": "pepper-chilli", "plantB": "marigold", "relationship": "friend", "reason": "Marigolds deter aphids and attract pollinators improving pepper yield", "source": "https://www.pubs.ext.vt.edu/SPES/spes-620.html" },
-  { "plantA": "cucumber", "plantB": "bush-bean", "relationship": "friend", "reason": "Spatial compatibility; varied root depths and maturity rates", "source": "https://www.pubs.ext.vt.edu/SPES/spes-620.html" },
-  { "plantA": "cucumber", "plantB": "dwarf-french-bean", "relationship": "friend", "reason": "Spatial compatibility; varied root depths and maturity rates", "source": "https://www.pubs.ext.vt.edu/SPES/spes-620.html" },
-  { "plantA": "cucumber", "plantB": "lettuce", "relationship": "friend", "reason": "Border planting; different rooting zones", "source": "https://www.pubs.ext.vt.edu/SPES/spes-620.html" },
-  { "plantA": "cucumber", "plantB": "potato-early", "relationship": "foe", "reason": "Disease sharing between cucurbits and potatoes", "source": "https://www.pubs.ext.vt.edu/SPES/spes-620.html" },
-  { "plantA": "courgette", "plantB": "nasturtium", "relationship": "friend", "reason": "Confirmed to reduce squash bug populations", "source": "https://extension.umn.edu/planting-and-growing-guides/companion-planting-home-gardens" },
-  { "plantA": "zucchini", "plantB": "nasturtium", "relationship": "friend", "reason": "Confirmed to reduce squash bug populations", "source": "https://extension.umn.edu/planting-and-growing-guides/companion-planting-home-gardens" },
-  { "plantA": "courgette", "plantB": "marigold", "relationship": "friend", "reason": "Increased natural aphid predators in field trials", "source": "https://blogs.ifas.ufl.edu/duvalco/2026/03/02/companion-planting-can-help-reduce-or-eliminate-insecticide-use-in-the-garden/" },
-  { "plantA": "zucchini", "plantB": "marigold", "relationship": "friend", "reason": "Increased natural aphid predators in field trials", "source": "https://blogs.ifas.ufl.edu/duvalco/2026/03/02/companion-planting-can-help-reduce-or-eliminate-insecticide-use-in-the-garden/" },
-  { "plantA": "bush-bean", "plantB": "nasturtium", "relationship": "friend", "reason": "Nasturtiums draw aphids away from beans as a sacrificial trap crop", "source": "https://www.rhs.org.uk/companion-planting" },
-  { "plantA": "bush-bean", "plantB": "marigold", "relationship": "friend", "reason": "Marigolds deter bean beetles and other pests", "source": "https://www.rhs.org.uk/companion-planting" },
-  { "plantA": "bush-bean", "plantB": "radish", "relationship": "friend", "reason": "Radishes break up soil and are harvested before beans need the space", "source": "https://extension.umn.edu/planting-and-growing-guides/companion-planting-home-gardens" },
-  { "plantA": "bush-bean", "plantB": "chives", "relationship": "foe", "reason": "Alliums can inhibit the growth of beans and other legumes", "source": "https://extension.umn.edu/planting-and-growing-guides/companion-planting-home-gardens" },
-  { "plantA": "fennel", "plantB": "lettuce", "relationship": "foe", "reason": "Fennel allelopathy inhibits most garden vegetables", "source": "https://extension.wvu.edu/lawn-gardening-pests/gardening/garden-management/companion-planting" },
-  { "plantA": "fennel", "plantB": "dwarf-french-bean", "relationship": "foe", "reason": "Fennel allelopathy inhibits most garden vegetables", "source": "https://extension.wvu.edu/lawn-gardening-pests/gardening/garden-management/companion-planting" },
-  { "plantA": "lettuce", "plantB": "kale", "relationship": "foe", "reason": "Both compete for nutrients in confined space", "source": "https://extension.umn.edu/planting-and-growing-guides/companion-planting-home-gardens" }
+  {
+    "plantA": "tomato-tumbling",
+    "plantB": "basil-sweet",
+    "relationship": "friend",
+    "reason": "Basil repels whiteflies and aphids that attack tomatoes, and may improve tomato flavour",
+    "source": "https://www.rhs.org.uk/companion-planting"
+  },
+  {
+    "plantA": "tomato-tumbling",
+    "plantB": "marigold",
+    "relationship": "friend",
+    "reason": "Marigold scent deters whitefly, a major tomato pest",
+    "source": "https://www.rhs.org.uk/companion-planting"
+  },
+  {
+    "plantA": "tomato-tumbling",
+    "plantB": "nasturtium",
+    "relationship": "friend",
+    "reason": "Nasturtiums act as trap crop, drawing aphids away from tomatoes",
+    "source": "https://www.rhs.org.uk/companion-planting"
+  },
+  {
+    "plantA": "tomato-tumbling",
+    "plantB": "chives",
+    "relationship": "friend",
+    "reason": "Allium scent helps deter aphids from tomatoes",
+    "source": "https://www.rhs.org.uk/companion-planting"
+  },
+  {
+    "plantA": "tomato-tumbling",
+    "plantB": "parsley",
+    "relationship": "friend",
+    "reason": "Parsley attracts hoverflies which eat tomato pests",
+    "source": "https://www.rhs.org.uk/companion-planting"
+  },
+  {
+    "plantA": "tomato-tumbling",
+    "plantB": "dwarf-french-bean",
+    "relationship": "friend",
+    "reason": "Beans fix nitrogen in the soil benefiting heavy-feeding tomatoes",
+    "source": "https://www.rhs.org.uk/companion-planting"
+  },
+  {
+    "plantA": "tomato-tumbling",
+    "plantB": "kale",
+    "relationship": "foe",
+    "reason": "Both are heavy feeders competing for nutrients in small pockets",
+    "source": "https://extension.umn.edu/vegetables/companion-planting"
+  },
+  {
+    "plantA": "tomato-tumbling",
+    "plantB": "mint",
+    "relationship": "foe",
+    "reason": "Mint's invasive roots compete aggressively for space in confined pockets",
+    "source": "https://extension.umn.edu/vegetables/companion-planting"
+  },
+  {
+    "plantA": "strawberry-everbearing",
+    "plantB": "lettuce",
+    "relationship": "friend",
+    "reason": "Lettuce acts as living mulch conserving moisture for strawberries",
+    "source": "https://www.rhs.org.uk/companion-planting"
+  },
+  {
+    "plantA": "strawberry-everbearing",
+    "plantB": "chives",
+    "relationship": "friend",
+    "reason": "Chives deter aphids and may reduce grey mould on strawberries",
+    "source": "https://www.rhs.org.uk/companion-planting"
+  },
+  {
+    "plantA": "strawberry-everbearing",
+    "plantB": "thyme",
+    "relationship": "friend",
+    "reason": "Thyme deters slugs and provides ground cover",
+    "source": "https://www.rhs.org.uk/companion-planting"
+  },
+  {
+    "plantA": "strawberry-everbearing",
+    "plantB": "marigold",
+    "relationship": "friend",
+    "reason": "Marigolds deter pests and attract pollinators for better fruit set",
+    "source": "https://www.rhs.org.uk/companion-planting"
+  },
+  {
+    "plantA": "strawberry-everbearing",
+    "plantB": "kale",
+    "relationship": "foe",
+    "reason": "Brassicas compete for nutrients and may inhibit strawberry growth",
+    "source": "https://extension.umn.edu/vegetables/companion-planting"
+  },
+  {
+    "plantA": "basil-sweet",
+    "plantB": "oregano",
+    "relationship": "friend",
+    "reason": "Mediterranean herbs thrive in similar conditions and complement each other",
+    "source": "https://www.rhs.org.uk/companion-planting"
+  },
+  {
+    "plantA": "basil-sweet",
+    "plantB": "pepper-chilli",
+    "relationship": "friend",
+    "reason": "Basil improves pepper growth and repels aphids, thrips, and mosquitoes",
+    "source": "https://extension.umn.edu/vegetables/companion-planting"
+  },
+  {
+    "plantA": "dwarf-french-bean",
+    "plantB": "nasturtium",
+    "relationship": "friend",
+    "reason": "Nasturtiums draw aphids away from beans as a sacrificial trap crop",
+    "source": "https://www.rhs.org.uk/companion-planting"
+  },
+  {
+    "plantA": "dwarf-french-bean",
+    "plantB": "marigold",
+    "relationship": "friend",
+    "reason": "Marigolds deter bean beetles and other pests",
+    "source": "https://www.rhs.org.uk/companion-planting"
+  },
+  {
+    "plantA": "dwarf-french-bean",
+    "plantB": "radish",
+    "relationship": "friend",
+    "reason": "Radishes break up soil and are harvested before beans need the space",
+    "source": "https://extension.umn.edu/vegetables/companion-planting"
+  },
+  {
+    "plantA": "dwarf-french-bean",
+    "plantB": "chives",
+    "relationship": "foe",
+    "reason": "Alliums can inhibit the growth of beans and other legumes",
+    "source": "https://extension.umn.edu/vegetables/companion-planting"
+  },
+  {
+    "plantA": "dwarf-french-bean",
+    "plantB": "spring-onion",
+    "relationship": "foe",
+    "reason": "Alliums inhibit legume growth",
+    "source": "https://extension.umn.edu/vegetables/companion-planting"
+  },
+  {
+    "plantA": "lettuce",
+    "plantB": "radish",
+    "relationship": "friend",
+    "reason": "Fast radishes mark slow lettuce rows and are harvested before lettuce needs space",
+    "source": "https://www.rhs.org.uk/companion-planting"
+  },
+  {
+    "plantA": "lettuce",
+    "plantB": "chives",
+    "relationship": "friend",
+    "reason": "Chives deter aphids which commonly attack lettuce",
+    "source": "https://www.rhs.org.uk/companion-planting"
+  },
+  {
+    "plantA": "lettuce",
+    "plantB": "mint",
+    "relationship": "friend",
+    "reason": "Mint deters slugs which are a major lettuce pest",
+    "source": "https://www.rhs.org.uk/companion-planting"
+  },
+  {
+    "plantA": "perpetual-spinach",
+    "plantB": "strawberry-everbearing",
+    "relationship": "friend",
+    "reason": "Similar growing conditions, spinach provides shade to strawberry roots",
+    "source": "https://www.rhs.org.uk/companion-planting"
+  },
+  {
+    "plantA": "perpetual-spinach",
+    "plantB": "radish",
+    "relationship": "friend",
+    "reason": "Radishes loosen soil for spinach roots",
+    "source": "https://extension.umn.edu/vegetables/companion-planting"
+  },
+  {
+    "plantA": "swiss-chard",
+    "plantB": "dwarf-french-bean",
+    "relationship": "friend",
+    "reason": "Beans fix nitrogen benefiting leafy chard",
+    "source": "https://extension.umn.edu/vegetables/companion-planting"
+  },
+  {
+    "plantA": "swiss-chard",
+    "plantB": "lettuce",
+    "relationship": "friend",
+    "reason": "Similar growing conditions, good companions in partial shade",
+    "source": "https://www.rhs.org.uk/companion-planting"
+  },
+  {
+    "plantA": "thyme",
+    "plantB": "oregano",
+    "relationship": "friend",
+    "reason": "Both Mediterranean herbs with identical growing requirements",
+    "source": "https://www.rhs.org.uk/herbs"
+  },
+  {
+    "plantA": "parsley",
+    "plantB": "chives",
+    "relationship": "friend",
+    "reason": "Both attract beneficial insects and have compatible growing needs",
+    "source": "https://www.rhs.org.uk/companion-planting"
+  },
+  {
+    "plantA": "nasturtium",
+    "plantB": "kale",
+    "relationship": "friend",
+    "reason": "Nasturtiums trap aphids and caterpillars away from brassicas",
+    "source": "https://www.rhs.org.uk/companion-planting"
+  },
+  {
+    "plantA": "rocket",
+    "plantB": "lettuce",
+    "relationship": "friend",
+    "reason": "Similar growing conditions, both benefit from partial shade in summer",
+    "source": "https://www.rhs.org.uk/companion-planting"
+  },
+  {
+    "plantA": "spring-onion",
+    "plantB": "lettuce",
+    "relationship": "friend",
+    "reason": "Allium scent deters aphids from lettuce",
+    "source": "https://www.rhs.org.uk/companion-planting"
+  },
+  {
+    "plantA": "spring-onion",
+    "plantB": "tomato-tumbling",
+    "relationship": "friend",
+    "reason": "Allium scent helps deter tomato pests",
+    "source": "https://www.rhs.org.uk/companion-planting"
+  },
+  {
+    "plantA": "mint",
+    "plantB": "kale",
+    "relationship": "friend",
+    "reason": "Mint deters cabbage moth and flea beetle from brassicas",
+    "source": "https://www.rhs.org.uk/companion-planting"
+  },
+  {
+    "plantA": "pepper-chilli",
+    "plantB": "tomato-tumbling",
+    "relationship": "friend",
+    "reason": "Same family (Solanaceae) with similar needs, good neighbours",
+    "source": "https://extension.umn.edu/vegetables/companion-planting"
+  },
+  {
+    "plantA": "pepper-chilli",
+    "plantB": "nasturtium",
+    "relationship": "friend",
+    "reason": "Nasturtiums deter aphids from peppers",
+    "source": "https://extension.umn.edu/vegetables/companion-planting"
+  },
+  {
+    "plantA": "marigold",
+    "plantB": "dwarf-french-bean",
+    "relationship": "friend",
+    "reason": "Marigold roots release thiophene which deters soil nematodes",
+    "source": "https://www.rhs.org.uk/companion-planting"
+  },
+  {
+    "plantA": "tomato-tumbling",
+    "plantB": "fennel",
+    "relationship": "foe",
+    "reason": "Fennel is allelopathically inhibitory to most vegetables including tomatoes",
+    "source": "https://extension.wvu.edu/lawn-gardening-pests/gardening/garden-management/companion-planting"
+  },
+  {
+    "plantA": "tomato-tumbling",
+    "plantB": "potato-early",
+    "relationship": "foe",
+    "reason": "Both solanaceous crops share disease susceptibility (blight); cross-infection risk",
+    "source": "https://extension.wvu.edu/lawn-gardening-pests/gardening/garden-management/companion-planting"
+  },
+  {
+    "plantA": "tomato-tumbling",
+    "plantB": "potato-maincrop",
+    "relationship": "foe",
+    "reason": "Both solanaceous crops share disease susceptibility (blight); cross-infection risk",
+    "source": "https://extension.wvu.edu/lawn-gardening-pests/gardening/garden-management/companion-planting"
+  },
+  {
+    "plantA": "strawberry-everbearing",
+    "plantB": "bush-bean",
+    "relationship": "friend",
+    "reason": "Different root depths reduce competition; beans fix nitrogen benefiting strawberries",
+    "source": "https://extension.wvu.edu/lawn-gardening-pests/gardening/garden-management/companion-planting"
+  },
+  {
+    "plantA": "strawberry-everbearing",
+    "plantB": "dwarf-french-bean",
+    "relationship": "friend",
+    "reason": "Different root depths reduce competition; beans fix nitrogen benefiting strawberries",
+    "source": "https://extension.wvu.edu/lawn-gardening-pests/gardening/garden-management/companion-planting"
+  },
+  {
+    "plantA": "strawberry-everbearing",
+    "plantB": "borage",
+    "relationship": "friend",
+    "reason": "Attracts pollinators; reported to enhance strawberry flavour and yield",
+    "source": "https://extension.usu.edu/utah4h/research/creating-sustainable-school-and-home-gardens-companion-planting"
+  },
+  {
+    "plantA": "strawberry-everbearing",
+    "plantB": "courgette",
+    "relationship": "foe",
+    "reason": "Mutual inhibition between strawberries and squash family",
+    "source": "https://extension.wvu.edu/lawn-gardening-pests/gardening/garden-management/companion-planting"
+  },
+  {
+    "plantA": "strawberry-everbearing",
+    "plantB": "zucchini",
+    "relationship": "foe",
+    "reason": "Mutual inhibition between strawberries and squash family",
+    "source": "https://extension.wvu.edu/lawn-gardening-pests/gardening/garden-management/companion-planting"
+  },
+  {
+    "plantA": "kale",
+    "plantB": "sage",
+    "relationship": "friend",
+    "reason": "Aromatic pest deterrence against diamondback moth and cabbage looper",
+    "source": "https://extension.umn.edu/planting-and-growing-guides/companion-planting-home-gardens"
+  },
+  {
+    "plantA": "kale",
+    "plantB": "dill",
+    "relationship": "friend",
+    "reason": "Aromatic pest deterrence; attracts beneficial predatory insects",
+    "source": "https://extension.umn.edu/planting-and-growing-guides/companion-planting-home-gardens"
+  },
+  {
+    "plantA": "kale",
+    "plantB": "thyme",
+    "relationship": "friend",
+    "reason": "Reduced diamondback moth in greenhouse trials",
+    "source": "https://extension.umn.edu/planting-and-growing-guides/companion-planting-home-gardens"
+  },
+  {
+    "plantA": "pepper-chilli",
+    "plantB": "marigold",
+    "relationship": "friend",
+    "reason": "Marigolds deter aphids and attract pollinators improving pepper yield",
+    "source": "https://www.pubs.ext.vt.edu/SPES/spes-620.html"
+  },
+  {
+    "plantA": "cucumber",
+    "plantB": "bush-bean",
+    "relationship": "friend",
+    "reason": "Spatial compatibility; varied root depths and maturity rates",
+    "source": "https://www.pubs.ext.vt.edu/SPES/spes-620.html"
+  },
+  {
+    "plantA": "cucumber",
+    "plantB": "dwarf-french-bean",
+    "relationship": "friend",
+    "reason": "Spatial compatibility; varied root depths and maturity rates",
+    "source": "https://www.pubs.ext.vt.edu/SPES/spes-620.html"
+  },
+  {
+    "plantA": "cucumber",
+    "plantB": "lettuce",
+    "relationship": "friend",
+    "reason": "Border planting; different rooting zones",
+    "source": "https://www.pubs.ext.vt.edu/SPES/spes-620.html"
+  },
+  {
+    "plantA": "cucumber",
+    "plantB": "potato-early",
+    "relationship": "foe",
+    "reason": "Disease sharing between cucurbits and potatoes",
+    "source": "https://www.pubs.ext.vt.edu/SPES/spes-620.html"
+  },
+  {
+    "plantA": "courgette",
+    "plantB": "nasturtium",
+    "relationship": "friend",
+    "reason": "Confirmed to reduce squash bug populations",
+    "source": "https://extension.umn.edu/planting-and-growing-guides/companion-planting-home-gardens"
+  },
+  {
+    "plantA": "zucchini",
+    "plantB": "nasturtium",
+    "relationship": "friend",
+    "reason": "Confirmed to reduce squash bug populations",
+    "source": "https://extension.umn.edu/planting-and-growing-guides/companion-planting-home-gardens"
+  },
+  {
+    "plantA": "courgette",
+    "plantB": "marigold",
+    "relationship": "friend",
+    "reason": "Increased natural aphid predators in field trials",
+    "source": "https://blogs.ifas.ufl.edu/duvalco/2026/03/02/companion-planting-can-help-reduce-or-eliminate-insecticide-use-in-the-garden/"
+  },
+  {
+    "plantA": "zucchini",
+    "plantB": "marigold",
+    "relationship": "friend",
+    "reason": "Increased natural aphid predators in field trials",
+    "source": "https://blogs.ifas.ufl.edu/duvalco/2026/03/02/companion-planting-can-help-reduce-or-eliminate-insecticide-use-in-the-garden/"
+  },
+  {
+    "plantA": "bush-bean",
+    "plantB": "nasturtium",
+    "relationship": "friend",
+    "reason": "Nasturtiums draw aphids away from beans as a sacrificial trap crop",
+    "source": "https://www.rhs.org.uk/companion-planting"
+  },
+  {
+    "plantA": "bush-bean",
+    "plantB": "marigold",
+    "relationship": "friend",
+    "reason": "Marigolds deter bean beetles and other pests",
+    "source": "https://www.rhs.org.uk/companion-planting"
+  },
+  {
+    "plantA": "bush-bean",
+    "plantB": "radish",
+    "relationship": "friend",
+    "reason": "Radishes break up soil and are harvested before beans need the space",
+    "source": "https://extension.umn.edu/planting-and-growing-guides/companion-planting-home-gardens"
+  },
+  {
+    "plantA": "bush-bean",
+    "plantB": "chives",
+    "relationship": "foe",
+    "reason": "Alliums can inhibit the growth of beans and other legumes",
+    "source": "https://extension.umn.edu/planting-and-growing-guides/companion-planting-home-gardens"
+  },
+  {
+    "plantA": "fennel",
+    "plantB": "lettuce",
+    "relationship": "foe",
+    "reason": "Fennel allelopathy inhibits most garden vegetables",
+    "source": "https://extension.wvu.edu/lawn-gardening-pests/gardening/garden-management/companion-planting"
+  },
+  {
+    "plantA": "fennel",
+    "plantB": "dwarf-french-bean",
+    "relationship": "foe",
+    "reason": "Fennel allelopathy inhibits most garden vegetables",
+    "source": "https://extension.wvu.edu/lawn-gardening-pests/gardening/garden-management/companion-planting"
+  },
+  {
+    "plantA": "lettuce",
+    "plantB": "kale",
+    "relationship": "foe",
+    "reason": "Both compete for nutrients in confined space",
+    "source": "https://extension.umn.edu/planting-and-growing-guides/companion-planting-home-gardens"
+  },
+  {
+    "plantA": "lemon-balm",
+    "plantB": "tomato-tumbling",
+    "relationship": "friend",
+    "reason": "Attracts pollinators for better fruit set; lemon scent may confuse pest insects",
+    "source": "https://www.rhs.org.uk/companion-planting"
+  },
+  {
+    "plantA": "lemon-balm",
+    "plantB": "strawberry-everbearing",
+    "relationship": "friend",
+    "reason": "Attracts bees for pollination; complementary growing conditions",
+    "source": "https://www.rhs.org.uk/companion-planting"
+  },
+  {
+    "plantA": "lemon-balm",
+    "plantB": "basil-sweet",
+    "relationship": "friend",
+    "reason": "Both attract beneficial insects; complementary Mediterranean herbs",
+    "source": "https://www.rhs.org.uk/herbs"
+  },
+  {
+    "plantA": "lemon-balm",
+    "plantB": "pepper-chilli",
+    "relationship": "friend",
+    "reason": "Attracts pollinators for better pepper fruit set",
+    "source": "https://www.rhs.org.uk/companion-planting"
+  },
+  {
+    "plantA": "corsican-mint",
+    "plantB": "strawberry-everbearing",
+    "relationship": "friend",
+    "reason": "Ground cover conserves moisture; mint scent may deter flea beetles",
+    "source": "https://www.rhs.org.uk/companion-planting"
+  },
+  {
+    "plantA": "corsican-mint",
+    "plantB": "lettuce",
+    "relationship": "friend",
+    "reason": "Ground cover conserves moisture; mint scent deters slugs",
+    "source": "https://www.rhs.org.uk/companion-planting"
+  },
+  {
+    "plantA": "corsican-mint",
+    "plantB": "kale",
+    "relationship": "friend",
+    "reason": "Mint scent deters flea beetle and cabbage moth from brassicas",
+    "source": "https://www.rhs.org.uk/companion-planting"
+  },
+  {
+    "plantA": "dianthus",
+    "plantB": "lavender",
+    "relationship": "friend",
+    "reason": "Similar growing requirements; both attract pollinators and prefer well-drained soil",
+    "source": "https://www.rhs.org.uk/plants/dianthus"
+  },
+  {
+    "plantA": "dianthus",
+    "plantB": "thyme",
+    "relationship": "friend",
+    "reason": "Compatible low-growing Mediterranean companions; both attract pollinators",
+    "source": "https://www.rhs.org.uk/companion-planting"
+  },
+  {
+    "plantA": "dianthus",
+    "plantB": "strawberry-everbearing",
+    "relationship": "friend",
+    "reason": "Attracts pollinators for better fruit set; edging plant",
+    "source": "https://www.rhs.org.uk/companion-planting"
+  },
+  {
+    "plantA": "scented-geranium",
+    "plantB": "tomato-tumbling",
+    "relationship": "friend",
+    "reason": "Scent repels whitefly and other flying pests from tomatoes",
+    "source": "https://www.rhs.org.uk/companion-planting"
+  },
+  {
+    "plantA": "scented-geranium",
+    "plantB": "pepper-chilli",
+    "relationship": "friend",
+    "reason": "Aromatic foliage deters aphids and whitefly from peppers",
+    "source": "https://www.rhs.org.uk/companion-planting"
+  },
+  {
+    "plantA": "scented-geranium",
+    "plantB": "strawberry-everbearing",
+    "relationship": "friend",
+    "reason": "Scent may repel pests; attracts pollinators",
+    "source": "https://www.rhs.org.uk/companion-planting"
+  },
+  {
+    "plantA": "night-scented-stock",
+    "plantB": "tomato-tumbling",
+    "relationship": "friend",
+    "reason": "Attracts pollinating moths and beneficial insects at dusk",
+    "source": "https://www.rhs.org.uk/companion-planting"
+  },
+  {
+    "plantA": "night-scented-stock",
+    "plantB": "lettuce",
+    "relationship": "friend",
+    "reason": "Quick-growing companion; attracts pollinators",
+    "source": "https://www.rhs.org.uk/companion-planting"
+  },
+  {
+    "plantA": "night-scented-stock",
+    "plantB": "kale",
+    "relationship": "foe",
+    "reason": "Same family (Brassicaceae) — shared clubroot risk and pest attraction",
+    "source": "https://www.rhs.org.uk/companion-planting"
+  },
+  {
+    "plantA": "nicotiana",
+    "plantB": "tomato-tumbling",
+    "relationship": "foe",
+    "reason": "Both Solanaceae — shared tobacco mosaic virus and blight risk",
+    "source": "https://extension.umn.edu/vegetables/companion-planting"
+  },
+  {
+    "plantA": "nicotiana",
+    "plantB": "pepper-chilli",
+    "relationship": "foe",
+    "reason": "Both Solanaceae — shared disease susceptibility",
+    "source": "https://extension.umn.edu/vegetables/companion-planting"
+  },
+  {
+    "plantA": "nicotiana",
+    "plantB": "borage",
+    "relationship": "friend",
+    "reason": "Both attract beneficial insects; nicotiana draws pollinating moths at dusk",
+    "source": "https://www.rhs.org.uk/companion-planting"
+  },
+  {
+    "plantA": "nicotiana",
+    "plantB": "nasturtium",
+    "relationship": "friend",
+    "reason": "Nasturtiums trap aphids away from nicotiana; both attract pollinators",
+    "source": "https://www.rhs.org.uk/companion-planting"
+  },
+  {
+    "plantA": "chamomile",
+    "plantB": "kale",
+    "relationship": "friend",
+    "reason": "Traditional 'plant doctor' — thought to improve vigour of nearby brassicas",
+    "source": "https://www.rhs.org.uk/companion-planting"
+  },
+  {
+    "plantA": "chamomile",
+    "plantB": "cucumber",
+    "relationship": "friend",
+    "reason": "Attracts hoverflies and beneficial insects that control cucumber pests",
+    "source": "https://www.rhs.org.uk/companion-planting"
+  },
+  {
+    "plantA": "chamomile",
+    "plantB": "onion-sets",
+    "relationship": "friend",
+    "reason": "Traditional companion — chamomile said to improve onion flavour",
+    "source": "https://www.rhs.org.uk/companion-planting"
+  },
+  {
+    "plantA": "chamomile",
+    "plantB": "basil-sweet",
+    "relationship": "friend",
+    "reason": "Both attract pollinators; chamomile provides ground cover beneath taller basil",
+    "source": "https://www.rhs.org.uk/companion-planting"
+  },
+  {
+    "plantA": "lemon-verbena",
+    "plantB": "tomato-tumbling",
+    "relationship": "friend",
+    "reason": "Lemon scent may confuse pest insects; attracts pollinators",
+    "source": "https://www.rhs.org.uk/companion-planting"
+  },
+  {
+    "plantA": "lemon-verbena",
+    "plantB": "lemon-balm",
+    "relationship": "friend",
+    "reason": "Complementary citrus-scented herbs; similar requirements",
+    "source": "https://www.rhs.org.uk/herbs"
+  },
+  {
+    "plantA": "lavender",
+    "plantB": "strawberry-everbearing",
+    "relationship": "friend",
+    "reason": "Repels aphids from strawberries; attracts bees for crop pollination",
+    "source": "https://www.rhs.org.uk/companion-planting"
+  },
+  {
+    "plantA": "lavender",
+    "plantB": "rosemary",
+    "relationship": "friend",
+    "reason": "Same Mediterranean growing requirements; both attract pollinators",
+    "source": "https://www.rhs.org.uk/companion-planting"
+  },
+  {
+    "plantA": "rosemary",
+    "plantB": "carrot",
+    "relationship": "friend",
+    "reason": "Rosemary scent repels carrot fly — one of the strongest evidence-based companions",
+    "source": "https://www.rhs.org.uk/companion-planting"
+  },
+  {
+    "plantA": "rosemary",
+    "plantB": "dwarf-french-bean",
+    "relationship": "friend",
+    "reason": "Rosemary scent deters bean beetle",
+    "source": "https://www.rhs.org.uk/companion-planting"
+  },
+  {
+    "plantA": "rosemary",
+    "plantB": "kale",
+    "relationship": "friend",
+    "reason": "Aromatic herb deters cabbage moth from brassicas",
+    "source": "https://www.rhs.org.uk/companion-planting"
+  }
 ]

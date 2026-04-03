@@ -39,8 +39,8 @@ export function PlantPalette({ plants, onSelectPlant, activePlantSlug }: PlantPa
 
   return (
     <div className="flex flex-col h-full">
-      <div className="p-3 border-b border-stone-200">
-        <h2 className="text-sm font-semibold text-stone-700 mb-2">
+      <div className="p-3 border-b border-stone-200 dark:border-stone-700">
+        <h2 className="text-sm font-semibold text-stone-700 dark:text-stone-200 mb-2">
           Plant Palette
         </h2>
         <input
@@ -48,7 +48,7 @@ export function PlantPalette({ plants, onSelectPlant, activePlantSlug }: PlantPa
           placeholder="Search plants..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full px-2.5 py-1.5 text-sm border border-stone-200 rounded-lg bg-stone-50 focus:outline-none focus:border-stone-400 focus:bg-white transition-colors"
+          className="w-full px-2.5 py-1.5 text-sm border border-stone-200 dark:border-stone-600 rounded-lg bg-stone-50 dark:bg-stone-700 dark:text-stone-100 focus:outline-none focus:border-stone-400 dark:focus:border-stone-500 focus:bg-white dark:focus:bg-stone-600 transition-colors"
         />
         <div className="flex flex-wrap gap-1 mt-2">
           {categories.map((cat) => (
@@ -57,8 +57,8 @@ export function PlantPalette({ plants, onSelectPlant, activePlantSlug }: PlantPa
               onClick={() => setCategory(cat.value)}
               className={`text-[10px] px-2 py-0.5 rounded-full transition-colors ${
                 category === cat.value
-                  ? 'bg-stone-800 text-white'
-                  : 'bg-stone-100 text-stone-500 hover:bg-stone-200'
+                  ? 'bg-stone-800 text-white dark:bg-stone-200 dark:text-stone-900'
+                  : 'bg-stone-100 dark:bg-stone-700 text-stone-500 dark:text-stone-400 hover:bg-stone-200 dark:hover:bg-stone-600'
               }`}
             >
               {cat.label}
@@ -81,7 +81,7 @@ export function PlantPalette({ plants, onSelectPlant, activePlantSlug }: PlantPa
           </div>
         )}
       </div>
-      <div className="p-2 border-t border-stone-200 text-[10px] text-stone-400 text-center">
+      <div className="p-2 border-t border-stone-200 dark:border-stone-700 text-[10px] text-stone-400 text-center">
         Click a plant to select, then click a pocket to place
       </div>
     </div>

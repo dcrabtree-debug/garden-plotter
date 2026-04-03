@@ -3,7 +3,8 @@ import { useState, useEffect } from 'react';
 interface RawSeller {
   seller: string;
   url: string;
-  priceGBP: number;
+  priceGBP?: number;
+  priceUSD?: number;
   note?: string;
 }
 
@@ -34,31 +35,44 @@ const SELLER_LOGOS: Record<string, string> = {
   "Mr Fothergill's": '\ud83c\udf3b',
   'Kings Seeds': '\ud83c\udf3f',
   'RHS Shop': '\ud83c\udfc5',
+  'Burpee': '\ud83c\udf31',
+  "Johnny's Selected Seeds": '\ud83c\udf3e',
+  'Baker Creek Heirloom': '\ud83c\udf3b',
+  'Park Seed': '\ud83c\udf3f',
+  'Territorial Seed Company': '\ud83c\udf3f',
 };
 
-function normalize(raw: RawSeedProduct[]): SeedProduct[] {
+function normalize(raw: RawSeedProduct[], region: 'uk' | 'us'): SeedProduct[] {
   return raw.map((r) => ({
     plantSlug: r.slug,
     varietyName: r.variety,
-    links: r.sellers.map((s) => ({
-      seller: s.seller,
-      url: s.url,
-      price: `\u00a3${s.priceGBP.toFixed(2)}`,
-      logo: SELLER_LOGOS[s.seller] ?? '\ud83c\udf31',
-    })),
+    links: r.sellers.map((s) => {
+      const price = region === 'us'
+        ? `$${(s.priceUSD ?? 0).toFixed(2)}`
+        : `\u00a3${(s.priceGBP ?? 0).toFixed(2)}`;
+      return {
+        seller: s.seller,
+        url: s.url,
+        price,
+        logo: SELLER_LOGOS[s.seller] ?? '\ud83c\udf31',
+      };
+    }),
   }));
 }
 
-let cachedData: SeedProduct[] | null = null;
+const cache = new Map<string, SeedProduct[]>();
 
-export function useSeedLinks(): SeedProduct[] {
-  const [data, setData] = useState<SeedProduct[]>(cachedData ?? []);
+export function useSeedLinks(region: 'uk' | 'us' = 'uk'): SeedProduct[] {
+  const [data, setData] = useState<SeedProduct[]>(cache.get(region) ?? []);
 
   useEffect(() => {
-    if (cachedData) return;
+    if (cache.has(region)) {
+      setData(cache.get(region)!);
+      return;
+    }
 
-    // Try multiple paths (dev vs production with base path)
-    const paths = ['/data/seed-links.json', '/garden-plotter/data/seed-links.json'];
+    const file = region === 'us' ? 'seed-links-us.json' : 'seed-links.json';
+    const paths = [`/data/${file}`, `/garden-plotter/data/${file}`];
 
     async function tryFetch() {
       for (const path of paths) {
@@ -66,19 +80,19 @@ export function useSeedLinks(): SeedProduct[] {
           const r = await fetch(path);
           if (r.ok) {
             const raw: RawSeedProduct[] = await r.json();
-            const normalized = normalize(raw);
-            cachedData = normalized;
+            const normalized = normalize(raw, region);
+            cache.set(region, normalized);
             setData(normalized);
             return;
           }
         } catch {}
       }
-      cachedData = [];
+      cache.set(region, []);
       setData([]);
     }
 
     tryFetch();
-  }, []);
+  }, [region]);
 
   return data;
 }

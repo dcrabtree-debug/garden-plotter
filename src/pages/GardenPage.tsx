@@ -50,9 +50,9 @@ const MONTHS = Array.from({ length: 12 }, (_, i) => i + 1);
 
 function SoilCard() {
   return (
-    <div className="bg-amber-50 rounded-xl border border-amber-200 p-4">
-      <h3 className="text-sm font-semibold text-amber-900 mb-2">Soil Profile</h3>
-      <div className="space-y-1.5 text-xs text-amber-800">
+    <div className="bg-amber-50 dark:bg-amber-900/20 rounded-xl border border-amber-200 dark:border-amber-800 p-4">
+      <h3 className="text-sm font-semibold text-amber-900 dark:text-amber-300 mb-2">Soil Profile</h3>
+      <div className="space-y-1.5 text-xs text-amber-800 dark:text-amber-400">
         <div><span className="font-medium">Type:</span> Thames terrace gravel & alluvium over London Clay</div>
         <div><span className="font-medium">pH:</span> 6.5 - 7.2 (slightly acidic to neutral)</div>
         <div><span className="font-medium">Drainage:</span> Good upper layer, waterlogging risk on clay subsoil</div>
@@ -69,11 +69,11 @@ function SolarPanel({ month }: { month: number }) {
   const localSet = toLocalHour(info.sunset, month);
 
   return (
-    <div className="bg-sky-50 rounded-xl border border-sky-200 p-4">
-      <h3 className="text-sm font-semibold text-sky-900 mb-2">
+    <div className="bg-sky-50 dark:bg-sky-900/20 rounded-xl border border-sky-200 dark:border-sky-800 p-4">
+      <h3 className="text-sm font-semibold text-sky-900 dark:text-sky-300 mb-2">
         Solar Data — {getMonthName(month)}
       </h3>
-      <div className="grid grid-cols-2 gap-2 text-xs text-sky-800">
+      <div className="grid grid-cols-2 gap-2 text-xs text-sky-800 dark:text-sky-400">
         <div><span className="font-medium">Sunrise:</span> {formatTime(localRise)}</div>
         <div><span className="font-medium">Sunset:</span> {formatTime(localSet)}</div>
         <div><span className="font-medium">Daylight:</span> {info.daylight.toFixed(1)}h</div>
@@ -85,24 +85,24 @@ function SolarPanel({ month }: { month: number }) {
 
 function ZoneGuide() {
   return (
-    <div className="bg-stone-50 rounded-xl border border-stone-200 p-4">
-      <h3 className="text-sm font-semibold text-stone-700 mb-2">Planting Zones</h3>
+    <div className="bg-stone-50 dark:bg-stone-800 rounded-xl border border-stone-200 dark:border-stone-700 p-4">
+      <h3 className="text-sm font-semibold text-stone-700 dark:text-stone-200 mb-2">Planting Zones</h3>
       <div className="space-y-1.5 text-xs">
         <div className="flex items-center gap-2">
           <span className="w-3 h-3 rounded" style={{ background: SUN_ZONE_COLORS['full-sun'] }} />
-          <span className="text-stone-700"><span className="font-medium">Full sun (6h+):</span> Tomatoes, peppers, courgettes, beans, fruit</span>
+          <span className="text-stone-700 dark:text-stone-300"><span className="font-medium">Full sun (6h+):</span> Tomatoes, peppers, courgettes, beans, fruit</span>
         </div>
         <div className="flex items-center gap-2">
           <span className="w-3 h-3 rounded" style={{ background: SUN_ZONE_COLORS['partial-sun'] }} />
-          <span className="text-stone-700"><span className="font-medium">Partial (3-6h):</span> Lettuce, peas, beetroot, herbs, soft fruit</span>
+          <span className="text-stone-700 dark:text-stone-300"><span className="font-medium">Partial (3-6h):</span> Lettuce, peas, beetroot, herbs, soft fruit</span>
         </div>
         <div className="flex items-center gap-2">
           <span className="w-3 h-3 rounded" style={{ background: SUN_ZONE_COLORS['light-shade'] }} />
-          <span className="text-stone-700"><span className="font-medium">Light shade (1-3h):</span> Spinach, chard, rocket, rhubarb</span>
+          <span className="text-stone-700 dark:text-stone-300"><span className="font-medium">Light shade (1-3h):</span> Spinach, chard, rocket, rhubarb</span>
         </div>
         <div className="flex items-center gap-2">
           <span className="w-3 h-3 rounded" style={{ background: SUN_ZONE_COLORS['deep-shade'] }} />
-          <span className="text-stone-700"><span className="font-medium">Deep shade (&lt;1h):</span> Ferns, hostas, wild garlic</span>
+          <span className="text-stone-700 dark:text-stone-300"><span className="font-medium">Deep shade (&lt;1h):</span> Ferns, hostas, wild garlic</span>
         </div>
       </div>
     </div>
@@ -170,11 +170,11 @@ export function GardenPage() {
   return (
     <div className="flex h-full overflow-hidden">
       {/* Left sidebar: tools + config */}
-      <div className="w-64 border-r border-stone-200 bg-stone-50 flex-shrink-0 overflow-y-auto p-3 space-y-4">
+      <div className="w-64 border-r border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 flex-shrink-0 overflow-y-auto p-3 space-y-4">
         {/* Garden name */}
         <div>
           <input
-            className="text-sm font-semibold text-stone-800 bg-transparent border-none outline-none w-full focus:underline decoration-stone-300"
+            className="text-sm font-semibold text-stone-800 dark:text-stone-100 bg-transparent border-none outline-none w-full focus:underline decoration-stone-300"
             value={garden.name}
             onChange={(e) => renameGarden(e.target.value)}
           />
@@ -193,8 +193,8 @@ export function GardenPage() {
                 onClick={() => { setTool(tool.type); setPlantToPlace(null); }}
                 className={`text-[10px] px-2 py-1.5 rounded-lg text-left flex items-center gap-1.5 transition-colors ${
                   activeTool === tool.type && !plantToPlace
-                    ? 'bg-stone-800 text-white'
-                    : 'bg-white border border-stone-200 text-stone-600 hover:bg-stone-100'
+                    ? 'bg-stone-800 text-white dark:bg-stone-200 dark:text-stone-900'
+                    : 'bg-white dark:bg-stone-700 border border-stone-200 dark:border-stone-600 text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-600'
                 }`}
               >
                 <span>{tool.emoji}</span>
@@ -209,7 +209,7 @@ export function GardenPage() {
           <h3 className="text-[10px] font-semibold text-stone-500 uppercase tracking-wide mb-1.5">Place Plants</h3>
           <button
             onClick={() => setShowPlantPanel(!showPlantPanel)}
-            className="text-xs w-full px-2 py-1.5 bg-emerald-50 border border-emerald-200 text-emerald-700 rounded-lg hover:bg-emerald-100 transition-colors"
+            className="text-xs w-full px-2 py-1.5 bg-emerald-50 dark:bg-emerald-900/30 border border-emerald-200 dark:border-emerald-800 text-emerald-700 dark:text-emerald-400 rounded-lg hover:bg-emerald-100 dark:hover:bg-emerald-900/50 transition-colors"
           >
             {plantToPlace
               ? `Placing: ${plantToPlace.emoji} ${plantToPlace.commonName}`
@@ -224,7 +224,7 @@ export function GardenPage() {
             </button>
           )}
           {showPlantPanel && (
-            <div className="mt-2 max-h-48 overflow-y-auto space-y-1 bg-white rounded-lg border border-stone-200 p-1.5">
+            <div className="mt-2 max-h-48 overflow-y-auto space-y-1 bg-white dark:bg-stone-700 rounded-lg border border-stone-200 dark:border-stone-600 p-1.5">
               {inGroundPlants.map((p) => (
                 <button
                   key={p.slug}
@@ -252,7 +252,7 @@ export function GardenPage() {
                   type="number"
                   value={config.widthM}
                   onChange={(e) => updateConfig({ widthM: Number(e.target.value) || 1 })}
-                  className="w-full mt-0.5 px-2 py-1 text-xs border border-stone-200 rounded bg-white"
+                  className="w-full mt-0.5 px-2 py-1 text-xs border border-stone-200 dark:border-stone-600 rounded bg-white dark:bg-stone-700 dark:text-stone-200"
                   min={2} max={50} step={0.5}
                 />
               </label>
@@ -262,7 +262,7 @@ export function GardenPage() {
                   type="number"
                   value={config.depthM}
                   onChange={(e) => updateConfig({ depthM: Number(e.target.value) || 1 })}
-                  className="w-full mt-0.5 px-2 py-1 text-xs border border-stone-200 rounded bg-white"
+                  className="w-full mt-0.5 px-2 py-1 text-xs border border-stone-200 dark:border-stone-600 rounded bg-white dark:bg-stone-700 dark:text-stone-200"
                   min={2} max={50} step={0.5}
                 />
               </label>
@@ -272,7 +272,7 @@ export function GardenPage() {
               <select
                 value={config.facing}
                 onChange={(e) => updateConfig({ facing: e.target.value as GardenFacing })}
-                className="w-full mt-0.5 px-2 py-1 text-xs border border-stone-200 rounded bg-white"
+                className="w-full mt-0.5 px-2 py-1 text-xs border border-stone-200 dark:border-stone-600 rounded bg-white dark:bg-stone-700 dark:text-stone-200"
               >
                 {FACING_OPTIONS.map((f) => (
                   <option key={f} value={f}>{f}</option>
@@ -286,7 +286,7 @@ export function GardenPage() {
                   type="number"
                   value={config.houseWallHeightM}
                   onChange={(e) => updateConfig({ houseWallHeightM: Number(e.target.value) || 1 })}
-                  className="w-full mt-0.5 px-2 py-1 text-xs border border-stone-200 rounded bg-white"
+                  className="w-full mt-0.5 px-2 py-1 text-xs border border-stone-200 dark:border-stone-600 rounded bg-white dark:bg-stone-700 dark:text-stone-200"
                   min={1} max={15} step={0.5}
                 />
               </label>
@@ -296,7 +296,7 @@ export function GardenPage() {
                   type="number"
                   value={config.fenceHeightM}
                   onChange={(e) => updateConfig({ fenceHeightM: Number(e.target.value) || 0.5 })}
-                  className="w-full mt-0.5 px-2 py-1 text-xs border border-stone-200 rounded bg-white"
+                  className="w-full mt-0.5 px-2 py-1 text-xs border border-stone-200 dark:border-stone-600 rounded bg-white dark:bg-stone-700 dark:text-stone-200"
                   min={0.5} max={3} step={0.1}
                 />
               </label>
@@ -323,7 +323,7 @@ export function GardenPage() {
             <select
               value={selectedMonth}
               onChange={(e) => setSelectedMonth(Number(e.target.value))}
-              className="w-full mt-0.5 px-2 py-1 text-xs border border-stone-200 rounded bg-white"
+              className="w-full mt-0.5 px-2 py-1 text-xs border border-stone-200 dark:border-stone-600 rounded bg-white dark:bg-stone-700 dark:text-stone-200"
             >
               {MONTHS.map((m) => (
                 <option key={m} value={m}>{getMonthName(m)}</option>

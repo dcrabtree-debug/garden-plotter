@@ -47,11 +47,11 @@ export function TowerView({
   );
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-stone-200 p-5">
+    <div className="bg-white dark:bg-stone-800 rounded-2xl shadow-sm border border-stone-200 dark:border-stone-700 p-5">
       <div className="flex items-center justify-between mb-4">
         <div>
           <input
-            className="text-lg font-semibold text-stone-800 bg-transparent border-none outline-none focus:underline decoration-stone-300 underline-offset-4"
+            className="text-lg font-semibold text-stone-800 dark:text-stone-100 bg-transparent border-none outline-none focus:underline decoration-stone-300 underline-offset-4"
             value={tower.name}
             onChange={(e) => renameTower(tower.id, e.target.value)}
           />
@@ -61,7 +61,7 @@ export function TowerView({
         </div>
         <button
           onClick={() => clearTower(tower.id)}
-          className="text-xs text-stone-400 hover:text-red-500 transition-colors px-2 py-1 rounded hover:bg-red-50"
+          className="text-xs text-stone-400 hover:text-red-500 transition-colors px-2 py-1 rounded hover:bg-red-50 dark:hover:bg-red-900/30"
         >
           Clear all
         </button>

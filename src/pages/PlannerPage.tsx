@@ -253,9 +253,9 @@ export function PlannerPage() {
       {/* Drag overlay */}
       <DragOverlay>
         {draggedPlant && (
-          <div className="bg-white rounded-lg shadow-xl border border-stone-200 px-3 py-2 flex items-center gap-2 pointer-events-none">
+          <div className="bg-white dark:bg-stone-700 rounded-lg shadow-xl border border-stone-200 dark:border-stone-600 px-3 py-2 flex items-center gap-2 pointer-events-none">
             <span className="text-lg">{draggedPlant.emoji}</span>
-            <span className="text-sm font-medium text-stone-700">
+            <span className="text-sm font-medium text-stone-700 dark:text-stone-200">
               {draggedPlant.commonName}
             </span>
           </div>
@@ -274,11 +274,11 @@ export function PlannerPage() {
       {/* Auto-populate modal */}
       {showAutoPopulate && (
         <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[80vh] overflow-y-auto">
-            <div className="p-6 border-b border-stone-100">
+          <div className="bg-white dark:bg-stone-800 rounded-2xl shadow-2xl max-w-2xl w-full max-h-[80vh] overflow-y-auto">
+            <div className="p-6 border-b border-stone-100 dark:border-stone-700">
               <div className="flex items-center justify-between">
                 <div>
-                  <h2 className="text-lg font-bold text-stone-800">
+                  <h2 className="text-lg font-bold text-stone-800 dark:text-stone-100">
                     Auto-Populate Towers
                   </h2>
                   <p className="text-sm text-stone-400 mt-0.5">
@@ -287,7 +287,7 @@ export function PlannerPage() {
                 </div>
                 <button
                   onClick={() => setShowAutoPopulate(false)}
-                  className="text-stone-400 hover:text-stone-600 text-xl"
+                  className="text-stone-400 hover:text-stone-600 dark:hover:text-stone-300 text-xl"
                 >
                   ×
                 </button>
@@ -307,11 +307,11 @@ export function PlannerPage() {
                 return (
                   <div
                     key={layout.id}
-                    className="border border-stone-200 rounded-xl p-4 hover:border-emerald-300 hover:bg-emerald-50/30 transition-colors"
+                    className="border border-stone-200 dark:border-stone-600 rounded-xl p-4 hover:border-emerald-300 dark:hover:border-emerald-700 hover:bg-emerald-50/30 dark:hover:bg-emerald-900/20 transition-colors"
                   >
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
-                        <h3 className="text-sm font-bold text-stone-800">
+                        <h3 className="text-sm font-bold text-stone-800 dark:text-stone-100">
                           {layout.name === 'Family Harvest' ? '👨‍👩‍👧‍👦 ' : layout.name === 'Companion Optimal' ? '🤝 ' : '📅 '}
                           {layout.name}
                         </h3>
@@ -339,7 +339,7 @@ export function PlannerPage() {
                                       <div
                                         key={pi}
                                         className={`w-5 h-5 rounded text-[10px] flex items-center justify-center ${
-                                          p ? 'bg-stone-100' : 'bg-stone-50'
+                                          p ? 'bg-stone-100 dark:bg-stone-600' : 'bg-stone-50 dark:bg-stone-700'
                                         }`}
                                         title={p?.commonName ?? 'empty'}
                                       >
@@ -366,7 +366,7 @@ export function PlannerPage() {
               })}
             </div>
 
-            <div className="p-4 border-t border-stone-100 text-[10px] text-stone-400 text-center">
+            <div className="p-4 border-t border-stone-100 dark:border-stone-700 text-[10px] text-stone-400 text-center">
               Applying a layout will clear existing plants. You can manually adjust afterwards.
             </div>
           </div>

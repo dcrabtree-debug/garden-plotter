@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react';
 import { usePlantDb } from '../data/use-plant-db';
 import { useSeedLinks } from '../data/use-seed-links';
+import { usePlannerStore } from '../state/planner-store';
 import { getMonthName, isInWindow } from '../lib/calendar-utils';
 import type { Plant } from '../types/plant';
 
@@ -52,7 +53,7 @@ interface SeedProduct {
   links: SeedLink[];
 }
 
-const SELLER_INFO: Record<string, { name: string; badge: string; note: string }> = {
+const SELLER_INFO_UK: Record<string, { name: string; badge: string; note: string }> = {
   'Thompson & Morgan': {
     name: 'Thompson & Morgan',
     badge: 'RHS Gold Medal',
@@ -80,16 +81,46 @@ const SELLER_INFO: Record<string, { name: string; badge: string; note: string }>
   },
 };
 
+const SELLER_INFO_US: Record<string, { name: string; badge: string; note: string }> = {
+  'Burpee': {
+    name: 'Burpee',
+    badge: 'Est. 1876, AHS',
+    note: 'America\'s oldest and most trusted seed company',
+  },
+  'Johnny\'s Selected Seeds': {
+    name: 'Johnny\'s Selected Seeds',
+    badge: 'USDA Organic',
+    note: 'Employee-owned, USDA Organic certified',
+  },
+  'Baker Creek Heirloom': {
+    name: 'Baker Creek Heirloom',
+    badge: 'Non-GMO Pledge',
+    note: 'Largest heirloom seed company in the US',
+  },
+  'Park Seed': {
+    name: 'Park Seed',
+    badge: 'Est. 1868, AHS',
+    note: 'One of America\'s oldest garden seed suppliers',
+  },
+  'Territorial Seed Company': {
+    name: 'Territorial Seed Company',
+    badge: 'West Coast Specialist',
+    note: 'Specializes in varieties suited to western climates',
+  },
+};
+
 function SeedCard({
   plant,
   timing,
   reason,
   seedProduct,
+  sellerInfo,
 }: {
   plant: Plant;
   timing: BuyTiming;
   reason: string;
   seedProduct: SeedProduct | null;
+  sellerInfo: Record<string, { name: string; badge: string; note: string }>;
 }) {
   const [expanded, setExpanded] = useState(false);
 
@@ -97,17 +128,17 @@ function SeedCard({
     <div
       className={`rounded-2xl border-2 p-4 transition-all ${
         timing === 'buy-now'
-          ? 'border-emerald-300 bg-emerald-50'
+          ? 'border-emerald-300 dark:border-emerald-700 bg-emerald-50 dark:bg-emerald-900/20'
           : timing === 'buy-soon'
-            ? 'border-amber-300 bg-amber-50'
-            : 'border-stone-200 bg-stone-50 opacity-60'
+            ? 'border-amber-300 dark:border-amber-700 bg-amber-50 dark:bg-amber-900/20'
+            : 'border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 opacity-60'
       }`}
     >
       <div className="flex items-start gap-3">
         <span className="text-4xl">{plant.emoji}</span>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2">
-            <h3 className="text-sm font-bold text-stone-800 truncate">
+            <h3 className="text-sm font-bold text-stone-800 dark:text-stone-100 truncate">
               {plant.commonName}
             </h3>
             {timing === 'buy-now' && (
@@ -133,38 +164,45 @@ function SeedCard({
       {/* Buy links */}
       {seedProduct && seedProduct.links.length > 0 && (
         <div className="mt-3 space-y-1.5">
-          {(expanded ? seedProduct.links : seedProduct.links.slice(0, 2)).map((link, i) => {
-            const sellerMeta = SELLER_INFO[link.seller];
+          {seedProduct.links.slice(0, expanded ? undefined : 3).map((link, i) => {
+            const sellerMeta = sellerInfo[link.seller];
             return (
               <a
                 key={i}
                 href={link.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 px-3 py-2 bg-white rounded-xl border border-stone-200 hover:border-emerald-300 hover:shadow-sm transition-all group"
+                className={`flex items-center gap-2 px-3 py-2 rounded-xl border hover:shadow-sm transition-all group ${
+                  i === 0
+                    ? 'bg-emerald-50 dark:bg-emerald-900/20 border-emerald-200 dark:border-emerald-800 hover:border-emerald-400'
+                    : 'bg-white dark:bg-stone-700 border-stone-200 dark:border-stone-600 hover:border-emerald-300 dark:hover:border-emerald-700'
+                }`}
               >
                 <span className="text-base">{link.logo}</span>
                 <div className="flex-1 min-w-0">
-                  <div className="text-xs font-medium text-stone-700 group-hover:text-emerald-700 truncate">
+                  <div className="text-xs font-medium text-stone-700 dark:text-stone-200 group-hover:text-emerald-700 dark:group-hover:text-emerald-400 truncate flex items-center gap-1">
                     {link.seller}
+                    {i === 0 && (
+                      <span className="text-[8px] px-1 py-0.5 bg-emerald-200 dark:bg-emerald-800 text-emerald-800 dark:text-emerald-200 rounded font-semibold">TOP PICK</span>
+                    )}
                   </div>
                   {sellerMeta && (
                     <div className="text-[9px] text-stone-400">{sellerMeta.badge}</div>
                   )}
                 </div>
-                <div className="text-xs font-bold text-stone-600">{link.price}</div>
+                <div className="text-xs font-bold text-stone-600 dark:text-stone-300">{link.price}</div>
                 <span className="text-stone-300 group-hover:text-emerald-500 transition-colors">
                   &rarr;
                 </span>
               </a>
             );
           })}
-          {seedProduct.links.length > 2 && !expanded && (
+          {seedProduct.links.length > 3 && !expanded && (
             <button
               onClick={() => setExpanded(true)}
-              className="text-[10px] text-stone-400 hover:text-stone-600 ml-1"
+              className="text-[10px] text-stone-400 hover:text-stone-600 dark:hover:text-stone-300 ml-1"
             >
-              +{seedProduct.links.length - 2} more sellers
+              +{seedProduct.links.length - 3} more sellers
             </button>
           )}
         </div>
@@ -181,7 +219,11 @@ function SeedCard({
 
 export function SeedFinderPage() {
   const { plants } = usePlantDb();
-  const seedLinks = useSeedLinks();
+  const location = usePlannerStore((s) => s.settings.location);
+  const isUS = location.includes('USA') || location.includes('CA,') || location.includes('Manhattan');
+  const region = isUS ? 'us' : 'uk';
+  const seedLinks = useSeedLinks(region);
+  const sellerInfo = isUS ? SELLER_INFO_US : SELLER_INFO_UK;
   const currentMonth = new Date().getMonth() + 1;
   const [selectedMonth, setSelectedMonth] = useState(currentMonth);
   const [filter, setFilter] = useState<'all' | 'buy-now' | 'buy-soon'>('all');
@@ -212,9 +254,11 @@ export function SeedFinderPage() {
       <div className="max-w-4xl mx-auto px-4 py-6">
         {/* Header */}
         <div className="mb-6">
-          <h1 className="text-2xl font-bold text-stone-800">Seed Finder</h1>
+          <h1 className="text-2xl font-bold text-stone-800 dark:text-stone-100">Seed Finder</h1>
           <p className="text-sm text-stone-500 mt-1">
-            What to buy now for your Surrey garden. All sellers are RHS-endorsed or hold Royal Warrants.
+            {isUS
+              ? 'What to buy now for your SoCal garden. All sellers are AHS members or USDA-certified.'
+              : 'What to buy now for your Surrey garden. All sellers are RHS-endorsed or hold Royal Warrants.'}
           </p>
         </div>
 
@@ -225,7 +269,7 @@ export function SeedFinderPage() {
             <select
               value={selectedMonth}
               onChange={(e) => setSelectedMonth(Number(e.target.value))}
-              className="px-3 py-1.5 text-sm border border-stone-200 rounded-lg bg-white"
+              className="px-3 py-1.5 text-sm border border-stone-200 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-700 dark:text-stone-200"
             >
               {Array.from({ length: 12 }, (_, i) => i + 1).map((m) => (
                 <option key={m} value={m}>
@@ -239,7 +283,7 @@ export function SeedFinderPage() {
             <button
               onClick={() => setFilter('all')}
               className={`text-xs px-3 py-1.5 rounded-lg ${
-                filter === 'all' ? 'bg-stone-800 text-white' : 'bg-stone-100 text-stone-500'
+                filter === 'all' ? 'bg-stone-800 text-white dark:bg-stone-200 dark:text-stone-900' : 'bg-stone-100 dark:bg-stone-700 text-stone-500 dark:text-stone-400'
               }`}
             >
               All ({plantsWithTiming.length})
@@ -247,7 +291,7 @@ export function SeedFinderPage() {
             <button
               onClick={() => setFilter('buy-now')}
               className={`text-xs px-3 py-1.5 rounded-lg ${
-                filter === 'buy-now' ? 'bg-emerald-700 text-white' : 'bg-emerald-50 text-emerald-700'
+                filter === 'buy-now' ? 'bg-emerald-700 text-white' : 'bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400'
               }`}
             >
               Buy Now ({buyNowCount})
@@ -255,7 +299,7 @@ export function SeedFinderPage() {
             <button
               onClick={() => setFilter('buy-soon')}
               className={`text-xs px-3 py-1.5 rounded-lg ${
-                filter === 'buy-soon' ? 'bg-amber-700 text-white' : 'bg-amber-50 text-amber-700'
+                filter === 'buy-soon' ? 'bg-amber-700 text-white' : 'bg-amber-50 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400'
               }`}
             >
               Buy Soon ({buySoonCount})
@@ -264,10 +308,10 @@ export function SeedFinderPage() {
         </div>
 
         {/* Trusted sellers banner */}
-        <div className="bg-stone-50 rounded-xl border border-stone-200 p-3 mb-5">
+        <div className="bg-stone-50 dark:bg-stone-800 rounded-xl border border-stone-200 dark:border-stone-700 p-3 mb-5">
           <h3 className="text-[10px] text-stone-500 uppercase tracking-wide mb-2">Trusted Sellers</h3>
-          <div className="flex gap-4 flex-wrap text-xs text-stone-600">
-            {Object.values(SELLER_INFO).map((s) => (
+          <div className="flex gap-4 flex-wrap text-xs text-stone-600 dark:text-stone-400">
+            {Object.values(sellerInfo).map((s) => (
               <span key={s.name} className="flex items-center gap-1">
                 <span className="font-medium">{s.name}</span>
                 <span className="text-[9px] text-stone-400">({s.badge})</span>
@@ -285,6 +329,7 @@ export function SeedFinderPage() {
               timing={timing}
               reason={reason}
               seedProduct={seedProduct}
+              sellerInfo={sellerInfo}
             />
           ))}
         </div>

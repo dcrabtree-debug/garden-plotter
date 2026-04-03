@@ -19,9 +19,9 @@ const statusColors: Record<CompanionStatus, string> = {
 };
 
 const statusBg: Record<CompanionStatus, string> = {
-  clear: 'bg-stone-50',
-  friends: 'bg-emerald-50',
-  conflict: 'bg-red-50',
+  clear: 'bg-stone-50 dark:bg-stone-700',
+  friends: 'bg-emerald-50 dark:bg-emerald-900/30',
+  conflict: 'bg-red-50 dark:bg-red-900/30',
 };
 
 export function Pocket({
@@ -71,11 +71,11 @@ export function Pocket({
       className={`
         group relative w-16 h-16 rounded-xl border-2 flex flex-col items-center justify-center
         cursor-pointer transition-all duration-150 select-none
-        ${plant ? statusColors[companionStatus] : 'border-dashed border-stone-300'}
-        ${plant ? statusBg[companionStatus] : 'bg-white'}
-        ${isOver ? 'scale-110 shadow-lg border-blue-400 bg-blue-50' : ''}
+        ${plant ? statusColors[companionStatus] : 'border-dashed border-stone-300 dark:border-stone-500'}
+        ${plant ? statusBg[companionStatus] : 'bg-white dark:bg-stone-700'}
+        ${isOver ? 'scale-110 shadow-lg border-blue-400 bg-blue-50 dark:bg-blue-900/30' : ''}
         ${isDragging ? 'opacity-40 scale-95' : ''}
-        ${!plant && !isOver ? 'hover:border-stone-400 hover:bg-stone-50' : ''}
+        ${!plant && !isOver ? 'hover:border-stone-400 hover:bg-stone-50 dark:hover:bg-stone-600' : ''}
         ${!plant && tierSuitability ? 'hover:scale-105' : ''}
         ${suitabilityRing}
       `}
@@ -83,7 +83,7 @@ export function Pocket({
       {plant ? (
         <>
           <span className="text-xl leading-none">{plant.emoji}</span>
-          <span className="text-[9px] leading-tight text-stone-600 text-center mt-0.5 px-0.5 truncate w-full">
+          <span className="text-[9px] leading-tight text-stone-600 dark:text-stone-300 text-center mt-0.5 px-0.5 truncate w-full">
             {plant.commonName.split(' ')[0]}
           </span>
           <button
@@ -98,7 +98,7 @@ export function Pocket({
           </button>
         </>
       ) : (
-        <span className="text-stone-300 text-lg">+</span>
+        <span className="text-stone-300 dark:text-stone-500 text-lg">+</span>
       )}
     </div>
   );

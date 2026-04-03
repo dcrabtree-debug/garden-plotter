@@ -30,13 +30,13 @@ function PlantRow({
   return (
     <tr
       onClick={onClick}
-      className="hover:bg-stone-50 cursor-pointer transition-colors border-t border-stone-100"
+      className="hover:bg-stone-50 dark:hover:bg-stone-700 cursor-pointer transition-colors border-t border-stone-100 dark:border-stone-700"
     >
       <td className="px-4 py-3">
         <div className="flex items-center gap-2">
           <span className="text-lg">{plant.emoji}</span>
           <div>
-            <div className="text-sm font-medium text-stone-700">
+            <div className="text-sm font-medium text-stone-700 dark:text-stone-200">
               {plant.commonName}
             </div>
             <div className="text-[10px] text-stone-400 italic">
@@ -45,13 +45,13 @@ function PlantRow({
           </div>
         </div>
       </td>
-      <td className="px-4 py-3 text-xs text-stone-500 capitalize">
+      <td className="px-4 py-3 text-xs text-stone-500 dark:text-stone-400 capitalize">
         {plant.category}
       </td>
-      <td className="px-4 py-3 text-xs text-stone-500 capitalize">
+      <td className="px-4 py-3 text-xs text-stone-500 dark:text-stone-400 capitalize">
         {plant.sun.replace('-', ' ')}
       </td>
-      <td className="px-4 py-3 text-xs text-stone-500 capitalize">
+      <td className="px-4 py-3 text-xs text-stone-500 dark:text-stone-400 capitalize">
         {plant.water}
       </td>
       <td className="px-4 py-3">
@@ -104,7 +104,7 @@ export function KnowledgeBasePage() {
 
   return (
     <div className="p-6 max-w-6xl mx-auto">
-      <h1 className="text-xl font-semibold text-stone-800 mb-1">
+      <h1 className="text-xl font-semibold text-stone-800 dark:text-stone-100 mb-1">
         Plant Knowledge Base
       </h1>
       <p className="text-sm text-stone-400 mb-4">
@@ -118,7 +118,7 @@ export function KnowledgeBasePage() {
           placeholder="Search plants..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="px-3 py-2 text-sm border border-stone-200 rounded-lg bg-white focus:outline-none focus:border-stone-400 w-64"
+          className="px-3 py-2 text-sm border border-stone-200 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-700 dark:text-stone-100 focus:outline-none focus:border-stone-400 dark:focus:border-stone-500 w-64"
         />
         <div className="flex gap-1">
           {categories.map((cat) => (
@@ -127,8 +127,8 @@ export function KnowledgeBasePage() {
               onClick={() => setCategory(cat.value)}
               className={`text-xs px-3 py-1.5 rounded-lg transition-colors ${
                 category === cat.value
-                  ? 'bg-stone-800 text-white'
-                  : 'bg-stone-100 text-stone-500 hover:bg-stone-200'
+                  ? 'bg-stone-800 text-white dark:bg-stone-200 dark:text-stone-900'
+                  : 'bg-stone-100 dark:bg-stone-700 text-stone-500 dark:text-stone-400 hover:bg-stone-200 dark:hover:bg-stone-600'
               }`}
             >
               {cat.label}
@@ -137,26 +137,26 @@ export function KnowledgeBasePage() {
         </div>
       </div>
 
-      <div className="bg-white rounded-2xl shadow-sm border border-stone-200 overflow-hidden">
+      <div className="bg-white dark:bg-stone-800 rounded-2xl shadow-sm border border-stone-200 dark:border-stone-700 overflow-hidden">
         <table className="w-full">
           <thead>
-            <tr className="bg-stone-50 text-left">
-              <th className="px-4 py-2 text-xs font-medium text-stone-500">
+            <tr className="bg-stone-50 dark:bg-stone-700 text-left">
+              <th className="px-4 py-2 text-xs font-medium text-stone-500 dark:text-stone-400">
                 Plant
               </th>
-              <th className="px-4 py-2 text-xs font-medium text-stone-500">
+              <th className="px-4 py-2 text-xs font-medium text-stone-500 dark:text-stone-400">
                 Type
               </th>
-              <th className="px-4 py-2 text-xs font-medium text-stone-500">
+              <th className="px-4 py-2 text-xs font-medium text-stone-500 dark:text-stone-400">
                 Sun
               </th>
-              <th className="px-4 py-2 text-xs font-medium text-stone-500">
+              <th className="px-4 py-2 text-xs font-medium text-stone-500 dark:text-stone-400">
                 Water
               </th>
-              <th className="px-4 py-2 text-xs font-medium text-stone-500">
+              <th className="px-4 py-2 text-xs font-medium text-stone-500 dark:text-stone-400">
                 GreenStalk
               </th>
-              <th className="px-4 py-2 text-xs font-medium text-stone-500">
+              <th className="px-4 py-2 text-xs font-medium text-stone-500 dark:text-stone-400">
                 Now
               </th>
             </tr>

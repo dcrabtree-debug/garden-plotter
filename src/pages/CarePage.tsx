@@ -182,6 +182,48 @@ function getFrostGuidance(month: number, isUS: boolean): { level: 'safe' | 'caut
   return { level: 'safe', message: 'Frost-free growing season. Focus on watering and feeding.' };
 }
 
+// ─── Succession sowing data (RHS / Charles Dowding) ──────────────────────────
+
+interface SuccessionCrop {
+  slug: string;
+  name: string;
+  emoji: string;
+  intervalDays: number;
+  startMonth: number;
+  endMonth: number;
+  note: string;
+}
+
+const SUCCESSION_CROPS: SuccessionCrop[] = [
+  { slug: 'lettuce', name: 'Lettuce', emoji: '🥬', intervalDays: 14, startMonth: 4, endMonth: 7, note: 'Sow every 2 weeks Apr–Jul for continuous supply. Use bolt-resistant varieties in summer.' },
+  { slug: 'radish', name: 'Radish', emoji: '🥕', intervalDays: 10, startMonth: 4, endMonth: 7, note: 'Fast 3-4 week crop. Sow every 10 days for steady harvest.' },
+  { slug: 'rocket', name: 'Rocket', emoji: '🥬', intervalDays: 14, startMonth: 4, endMonth: 9, note: 'Sow every 2 weeks. Prefers cooler weather — slow summer sowings.' },
+  { slug: 'spring-onion', name: 'Spring Onion', emoji: '🧅', intervalDays: 21, startMonth: 4, endMonth: 8, note: 'Sow every 3 weeks. 8-12 weeks to harvest.' },
+  { slug: 'perpetual-spinach', name: 'Spinach', emoji: '🥬', intervalDays: 21, startMonth: 4, endMonth: 6, note: 'Sow every 3 weeks Apr–Jun. Bolts in summer heat — resume Aug for autumn crop.' },
+  { slug: 'dwarf-french-bean', name: 'French Bean', emoji: '🫘', intervalDays: 21, startMonth: 5, endMonth: 7, note: 'Sow every 3 weeks May–Jul for beans through to October frost.' },
+  { slug: 'beetroot', name: 'Beetroot', emoji: '🟣', intervalDays: 21, startMonth: 4, endMonth: 7, note: 'Sow every 3 weeks for baby beet. Last sowing July for autumn harvest.' },
+  { slug: 'coriander', name: 'Coriander', emoji: '🌿', intervalDays: 14, startMonth: 4, endMonth: 8, note: 'Bolts fast in heat. Sow every 2 weeks using bolt-resistant varieties like Confetti.' },
+];
+
+// ─── Hardening off protocol (RHS) ────────────────────────────────────────────
+
+interface HardenStep {
+  days: string;
+  exposure: string;
+  hours: string;
+  location: string;
+}
+
+const HARDEN_STEPS: HardenStep[] = [
+  { days: 'Days 1–2', exposure: 'Sheltered shade', hours: '1–2 hours', location: 'By a wall or fence, out of wind' },
+  { days: 'Days 3–4', exposure: 'Dappled shade', hours: '2–3 hours', location: 'Under a tree or partial cover' },
+  { days: 'Days 5–6', exposure: 'Morning sun', hours: '3–4 hours', location: 'Open but sheltered spot' },
+  { days: 'Days 7–8', exposure: 'Morning–midday', hours: '5–6 hours', location: 'Full sun, some shelter' },
+  { days: 'Days 9–10', exposure: 'Full day outside', hours: '8+ hours', location: 'Bring in at dusk' },
+  { days: 'Days 11–12', exposure: 'Overnight (>10°C)', hours: '24 hours', location: 'Leave out if mild' },
+  { days: 'Days 13–14', exposure: 'Overnight (>5°C)', hours: 'Continuous', location: 'Ready to plant!' },
+];
+
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export function CarePage() {
@@ -465,6 +507,81 @@ export function CarePage() {
                   }`}>
                     {f.frequency}
                   </span>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* 🔄 Succession sowing tracker */}
+        {(() => {
+          const activeSuccessions = SUCCESSION_CROPS.filter(
+            (c) => selectedMonth >= c.startMonth && selectedMonth <= c.endMonth
+          );
+          if (activeSuccessions.length === 0) return null;
+          return (
+            <section className="bg-white dark:bg-stone-800 rounded-2xl shadow-sm border border-stone-200 dark:border-stone-700 p-5">
+              <h2 className="text-lg font-semibold text-stone-800 dark:text-stone-100 flex items-center gap-2">
+                <span>🔄</span> Succession Sowing
+              </h2>
+              <p className="text-xs text-stone-400 mt-0.5 mb-3">
+                Keep sowing for continuous harvests — never a glut, never a gap
+              </p>
+              <div className="space-y-2">
+                {activeSuccessions.map((crop) => (
+                  <div
+                    key={crop.slug}
+                    className="flex items-center justify-between px-3 py-2.5 rounded-xl bg-stone-50 dark:bg-stone-700/50 border border-stone-100 dark:border-stone-700"
+                  >
+                    <div className="flex items-center gap-2 min-w-0 flex-1">
+                      <span className="text-base">{crop.emoji}</span>
+                      <div className="min-w-0">
+                        <div className="text-xs font-medium text-stone-700 dark:text-stone-200">
+                          {crop.name}
+                        </div>
+                        <div className="text-[10px] text-stone-400 mt-0.5">{crop.note}</div>
+                      </div>
+                    </div>
+                    <span className="flex-shrink-0 ml-2 text-[10px] font-bold px-2.5 py-1 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 whitespace-nowrap">
+                      Every {crop.intervalDays}d
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </section>
+          );
+        })()}
+
+        {/* 🌡️ Hardening off protocol */}
+        {(selectedMonth === 4 || selectedMonth === 5) && !isUS && (
+          <section className="bg-white dark:bg-stone-800 rounded-2xl shadow-sm border border-stone-200 dark:border-stone-700 p-5">
+            <h2 className="text-lg font-semibold text-stone-800 dark:text-stone-100 flex items-center gap-2">
+              <span>🌡️</span> Hardening Off Protocol
+            </h2>
+            <p className="text-xs text-stone-400 mt-0.5 mb-3">
+              {selectedMonth === 4
+                ? 'Critical for April — seedlings raised indoors must be gradually acclimatised before planting out'
+                : 'Final hardening off window before summer planting'}
+            </p>
+            <div className="space-y-1">
+              {HARDEN_STEPS.map((step, i) => (
+                <div
+                  key={i}
+                  className="flex items-center gap-3 px-3 py-2 rounded-lg bg-stone-50 dark:bg-stone-700/50"
+                >
+                  <span className={`w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold flex-shrink-0 ${
+                    i < 4 ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-300' :
+                    i < 6 ? 'bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-300' :
+                    'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-300'
+                  }`}>
+                    {i + 1}
+                  </span>
+                  <div className="flex-1 min-w-0">
+                    <div className="text-[11px] font-medium text-stone-700 dark:text-stone-200">
+                      {step.days}: {step.exposure} — {step.hours}
+                    </div>
+                    <div className="text-[10px] text-stone-400">{step.location}</div>
+                  </div>
                 </div>
               ))}
             </div>

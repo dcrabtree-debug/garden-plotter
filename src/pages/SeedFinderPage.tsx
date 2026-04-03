@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { usePlantDb } from '../data/use-plant-db';
-import { useSeedLinks, type SeedContext, type SeedProduct, type SeedVariety } from '../data/use-seed-links';
+import { useSeedLinks, type SeedContext, type SeedLink, type SeedProduct, type SeedVariety } from '../data/use-seed-links';
 import { useRegion } from '../data/use-region';
 import { getMonthName, isInWindow } from '../lib/calendar-utils';
 import type { Plant } from '../types/plant';
@@ -40,18 +40,7 @@ function getTimingForMonth(plant: Plant, month: number): { timing: BuyTiming; re
   return { timing: 'not-yet', reason: 'Not in season yet' };
 }
 
-interface SeedLink {
-  seller: string;
-  url: string;
-  price: string;
-  logo: string;
-}
 
-interface SeedProduct {
-  plantSlug: string;
-  varietyName: string;
-  links: SeedLink[];
-}
 
 const SELLER_INFO_UK: Record<string, { name: string; badge: string; note: string }> = {
   'Thompson & Morgan': {

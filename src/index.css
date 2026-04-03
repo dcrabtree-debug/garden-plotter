@@ -28,3 +28,18 @@ html {
   background: #44403c;
   border-radius: 4px;
 }
+
+/* Gentle pulse for "ready to pick" buttons */
+@keyframes pulse-gentle {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.04); }
+}
+
+/* Hide scrollbar but keep scroll (for horizontal pick rows) */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}

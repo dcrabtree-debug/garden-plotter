@@ -6,8 +6,153 @@ import type {
   CellType,
   GardenFacing,
 } from '../types/planner';
+import type { Plant } from '../types/plant';
 
 const STORAGE_KEY = 'garden-plotter-garden';
+const ROTATION_STORAGE_KEY = 'garden-plotter-rotation-history';
+
+/** Rotation groups that actually need tracking (permanent/any are exempt) */
+const TRACKED_ROTATION_GROUPS = ['legumes', 'brassicas', 'roots-onions', 'potatoes'];
+
+/** Map of rotation group to human-friendly name */
+const ROTATION_GROUP_LABELS: Record<string, string> = {
+  legumes: 'Legumes',
+  brassicas: 'Brassicas',
+  'roots-onions': 'Roots & onions',
+  potatoes: 'Potatoes',
+};
+
+const ROTATION_DISEASE_RISK: Record<string, string> = {
+  legumes: 'soil nitrogen depletion',
+  brassicas: 'clubroot',
+  'roots-onions': 'root fly / white rot',
+  potatoes: 'blight / eelworm',
+};
+
+/** Keyed by "YYYY-season", value is 2D grid of rotation group names (or null) */
+export type RotationHistory = Record<string, (string | null)[][]>;
+
+function getCurrentSeason(): string {
+  const month = new Date().getMonth() + 1;
+  if (month >= 3 && month <= 5) return 'spring';
+  if (month >= 6 && month <= 8) return 'summer';
+  if (month >= 9 && month <= 11) return 'autumn';
+  return 'winter';
+}
+
+function getCurrentSeasonKey(): string {
+  const year = new Date().getFullYear();
+  return `${year}-${getCurrentSeason()}`;
+}
+
+function getSeasonLabel(key: string): string {
+  const [year, season] = key.split('-');
+  return `${season.charAt(0).toUpperCase() + season.slice(1)} ${year}`;
+}
+
+function loadRotationHistory(): RotationHistory {
+  try {
+    const raw = localStorage.getItem(ROTATION_STORAGE_KEY);
+    if (!raw) return {};
+    return JSON.parse(raw);
+  } catch {
+    return {};
+  }
+}
+
+function saveRotationHistoryToStorage(history: RotationHistory) {
+  try {
+    localStorage.setItem(ROTATION_STORAGE_KEY, JSON.stringify(history));
+  } catch {}
+}
+
+/** Get ordered season keys going backwards from the given key */
+function getPreviousSeasonKeys(currentKey: string, count: number): string[] {
+  const seasonOrder = ['winter', 'spring', 'summer', 'autumn'];
+  const [yearStr, season] = currentKey.split('-');
+  let year = parseInt(yearStr, 10);
+  let seasonIdx = seasonOrder.indexOf(season);
+  const keys: string[] = [];
+  for (let i = 0; i < count; i++) {
+    seasonIdx--;
+    if (seasonIdx < 0) {
+      seasonIdx = 3;
+      year--;
+    }
+    keys.push(`${year}-${seasonOrder[seasonIdx]}`);
+  }
+  return keys;
+}
+
+/** Check spacing violations for a given cell position */
+export function getSpacingWarnings(
+  row: number,
+  col: number,
+  cells: GardenCell[][],
+  config: GardenConfig,
+  plantMap: Map<string, Plant>,
+): string | null {
+  const cell = cells[row]?.[col];
+  if (!cell?.plantSlug) return null;
+  const plant = plantMap.get(cell.plantSlug);
+  if (!plant) return null;
+
+  const spacingCm = plant.inGround?.plantSpacingCm ?? plant.spacingCm;
+  if (!spacingCm || spacingCm <= 0) return null;
+
+  const cellSizeCm = config.cellSizeM * 100;
+  const requiredCells = Math.ceil(spacingCm / cellSizeCm);
+
+  const totalRows = cells.length;
+  const totalCols = cells[0]?.length ?? 0;
+
+  for (let dr = -requiredCells; dr <= requiredCells; dr++) {
+    for (let dc = -requiredCells; dc <= requiredCells; dc++) {
+      if (dr === 0 && dc === 0) continue;
+      const nr = row + dr;
+      const nc = col + dc;
+      if (nr < 0 || nr >= totalRows || nc < 0 || nc >= totalCols) continue;
+      const neighbor = cells[nr]?.[nc];
+      if (neighbor?.plantSlug === cell.plantSlug) {
+        return `Too close! ${plant.commonName} needs ${spacingCm}cm spacing`;
+      }
+    }
+  }
+  return null;
+}
+
+/** Check rotation warnings for a given cell position */
+export function getRotationWarnings(
+  row: number,
+  col: number,
+  plantSlug: string,
+  plantMap: Map<string, Plant>,
+  rotationHistory: RotationHistory,
+): string | null {
+  const plant = plantMap.get(plantSlug);
+  if (!plant) return null;
+
+  const rotation = plant.inGround?.rotation;
+  if (!rotation || !TRACKED_ROTATION_GROUPS.includes(rotation)) return null;
+
+  const currentKey = getCurrentSeasonKey();
+  const previousKeys = getPreviousSeasonKeys(currentKey, 2);
+
+  for (const key of previousKeys) {
+    const grid = rotationHistory[key];
+    if (!grid) continue;
+    const prevGroup = grid[row]?.[col];
+    if (prevGroup === rotation) {
+      const label = ROTATION_GROUP_LABELS[rotation] ?? rotation;
+      const risk = ROTATION_DISEASE_RISK[rotation] ?? 'disease buildup';
+      const seasonLabel = getSeasonLabel(key);
+      return `${label} were here in ${seasonLabel} — risk of ${risk}`;
+    }
+  }
+  return null;
+}
+
+export { getCurrentSeasonKey, getSeasonLabel };
 
 const DEFAULT_CONFIG: GardenConfig = {
   widthM: 10,
@@ -64,6 +209,10 @@ interface GardenStore {
   selectedHour: number;
   showSunOverlay: boolean;
   showShadowOverlay: boolean;
+  showCompanionOverlay: boolean;
+  showSpacingWarnings: boolean;
+  showRotationWarnings: boolean;
+  rotationHistory: RotationHistory;
 
   setTool: (tool: CellType) => void;
   paintCell: (row: number, col: number) => void;
@@ -77,6 +226,10 @@ interface GardenStore {
   setSelectedHour: (hour: number) => void;
   toggleSunOverlay: () => void;
   toggleShadowOverlay: () => void;
+  toggleCompanionOverlay: () => void;
+  toggleSpacingWarnings: () => void;
+  toggleRotationWarnings: () => void;
+  saveSeasonSnapshot: (plantMap: Map<string, Plant>) => string;
   resetGarden: () => void;
   clearPaint: () => void;
 }
@@ -91,6 +244,10 @@ export const useGardenStore = create<GardenStore>((set, get) => {
     selectedHour: 12,
     showSunOverlay: false,
     showShadowOverlay: false,
+    showCompanionOverlay: false,
+    showSpacingWarnings: true,
+    showRotationWarnings: true,
+    rotationHistory: loadRotationHistory(),
 
     setTool: (tool) => set({ activeTool: tool }),
 
@@ -195,6 +352,25 @@ export const useGardenStore = create<GardenStore>((set, get) => {
     setSelectedHour: (hour) => set({ selectedHour: hour }),
     toggleSunOverlay: () => set((s) => ({ showSunOverlay: !s.showSunOverlay })),
     toggleShadowOverlay: () => set((s) => ({ showShadowOverlay: !s.showShadowOverlay })),
+    toggleCompanionOverlay: () => set((s) => ({ showCompanionOverlay: !s.showCompanionOverlay })),
+    toggleSpacingWarnings: () => set((s) => ({ showSpacingWarnings: !s.showSpacingWarnings })),
+    toggleRotationWarnings: () => set((s) => ({ showRotationWarnings: !s.showRotationWarnings })),
+
+    saveSeasonSnapshot: (plantMap: Map<string, Plant>) => {
+      const state = get();
+      const key = getCurrentSeasonKey();
+      const grid: (string | null)[][] = state.garden.cells.map((row) =>
+        row.map((cell) => {
+          if (!cell.plantSlug) return null;
+          const plant = plantMap.get(cell.plantSlug);
+          return plant?.inGround?.rotation ?? null;
+        })
+      );
+      const history = { ...state.rotationHistory, [key]: grid };
+      saveRotationHistoryToStorage(history);
+      set({ rotationHistory: history });
+      return getSeasonLabel(key);
+    },
 
     resetGarden: () => {
       const fresh = createDefaultGarden();

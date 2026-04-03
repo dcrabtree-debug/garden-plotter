@@ -1,10 +1,11 @@
 import { useState, useRef, useCallback, useEffect, useMemo } from 'react';
-import { useGardenStore } from '../state/garden-store';
+import { useGardenStore, getSpacingWarnings, getRotationWarnings, getCurrentSeasonKey, getSeasonLabel } from '../state/garden-store';
 import { usePlantDb } from '../data/use-plant-db';
 import { PlantDetail } from '../components/plant-palette/PlantDetail';
 import { useCompanionDb } from '../data/use-companion-db';
 import { useRegion } from '../data/use-region';
 import { generateGardenLayouts, type GardenLayoutOption, type PlacementReason } from '../lib/garden-auto-populate';
+import { checkPair } from '../lib/companion-engine';
 import type { CellType, GardenFacing } from '../types/planner';
 import type { Plant } from '../types/plant';
 import {
@@ -115,9 +116,13 @@ function ZoneGuide() {
 
 export function GardenPage() {
   const {
-    garden, activeTool, selectedMonth, selectedHour, showSunOverlay, showShadowOverlay,
+    garden, activeTool, selectedMonth, selectedHour,
+    showSunOverlay, showShadowOverlay, showCompanionOverlay,
+    showSpacingWarnings, showRotationWarnings, rotationHistory,
     setTool, paintCell, updateConfig, renameGarden,
-    setSunHours, setSelectedMonth, setSelectedHour, toggleSunOverlay, toggleShadowOverlay,
+    setSunHours, setSelectedMonth, setSelectedHour,
+    toggleSunOverlay, toggleShadowOverlay, toggleCompanionOverlay,
+    toggleSpacingWarnings, toggleRotationWarnings, saveSeasonSnapshot,
     resetGarden, clearPaint,
   } = useGardenStore();
 
@@ -129,6 +134,7 @@ export function GardenPage() {
   const [selectedPlant, setSelectedPlant] = useState<Plant | null>(null);
   const [showPlantPanel, setShowPlantPanel] = useState(false);
   const [showAutoPopulate, setShowAutoPopulate] = useState(false);
+  const [showSaveSeasonConfirm, setShowSaveSeasonConfirm] = useState(false);
   const [gardenLayouts, setGardenLayouts] = useState<GardenLayoutOption[]>([]);
   const [gardenPlan, setGardenPlan] = useState<PlacementReason[] | null>(null);
   const [showPlan, setShowPlan] = useState(false);
@@ -212,6 +218,65 @@ export function GardenPage() {
     if (!showShadowOverlay) return null;
     return sunPosition(selectedMonth, midMonthDay(selectedMonth), selectedHour, config.latitude, config.longitude);
   }, [showShadowOverlay, selectedMonth, selectedHour, config.latitude, config.longitude]);
+
+  // Companion planting indicators per cell
+  // Two modes: placement mode (highlighting friends/foes of plantToPlace)
+  // and static mode (checking neighbours of already-placed plants)
+  const companionGrid = useMemo(() => {
+    if (!showCompanionOverlay) return null;
+
+    const grid: { hasFriend: boolean; hasFoe: boolean }[][] = Array.from(
+      { length: rows },
+      () => Array.from({ length: cols }, () => ({ hasFriend: false, hasFoe: false }))
+    );
+
+    const RANGE = 2; // Check within 2 cells
+
+    if (plantToPlace) {
+      // Placement mode: for each cell that already has a plant,
+      // check if it's a friend or foe of the plant being placed
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          const slug = cells[r][c].plantSlug;
+          if (!slug) continue;
+          const edge = checkPair(plantToPlace.slug, slug, companionMap);
+          if (!edge) continue;
+          if (edge.relationship === 'friend') {
+            grid[r][c].hasFriend = true;
+          } else if (edge.relationship === 'foe') {
+            grid[r][c].hasFoe = true;
+          }
+        }
+      }
+    } else {
+      // Static mode: for each planted cell, check neighbours within RANGE
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          const slug = cells[r][c].plantSlug;
+          if (!slug) continue;
+          for (let dr = -RANGE; dr <= RANGE; dr++) {
+            for (let dc = -RANGE; dc <= RANGE; dc++) {
+              if (dr === 0 && dc === 0) continue;
+              const nr = r + dr;
+              const nc = c + dc;
+              if (nr < 0 || nr >= rows || nc < 0 || nc >= cols) continue;
+              const neighbourSlug = cells[nr][nc].plantSlug;
+              if (!neighbourSlug || neighbourSlug === slug) continue;
+              const edge = checkPair(slug, neighbourSlug, companionMap);
+              if (!edge) continue;
+              if (edge.relationship === 'friend') {
+                grid[r][c].hasFriend = true;
+              } else if (edge.relationship === 'foe') {
+                grid[r][c].hasFoe = true;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    return grid;
+  }, [showCompanionOverlay, plantToPlace, cells, rows, cols, companionMap]);
 
   // Veg-suitable plants for the plant panel
   const inGroundPlants = useMemo(
@@ -378,6 +443,33 @@ export function GardenPage() {
               />
               Real-time shadow
             </label>
+            <label className="flex items-center gap-2 text-xs text-stone-600 dark:text-stone-400 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={showCompanionOverlay}
+                onChange={toggleCompanionOverlay}
+                className="rounded border-stone-300"
+              />
+              Companion planting
+            </label>
+            <label className="flex items-center gap-2 text-xs text-stone-600 dark:text-stone-400 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={showSpacingWarnings}
+                onChange={toggleSpacingWarnings}
+                className="rounded border-stone-300 accent-orange-500"
+              />
+              Spacing warnings
+            </label>
+            <label className="flex items-center gap-2 text-xs text-stone-600 dark:text-stone-400 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={showRotationWarnings}
+                onChange={toggleRotationWarnings}
+                className="rounded border-stone-300 accent-violet-500"
+              />
+              Crop rotation warnings
+            </label>
           </div>
           <label className="text-[10px] text-stone-500 block mt-2">
             Month
@@ -446,16 +538,24 @@ export function GardenPage() {
         <div className="mb-3">
           <div className="flex items-center justify-between">
             <h1 className="text-xl font-semibold text-stone-800 dark:text-stone-100">In-Ground Garden Plotter</h1>
-            <button
-              onClick={() => {
-                const layouts = generateGardenLayouts(plants, cells, config, companionMap);
-                setGardenLayouts(layouts);
-                setShowAutoPopulate(true);
-              }}
-              className="px-3 py-1.5 text-xs bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors flex items-center gap-1.5"
-            >
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setShowSaveSeasonConfirm(true)}
+                className="px-3 py-1.5 text-xs bg-violet-600 text-white rounded-lg hover:bg-violet-700 transition-colors flex items-center gap-1.5"
+              >
+                <span>&#128197;</span> Save Season
+              </button>
+              <button
+                onClick={() => {
+                  const layouts = generateGardenLayouts(plants, cells, config, companionMap);
+                  setGardenLayouts(layouts);
+                  setShowAutoPopulate(true);
+                }}
+                className="px-3 py-1.5 text-xs bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors flex items-center gap-1.5"
+              >
               <span>✨</span> Auto-Populate
             </button>
+            </div>
           </div>
           <p className="text-sm text-stone-400">
             {plantToPlace
@@ -494,6 +594,14 @@ export function GardenPage() {
 
                 const isInShadow = showShadowOverlay && shadowGrid?.[ri]?.[ci];
 
+                // Spacing and rotation warnings
+                const spacingWarning = showSpacingWarnings
+                  ? getSpacingWarnings(ri, ci, cells, config, plantMap)
+                  : null;
+                const rotationWarning = showRotationWarnings && cell.plantSlug != null
+                  ? getRotationWarnings(ri, ci, cell.plantSlug, plantMap, rotationHistory)
+                  : null;
+
                 return (
                   <div
                     key={ci}
@@ -504,6 +612,9 @@ export function GardenPage() {
                       fontSize: cellSize * 0.55,
                       lineHeight: `${cellSize}px`,
                       position: 'relative',
+                      ...(spacingWarning ? { boxShadow: 'inset 0 0 0 2px #f97316' } : {}),
+                      ...(rotationWarning && !spacingWarning ? { boxShadow: 'inset 0 0 0 2px #8b5cf6' } : {}),
+                      ...(rotationWarning && spacingWarning ? { boxShadow: 'inset 0 0 0 2px #f97316, inset 0 0 0 4px #8b5cf6' } : {}),
                     }}
                     className={`
                       border-r border-b border-stone-200/30 cursor-crosshair
@@ -511,11 +622,19 @@ export function GardenPage() {
                       hover:brightness-110 transition-colors duration-75
                       ${plantToPlace && (cell.type === 'veg-patch' || cell.type === 'raised-bed' || cell.type === 'flower-bed') ? 'hover:ring-1 ring-inset ring-emerald-400' : ''}
                     `}
-                    title={
-                      plant
+                    title={(() => {
+                      const base = plant
                         ? `${plant.commonName}${cell.sunHours !== null ? ` | ${cell.sunHours}h sun` : ''}${isInShadow ? ' | In shadow' : ''}`
-                        : `${cell.type}${cell.sunHours !== null ? ` | ${cell.sunHours}h sun` : ''}${isInShadow ? ' | In shadow' : ''}`
-                    }
+                        : `${cell.type}${cell.sunHours !== null ? ` | ${cell.sunHours}h sun` : ''}${isInShadow ? ' | In shadow' : ''}`;
+                      const cd = companionGrid?.[ri]?.[ci];
+                      const tags: string[] = [];
+                      if (cd?.hasFriend) tags.push('Friend nearby');
+                      if (cd?.hasFoe) tags.push('Foe nearby');
+                      if (spacingWarning) tags.push(spacingWarning);
+                      if (rotationWarning) tags.push(rotationWarning);
+                      const extra = tags.length > 0 ? ` | ${tags.join(', ')}` : '';
+                      return base + extra;
+                    })()}
                     onMouseDown={() => {
                       setIsPainting(true);
                       handleCellInteraction(ri, ci);
@@ -547,6 +666,73 @@ export function GardenPage() {
                           backgroundColor: '#1a1a2e',
                           opacity: 0.35,
                           pointerEvents: 'none',
+                        }}
+                      />
+                    )}
+                    {/* Companion planting indicator dots */}
+                    {(() => {
+                      const ci_data = companionGrid?.[ri]?.[ci];
+                      if (!ci_data) return null;
+                      const { hasFriend, hasFoe } = ci_data;
+                      if (!hasFriend && !hasFoe) return null;
+                      if (hasFriend && hasFoe) {
+                        // Both: two small dots stacked vertically in top-right
+                        return (
+                          <>
+                            <span
+                              style={{
+                                position: 'absolute', top: 1, right: 1,
+                                width: 6, height: 6, borderRadius: '50%',
+                                backgroundColor: '#34d399',
+                                zIndex: 2, pointerEvents: 'none',
+                                boxShadow: '0 0 2px rgba(0,0,0,0.3)',
+                              }}
+                            />
+                            <span
+                              style={{
+                                position: 'absolute', top: 9, right: 1,
+                                width: 6, height: 6, borderRadius: '50%',
+                                backgroundColor: '#f87171',
+                                zIndex: 2, pointerEvents: 'none',
+                                boxShadow: '0 0 2px rgba(0,0,0,0.3)',
+                              }}
+                            />
+                          </>
+                        );
+                      }
+                      return (
+                        <span
+                          style={{
+                            position: 'absolute', top: 1, right: 1,
+                            width: 7, height: 7, borderRadius: '50%',
+                            backgroundColor: hasFriend ? '#34d399' : '#f87171',
+                            zIndex: 2, pointerEvents: 'none',
+                            boxShadow: '0 0 2px rgba(0,0,0,0.3)',
+                          }}
+                        />
+                      );
+                    })()}
+                    {/* Spacing warning indicator — orange triangle, bottom-left */}
+                    {spacingWarning && (
+                      <span
+                        style={{
+                          position: 'absolute', bottom: 0, left: 0,
+                          width: 0, height: 0,
+                          borderLeft: '8px solid #f97316',
+                          borderTop: '8px solid transparent',
+                          zIndex: 3, pointerEvents: 'none',
+                        }}
+                      />
+                    )}
+                    {/* Rotation warning indicator — violet triangle, bottom-right */}
+                    {rotationWarning && (
+                      <span
+                        style={{
+                          position: 'absolute', bottom: 0, right: 0,
+                          width: 0, height: 0,
+                          borderRight: '8px solid #8b5cf6',
+                          borderTop: '8px solid transparent',
+                          zIndex: 3, pointerEvents: 'none',
                         }}
                       />
                     )}
@@ -583,6 +769,30 @@ export function GardenPage() {
               {tool.label}
             </span>
           ))}
+          {showCompanionOverlay && (
+            <>
+              <span className="flex items-center gap-1">
+                <span className="w-3 h-3 rounded-full" style={{ backgroundColor: '#34d399' }} />
+                Friend nearby
+              </span>
+              <span className="flex items-center gap-1">
+                <span className="w-3 h-3 rounded-full" style={{ backgroundColor: '#f87171' }} />
+                Foe nearby
+              </span>
+            </>
+          )}
+          {showSpacingWarnings && (
+            <span className="flex items-center gap-1">
+              <span className="w-3 h-3 border-2 border-orange-500 rounded-sm" />
+              Spacing warning
+            </span>
+          )}
+          {showRotationWarnings && (
+            <span className="flex items-center gap-1">
+              <span className="w-3 h-3 border-2 border-violet-500 rounded-sm" />
+              Rotation warning
+            </span>
+          )}
         </div>
 
         {/* Garden Plan reasoning panel */}
@@ -723,6 +933,58 @@ export function GardenPage() {
 
             <div className="p-4 border-t border-stone-100 dark:border-stone-700 text-[10px] text-stone-400 text-center">
               Paint veg patches, raised beds, and flower beds first. Auto-populate only fills painted zones.
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Save Season confirmation modal */}
+      {showSaveSeasonConfirm && (
+        <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-stone-800 rounded-2xl shadow-2xl max-w-md w-full">
+            <div className="p-6">
+              <h2 className="text-lg font-bold text-stone-800 dark:text-stone-100 flex items-center gap-2">
+                <span>&#128197;</span> Save Season Snapshot
+              </h2>
+              <p className="text-sm text-stone-500 dark:text-stone-400 mt-2">
+                Save the current garden layout as <span className="font-semibold text-violet-600 dark:text-violet-400">
+                  {getSeasonLabel(getCurrentSeasonKey())}
+                </span>? This records which crop rotation groups are planted where, helping track rotation across seasons.
+              </p>
+              {Object.keys(rotationHistory).length > 0 && (
+                <div className="mt-3 p-2 bg-stone-50 dark:bg-stone-700 rounded-lg">
+                  <p className="text-[10px] font-semibold text-stone-500 dark:text-stone-400 uppercase tracking-wide mb-1">
+                    Saved seasons
+                  </p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {Object.keys(rotationHistory).sort().map((key) => (
+                      <span
+                        key={key}
+                        className="text-[10px] px-2 py-0.5 bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-300 rounded-full"
+                      >
+                        {getSeasonLabel(key)}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+            <div className="flex justify-end gap-2 px-6 pb-6">
+              <button
+                onClick={() => setShowSaveSeasonConfirm(false)}
+                className="px-4 py-2 text-xs text-stone-500 border border-stone-200 dark:border-stone-600 rounded-lg hover:bg-stone-100 dark:hover:bg-stone-700 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => {
+                  saveSeasonSnapshot(plantMap);
+                  setShowSaveSeasonConfirm(false);
+                }}
+                className="px-4 py-2 text-xs bg-violet-600 text-white rounded-lg hover:bg-violet-700 transition-colors font-semibold"
+              >
+                Save {getSeasonLabel(getCurrentSeasonKey())}
+              </button>
             </div>
           </div>
         </div>

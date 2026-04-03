@@ -1,5 +1,7 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { useHarvestStore } from '../state/harvest-store';
+import { usePlannerStore } from '../state/planner-store';
+import { useGardenStore } from '../state/garden-store';
 import { usePlantDb } from '../data/use-plant-db';
 import { useRegion } from '../data/use-region';
 import type { Harvester } from '../types/harvest';
@@ -24,6 +26,236 @@ const HARVESTABLE_SLUGS = [
   'chives',
   'mint',
 ];
+
+// ─── "What can we pick today?" ───────────────────────────────────────────────
+
+type ReadyStatus = 'ready' | 'almost' | 'growing';
+
+interface PickableItem {
+  plant: Plant;
+  status: ReadyStatus;
+  daysUntilReady: number; // 0 or negative = ready, positive = days to go
+  source: string; // e.g. "Tower 1, Tier 3" or "Garden"
+}
+
+function getDaysBetween(dateStr: string, today: Date): number {
+  const planted = new Date(dateStr + 'T00:00:00');
+  const diff = today.getTime() - planted.getTime();
+  return Math.floor(diff / (1000 * 60 * 60 * 24));
+}
+
+function usePickableItems(): {
+  ready: PickableItem[];
+  almost: PickableItem[];
+  hasAnyPlantedDates: boolean;
+  hasAnyPlants: boolean;
+} {
+  const towers = usePlannerStore((s) => s.towers);
+  const garden = useGardenStore((s) => s.garden);
+  const region = useRegion();
+  const { plantMap } = usePlantDb(region);
+
+  return useMemo(() => {
+    const today = new Date();
+    const seen = new Map<string, PickableItem>();
+    let hasAnyPlantedDates = false;
+    let hasAnyPlants = false;
+
+    // Scan tower pockets
+    for (const tower of towers) {
+      for (const tier of tower.tiers) {
+        for (const pocket of tier.pockets) {
+          if (!pocket.plantSlug) continue;
+          hasAnyPlants = true;
+          if (!pocket.plantedDate) continue;
+          hasAnyPlantedDates = true;
+
+          const plant = plantMap.get(pocket.plantSlug);
+          if (!plant) continue;
+
+          const daysSincePlanted = getDaysBetween(pocket.plantedDate, today);
+          const earliestHarvest = plant.daysToHarvest[0];
+          const daysUntilReady = earliestHarvest - daysSincePlanted;
+
+          let status: ReadyStatus;
+          if (daysUntilReady <= 0) {
+            status = 'ready';
+          } else if (daysUntilReady <= 7) {
+            status = 'almost';
+          } else {
+            status = 'growing';
+          }
+
+          const source = `${tower.name}, Tier ${tier.tierNumber}`;
+
+          // Keep the best status per slug (ready > almost > growing)
+          const existing = seen.get(plant.slug);
+          if (
+            !existing ||
+            (status === 'ready' && existing.status !== 'ready') ||
+            (status === 'almost' && existing.status === 'growing') ||
+            daysUntilReady < existing.daysUntilReady
+          ) {
+            seen.set(plant.slug, { plant, status, daysUntilReady, source });
+          }
+        }
+      }
+    }
+
+    // Scan garden cells (no plantedDate on GardenCell, so just mark as planted)
+    for (const row of garden.cells) {
+      for (const cell of row) {
+        if (cell.plantSlug) {
+          hasAnyPlants = true;
+          // Garden cells lack plantedDate — can't compute readiness
+        }
+      }
+    }
+
+    const items = Array.from(seen.values());
+    const ready = items
+      .filter((i) => i.status === 'ready')
+      .sort((a, b) => a.daysUntilReady - b.daysUntilReady);
+    const almost = items
+      .filter((i) => i.status === 'almost')
+      .sort((a, b) => a.daysUntilReady - b.daysUntilReady);
+
+    return { ready, almost, hasAnyPlantedDates, hasAnyPlants };
+  }, [towers, garden.cells, plantMap]);
+}
+
+function ReadyToPickSection({
+  onSelectPlant,
+}: {
+  onSelectPlant: (slug: string) => void;
+}) {
+  const { ready, almost, hasAnyPlantedDates, hasAnyPlants } =
+    usePickableItems();
+
+  // Nothing planted at all
+  if (!hasAnyPlants) {
+    return (
+      <div className="bg-white dark:bg-stone-800 rounded-3xl shadow-md p-6 text-center">
+        <div className="text-5xl mb-3">🌱</div>
+        <h2 className="text-xl font-bold text-stone-700 dark:text-stone-200 mb-1">
+          What can we pick today?
+        </h2>
+        <p className="text-stone-500 dark:text-stone-400">
+          Plant something first, then we'll tell you when it's ready!
+        </p>
+      </div>
+    );
+  }
+
+  // Plants exist but none have plantedDate
+  if (!hasAnyPlantedDates) {
+    return (
+      <div className="bg-white dark:bg-stone-800 rounded-3xl shadow-md p-6 text-center">
+        <div className="text-5xl mb-3">🌱</div>
+        <h2 className="text-xl font-bold text-stone-700 dark:text-stone-200 mb-1">
+          What can we pick today?
+        </h2>
+        <p className="text-stone-500 dark:text-stone-400">
+          Plant something first, then we'll tell you when it's ready!
+        </p>
+      </div>
+    );
+  }
+
+  // Nothing ready or almost ready
+  if (ready.length === 0 && almost.length === 0) {
+    return (
+      <div className="bg-white dark:bg-stone-800 rounded-3xl shadow-md p-6 text-center">
+        <div className="text-5xl mb-3">🌱</div>
+        <h2 className="text-xl font-bold text-stone-700 dark:text-stone-200 mb-1">
+          What can we pick today?
+        </h2>
+        <p className="text-stone-500 dark:text-stone-400">
+          Nothing ready yet! Check back soon.
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="bg-white dark:bg-stone-800 rounded-3xl shadow-md overflow-hidden">
+      <div className="px-6 pt-5 pb-2">
+        <h2 className="text-xl font-bold text-stone-700 dark:text-stone-200">
+          What can we pick today?
+        </h2>
+      </div>
+
+      {/* Ready to Pick row */}
+      {ready.length > 0 && (
+        <div className="px-4 pb-3">
+          <p className="text-sm font-semibold text-emerald-600 dark:text-emerald-400 mb-2 px-2">
+            Ready to pick!
+          </p>
+          <div className="flex gap-3 overflow-x-auto pb-2 px-1 snap-x snap-mandatory scrollbar-hide">
+            {ready.map((item) => (
+              <button
+                key={item.plant.slug}
+                onClick={() => onSelectPlant(item.plant.slug)}
+                className="
+                  flex-shrink-0 snap-start flex flex-col items-center justify-center
+                  w-[88px] h-[96px] rounded-2xl
+                  bg-emerald-50 dark:bg-emerald-900/40
+                  border-2 border-emerald-300 dark:border-emerald-600
+                  shadow-md hover:shadow-lg
+                  active:scale-95 hover:scale-105
+                  transition-all duration-200
+                  animate-[pulse-gentle_2s_ease-in-out_infinite]
+                "
+              >
+                <span className="text-[52px] leading-none drop-shadow-sm">
+                  {item.plant.emoji}
+                </span>
+                <span className="text-[10px] font-bold text-emerald-700 dark:text-emerald-300 mt-1 truncate max-w-[80px] px-1">
+                  {item.plant.commonName}
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Almost Ready row */}
+      {almost.length > 0 && (
+        <div className="px-4 pb-4">
+          <p className="text-sm font-semibold text-amber-600 dark:text-amber-400 mb-2 px-2">
+            Almost ready!
+          </p>
+          <div className="flex gap-3 overflow-x-auto pb-2 px-1 snap-x snap-mandatory scrollbar-hide">
+            {almost.map((item) => (
+              <button
+                key={item.plant.slug}
+                onClick={() => onSelectPlant(item.plant.slug)}
+                className="
+                  flex-shrink-0 snap-start flex flex-col items-center justify-center
+                  w-[76px] h-[88px] rounded-2xl
+                  bg-amber-50 dark:bg-amber-900/30
+                  border-2 border-amber-200 dark:border-amber-700
+                  shadow hover:shadow-md
+                  active:scale-95 hover:scale-105
+                  transition-all duration-200
+                "
+              >
+                <span className="text-[40px] leading-none">
+                  {item.plant.emoji}
+                </span>
+                <span className="text-[10px] font-bold text-amber-700 dark:text-amber-300 mt-1">
+                  {item.daysUntilReady}d to go
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ─── End "What can we pick today?" ───────────────────────────────────────────
 
 function CelebrationOverlay({
   emoji,
@@ -89,6 +321,7 @@ function HarvestButton({
 
   return (
     <button
+      data-plant-slug={plant.slug}
       onClick={handlePick}
       className={`
         relative w-full rounded-3xl p-5 text-left transition-all duration-200
@@ -324,6 +557,29 @@ function Scoreboard() {
 
 export function HarvestPage() {
   const { harvesters } = useHarvestStore();
+  const harvestSectionRef = useRef<HTMLDivElement>(null);
+
+  // When a "ready to pick" plant is tapped, scroll down to the harvest buttons
+  // and briefly highlight the matching plant buttons
+  const handleSelectPlant = useCallback((slug: string) => {
+    if (!harvestSectionRef.current) return;
+
+    // Scroll the harvest sections into view
+    harvestSectionRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    // After scroll, find and flash the matching buttons
+    setTimeout(() => {
+      const buttons = harvestSectionRef.current?.querySelectorAll(
+        `[data-plant-slug="${slug}"]`
+      );
+      buttons?.forEach((btn) => {
+        btn.classList.add('ring-4', 'ring-emerald-400', 'scale-105');
+        setTimeout(() => {
+          btn.classList.remove('ring-4', 'ring-emerald-400', 'scale-105');
+        }, 1200);
+      });
+    }, 400);
+  }, []);
 
   return (
     <div className="h-full overflow-y-auto">
@@ -338,10 +594,15 @@ export function HarvestPage() {
           </p>
         </div>
 
+        {/* "What can we pick today?" — above the harvest picker */}
+        <ReadyToPickSection onSelectPlant={handleSelectPlant} />
+
         {/* Harvester sections */}
-        {harvesters.map((h) => (
-          <HarvesterSection key={h.id} harvester={h} />
-        ))}
+        <div ref={harvestSectionRef} className="space-y-6">
+          {harvesters.map((h) => (
+            <HarvesterSection key={h.id} harvester={h} />
+          ))}
+        </div>
 
         {/* Bottom panels */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

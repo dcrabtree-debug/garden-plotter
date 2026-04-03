@@ -51,7 +51,7 @@ function getPlantableCells(cells: GardenCell[][]): PlantableCell[] {
 
 function plantNeedsSun(plant: Plant): number {
   if (plant.sun === 'full-sun') return 6;
-  if (plant.sun === 'partial-shade' || plant.sun === 'partial-sun') return 3;
+  if (plant.sun === 'partial-shade') return 3;
   return 1;
 }
 
@@ -114,7 +114,6 @@ function companionScore(
 // Is a plant "tall" (would shade neighbours)?
 function isTallPlant(plant: Plant): boolean {
   return plant.growthHabit === 'climbing' ||
-    plant.growthHabit === 'vining' ||
     (plant.spacingCm ?? 0) >= 40 ||
     plant.slug.includes('tomato') ||
     plant.slug.includes('bean') ||

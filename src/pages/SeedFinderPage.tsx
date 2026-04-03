@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { usePlantDb } from '../data/use-plant-db';
-import { useSeedLinks, type SeedContext, type SeedVariety } from '../data/use-seed-links';
+import { useSeedLinks, type SeedContext, type SeedProduct, type SeedVariety } from '../data/use-seed-links';
 import { useRegion } from '../data/use-region';
 import { getMonthName, isInWindow } from '../lib/calendar-utils';
 import type { Plant } from '../types/plant';
@@ -241,7 +241,7 @@ function SeedCard({
           Show {varieties.length - 1} more {varieties.length - 1 === 1 ? 'variety' : 'varieties'}
         </button>
       )}
-      {showVarieties && varieties.slice(1).map((v, i) => (
+      {showVarieties && varieties.slice(1).map((v: SeedVariety, i: number) => (
         <VarietySection key={i} variety={v} sellerInfo={sellerInfo} isFirst={false} />
       ))}
 

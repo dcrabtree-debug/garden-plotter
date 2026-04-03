@@ -93,6 +93,14 @@ export function Pocket({
           <span className="text-[9px] leading-tight text-stone-600 dark:text-stone-300 text-center mt-0.5 px-0.5 truncate w-full">
             {plant.commonName.split(' ')[0]}
           </span>
+          {/* Water need indicator */}
+          <span
+            className={`absolute top-0.5 left-0.5 w-1.5 h-1.5 rounded-full ${
+              plant.water === 'high' ? 'bg-blue-500' :
+              plant.water === 'moderate' ? 'bg-blue-300' : 'bg-blue-100 dark:bg-blue-800'
+            }`}
+            title={`Water: ${plant.water}`}
+          />
           <button
             onClick={(e) => {
               e.stopPropagation();

@@ -4,7 +4,7 @@ import { usePlantDb } from '../data/use-plant-db';
 import { PlantDetail } from '../components/plant-palette/PlantDetail';
 import { useCompanionDb } from '../data/use-companion-db';
 import { useRegion } from '../data/use-region';
-import { generateGardenLayouts, type GardenLayoutOption } from '../lib/garden-auto-populate';
+import { generateGardenLayouts, type GardenLayoutOption, type PlacementReason } from '../lib/garden-auto-populate';
 import type { CellType, GardenFacing } from '../types/planner';
 import type { Plant } from '../types/plant';
 import {
@@ -130,6 +130,8 @@ export function GardenPage() {
   const [showPlantPanel, setShowPlantPanel] = useState(false);
   const [showAutoPopulate, setShowAutoPopulate] = useState(false);
   const [gardenLayouts, setGardenLayouts] = useState<GardenLayoutOption[]>([]);
+  const [gardenPlan, setGardenPlan] = useState<PlacementReason[] | null>(null);
+  const [showPlan, setShowPlan] = useState(false);
   const gridRef = useRef<HTMLDivElement>(null);
 
   const { config, cells } = garden;
@@ -446,7 +448,7 @@ export function GardenPage() {
             <h1 className="text-xl font-semibold text-stone-800 dark:text-stone-100">In-Ground Garden Plotter</h1>
             <button
               onClick={() => {
-                const layouts = generateGardenLayouts(plants, cells, config);
+                const layouts = generateGardenLayouts(plants, cells, config, companionMap);
                 setGardenLayouts(layouts);
                 setShowAutoPopulate(true);
               }}
@@ -582,6 +584,51 @@ export function GardenPage() {
             </span>
           ))}
         </div>
+
+        {/* Garden Plan reasoning panel */}
+        {gardenPlan && gardenPlan.length > 0 && (
+          <div className="mt-4">
+            <button
+              onClick={() => setShowPlan(!showPlan)}
+              className="flex items-center gap-2 text-sm font-semibold text-stone-700 dark:text-stone-300 hover:text-emerald-700 dark:hover:text-emerald-400 transition-colors"
+            >
+              <span>{showPlan ? '▼' : '▶'}</span>
+              Garden Plan — Why plants are placed here ({gardenPlan.length} decisions)
+            </button>
+            {showPlan && (
+              <div className="mt-2 bg-white dark:bg-stone-800 rounded-xl border border-stone-200 dark:border-stone-700 divide-y divide-stone-100 dark:divide-stone-700 max-h-96 overflow-y-auto">
+                {gardenPlan.map((item, i) => (
+                  <div key={i} className="px-4 py-2.5 flex items-start gap-3">
+                    <span className="text-base mt-0.5">
+                      {plantMap.get(item.plantSlug)?.emoji ?? '🌱'}
+                    </span>
+                    <div className="flex-1 min-w-0">
+                      <div className="text-xs font-semibold text-stone-700 dark:text-stone-200">
+                        {item.plantName}
+                        <span className="font-normal text-stone-400 ml-2">
+                          row {item.row + 1}, col {item.col + 1}
+                        </span>
+                      </div>
+                      <ul className="mt-0.5 space-y-0.5">
+                        {item.reasons.map((reason, ri) => (
+                          <li key={ri} className={`text-[10px] ${
+                            reason.startsWith('Companion:')
+                              ? 'text-emerald-600 dark:text-emerald-400'
+                              : reason.startsWith('Warning:')
+                                ? 'text-amber-600 dark:text-amber-400'
+                                : 'text-stone-500 dark:text-stone-400'
+                          }`}>
+                            {reason}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
       </div>
 
       {/* Plant detail modal */}
@@ -632,10 +679,16 @@ export function GardenPage() {
                       <p className="text-xs text-stone-500 dark:text-stone-400 mt-1">
                         {layout.description}
                       </p>
-                      <div className="flex gap-3 mt-2 text-[10px] text-stone-400">
+                      <div className="flex gap-3 mt-2 text-[10px] text-stone-400 flex-wrap">
                         <span>{layout.stats.totalPlanted} cells planted</span>
                         <span>{layout.stats.uniquePlants} unique plants</span>
                         <span>Avg {layout.stats.avgSunHours}h sun</span>
+                        {layout.stats.companionPairs > 0 && (
+                          <span className="text-emerald-600 dark:text-emerald-400">{layout.stats.companionPairs} companion pairings</span>
+                        )}
+                        {layout.stats.conflictsAvoided > 0 && (
+                          <span className="text-amber-600 dark:text-amber-400">{layout.stats.conflictsAvoided} conflicts avoided</span>
+                        )}
                       </div>
                     </div>
 
@@ -655,6 +708,8 @@ export function GardenPage() {
                         for (const p of layout.placements) {
                           store.plantInCell(p.row, p.col, p.plantSlug);
                         }
+                        setGardenPlan(layout.reasoning);
+                        setShowPlan(true);
                         setShowAutoPopulate(false);
                       }}
                       className="ml-4 px-4 py-2 bg-emerald-600 text-white text-xs font-semibold rounded-lg hover:bg-emerald-700 transition-colors shrink-0"

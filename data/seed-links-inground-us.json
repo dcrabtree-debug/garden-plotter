@@ -1,0 +1,1301 @@
+[
+  {
+    "slug": "strawberry-everbearing",
+    "commonName": "Everbearing Strawberry",
+    "varieties": [
+      {
+        "name": "Chandler",
+        "why": "UC Davis bred, large firm fruit, exceptional flavour, commercial standard in CA",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/fruit-plants/strawberry-plants/strawberry-chandler-prod002030.html",
+            "priceUSD": 16.99,
+            "recommended": true
+          },
+          {
+            "seller": "Park Seed",
+            "url": "https://www.parkseed.com/chandler-strawberry-plants/p/05900/",
+            "priceUSD": 14.95
+          },
+          {
+            "seller": "Territorial Seed Company",
+            "url": "https://www.territorialseed.com/product/chandler-strawberry-plants",
+            "priceUSD": 12.75
+          }
+        ]
+      },
+      {
+        "name": "Camarosa",
+        "why": "Leading CA commercial variety, huge yields, intense strawberry flavour",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/fruit-plants/strawberry-plants/strawberry-camarosa-prod002035.html",
+            "priceUSD": 17.99
+          },
+          {
+            "seller": "Territorial Seed Company",
+            "url": "https://www.territorialseed.com/product/camarosa-strawberry-plants",
+            "priceUSD": 13.75
+          },
+          {
+            "seller": "Park Seed",
+            "url": "https://www.parkseed.com/camarosa-strawberry-plants/p/05905/",
+            "priceUSD": 15.95
+          }
+        ]
+      },
+      {
+        "name": "Ozark Beauty",
+        "why": "Everbearing classic, produces spring through fall, very adaptable",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/fruit-plants/strawberry-plants/strawberry-ozark-beauty-prod002010.html",
+            "priceUSD": 14.99
+          },
+          {
+            "seller": "Park Seed",
+            "url": "https://www.parkseed.com/ozark-beauty-strawberry-plants/p/05892/",
+            "priceUSD": 13.95
+          },
+          {
+            "seller": "Johnny's Selected Seeds",
+            "url": "https://www.johnnyseeds.com/fruit/strawberries/ozark-beauty-strawberry-plants-1050.html",
+            "priceUSD": 12.95
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "tomato-tumbling",
+    "commonName": "Tomato (Garden Varieties)",
+    "varieties": [
+      {
+        "name": "Early Girl",
+        "why": "Classic indeterminate, early maturity 50 days, reliable heavy yields",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/tomato-early-girl-hybrid-prod000760.html",
+            "priceUSD": 5.95,
+            "recommended": true
+          },
+          {
+            "seller": "Park Seed",
+            "url": "https://www.parkseed.com/early-girl-tomato-seeds/p/05250/",
+            "priceUSD": 5.45
+          },
+          {
+            "seller": "Johnny's Selected Seeds",
+            "url": "https://www.johnnyseeds.com/vegetables/tomatoes/slicing-tomatoes/early-girl-f1-tomato-seed-2450.html",
+            "priceUSD": 5.25
+          }
+        ]
+      },
+      {
+        "name": "Brandywine",
+        "why": "Heritage heirloom since 1885, incredible beefsteak flavour, large fruits",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rfrareseeds.com/brandywine-pink-tomato",
+            "priceUSD": 2.75,
+            "badge": "Non-GMO Pledge"
+          },
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/tomato-brandywine-pink-prod000770.html",
+            "priceUSD": 5.95
+          },
+          {
+            "seller": "Johnny's Selected Seeds",
+            "url": "https://www.johnnyseeds.com/vegetables/tomatoes/heirloom-tomatoes/brandywine-pink-tomato-seed-2455.html",
+            "priceUSD": 4.95
+          }
+        ]
+      },
+      {
+        "name": "Sun Gold",
+        "why": "AAS Winner, orange cherry, intensely sweet, prolific indeterminate vine",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Johnny's Selected Seeds",
+            "url": "https://www.johnnyseeds.com/vegetables/tomatoes/cherry-tomatoes/sun-gold-f1-tomato-seed-2460.html",
+            "priceUSD": 5.75,
+            "badge": "AAS Winner"
+          },
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/tomato-sun-gold-hybrid-prod000775.html",
+            "priceUSD": 5.95
+          },
+          {
+            "seller": "Park Seed",
+            "url": "https://www.parkseed.com/sun-gold-tomato-seeds/p/05260/",
+            "priceUSD": 5.45
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "basil-sweet",
+    "commonName": "Sweet Basil",
+    "varieties": [
+      {
+        "name": "Genovese",
+        "why": "Classic Italian large-leaf, best for pesto, full-size 24-inch garden plant",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Johnny's Selected Seeds",
+            "url": "https://www.johnnyseeds.com/herbs/basil/sweet-basil/genovese-organic-basil-seed-970G.html",
+            "priceUSD": 4.25,
+            "badge": "USDA Organic",
+            "recommended": true
+          },
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rfrareseeds.com/genovese-basil",
+            "priceUSD": 2.50
+          },
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/herbs/basil/basil-sweet-genovese-prod000484.html",
+            "priceUSD": 5.49
+          }
+        ]
+      },
+      {
+        "name": "African Blue",
+        "why": "Perennial in SoCal, stunning purple-veined leaves, pollinators love it",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rfrareseeds.com/african-blue-basil",
+            "priceUSD": 2.75
+          },
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/herbs/basil/basil-african-blue-prod000488.html",
+            "priceUSD": 12.99
+          },
+          {
+            "seller": "Park Seed",
+            "url": "https://www.parkseed.com/african-blue-basil-plant/p/05635/",
+            "priceUSD": 11.95
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "bush-bean",
+    "commonName": "Bush Bean",
+    "varieties": [
+      {
+        "name": "Blue Lake Bush",
+        "why": "Classic American garden bean, stringless, heavy yields, 55-day maturity",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rfrareseeds.com/blue-lake-bush-bean",
+            "priceUSD": 3.50,
+            "badge": "Non-GMO Pledge",
+            "recommended": true
+          },
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/bean-bush-blue-lake-274-prod000100.html",
+            "priceUSD": 5.95
+          },
+          {
+            "seller": "Johnny's Selected Seeds",
+            "url": "https://www.johnnyseeds.com/vegetables/beans/bush-beans/blue-lake-274-bush-bean-seed-2035.html",
+            "priceUSD": 5.25
+          }
+        ]
+      },
+      {
+        "name": "Kentucky Wonder (Pole)",
+        "why": "Heritage climbing bean since 1877, massive yields, needs pole structure",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rfrareseeds.com/kentucky-wonder-pole-bean",
+            "priceUSD": 3.50
+          },
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/bean-pole-kentucky-wonder-prod000115.html",
+            "priceUSD": 5.95
+          },
+          {
+            "seller": "Johnny's Selected Seeds",
+            "url": "https://www.johnnyseeds.com/vegetables/beans/pole-beans/kentucky-wonder-pole-bean-seed-2060.html",
+            "priceUSD": 5.25
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "perpetual-spinach",
+    "commonName": "Spinach",
+    "varieties": [
+      {
+        "name": "Bloomsdale Long Standing",
+        "why": "Heritage savoy type since 1908, slow bolting, large yields in open ground",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rfrareseeds.com/bloomsdale-long-standing-spinach",
+            "priceUSD": 2.50,
+            "badge": "Non-GMO Pledge",
+            "recommended": true
+          },
+          {
+            "seller": "Johnny's Selected Seeds",
+            "url": "https://www.johnnyseeds.com/vegetables/greens/spinach/bloomsdale-long-standing-organic-spinach-seed-2835G.html",
+            "priceUSD": 4.25,
+            "badge": "USDA Organic"
+          },
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/spinach-bloomsdale-long-standing-prod000443.html",
+            "priceUSD": 5.25
+          }
+        ]
+      },
+      {
+        "name": "Giant Noble",
+        "why": "Enormous leaves, highest yield per row foot, great for SoCal winter growing",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rfrareseeds.com/giant-noble-spinach",
+            "priceUSD": 2.50
+          },
+          {
+            "seller": "Territorial Seed Company",
+            "url": "https://www.territorialseed.com/product/giant-noble-spinach-seeds",
+            "priceUSD": 3.45
+          },
+          {
+            "seller": "Johnny's Selected Seeds",
+            "url": "https://www.johnnyseeds.com/vegetables/greens/spinach/giant-noble-spinach-seed-2840.html",
+            "priceUSD": 3.95
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "swiss-chard",
+    "commonName": "Swiss Chard",
+    "varieties": [
+      {
+        "name": "Fordhook Giant",
+        "why": "Large vigorous plant, heavy yields, thick white stems, heat tolerant",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rfrareseeds.com/fordhook-giant-swiss-chard",
+            "priceUSD": 2.50,
+            "badge": "Non-GMO Pledge",
+            "recommended": true
+          },
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/swiss-chard-fordhook-giant-prod000575.html",
+            "priceUSD": 5.25
+          },
+          {
+            "seller": "Johnny's Selected Seeds",
+            "url": "https://www.johnnyseeds.com/vegetables/greens/chard-swiss/fordhook-giant-swiss-chard-seed-2845.html",
+            "priceUSD": 4.25
+          }
+        ]
+      },
+      {
+        "name": "Ruby Red",
+        "why": "Deep crimson stems, ornamental kitchen garden classic, vigorous grower",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rfrareseeds.com/ruby-red-swiss-chard",
+            "priceUSD": 2.75
+          },
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/swiss-chard-ruby-red-prod000580.html",
+            "priceUSD": 5.95
+          },
+          {
+            "seller": "Park Seed",
+            "url": "https://www.parkseed.com/ruby-red-swiss-chard-seeds/p/05410/",
+            "priceUSD": 4.95
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "lettuce",
+    "commonName": "Lettuce",
+    "varieties": [
+      {
+        "name": "Iceberg (Great Lakes)",
+        "why": "Full-size crisphead, large firm hearts, heat tolerant strains available",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rfrareseeds.com/great-lakes-lettuce",
+            "priceUSD": 2.50,
+            "badge": "Non-GMO Pledge",
+            "recommended": true
+          },
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/lettuce-iceberg-great-lakes-prod000345.html",
+            "priceUSD": 5.25
+          },
+          {
+            "seller": "Johnny's Selected Seeds",
+            "url": "https://www.johnnyseeds.com/vegetables/lettuce/crisphead-lettuce/great-lakes-lettuce-seed-2760.html",
+            "priceUSD": 3.95
+          }
+        ]
+      },
+      {
+        "name": "Romaine (Parris Island Cos)",
+        "why": "Classic Caesar salad lettuce, tall upright heads, heat tolerant",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rfrareseeds.com/parris-island-cos-romaine-lettuce",
+            "priceUSD": 2.50
+          },
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/lettuce-romaine-parris-island-prod000350.html",
+            "priceUSD": 5.25
+          },
+          {
+            "seller": "Territorial Seed Company",
+            "url": "https://www.territorialseed.com/product/parris-island-cos-romaine-lettuce-seeds",
+            "priceUSD": 3.45
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "kale",
+    "commonName": "Kale",
+    "varieties": [
+      {
+        "name": "Red Russian",
+        "why": "Tall ornamental purple-veined leaves, very cold hardy, sweet flavour",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rfrareseeds.com/red-russian-kale",
+            "priceUSD": 2.50,
+            "badge": "Non-GMO Pledge",
+            "recommended": true
+          },
+          {
+            "seller": "Johnny's Selected Seeds",
+            "url": "https://www.johnnyseeds.com/vegetables/kale/red-russian-organic-kale-seed-2205G.html",
+            "priceUSD": 4.25,
+            "badge": "USDA Organic"
+          },
+          {
+            "seller": "Territorial Seed Company",
+            "url": "https://www.territorialseed.com/product/red-russian-kale-seeds",
+            "priceUSD": 3.75
+          }
+        ]
+      },
+      {
+        "name": "Winterbor",
+        "why": "Extra curly, 36-inch plants, supreme cold hardiness, heavy yields",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Johnny's Selected Seeds",
+            "url": "https://www.johnnyseeds.com/vegetables/kale/winterbor-f1-kale-seed-2210.html",
+            "priceUSD": 5.25
+          },
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/kale-winterbor-f1-prod000335.html",
+            "priceUSD": 5.95
+          },
+          {
+            "seller": "Park Seed",
+            "url": "https://www.parkseed.com/winterbor-kale-seeds/p/05335/",
+            "priceUSD": 5.45
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "zucchini",
+    "commonName": "Zucchini",
+    "varieties": [
+      {
+        "name": "Black Beauty",
+        "why": "Classic dark green, prolific cropper, bushy but needs 3-foot spacing",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rfrareseeds.com/black-beauty-zucchini",
+            "priceUSD": 2.75,
+            "badge": "Non-GMO Pledge",
+            "recommended": true
+          },
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/squash-summer-zucchini-black-beauty-prod000455.html",
+            "priceUSD": 5.95
+          },
+          {
+            "seller": "Park Seed",
+            "url": "https://www.parkseed.com/black-beauty-zucchini-seeds/p/05398/",
+            "priceUSD": 5.45
+          }
+        ]
+      },
+      {
+        "name": "Costata Romanesco",
+        "why": "Italian heirloom, ribbed nutty flesh, outstanding flavour when picked small",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rfrareseeds.com/costata-romanesco-zucchini",
+            "priceUSD": 2.75
+          },
+          {
+            "seller": "Johnny's Selected Seeds",
+            "url": "https://www.johnnyseeds.com/vegetables/squash/summer-squash/costata-romanesco-zucchini-seed-2700.html",
+            "priceUSD": 4.50
+          },
+          {
+            "seller": "Territorial Seed Company",
+            "url": "https://www.territorialseed.com/product/costata-romanesco-zucchini-seeds",
+            "priceUSD": 3.95
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "cucumber",
+    "commonName": "Cucumber",
+    "varieties": [
+      {
+        "name": "Marketmore 76",
+        "why": "Cornell bred, disease resistant, reliable slicer, outdoor garden standard",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rfrareseeds.com/marketmore-76-cucumber",
+            "priceUSD": 2.50,
+            "badge": "Non-GMO Pledge",
+            "recommended": true
+          },
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/cucumber-marketmore-76-prod000315.html",
+            "priceUSD": 5.25
+          },
+          {
+            "seller": "Johnny's Selected Seeds",
+            "url": "https://www.johnnyseeds.com/vegetables/cucumbers/slicing-cucumbers/marketmore-76-organic-cucumber-seed-2150G.html",
+            "priceUSD": 4.25,
+            "badge": "USDA Organic"
+          }
+        ]
+      },
+      {
+        "name": "Lemon",
+        "why": "Heritage round yellow fruits, prolific vining plant, mild sweet flavour",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rfrareseeds.com/lemon-cucumber",
+            "priceUSD": 2.75
+          },
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/cucumber-lemon-prod000320.html",
+            "priceUSD": 5.95
+          },
+          {
+            "seller": "Territorial Seed Company",
+            "url": "https://www.territorialseed.com/product/lemon-cucumber-seeds",
+            "priceUSD": 3.45
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "pepper-chilli",
+    "commonName": "Hot Pepper",
+    "varieties": [
+      {
+        "name": "Jalape\u00f1o",
+        "why": "Mexican classic, thick-walled, medium heat, heavy outdoor yields",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rfrareseeds.com/jalapeno-pepper",
+            "priceUSD": 2.75,
+            "badge": "Non-GMO Pledge",
+            "recommended": true
+          },
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/pepper-hot-jalapeno-early-prod000400.html",
+            "priceUSD": 5.49
+          },
+          {
+            "seller": "Johnny's Selected Seeds",
+            "url": "https://www.johnnyseeds.com/vegetables/peppers/hot-peppers/jalapeno-m-pepper-seed-2400.html",
+            "priceUSD": 4.50
+          }
+        ]
+      },
+      {
+        "name": "Serrano",
+        "why": "Hotter than jalape\u00f1o, prolific in SoCal heat, essential for salsa",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rfrareseeds.com/serrano-pepper",
+            "priceUSD": 2.75
+          },
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/pepper-hot-serrano-prod000408.html",
+            "priceUSD": 5.49
+          },
+          {
+            "seller": "Park Seed",
+            "url": "https://www.parkseed.com/serrano-hot-pepper-seeds/p/05465/",
+            "priceUSD": 4.95
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "bell-pepper",
+    "commonName": "Bell Pepper",
+    "varieties": [
+      {
+        "name": "California Wonder",
+        "why": "Classic bell, thick walls, 75-day maturity, green to red, heavy yields",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rfrareseeds.com/california-wonder-pepper",
+            "priceUSD": 2.50,
+            "badge": "Non-GMO Pledge",
+            "recommended": true
+          },
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/pepper-sweet-california-wonder-prod000395.html",
+            "priceUSD": 5.25
+          },
+          {
+            "seller": "Johnny's Selected Seeds",
+            "url": "https://www.johnnyseeds.com/vegetables/peppers/sweet-peppers/california-wonder-pepper-seed-2380.html",
+            "priceUSD": 4.25
+          }
+        ]
+      },
+      {
+        "name": "King of the North",
+        "why": "Early maturing, sets fruit in cooler temps, adaptable across zones",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rfrareseeds.com/king-of-the-north-pepper",
+            "priceUSD": 2.75
+          },
+          {
+            "seller": "Territorial Seed Company",
+            "url": "https://www.territorialseed.com/product/king-of-the-north-pepper-seeds",
+            "priceUSD": 3.95
+          },
+          {
+            "seller": "Johnny's Selected Seeds",
+            "url": "https://www.johnnyseeds.com/vegetables/peppers/sweet-peppers/king-of-the-north-pepper-seed-2385.html",
+            "priceUSD": 4.50
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "eggplant",
+    "commonName": "Eggplant",
+    "varieties": [
+      {
+        "name": "Black Beauty",
+        "why": "Classic large purple eggplant, heavy yields in warm climates, 80-day maturity",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rfrareseeds.com/black-beauty-eggplant",
+            "priceUSD": 2.75,
+            "badge": "Non-GMO Pledge",
+            "recommended": true
+          },
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/eggplant-black-beauty-prod000325.html",
+            "priceUSD": 5.95
+          },
+          {
+            "seller": "Park Seed",
+            "url": "https://www.parkseed.com/black-beauty-eggplant-seeds/p/05350/",
+            "priceUSD": 4.95
+          }
+        ]
+      },
+      {
+        "name": "Ichiban",
+        "why": "Japanese long type, prolific in SoCal heat, tender skin, no bitterness",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/eggplant-ichiban-prod000328.html",
+            "priceUSD": 5.95
+          },
+          {
+            "seller": "Johnny's Selected Seeds",
+            "url": "https://www.johnnyseeds.com/vegetables/eggplant/ichiban-eggplant-seed-2100.html",
+            "priceUSD": 5.25
+          },
+          {
+            "seller": "Territorial Seed Company",
+            "url": "https://www.territorialseed.com/product/ichiban-eggplant-seeds",
+            "priceUSD": 3.95
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "sweet-potato",
+    "commonName": "Sweet Potato",
+    "varieties": [
+      {
+        "name": "Beauregard",
+        "why": "USDA standard, orange flesh, 90-day maturity, excellent in Zone 10b",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/sweet-potato-beauregard-prod000465.html",
+            "priceUSD": 14.99,
+            "recommended": true
+          },
+          {
+            "seller": "Park Seed",
+            "url": "https://www.parkseed.com/beauregard-sweet-potato-slips/p/05470/",
+            "priceUSD": 13.95
+          },
+          {
+            "seller": "Territorial Seed Company",
+            "url": "https://www.territorialseed.com/product/beauregard-sweet-potato-slips",
+            "priceUSD": 12.95
+          }
+        ]
+      },
+      {
+        "name": "Georgia Jet",
+        "why": "Early 90-day, red skin orange flesh, high yields, good for shorter seasons",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/sweet-potato-georgia-jet-prod000468.html",
+            "priceUSD": 14.99
+          },
+          {
+            "seller": "Park Seed",
+            "url": "https://www.parkseed.com/georgia-jet-sweet-potato-slips/p/05475/",
+            "priceUSD": 13.95
+          },
+          {
+            "seller": "Johnny's Selected Seeds",
+            "url": "https://www.johnnyseeds.com/vegetables/sweet-potatoes/georgia-jet-sweet-potato-slips-1060.html",
+            "priceUSD": 12.75
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "corn",
+    "commonName": "Sweet Corn",
+    "varieties": [
+      {
+        "name": "Golden Bantam",
+        "why": "Heritage classic since 1902, sweet yellow kernels, 80-day maturity",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rfrareseeds.com/golden-bantam-corn",
+            "priceUSD": 3.50,
+            "badge": "Non-GMO Pledge",
+            "recommended": true
+          },
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/corn-golden-bantam-prod000310.html",
+            "priceUSD": 5.95
+          },
+          {
+            "seller": "Johnny's Selected Seeds",
+            "url": "https://www.johnnyseeds.com/vegetables/corn/sweet-corn/golden-bantam-corn-seed-2130.html",
+            "priceUSD": 4.95
+          }
+        ]
+      },
+      {
+        "name": "Peaches & Cream",
+        "why": "Bicolor supersweet, 85-day, AAS Winner, excellent fresh eating",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/corn-peaches-cream-prod000312.html",
+            "priceUSD": 6.49,
+            "badge": "AAS Winner"
+          },
+          {
+            "seller": "Park Seed",
+            "url": "https://www.parkseed.com/peaches-and-cream-corn-seeds/p/05300/",
+            "priceUSD": 5.95
+          },
+          {
+            "seller": "Johnny's Selected Seeds",
+            "url": "https://www.johnnyseeds.com/vegetables/corn/sweet-corn/peaches-cream-corn-seed-2135.html",
+            "priceUSD": 5.75
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "watermelon",
+    "commonName": "Watermelon",
+    "varieties": [
+      {
+        "name": "Crimson Sweet",
+        "why": "Classic 25-lb melon, disease resistant, 85-day maturity, thrives in SoCal",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rfrareseeds.com/crimson-sweet-watermelon",
+            "priceUSD": 2.75,
+            "badge": "Non-GMO Pledge",
+            "recommended": true
+          },
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/watermelon-crimson-sweet-prod000530.html",
+            "priceUSD": 5.95
+          },
+          {
+            "seller": "Park Seed",
+            "url": "https://www.parkseed.com/crimson-sweet-watermelon-seeds/p/05500/",
+            "priceUSD": 4.95
+          }
+        ]
+      },
+      {
+        "name": "Sugar Baby",
+        "why": "Compact 8-10 lb icebox type, smaller vine, 75-day maturity, sweet red flesh",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rfrareseeds.com/sugar-baby-watermelon",
+            "priceUSD": 2.50
+          },
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/watermelon-sugar-baby-prod000535.html",
+            "priceUSD": 5.25
+          },
+          {
+            "seller": "Territorial Seed Company",
+            "url": "https://www.territorialseed.com/product/sugar-baby-watermelon-seeds",
+            "priceUSD": 3.45
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "cantaloupe",
+    "commonName": "Cantaloupe / Melon",
+    "varieties": [
+      {
+        "name": "Hale's Best Jumbo",
+        "why": "Heritage since 1923, bred for hot climates, sweet orange flesh, 85-day",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rfrareseeds.com/hales-best-jumbo-cantaloupe",
+            "priceUSD": 2.75,
+            "badge": "Non-GMO Pledge",
+            "recommended": true
+          },
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/cantaloupe-hales-best-jumbo-prod000300.html",
+            "priceUSD": 5.25
+          },
+          {
+            "seller": "Park Seed",
+            "url": "https://www.parkseed.com/hales-best-jumbo-cantaloupe-seeds/p/05290/",
+            "priceUSD": 4.95
+          }
+        ]
+      },
+      {
+        "name": "Ambrosia",
+        "why": "Extra-sweet hybrid, small cavity, thick flesh, AAS Winner",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/cantaloupe-ambrosia-hybrid-prod000305.html",
+            "priceUSD": 6.49,
+            "badge": "AAS Winner"
+          },
+          {
+            "seller": "Park Seed",
+            "url": "https://www.parkseed.com/ambrosia-cantaloupe-seeds/p/05295/",
+            "priceUSD": 5.45
+          },
+          {
+            "seller": "Johnny's Selected Seeds",
+            "url": "https://www.johnnyseeds.com/vegetables/melons/cantaloupe/ambrosia-cantaloupe-seed-2120.html",
+            "priceUSD": 5.75
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "okra",
+    "commonName": "Okra",
+    "varieties": [
+      {
+        "name": "Clemson Spineless",
+        "why": "AAS Winner, spineless pods, 55-day maturity, thrives in SoCal heat",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rfrareseeds.com/clemson-spineless-okra",
+            "priceUSD": 2.75,
+            "badge": "AAS Winner",
+            "recommended": true
+          },
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/okra-clemson-spineless-prod000380.html",
+            "priceUSD": 5.25
+          },
+          {
+            "seller": "Park Seed",
+            "url": "https://www.parkseed.com/clemson-spineless-okra-seeds/p/05375/",
+            "priceUSD": 4.95
+          }
+        ]
+      },
+      {
+        "name": "Burgundy",
+        "why": "Stunning red pods, ornamental and productive, 60-day maturity",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rfrareseeds.com/burgundy-okra",
+            "priceUSD": 2.75
+          },
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/okra-burgundy-prod000382.html",
+            "priceUSD": 5.95
+          },
+          {
+            "seller": "Johnny's Selected Seeds",
+            "url": "https://www.johnnyseeds.com/vegetables/okra/burgundy-okra-seed-2350.html",
+            "priceUSD": 4.50
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "squash-winter",
+    "commonName": "Winter Squash",
+    "varieties": [
+      {
+        "name": "Butternut Waltham",
+        "why": "AAS Winner, stores 3+ months, sweet nutty flesh, vigorous trailing vine",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rfrareseeds.com/waltham-butternut-squash",
+            "priceUSD": 2.75,
+            "badge": "AAS Winner",
+            "recommended": true
+          },
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/squash-winter-waltham-butternut-prod000460.html",
+            "priceUSD": 5.95
+          },
+          {
+            "seller": "Johnny's Selected Seeds",
+            "url": "https://www.johnnyseeds.com/vegetables/squash/winter-squash/waltham-butternut-squash-seed-2720.html",
+            "priceUSD": 4.50
+          }
+        ]
+      },
+      {
+        "name": "Delicata",
+        "why": "Edible skin, sweet flavour, smaller vine, 100-day, easy for beginners",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rfrareseeds.com/delicata-squash",
+            "priceUSD": 2.75
+          },
+          {
+            "seller": "Territorial Seed Company",
+            "url": "https://www.territorialseed.com/product/delicata-winter-squash-seeds",
+            "priceUSD": 3.95
+          },
+          {
+            "seller": "Johnny's Selected Seeds",
+            "url": "https://www.johnnyseeds.com/vegetables/squash/winter-squash/delicata-squash-seed-2725.html",
+            "priceUSD": 4.25
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "pumpkin",
+    "commonName": "Pumpkin",
+    "varieties": [
+      {
+        "name": "Jack O'Lantern",
+        "why": "Classic 10-15 lb carving pumpkin, 100-day, kids love growing for Halloween",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rfrareseeds.com/jack-o-lantern-pumpkin",
+            "priceUSD": 2.75,
+            "badge": "Non-GMO Pledge",
+            "recommended": true
+          },
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/pumpkin-jack-o-lantern-prod000410.html",
+            "priceUSD": 5.95
+          },
+          {
+            "seller": "Park Seed",
+            "url": "https://www.parkseed.com/jack-o-lantern-pumpkin-seeds/p/05390/",
+            "priceUSD": 4.95
+          }
+        ]
+      },
+      {
+        "name": "Sugar Pie",
+        "why": "Best baking pumpkin, sweet dense flesh, 5-8 lb, 100-day maturity",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rfrareseeds.com/sugar-pie-pumpkin",
+            "priceUSD": 2.75
+          },
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/pumpkin-sugar-pie-prod000412.html",
+            "priceUSD": 5.25
+          },
+          {
+            "seller": "Johnny's Selected Seeds",
+            "url": "https://www.johnnyseeds.com/vegetables/pumpkins/sugar-pie-pumpkin-seed-2740.html",
+            "priceUSD": 4.50
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "pea",
+    "commonName": "Pea",
+    "varieties": [
+      {
+        "name": "Sugar Snap",
+        "why": "AAS Winner, edible pods, 6-foot vines, needs trellis, incredible fresh flavour",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/pea-sugar-snap-prod000399.html",
+            "priceUSD": 6.95,
+            "badge": "AAS Winner",
+            "recommended": true
+          },
+          {
+            "seller": "Johnny's Selected Seeds",
+            "url": "https://www.johnnyseeds.com/vegetables/peas/snap-peas/sugar-snap-organic-pea-seed-2542G.html",
+            "priceUSD": 5.95,
+            "badge": "USDA Organic"
+          },
+          {
+            "seller": "Territorial Seed Company",
+            "url": "https://www.territorialseed.com/product/sugar-snap-pea-seeds",
+            "priceUSD": 4.95
+          }
+        ]
+      },
+      {
+        "name": "Oregon Sugar Pod II",
+        "why": "Snow pea, flat edible pods, 3-foot vines, prolific producer, stir-fry favourite",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Territorial Seed Company",
+            "url": "https://www.territorialseed.com/product/oregon-sugar-pod-ii-pea-seeds",
+            "priceUSD": 4.95
+          },
+          {
+            "seller": "Johnny's Selected Seeds",
+            "url": "https://www.johnnyseeds.com/vegetables/peas/snow-peas/oregon-sugar-pod-ii-pea-seed-2550.html",
+            "priceUSD": 5.25
+          },
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rfrareseeds.com/oregon-sugar-pod-ii-pea",
+            "priceUSD": 3.50
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "carrot",
+    "commonName": "Carrot",
+    "varieties": [
+      {
+        "name": "Scarlet Nantes",
+        "why": "Sweet cylindrical roots, deep root run suits open ground, 70-day maturity",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rfrareseeds.com/scarlet-nantes-carrot",
+            "priceUSD": 2.50,
+            "badge": "Non-GMO Pledge",
+            "recommended": true
+          },
+          {
+            "seller": "Johnny's Selected Seeds",
+            "url": "https://www.johnnyseeds.com/vegetables/carrots/scarlet-nantes-organic-carrot-seed-2081G.html",
+            "priceUSD": 3.95,
+            "badge": "USDA Organic"
+          },
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/carrot-scarlet-nantes-prod000308.html",
+            "priceUSD": 5.25
+          }
+        ]
+      },
+      {
+        "name": "Rainbow Blend",
+        "why": "Purple, yellow, white and orange roots, kids love pulling different colours",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rfrareseeds.com/rainbow-blend-carrot",
+            "priceUSD": 2.75
+          },
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/carrot-rainbow-blend-prod000310.html",
+            "priceUSD": 5.95
+          },
+          {
+            "seller": "Johnny's Selected Seeds",
+            "url": "https://www.johnnyseeds.com/vegetables/carrots/rainbow-blend-carrot-seed-2090.html",
+            "priceUSD": 4.50
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "beet",
+    "commonName": "Beet",
+    "varieties": [
+      {
+        "name": "Detroit Dark Red",
+        "why": "Classic garden beet, deep red, reliable 55-day maturity, stores well",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rfrareseeds.com/detroit-dark-red-beet",
+            "priceUSD": 2.50,
+            "badge": "Non-GMO Pledge",
+            "recommended": true
+          },
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/beet-detroit-dark-red-prod000474.html",
+            "priceUSD": 5.25
+          },
+          {
+            "seller": "Johnny's Selected Seeds",
+            "url": "https://www.johnnyseeds.com/vegetables/beets/detroit-dark-red-organic-beet-seed-2016G.html",
+            "priceUSD": 3.95,
+            "badge": "USDA Organic"
+          }
+        ]
+      },
+      {
+        "name": "Chioggia",
+        "why": "Italian heirloom, candy-stripe interior, kids love slicing them open",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rfrareseeds.com/chioggia-beet",
+            "priceUSD": 2.75
+          },
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/beet-chioggia-prod000478.html",
+            "priceUSD": 5.95
+          },
+          {
+            "seller": "Territorial Seed Company",
+            "url": "https://www.territorialseed.com/product/chioggia-beet-seeds",
+            "priceUSD": 3.45
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "sunflower",
+    "commonName": "Sunflower",
+    "varieties": [
+      {
+        "name": "Mammoth Grey Stripe",
+        "why": "Classic giant 8-10 foot, huge seed heads, edible seeds, race to grow tallest",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rfrareseeds.com/mammoth-grey-stripe-sunflower",
+            "priceUSD": 2.75,
+            "badge": "Non-GMO Pledge",
+            "recommended": true
+          },
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/sunflower-mammoth-prod000260.html",
+            "priceUSD": 5.95
+          },
+          {
+            "seller": "Park Seed",
+            "url": "https://www.parkseed.com/mammoth-sunflower-seeds/p/05080/",
+            "priceUSD": 4.95
+          }
+        ]
+      },
+      {
+        "name": "Autumn Beauty",
+        "why": "Multi-coloured mix, 6-foot branching, multiple blooms per plant",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rfrareseeds.com/autumn-beauty-sunflower",
+            "priceUSD": 2.75
+          },
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/sunflower-autumn-beauty-prod000268.html",
+            "priceUSD": 5.49
+          },
+          {
+            "seller": "Territorial Seed Company",
+            "url": "https://www.territorialseed.com/product/autumn-beauty-sunflower-seeds",
+            "priceUSD": 3.95
+          }
+        ]
+      }
+    ]
+  }
+]

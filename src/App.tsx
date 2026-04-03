@@ -7,10 +7,11 @@ import { CalendarPage } from './pages/CalendarPage';
 import { CarePage } from './pages/CarePage';
 import { KnowledgeBasePage } from './pages/KnowledgeBasePage';
 import { SettingsPage } from './pages/SettingsPage';
+import { SetupGuidePage } from './pages/SetupGuidePage';
 import { useDarkMode } from './hooks/use-dark-mode';
 import { usePlannerStore } from './state/planner-store';
 
-type Page = 'planner' | 'garden' | 'harvest' | 'seeds' | 'care' | 'calendar' | 'knowledge' | 'settings';
+type Page = 'planner' | 'garden' | 'harvest' | 'seeds' | 'care' | 'setup' | 'calendar' | 'knowledge' | 'settings';
 
 const navItems: { id: Page; label: string; icon: string }[] = [
   { id: 'planner', label: 'GreenStalk', icon: '\ud83c\udf31' },
@@ -18,6 +19,7 @@ const navItems: { id: Page; label: string; icon: string }[] = [
   { id: 'harvest', label: 'Harvest', icon: '\ud83c\udf53' },
   { id: 'seeds', label: 'Seeds', icon: '\ud83d\udecd\ufe0f' },
   { id: 'care', label: 'Care', icon: '\ud83e\ude7a' },
+  { id: 'setup', label: 'Setup', icon: '\ud83d\udee0\ufe0f' },
   { id: 'calendar', label: 'Calendar', icon: '\ud83d\udcc5' },
   { id: 'knowledge', label: 'Plants', icon: '\ud83d\udcda' },
   { id: 'settings', label: 'Settings', icon: '\u2699\ufe0f' },
@@ -78,6 +80,7 @@ function App() {
           {page === 'harvest' && <HarvestPage />}
           {page === 'seeds' && <SeedFinderPage />}
           {page === 'care' && <CarePage />}
+          {page === 'setup' && <SetupGuidePage />}
           {page === 'calendar' && <CalendarPage />}
           {page === 'knowledge' && <KnowledgeBasePage />}
           {page === 'settings' && <SettingsPage />}

@@ -2,19 +2,33 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+html {
+  scroll-behavior: smooth;
+  transition: background-color 0.2s, color 0.2s;
+}
+
 body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+::selection {
+  background-color: #34d399;
+  color: #1c1917;
+}
+
 #root {
   height: 100vh;
 }
 
-/* Dark mode base transitions */
-html {
-  transition: background-color 0.2s, color 0.2s;
+/* Page transition */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fadeIn {
+  animation: fadeIn 0.2s ease-out;
 }
 
 /* Dark mode scrollbar styling */
@@ -42,4 +56,30 @@ html {
 }
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
+}
+
+/* Shimmer effect for premium buttons */
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+.shimmer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.12) 50%,
+    transparent 100%
+  );
+  animation: shimmer 2.5s ease-in-out infinite;
+}
+
+/* Companion dot glow effects */
+.glow-emerald {
+  box-shadow: 0 0 4px rgba(52, 211, 153, 0.5);
+}
+.glow-red {
+  box-shadow: 0 0 4px rgba(248, 113, 113, 0.5);
 }

@@ -186,7 +186,7 @@ export function PlannerPage() {
     >
       <div className="flex h-full">
         {/* Sidebar: Plant Palette */}
-        <div className="w-64 border-r border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 flex-shrink-0 overflow-hidden flex flex-col">
+        <div className="w-64 border-r border-stone-200 dark:border-stone-700/50 bg-stone-50 dark:bg-stone-900/50 dark:backdrop-blur-sm flex-shrink-0 overflow-hidden flex flex-col">
           <PlantPalette
             plants={plants}
             onSelectPlant={handlePaletteSelect}
@@ -203,7 +203,7 @@ export function PlannerPage() {
               </h1>
               <button
                 onClick={handleAutoPopulate}
-                className="px-3 py-1.5 text-xs bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors flex items-center gap-1.5"
+                className="shimmer relative overflow-hidden px-4 py-2 text-xs font-semibold bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white rounded-full shadow-lg shadow-emerald-500/20 transition-all duration-200 flex items-center gap-1.5"
               >
                 <span>✨</span> Auto-Populate
               </button>
@@ -258,7 +258,7 @@ export function PlannerPage() {
             {/* Add tower button */}
             <button
               onClick={addTower}
-              className="border-2 border-dashed border-stone-300 dark:border-stone-600 rounded-2xl p-8 flex flex-col items-center justify-center gap-2 text-stone-400 dark:text-stone-500 hover:border-emerald-400 dark:hover:border-emerald-600 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors min-h-[200px]"
+              className="border-2 border-dashed border-stone-300 dark:border-stone-600 rounded-2xl p-8 flex flex-col items-center justify-center gap-2 text-stone-400 dark:text-stone-500 hover:border-emerald-500 dark:hover:border-emerald-500 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors min-h-[200px]"
             >
               <span className="text-3xl">+</span>
               <span className="text-sm font-medium">Add GreenStalk</span>

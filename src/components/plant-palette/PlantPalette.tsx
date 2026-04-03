@@ -39,17 +39,22 @@ export function PlantPalette({ plants, onSelectPlant, activePlantSlug }: PlantPa
 
   return (
     <div className="flex flex-col h-full">
-      <div className="p-3 border-b border-stone-200 dark:border-stone-700">
+      <div className="p-3 border-b border-stone-700/50">
         <h2 className="text-sm font-semibold text-stone-700 dark:text-stone-200 mb-2">
           Plant Palette
         </h2>
-        <input
-          type="text"
-          placeholder="Search plants..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="w-full px-2.5 py-1.5 text-sm border border-stone-200 dark:border-stone-600 rounded-lg bg-stone-50 dark:bg-stone-700 dark:text-stone-100 focus:outline-none focus:border-stone-400 dark:focus:border-stone-500 focus:bg-white dark:focus:bg-stone-600 transition-colors"
-        />
+        <div className="relative">
+          <svg className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-stone-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+          <input
+            type="text"
+            placeholder="Search plants..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="w-full pl-8 pr-3 py-1.5 text-sm border border-stone-200 dark:border-stone-600 rounded-full bg-stone-50 dark:bg-stone-700 dark:text-stone-100 focus:outline-none focus:border-stone-400 dark:focus:border-stone-500 focus:bg-white dark:focus:bg-stone-600 transition-colors shadow-inner"
+          />
+        </div>
         <div className="flex flex-wrap gap-1 mt-2">
           {categories.map((cat) => (
             <button
@@ -57,7 +62,7 @@ export function PlantPalette({ plants, onSelectPlant, activePlantSlug }: PlantPa
               onClick={() => setCategory(cat.value)}
               className={`text-[10px] px-2 py-0.5 rounded-full transition-colors ${
                 category === cat.value
-                  ? 'bg-stone-800 text-white dark:bg-stone-200 dark:text-stone-900'
+                  ? 'bg-emerald-600 text-white dark:bg-emerald-600 dark:text-white'
                   : 'bg-stone-100 dark:bg-stone-700 text-stone-500 dark:text-stone-400 hover:bg-stone-200 dark:hover:bg-stone-600'
               }`}
             >

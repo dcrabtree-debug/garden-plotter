@@ -109,9 +109,9 @@ function VarietySection({ variety, sellerInfo, isFirst }: {
   return (
     <div className={`${!isFirst ? 'mt-3 pt-3 border-t border-stone-200/50 dark:border-stone-700/50' : 'mt-3'}`}>
       <div className="flex items-center gap-2 mb-1.5">
-        <span className="text-xs font-semibold text-stone-700 dark:text-stone-200">{variety.name}</span>
+        <span className="text-lg font-semibold text-stone-700 dark:text-stone-200">{variety.name}</span>
         {isFirst && (
-          <span className="text-[8px] px-1.5 py-0.5 bg-emerald-200 dark:bg-emerald-800 text-emerald-800 dark:text-emerald-200 rounded font-semibold">RECOMMENDED</span>
+          <span className="bg-emerald-500 text-white text-[10px] font-bold uppercase tracking-wider rounded-full px-2 py-0.5">RECOMMENDED</span>
         )}
       </div>
       {variety.why && (
@@ -144,15 +144,15 @@ function VarietySection({ variety, sellerInfo, isFirst }: {
                   <div className="text-[9px] text-stone-400">{sellerMeta.badge}</div>
                 )}
               </div>
-              <div className="text-[11px] font-bold text-stone-600 dark:text-stone-300">{link.price}</div>
-              <span className="text-stone-300 group-hover:text-emerald-500 transition-colors text-xs">&rarr;</span>
+              <div className="text-[11px] font-semibold text-emerald-400">{link.price}</div>
+              <span className="text-stone-300 group-hover:text-emerald-500 group-hover:translate-x-1 transition-all text-xs">&rarr;</span>
             </a>
           );
         })}
         {variety.links.length > 3 && !showAll && (
           <button
             onClick={() => setShowAll(true)}
-            className="text-[10px] text-stone-400 hover:text-stone-600 dark:hover:text-stone-300 ml-1"
+            className="rounded-full text-sm text-emerald-400 hover:text-emerald-300 transition-colors ml-1"
           >
             +{variety.links.length - 3} more sellers
           </button>
@@ -181,23 +181,23 @@ function SeedCard({
 
   return (
     <div
-      className={`rounded-2xl border-2 p-4 transition-all ${
+      className={`rounded-2xl shadow-lg p-4 transition-all ${
         timing === 'buy-now'
-          ? 'border-emerald-300 dark:border-emerald-700 bg-emerald-50 dark:bg-emerald-900/20'
+          ? 'bg-gradient-to-br from-emerald-900/30 to-emerald-950/30 border border-emerald-700/50'
           : timing === 'buy-soon'
-            ? 'border-amber-300 dark:border-amber-700 bg-amber-50 dark:bg-amber-900/20'
-            : 'border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 opacity-60'
+            ? 'border border-amber-300 dark:border-amber-700 bg-amber-50 dark:bg-amber-900/20'
+            : 'border border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 opacity-60'
       }`}
     >
       <div className="flex items-start gap-3">
         <span className="text-4xl">{plant.emoji}</span>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2">
-            <h3 className="text-sm font-bold text-stone-800 dark:text-stone-100 truncate">
+            <h3 className="font-semibold text-lg text-stone-800 dark:text-stone-100 truncate">
               {plant.commonName}
             </h3>
             {timing === 'buy-now' && (
-              <span className="text-[10px] px-2 py-0.5 bg-emerald-200 text-emerald-800 rounded-full font-semibold shrink-0">
+              <span className="text-[11px] px-2.5 py-0.5 bg-emerald-500 text-white rounded-full font-bold uppercase tracking-wider shrink-0 animate-pulse">
                 BUY NOW
               </span>
             )}
@@ -225,7 +225,7 @@ function SeedCard({
       {hasMultiple && !showVarieties && (
         <button
           onClick={() => setShowVarieties(true)}
-          className="mt-2 text-[10px] text-emerald-600 dark:text-emerald-400 hover:text-emerald-800 dark:hover:text-emerald-300 font-medium"
+          className="mt-2 rounded-full text-sm text-emerald-400 hover:text-emerald-300 transition-colors font-medium"
         >
           Show {varieties.length - 1} more {varieties.length - 1 === 1 ? 'variety' : 'varieties'}
         </button>
@@ -280,8 +280,8 @@ export function SeedFinderPage() {
       <div className="max-w-4xl mx-auto px-4 py-6">
         {/* Header */}
         <div className="mb-4">
-          <h1 className="text-2xl font-bold text-stone-800 dark:text-stone-100">Seed Finder</h1>
-          <p className="text-sm text-stone-500 mt-1">
+          <h1 className="text-3xl font-bold tracking-tight text-stone-800 dark:text-stone-100">Seed Finder</h1>
+          <p className="text-sm text-stone-400 mt-1">
             {isUS
               ? 'What to buy now for your SoCal garden. All sellers are AHS members or USDA-certified.'
               : 'What to buy now for your Surrey garden. All sellers are RHS-endorsed or hold Royal Warrants.'}
@@ -289,23 +289,23 @@ export function SeedFinderPage() {
         </div>
 
         {/* GreenStalk / In-Ground tabs */}
-        <div className="flex gap-1 mb-5 bg-stone-100 dark:bg-stone-700 p-1 rounded-xl w-fit">
+        <div className="bg-stone-800/50 rounded-full p-1 inline-flex mb-5">
           <button
             onClick={() => setSeedContext('greenstalk')}
-            className={`text-xs px-4 py-2 rounded-lg font-medium transition-colors ${
+            className={`text-xs px-4 py-2 rounded-full font-medium transition-colors ${
               seedContext === 'greenstalk'
-                ? 'bg-white dark:bg-stone-600 text-stone-800 dark:text-stone-100 shadow-sm'
-                : 'text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-300'
+                ? 'bg-emerald-600 text-white shadow-sm'
+                : 'bg-stone-800 text-stone-400 hover:bg-stone-700'
             }`}
           >
             <span className="mr-1.5">🌱</span>GreenStalk Varieties
           </button>
           <button
             onClick={() => setSeedContext('inground')}
-            className={`text-xs px-4 py-2 rounded-lg font-medium transition-colors ${
+            className={`text-xs px-4 py-2 rounded-full font-medium transition-colors ${
               seedContext === 'inground'
-                ? 'bg-white dark:bg-stone-600 text-stone-800 dark:text-stone-100 shadow-sm'
-                : 'text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-300'
+                ? 'bg-emerald-600 text-white shadow-sm'
+                : 'bg-stone-800 text-stone-400 hover:bg-stone-700'
             }`}
           >
             <span className="mr-1.5">🏡</span>In-Ground Varieties
@@ -358,8 +358,10 @@ export function SeedFinderPage() {
         </div>
 
         {/* Trusted sellers banner */}
-        <div className="bg-stone-50 dark:bg-stone-800 rounded-xl border border-stone-200 dark:border-stone-700 p-3 mb-5">
-          <h3 className="text-[10px] text-stone-500 uppercase tracking-wide mb-2">Trusted Sellers</h3>
+        <div className="bg-stone-50 dark:bg-stone-800 rounded-2xl border border-stone-200/60 dark:border-stone-700/60 p-4 mb-5">
+          <h3 className="text-[10px] text-stone-500 uppercase tracking-wide mb-2 flex items-center gap-1.5">
+            <span className="text-emerald-500">🌿</span>Trusted Sellers
+          </h3>
           <div className="flex gap-4 flex-wrap text-xs text-stone-600 dark:text-stone-400">
             {Object.values(sellerInfo).map((s) => (
               <span key={s.name} className="flex items-center gap-1">

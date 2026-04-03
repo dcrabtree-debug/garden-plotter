@@ -47,7 +47,7 @@ export function TowerView({
   );
 
   return (
-    <div className="bg-white dark:bg-stone-800 rounded-2xl shadow-sm border border-stone-200 dark:border-stone-700 p-5">
+    <div className="bg-white dark:bg-stone-800/80 rounded-2xl shadow-lg border border-stone-200 dark:border-stone-700/50 p-6">
       <div className="flex items-center justify-between mb-4">
         <div>
           <input
@@ -84,10 +84,10 @@ export function TowerView({
 
       <div className="mt-3 flex items-center gap-4 text-[10px] text-stone-400">
         <span className="flex items-center gap-1">
-          <span className="w-2 h-2 rounded-full bg-emerald-400" /> Friends nearby
+          <span className="w-2 h-2 rounded-full bg-emerald-400 glow-emerald" /> Friends nearby
         </span>
         <span className="flex items-center gap-1">
-          <span className="w-2 h-2 rounded-full bg-red-400" /> Conflict
+          <span className="w-2 h-2 rounded-full bg-red-400 glow-red" /> Conflict
         </span>
         <span className="flex items-center gap-1">
           <span className="w-2 h-2 rounded-full border border-stone-300" /> Neutral

@@ -28,53 +28,57 @@ function App() {
 
   return (
     <div className="h-screen flex flex-col bg-stone-100 dark:bg-stone-900 transition-colors">
-      {/* Top nav */}
-      <header className="bg-white dark:bg-stone-800 border-b border-stone-200 dark:border-stone-700 px-4 py-2 flex items-center justify-between flex-shrink-0">
-        <div className="flex items-center gap-2">
-          <span className="text-xl">{'\ud83c\udf3f'}</span>
-          <h1 className="text-base font-semibold text-stone-800 dark:text-stone-100">
-            Garden Plotter
-          </h1>
-          <span className="text-[10px] text-stone-400 dark:text-stone-500 ml-1">
-            {location.includes('Manhattan') ? 'Manhattan Beach, CA' : 'Surrey, UK'}
-          </span>
-        </div>
-        <div className="flex items-center gap-2">
-          <nav className="flex gap-1">
-            {navItems.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => setPage(item.id)}
-                className={`px-3 py-1.5 rounded-lg text-sm transition-colors flex items-center gap-1.5 ${
-                  page === item.id
-                    ? 'bg-stone-800 text-white dark:bg-stone-200 dark:text-stone-900'
-                    : 'text-stone-500 hover:bg-stone-100 dark:text-stone-400 dark:hover:bg-stone-700'
-                }`}
-              >
-                <span className="text-sm">{item.icon}</span>
-                {item.label}
-              </button>
-            ))}
-          </nav>
+      {/* Header */}
+      <header className="bg-white dark:bg-stone-800 border-b border-emerald-200/40 dark:border-emerald-900/30 px-4 py-4 flex-shrink-0">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <span className="text-2xl">{'\ud83c\udf3f'}</span>
+            <h1 className="text-xl font-bold tracking-tight text-stone-800 dark:text-stone-100">
+              Garden Plotter
+            </h1>
+            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-stone-100 text-stone-500 dark:bg-stone-700 dark:text-stone-400">
+              {'\ud83c\udf0d'} {location.includes('Manhattan') ? 'Manhattan Beach, CA' : 'Surrey, UK'}
+            </span>
+          </div>
           <button
             onClick={toggleDark}
-            className="ml-2 p-1.5 rounded-lg text-sm hover:bg-stone-100 dark:hover:bg-stone-700 transition-colors"
+            className="p-2 rounded-full text-sm hover:bg-stone-100 dark:hover:bg-stone-700 transition-colors"
             title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
           >
             {isDark ? '\u2600\ufe0f' : '\ud83c\udf19'}
           </button>
         </div>
+
+        {/* Tab navigation */}
+        <nav className="mt-3 -mb-1 flex gap-2 overflow-x-auto scrollbar-hide">
+          {navItems.map((item) => (
+            <button
+              key={item.id}
+              onClick={() => setPage(item.id)}
+              className={`px-3.5 py-1.5 rounded-full text-sm font-medium whitespace-nowrap flex items-center gap-1.5 transition-all duration-200 ${
+                page === item.id
+                  ? 'bg-emerald-600 text-white shadow-sm dark:bg-emerald-500 dark:text-white'
+                  : 'text-stone-500 hover:text-stone-700 hover:bg-stone-100 dark:text-stone-400 dark:hover:text-stone-200 dark:hover:bg-stone-700/50'
+              }`}
+            >
+              <span className="text-sm">{item.icon}</span>
+              {item.label}
+            </button>
+          ))}
+        </nav>
       </header>
 
       {/* Page content */}
       <main className="flex-1 overflow-hidden">
-        {page === 'planner' && <PlannerPage />}
-        {page === 'garden' && <GardenPage />}
-        {page === 'harvest' && <HarvestPage />}
-        {page === 'seeds' && <SeedFinderPage />}
-        {page === 'calendar' && <CalendarPage />}
-        {page === 'knowledge' && <KnowledgeBasePage />}
-        {page === 'settings' && <SettingsPage />}
+        <div key={page} className="h-full animate-fadeIn">
+          {page === 'planner' && <PlannerPage />}
+          {page === 'garden' && <GardenPage />}
+          {page === 'harvest' && <HarvestPage />}
+          {page === 'seeds' && <SeedFinderPage />}
+          {page === 'calendar' && <CalendarPage />}
+          {page === 'knowledge' && <KnowledgeBasePage />}
+          {page === 'settings' && <SettingsPage />}
+        </div>
       </main>
     </div>
   );

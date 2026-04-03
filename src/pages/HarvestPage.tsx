@@ -135,9 +135,9 @@ function ReadyToPickSection({
   // Nothing planted at all
   if (!hasAnyPlants) {
     return (
-      <div className="bg-white dark:bg-stone-800 rounded-3xl shadow-md p-6 text-center">
+      <div className="bg-gradient-to-br from-stone-800 to-stone-900 rounded-2xl shadow-lg border border-stone-700/50 p-8 text-center">
         <div className="text-5xl mb-3">🌱</div>
-        <h2 className="text-xl font-bold text-stone-700 dark:text-stone-200 mb-1">
+        <h2 className="text-xl font-bold text-stone-700 dark:text-stone-200 mb-2">
           What can we pick today?
         </h2>
         <p className="text-stone-500 dark:text-stone-400">
@@ -150,9 +150,9 @@ function ReadyToPickSection({
   // Plants exist but none have plantedDate
   if (!hasAnyPlantedDates) {
     return (
-      <div className="bg-white dark:bg-stone-800 rounded-3xl shadow-md p-6 text-center">
+      <div className="bg-gradient-to-br from-stone-800 to-stone-900 rounded-2xl shadow-lg border border-stone-700/50 p-8 text-center">
         <div className="text-5xl mb-3">🌱</div>
-        <h2 className="text-xl font-bold text-stone-700 dark:text-stone-200 mb-1">
+        <h2 className="text-xl font-bold text-stone-700 dark:text-stone-200 mb-2">
           What can we pick today?
         </h2>
         <p className="text-stone-500 dark:text-stone-400">
@@ -165,9 +165,9 @@ function ReadyToPickSection({
   // Nothing ready or almost ready
   if (ready.length === 0 && almost.length === 0) {
     return (
-      <div className="bg-white dark:bg-stone-800 rounded-3xl shadow-md p-6 text-center">
+      <div className="bg-gradient-to-br from-stone-800 to-stone-900 rounded-2xl shadow-lg border border-stone-700/50 p-8 text-center">
         <div className="text-5xl mb-3">🌱</div>
-        <h2 className="text-xl font-bold text-stone-700 dark:text-stone-200 mb-1">
+        <h2 className="text-xl font-bold text-stone-700 dark:text-stone-200 mb-2">
           What can we pick today?
         </h2>
         <p className="text-stone-500 dark:text-stone-400">
@@ -178,7 +178,7 @@ function ReadyToPickSection({
   }
 
   return (
-    <div className="bg-white dark:bg-stone-800 rounded-3xl shadow-md overflow-hidden">
+    <div className="bg-gradient-to-br from-stone-800 to-stone-900 rounded-2xl shadow-lg border border-stone-700/50 overflow-hidden">
       <div className="px-6 pt-5 pb-2">
         <h2 className="text-xl font-bold text-stone-700 dark:text-stone-200">
           What can we pick today?
@@ -324,8 +324,8 @@ function HarvestButton({
       data-plant-slug={plant.slug}
       onClick={handlePick}
       className={`
-        relative w-full rounded-3xl p-5 text-left transition-all duration-200
-        active:scale-95 hover:scale-[1.02] shadow-lg hover:shadow-xl
+        relative w-full rounded-2xl p-5 text-left transition-transform duration-150
+        active:scale-95 hover:scale-105 shadow-md hover:shadow-xl
         ${justPicked ? 'scale-110 ring-4 ring-yellow-400' : ''}
       `}
       style={{
@@ -346,9 +346,9 @@ function HarvestButton({
         </div>
       </div>
 
-      {/* Pick badge */}
+      {/* Pick badge — upward bounce */}
       {justPicked && (
-        <div className="absolute -top-2 -right-2 text-3xl animate-bounce">
+        <div className="absolute -top-3 -right-2 text-3xl font-bold text-yellow-400 drop-shadow-md animate-bounce">
           +1
         </div>
       )}
@@ -414,12 +414,12 @@ function HarvesterSection({ harvester }: { harvester: Harvester }) {
         style={{ background: `${harvester.color}20` }}
       >
         <div className="flex items-center gap-3">
-          <span className="text-4xl">{harvester.emoji}</span>
+          <span className="text-3xl">{harvester.emoji}</span>
           <div>
-            <h2 className="text-2xl font-bold" style={{ color: harvester.color }}>
+            <h2 className="text-2xl font-bold tracking-tight" style={{ color: harvester.color }}>
               {harvester.name}'s Garden
             </h2>
-            <p className="text-sm text-stone-500">
+            <p className="text-sm text-stone-400 font-medium">
               {totalToday} picked today | {totalAll} total
             </p>
           </div>
@@ -431,7 +431,7 @@ function HarvesterSection({ harvester }: { harvester: Harvester }) {
             <span
               key={m.id}
               title={m.label}
-              className="text-2xl hover:scale-125 transition-transform cursor-default"
+              className="text-2xl bg-gradient-to-br from-amber-600/20 to-amber-700/20 border border-amber-600/30 rounded-xl px-1.5 py-0.5 hover:scale-125 transition-transform cursor-default shadow-[0_0_8px_rgba(217,119,6,0.25)]"
             >
               {m.emoji}
             </span>
@@ -542,7 +542,7 @@ function Scoreboard() {
               <div className="text-[10px] text-stone-500">total picked</div>
               <div className="flex justify-center gap-1 mt-2">
                 {badges.map((m) => (
-                  <span key={m.id} className="text-lg" title={m.label}>
+                  <span key={m.id} className="text-lg bg-gradient-to-br from-amber-600/20 to-amber-700/20 border border-amber-600/30 rounded-xl px-1 py-0.5 shadow-[0_0_6px_rgba(217,119,6,0.2)]" title={m.label}>
                     {m.emoji}
                   </span>
                 ))}

@@ -28,10 +28,19 @@ export function TierRow({
 }: TierRowProps) {
   const removePlant = usePlannerStore((s) => s.removePlant);
 
+  // Gradient: top tiers warmer/lighter, bottom tiers cooler
+  const tierGradient = (() => {
+    const total = 6;
+    const warmth = 1 - (tier.tierNumber - 1) / (total - 1); // 1.0 at top, 0.0 at bottom
+    if (warmth > 0.6) return 'bg-amber-500/[0.03] dark:bg-amber-400/[0.04]';
+    if (warmth > 0.3) return 'bg-stone-500/[0.02] dark:bg-stone-400/[0.02]';
+    return 'bg-sky-500/[0.03] dark:bg-sky-400/[0.03]';
+  })();
+
   return (
-    <div className="flex items-center gap-3">
+    <div className={`flex items-center gap-3 rounded-lg px-2 py-1 ${tierGradient}`}>
       <div className="w-16 text-right">
-        <div className="text-xs font-medium text-stone-600">
+        <div className="text-xs font-semibold uppercase tracking-widest text-stone-500">
           {getTierLabel(tier.tierNumber)}
         </div>
         <div className="text-[10px] text-stone-400" title={getTierAdvice(tier.tierNumber)}>

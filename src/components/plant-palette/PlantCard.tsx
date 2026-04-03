@@ -31,8 +31,9 @@ export function PlantCard({ plant, onSelect, isActive }: PlantCardProps) {
         onSelect(plant);
       }}
       className={`
-        flex items-center gap-2 px-3 py-2 rounded-lg border
+        flex items-center gap-2 px-3 py-2 rounded-xl border
         cursor-pointer transition-all select-none
+        hover:scale-[1.02] transition-transform duration-150
         ${
           isActive
             ? 'border-emerald-400 bg-emerald-50 dark:bg-emerald-900/30 ring-2 ring-emerald-200 dark:ring-emerald-800 shadow-sm'

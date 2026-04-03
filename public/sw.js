@@ -1,10 +1,14 @@
-const CACHE_NAME = 'garden-plotter-v1';
+const CACHE_NAME = 'garden-plotter-v2';
 const ASSETS_TO_CACHE = [
   '/garden-plotter/',
   '/garden-plotter/index.html',
   '/garden-plotter/data/plants.json',
+  '/garden-plotter/data/plants-us.json',
   '/garden-plotter/data/companions.json',
-  '/garden-plotter/data/seed-links.json',
+  '/garden-plotter/data/seed-links-greenstalk.json',
+  '/garden-plotter/data/seed-links-inground.json',
+  '/garden-plotter/data/seed-links-greenstalk-us.json',
+  '/garden-plotter/data/seed-links-inground-us.json',
 ];
 
 self.addEventListener('install', (event) => {

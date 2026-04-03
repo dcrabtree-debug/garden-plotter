@@ -57,7 +57,7 @@ export function CalendarPage() {
 
   if (plantedPlants.length === 0) {
     return (
-      <div className="flex items-center justify-center h-full text-stone-400">
+      <div className="flex items-center justify-center h-full text-stone-400 dark:text-stone-500">
         <div className="text-center">
           <p className="text-lg mb-1">No plants in your towers yet</p>
           <p className="text-sm">
@@ -70,16 +70,16 @@ export function CalendarPage() {
 
   return (
     <div className="h-full overflow-y-auto p-6 max-w-5xl mx-auto">
-      <h1 className="text-xl font-semibold text-stone-800 mb-1">
+      <h1 className="text-xl font-semibold text-stone-800 dark:text-stone-100 mb-1">
         Seasonal Calendar
       </h1>
       <p className="text-sm text-stone-400 mb-6">
         Surrey, UK growing season — showing your planted crops
       </p>
 
-      <div className="bg-white rounded-2xl shadow-sm border border-stone-200 overflow-hidden">
+      <div className="bg-white dark:bg-stone-800 rounded-2xl shadow-sm border border-stone-200 dark:border-stone-700 overflow-hidden">
         {/* Month headers */}
-        <div className="flex items-center border-b border-stone-100 px-4 py-2">
+        <div className="flex items-center border-b border-stone-100 dark:border-stone-700 px-4 py-2">
           <div className="w-40" />
           <div className="flex flex-1 gap-px">
             {MONTHS.map((m) => (
@@ -87,10 +87,10 @@ export function CalendarPage() {
                 key={m}
                 className={`flex-1 text-center text-[10px] font-medium ${
                   m === currentMonth
-                    ? 'text-emerald-600'
+                    ? 'text-emerald-600 dark:text-emerald-400'
                     : m < SURREY_LAST_FROST_MONTH || m > SURREY_FIRST_FROST_MONTH
-                      ? 'text-blue-400'
-                      : 'text-stone-400'
+                      ? 'text-blue-400 dark:text-blue-300'
+                      : 'text-stone-400 dark:text-stone-500'
                 }`}
               >
                 {getMonthName(m)}
@@ -100,15 +100,15 @@ export function CalendarPage() {
         </div>
 
         {/* Frost overlay row */}
-        <div className="flex items-center border-b border-stone-50 px-4 py-1">
-          <div className="w-40 text-[10px] text-stone-400">Frost risk</div>
+        <div className="flex items-center border-b border-stone-50 dark:border-stone-700 px-4 py-1">
+          <div className="w-40 text-[10px] text-stone-400 dark:text-stone-500">Frost risk</div>
           <div className="flex flex-1 gap-px">
             {MONTHS.map((m) => (
               <div
                 key={m}
                 className={`flex-1 h-2 rounded-sm ${
                   m < SURREY_LAST_FROST_MONTH || m > SURREY_FIRST_FROST_MONTH
-                    ? 'bg-blue-100'
+                    ? 'bg-blue-100 dark:bg-blue-900/40'
                     : 'bg-transparent'
                 }`}
               />
@@ -137,40 +137,40 @@ export function CalendarPage() {
           return (
             <div
               key={plant.slug}
-              className="flex items-center border-t border-stone-50 px-4 py-2 hover:bg-stone-50 transition-colors"
+              className="flex items-center border-t border-stone-50 dark:border-stone-700 px-4 py-2 hover:bg-stone-50 dark:hover:bg-stone-700 transition-colors"
             >
               <div className="w-40 flex items-center gap-2">
                 <span className="text-sm">{plant.emoji}</span>
-                <span className="text-xs font-medium text-stone-700 truncate">
+                <span className="text-xs font-medium text-stone-700 dark:text-stone-200 truncate">
                   {plant.commonName}
                 </span>
               </div>
               <div className="flex-1 space-y-0.5">
-                <CalendarBar window={w.sowIndoors} color="bg-sky-200" />
-                <CalendarBar window={w.sowOutdoors} color="bg-emerald-200" />
-                <CalendarBar window={w.transplant} color="bg-amber-200" />
-                <CalendarBar window={w.harvest} color="bg-rose-200" />
+                <CalendarBar window={w.sowIndoors} color="bg-sky-200 dark:bg-sky-800" />
+                <CalendarBar window={w.sowOutdoors} color="bg-emerald-200 dark:bg-emerald-800" />
+                <CalendarBar window={w.transplant} color="bg-amber-200 dark:bg-amber-800" />
+                <CalendarBar window={w.harvest} color="bg-rose-200 dark:bg-rose-800" />
               </div>
             </div>
           );
         })}
 
         {/* Legend */}
-        <div className="flex items-center gap-4 px-4 py-3 border-t border-stone-100 text-[10px] text-stone-400">
+        <div className="flex items-center gap-4 px-4 py-3 border-t border-stone-100 dark:border-stone-700 text-[10px] text-stone-400 dark:text-stone-500">
           <span className="flex items-center gap-1">
-            <span className="w-3 h-2 rounded-sm bg-sky-200" /> Sow indoors
+            <span className="w-3 h-2 rounded-sm bg-sky-200 dark:bg-sky-800" /> Sow indoors
           </span>
           <span className="flex items-center gap-1">
-            <span className="w-3 h-2 rounded-sm bg-emerald-200" /> Sow outdoors
+            <span className="w-3 h-2 rounded-sm bg-emerald-200 dark:bg-emerald-800" /> Sow outdoors
           </span>
           <span className="flex items-center gap-1">
-            <span className="w-3 h-2 rounded-sm bg-amber-200" /> Transplant
+            <span className="w-3 h-2 rounded-sm bg-amber-200 dark:bg-amber-800" /> Transplant
           </span>
           <span className="flex items-center gap-1">
-            <span className="w-3 h-2 rounded-sm bg-rose-200" /> Harvest
+            <span className="w-3 h-2 rounded-sm bg-rose-200 dark:bg-rose-800" /> Harvest
           </span>
           <span className="flex items-center gap-1">
-            <span className="w-3 h-2 rounded-sm bg-blue-100" /> Frost risk
+            <span className="w-3 h-2 rounded-sm bg-blue-100 dark:bg-blue-900/40" /> Frost risk
           </span>
         </div>
       </div>

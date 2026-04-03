@@ -133,11 +133,8 @@ export function useSeedLinks(
     }
 
     const file = fileForContext(region, context);
-    // Also try legacy filenames as fallback
-    const legacyFile = region === 'us' ? 'seed-links-us.json' : 'seed-links.json';
     const paths = [
       `/data/${file}`, `/garden-plotter/data/${file}`,
-      `/data/${legacyFile}`, `/garden-plotter/data/${legacyFile}`,
     ];
 
     async function tryFetch() {

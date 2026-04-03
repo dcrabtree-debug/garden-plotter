@@ -54,8 +54,15 @@ function alternate(a: Plant | undefined, b: Plant | undefined, count: number): P
 
 /**
  * Strategy 1: Kids' Picking Towers
- * Strawberries & tomatoes at easy picking height on BOTH towers,
- * with proven companion plants. Optimized for Max (5) and Noelle (3).
+ * Variety-aware tier placement for Tumbling Tom (trailing determinate) and
+ * nasturtiums (vigorous trailing). Optimized for Max (5) and Noelle (3).
+ *
+ * Tier layout (top→bottom = tier 1→5):
+ *   1 (top):    Herbs — drought-tolerant, tiny footprint, zero shading
+ *   2:          Tumbling Tom + basil — fruit hangs clean, basil companion
+ *   3 (middle): Strawberries + lettuce — kid-height picking, living mulch
+ *   4:          Strawberries + spinach — more berries, spinach loves shade
+ *   5 (bottom): Beans + nasturtium + marigold — trailing on ground only
  */
 function familyHarvestLayout(plants: Plant[]): LayoutOption {
   const suitable = plants.filter((p) => p.greenstalkSuitability !== 'unsuitable');
@@ -63,38 +70,37 @@ function familyHarvestLayout(plants: Plant[]): LayoutOption {
 
   const strawberry = f('strawberry');
   const tomato = f('tomato');
-  const basil = f('basil');       // tomato companion
-  const bean = f('french-bean');  // tomato companion (nitrogen fixer)
-  const lettuce = f('lettuce');   // strawberry companion
-  const chives = f('chives');     // strawberry + tomato companion
-  const thyme = f('thyme');       // strawberry companion (deters slugs)
-  const parsley = f('parsley');   // tomato companion (attracts hoverflies)
-  const nasturtium = f('nasturtium'); // tomato companion (trap crop)
-  const marigold = f('marigold'); // strawberry + tomato companion
+  const basil = f('basil');       // tomato companion (repels whitefly)
+  const bean = f('french-bean');  // nitrogen fixer
+  const lettuce = f('lettuce');   // strawberry companion (living mulch)
+  const chives = f('chives');     // deters aphids
+  const thyme = f('thyme');       // deters slugs
+  const nasturtium = f('nasturtium'); // aphid trap crop (trails on ground at bottom)
+  const marigold = f('marigold'); // deters whitefly + pollinators
+  const spinach = f('perpetual-spinach'); // shade-tolerant
 
-  // Tower 1: "Strawberry & Tomato Snacker"
-  // Top 2 tiers: easy picking for kids
+  // Tower 1: "Strawberry Snacker"
   const tower1 = fillTower([
-    { tier: 1, plants: repeat(strawberry, 6) },
-    { tier: 2, plants: alternate(tomato, basil, 6) },
-    { tier: 3, plants: alternate(chives, lettuce, 6) },
-    { tier: 4, plants: repeat(bean, 6) },
-    { tier: 5, plants: alternate(nasturtium, marigold, 6) },
+    { tier: 1, plants: alternate(chives, thyme, 6) },        // herbs at top (drought-tolerant, no shading)
+    { tier: 2, plants: alternate(tomato, basil, 6) },         // Tumbling Tom cascades freely, basil companion
+    { tier: 3, plants: alternate(strawberry, lettuce, 6) },   // kid-height picking + living mulch
+    { tier: 4, plants: alternate(strawberry, spinach, 6) },   // more berries, spinach loves shade from above
+    { tier: 5, plants: alternate(bean, nasturtium, 6) },      // nasturtium trails on ground (can't shade), beans upright
   ], 6);
 
-  // Tower 2: "Berry & Tomato Companion Tower"
+  // Tower 2: "Tomato Snacker"
   const tower2 = fillTower([
-    { tier: 1, plants: repeat(strawberry, 6) },
-    { tier: 2, plants: alternate(tomato, basil, 6) },
-    { tier: 3, plants: alternate(thyme, parsley, 6) },
-    { tier: 4, plants: alternate(lettuce, chives, 6) },
-    { tier: 5, plants: alternate(marigold, nasturtium, 6) },
+    { tier: 1, plants: alternate(thyme, chives, 6) },         // herbs at top
+    { tier: 2, plants: alternate(tomato, basil, 6) },          // Tumbling Tom + basil
+    { tier: 3, plants: alternate(strawberry, lettuce, 6) },    // kid-height picking
+    { tier: 4, plants: alternate(strawberry, spinach, 6) },    // more berries + shade-tolerant green
+    { tier: 5, plants: alternate(bean, marigold, 6) },         // beans + pest protection at base
   ], 6);
 
   return {
     id: 'family-harvest',
     name: 'Kids\' Picking Towers',
-    description: 'Strawberries & tomatoes on both towers at easy picking height for Max and Noelle. Basil, chives, lettuce, and beans as proven companions. Marigolds and nasturtiums at the base to repel pests.',
+    description: 'Tumbling Tom tomatoes on tier 2 so fruit hangs clean (no staking needed). Strawberries at kid-height for Max and Noelle. Nasturtiums at the bottom where trailing can\'t shade other tiers. Herbs at the top.',
     strategy: 'family-harvest',
     tower1,
     tower2,
@@ -103,8 +109,16 @@ function familyHarvestLayout(plants: Plant[]): LayoutOption {
 
 /**
  * Strategy 2: Companion Powerhouse
- * Strawberries & tomatoes on both towers, every remaining pocket
- * is a proven companion plant for one or both.
+ * Every pocket is a proven companion. Variety-aware placement:
+ * Tumbling Tom on tier 2 (fruit hangs clean), nasturtiums at bottom
+ * (trailing can't shade), herbs at top (drought-tolerant).
+ *
+ * Tier layout (top→bottom = tier 1→5):
+ *   1 (top):    Chives + thyme — allium + herb pest barrier, drought-tolerant
+ *   2:          Tumbling Tom + basil — tomatoes cascade, basil repels whitefly
+ *   3 (middle): Strawberry + lettuce — kid-height picking, living mulch
+ *   4:          Strawberry + spinach — shade-tolerant companion pair
+ *   5 (bottom): Bean + nasturtium/marigold — nitrogen fixer + pest deterrents
  */
 function companionOptimalLayout(plants: Plant[]): LayoutOption {
   const suitable = plants.filter((p) => p.greenstalkSuitability !== 'unsuitable');
@@ -115,7 +129,7 @@ function companionOptimalLayout(plants: Plant[]): LayoutOption {
   const basil = f('basil');       // tomato: repels whitefly
   const chives = f('chives');     // both: deters aphids
   const marigold = f('marigold'); // both: deters whitefly + pollinators
-  const nasturtium = f('nasturtium'); // tomato: aphid trap crop
+  const nasturtium = f('nasturtium'); // tomato: aphid trap crop, trailing
   const lettuce = f('lettuce');   // strawberry: living mulch
   const bean = f('french-bean');  // tomato: nitrogen fixer
   const parsley = f('parsley');   // tomato: attracts hoverflies
@@ -123,30 +137,28 @@ function companionOptimalLayout(plants: Plant[]): LayoutOption {
   const spinach = f('perpetual-spinach'); // strawberry: shade for roots
   const springOnion = f('spring-onion'); // tomato: allium scent deters pests
 
-  // Tower 1: "Strawberry Focus + Tomato Companions"
-  // Strawberries tiers 1 & 3, tomato tier 2 — all companions
+  // Tower 1: "Strawberry Companion Tower"
   const tower1 = fillTower([
-    { tier: 1, plants: alternate(strawberry, chives, 6) },
-    { tier: 2, plants: alternate(tomato, basil, 6) },
-    { tier: 3, plants: alternate(strawberry, thyme, 6) },
-    { tier: 4, plants: alternate(bean, parsley, 6) },
-    { tier: 5, plants: alternate(nasturtium, marigold, 6) },
+    { tier: 1, plants: alternate(chives, thyme, 6) },          // allium + herb barrier at top
+    { tier: 2, plants: alternate(tomato, basil, 6) },          // Tumbling Tom cascades + basil companion
+    { tier: 3, plants: alternate(strawberry, lettuce, 6) },    // berries + living mulch
+    { tier: 4, plants: alternate(strawberry, spinach, 6) },    // berries + shade-tolerant green
+    { tier: 5, plants: alternate(bean, nasturtium, 6) },       // nitrogen fixer + trailing trap crop on ground
   ], 6);
 
-  // Tower 2: "Tomato Focus + Strawberry Companions"
-  // Tomatoes tiers 1 & 2, strawberry tier 3 — all companions
+  // Tower 2: "Tomato Companion Tower"
   const tower2 = fillTower([
-    { tier: 1, plants: alternate(tomato, basil, 6) },
-    { tier: 2, plants: alternate(strawberry, lettuce, 6) },
-    { tier: 3, plants: alternate(springOnion, chives, 6) },
-    { tier: 4, plants: alternate(spinach, lettuce, 6) },
-    { tier: 5, plants: alternate(marigold, nasturtium, 6) },
+    { tier: 1, plants: alternate(thyme, springOnion, 6) },     // allium + herb pest deterrent
+    { tier: 2, plants: alternate(tomato, basil, 6) },          // Tumbling Tom + basil
+    { tier: 3, plants: alternate(strawberry, parsley, 6) },    // berries + hoverfly attractor
+    { tier: 4, plants: alternate(strawberry, lettuce, 6) },    // berries + living mulch
+    { tier: 5, plants: alternate(bean, marigold, 6) },         // nitrogen fixer + pest deterrent at base
   ], 6);
 
   return {
     id: 'companion-optimal',
     name: 'Companion Powerhouse',
-    description: 'Every pocket is a proven companion. Chives + thyme protect strawberries from slugs and aphids. Basil + marigolds guard tomatoes from whitefly. Beans fix nitrogen for heavy-feeding tomatoes. Zero foes.',
+    description: 'Every pocket is a proven companion. Tumbling Tom on tier 2 with basil (fruit hangs clean, no staking). Chives + thyme deter pests at the top. Nasturtiums trail safely at the bottom. Beans fix nitrogen. Zero foes.',
     strategy: 'companion-optimal',
     tower1,
     tower2,
@@ -155,8 +167,16 @@ function companionOptimalLayout(plants: Plant[]): LayoutOption {
 
 /**
  * Strategy 3: Maximum Berries & Tomatoes
- * As many strawberry and tomato pockets as possible,
- * with just enough companion plants to keep them healthy.
+ * As many strawberry and tomato pockets as possible, minimal companions.
+ * Tumbling Tom on tier 2 (cascades freely), strawberries fill tiers 3-4,
+ * chives at top (drought-tolerant), marigolds at bottom (compact).
+ *
+ * Tier layout (top→bottom = tier 1→5):
+ *   1 (top):    Strawberry + chives — berries + pest deterrent
+ *   2:          Tumbling Tom + basil — tomatoes cascade, basil companion
+ *   3 (middle): Strawberry (all 6) — kid-height picking zone
+ *   4:          Strawberry (all 6) — maximum berries
+ *   5 (bottom): Strawberry + marigold — berries + compact pest deterrent
  */
 function maximumBerriesLayout(plants: Plant[]): LayoutOption {
   const suitable = plants.filter((p) => p.greenstalkSuitability !== 'unsuitable');
@@ -165,32 +185,31 @@ function maximumBerriesLayout(plants: Plant[]): LayoutOption {
   const strawberry = f('strawberry');
   const tomato = f('tomato');
   const basil = f('basil');       // essential tomato companion
-  const chives = f('chives');     // dual companion
-  const marigold = f('marigold'); // dual companion, pest deterrent
-  const nasturtium = f('nasturtium'); // tomato companion, trailing
+  const chives = f('chives');     // dual companion, drought-tolerant for top
+  const marigold = f('marigold'); // dual companion, compact pest deterrent
 
-  // Tower 1: 18 strawberry + 6 tomato + 6 companions
+  // Tower 1: tomatoes tier 2, strawberries everywhere else
   const tower1 = fillTower([
-    { tier: 1, plants: repeat(strawberry, 6) },
-    { tier: 2, plants: alternate(tomato, basil, 6) },
-    { tier: 3, plants: repeat(strawberry, 6) },
-    { tier: 4, plants: alternate(strawberry, chives, 6) },
-    { tier: 5, plants: alternate(nasturtium, marigold, 6) },
+    { tier: 1, plants: alternate(strawberry, chives, 6) },     // berries + pest deterrent at top
+    { tier: 2, plants: alternate(tomato, basil, 6) },          // Tumbling Tom cascades + basil
+    { tier: 3, plants: repeat(strawberry, 6) },                // kid-height picking
+    { tier: 4, plants: repeat(strawberry, 6) },                // maximum berries
+    { tier: 5, plants: alternate(strawberry, marigold, 6) },   // berries + compact pest protection at base
   ], 6);
 
-  // Tower 2: 12 strawberry + 6 tomato + 6 companions + 6 flowers
+  // Tower 2: same structure
   const tower2 = fillTower([
-    { tier: 1, plants: repeat(strawberry, 6) },
-    { tier: 2, plants: alternate(tomato, basil, 6) },
-    { tier: 3, plants: repeat(strawberry, 6) },
-    { tier: 4, plants: alternate(chives, strawberry, 6) },
-    { tier: 5, plants: alternate(marigold, nasturtium, 6) },
+    { tier: 1, plants: alternate(strawberry, chives, 6) },     // berries + allium pest barrier
+    { tier: 2, plants: alternate(tomato, basil, 6) },          // Tumbling Tom + basil
+    { tier: 3, plants: repeat(strawberry, 6) },                // kid-height picking
+    { tier: 4, plants: repeat(strawberry, 6) },                // maximum berries
+    { tier: 5, plants: alternate(strawberry, marigold, 6) },   // berries + pest protection at base
   ], 6);
 
   return {
     id: 'maximum-berries',
     name: 'Maximum Berries & Tomatoes',
-    description: 'The most strawberry and tomato pockets possible: 30+ berries and 6 tomatoes per tower. Basil, chives, marigolds, and nasturtiums provide just enough companion protection.',
+    description: 'Maximum berry harvest: strawberries on 4 of 5 tiers. Tumbling Tom on tier 2 so fruit hangs clean. Chives and marigolds for minimal pest protection. No nasturtiums — more room for berries.',
     strategy: 'continuous-harvest',
     tower1,
     tower2,

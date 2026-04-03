@@ -7,6 +7,69 @@ import type { Plant } from '../types/plant';
 
 type BuyTiming = 'buy-now' | 'buy-soon' | 'not-yet';
 
+// ─── Essentials: the must-have crops by context ──────────────────────────────
+// Curated from RHS beginner guidance + GreenStalk best practice.
+// "Essential" = high yield, easy to grow, proven in Surrey/SoCal, worth the space.
+
+interface EssentialDef {
+  slug: string;
+  reason: string;
+}
+
+const ESSENTIALS_GREENSTALK_UK: EssentialDef[] = [
+  { slug: 'strawberry-everbearing', reason: 'Highest ROI fruit for vertical planters — crops June–October' },
+  { slug: 'tomato-tumbling', reason: 'Purpose-bred for containers — heavy yields in small pockets' },
+  { slug: 'basil-sweet', reason: 'Companion-plants with tomatoes, high-value herb you use constantly' },
+  { slug: 'lettuce', reason: 'Cut-and-come-again salad — harvest leaves for months from one sowing' },
+  { slug: 'chives', reason: 'Perennial, pest-deterrent, zero maintenance — comes back every year' },
+  { slug: 'dwarf-french-bean', reason: 'Nitrogen-fixer, heavy cropper, kids love picking beans' },
+  { slug: 'radish', reason: 'Ready in 4 weeks — fastest crop for impatient gardeners and kids' },
+  { slug: 'thyme', reason: 'Perennial herb, drought-tolerant, thrives in top tiers' },
+  { slug: 'perpetual-spinach', reason: 'Harvest for 12+ months from one sowing — the best value leafy green' },
+  { slug: 'nasturtium', reason: 'Edible trap crop — protects everything else from aphids' },
+];
+
+const ESSENTIALS_INGROUND_UK: EssentialDef[] = [
+  { slug: 'potato-early', reason: 'Nothing beats fresh new potatoes — the taste difference is enormous' },
+  { slug: 'runner-bean', reason: 'Massive yields from a small area — freezes well too' },
+  { slug: 'courgette', reason: 'One plant produces 20+ fruits — borderline unstoppable' },
+  { slug: 'tomato-tumbling', reason: 'Fresh tomatoes from the garden are incomparable to shop-bought' },
+  { slug: 'garlic', reason: 'Plant in autumn, ignore all winter, harvest in July — easiest crop there is' },
+  { slug: 'lettuce', reason: 'Cut-and-come-again — succession sow every 2 weeks for continuous salad' },
+  { slug: 'beetroot', reason: 'Reliable, stores well, beautiful in the garden — leaves edible too' },
+  { slug: 'broad-bean', reason: 'Hardy, nitrogen-fixing, sow in autumn for earliest spring crop' },
+  { slug: 'kale', reason: 'Stands through winter when nothing else grows — invaluable Nov–Mar' },
+  { slug: 'pea', reason: 'Kids eat them straight off the plant — the best garden snack' },
+  { slug: 'carrot', reason: 'Fresh carrots are a different vegetable to shop-bought — worth the effort' },
+  { slug: 'raspberry', reason: 'Perennial fruit, minimal care, massive yields for years' },
+];
+
+const ESSENTIALS_GREENSTALK_US: EssentialDef[] = [
+  { slug: 'strawberry-everbearing', reason: 'Year-round cropping in SoCal — the #1 GreenStalk fruit' },
+  { slug: 'tomato-tumbling', reason: 'Purpose-bred for containers — heavy yields in small pockets' },
+  { slug: 'basil-sweet', reason: 'Companion-plants with tomatoes, thrives in SoCal heat' },
+  { slug: 'lettuce', reason: 'Cut-and-come-again — grow in cooler months for best results' },
+  { slug: 'pepper-chilli', reason: 'Loves SoCal heat — perfect for containers' },
+  { slug: 'dwarf-french-bean', reason: 'Fast nitrogen-fixer, heavy cropper, kids love picking beans' },
+  { slug: 'radish', reason: 'Ready in 4 weeks — fastest crop for impatient gardeners' },
+  { slug: 'chives', reason: 'Perennial, pest-deterrent, zero maintenance' },
+  { slug: 'mint', reason: 'Contained in a pocket = the best way to grow this invasive herb' },
+  { slug: 'nasturtium', reason: 'Edible trap crop — protects everything else from aphids' },
+];
+
+const ESSENTIALS_INGROUND_US: EssentialDef[] = [
+  { slug: 'tomato-tumbling', reason: 'The single most rewarding crop to grow in Southern California' },
+  { slug: 'pepper-chilli', reason: 'Thrives in SoCal heat — grows like a weed here' },
+  { slug: 'zucchini', reason: 'One plant produces 20+ fruits — borderline unstoppable' },
+  { slug: 'lettuce', reason: 'Cool-season star — succession sow Oct–Mar for year-round salad' },
+  { slug: 'basil-sweet', reason: 'Summer herb that loves heat — grows faster than you can eat it' },
+  { slug: 'cucumber', reason: 'Prolific in warm climates — perfect for SoCal gardens' },
+  { slug: 'bush-bean', reason: 'Fast, heavy cropper, nitrogen-fixer — the perfect beginner crop' },
+  { slug: 'strawberry-everbearing', reason: 'Nearly year-round fruit in the SoCal climate' },
+  { slug: 'radish', reason: 'Ready in 4 weeks — the fastest gratification crop' },
+  { slug: 'pepper-sweet', reason: 'Sweet peppers thrive in SoCal warmth — easy and prolific' },
+];
+
 function getTimingForMonth(plant: Plant, month: number): { timing: BuyTiming; reason: string } {
   const pw = plant.plantingWindow;
 
@@ -168,12 +231,14 @@ function SeedCard({
   reason,
   seedProduct,
   sellerInfo,
+  essentialReason,
 }: {
   plant: Plant;
   timing: BuyTiming;
   reason: string;
   seedProduct: SeedProduct | null;
   sellerInfo: Record<string, { name: string; badge: string; note: string }>;
+  essentialReason?: string;
 }) {
   const [showVarieties, setShowVarieties] = useState(false);
   const varieties = seedProduct?.varieties ?? [];
@@ -208,6 +273,11 @@ function SeedCard({
             )}
           </div>
           <p className="text-xs text-stone-500 mt-0.5">{reason}</p>
+          {essentialReason && (
+            <p className="text-[10px] text-amber-600 dark:text-amber-400 mt-1 font-medium flex items-center gap-1">
+              <span>⭐</span> {essentialReason}
+            </p>
+          )}
           {hasMultiple && (
             <p className="text-[10px] text-stone-400 mt-0.5">
               {varieties.length} varieties available
@@ -252,7 +322,16 @@ export function SeedFinderPage() {
   const sellerInfo = isUS ? SELLER_INFO_US : SELLER_INFO_UK;
   const currentMonth = new Date().getMonth() + 1;
   const [selectedMonth, setSelectedMonth] = useState(currentMonth);
-  const [filter, setFilter] = useState<'all' | 'buy-now' | 'buy-soon'>('all');
+  const [filter, setFilter] = useState<'essentials' | 'all' | 'buy-now' | 'buy-soon'>('essentials');
+
+  // Pick the right essentials list
+  const essentialsDefs = useMemo(() => {
+    if (isUS) return seedContext === 'greenstalk' ? ESSENTIALS_GREENSTALK_US : ESSENTIALS_INGROUND_US;
+    return seedContext === 'greenstalk' ? ESSENTIALS_GREENSTALK_UK : ESSENTIALS_INGROUND_UK;
+  }, [isUS, seedContext]);
+
+  const essentialSlugs = useMemo(() => new Set(essentialsDefs.map(e => e.slug)), [essentialsDefs]);
+  const essentialReasonMap = useMemo(() => new Map(essentialsDefs.map(e => [e.slug, e.reason])), [essentialsDefs]);
 
   const plantsWithTiming = useMemo(() => {
     return plants
@@ -276,9 +355,10 @@ export function SeedFinderPage() {
   }, [plants, selectedMonth, seedLinks]);
 
   const filtered = useMemo(() => {
+    if (filter === 'essentials') return plantsWithTiming.filter((p) => essentialSlugs.has(p.plant.slug));
     if (filter === 'all') return plantsWithTiming;
     return plantsWithTiming.filter((p) => p.timing === filter);
-  }, [plantsWithTiming, filter]);
+  }, [plantsWithTiming, filter, essentialSlugs]);
 
   const buyNowCount = plantsWithTiming.filter((p) => p.timing === 'buy-now').length;
   const buySoonCount = plantsWithTiming.filter((p) => p.timing === 'buy-soon').length;
@@ -339,6 +419,14 @@ export function SeedFinderPage() {
 
           <div className="flex gap-1.5">
             <button
+              onClick={() => setFilter('essentials')}
+              className={`text-xs px-3 py-1.5 rounded-lg font-medium ${
+                filter === 'essentials' ? 'bg-amber-500 text-white shadow-sm' : 'bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400'
+              }`}
+            >
+              ⭐ Essentials ({essentialsDefs.length})
+            </button>
+            <button
               onClick={() => setFilter('all')}
               className={`text-xs px-3 py-1.5 rounded-lg ${
                 filter === 'all' ? 'bg-stone-800 text-white dark:bg-stone-200 dark:text-stone-900' : 'bg-stone-100 dark:bg-stone-700 text-stone-500 dark:text-stone-400'
@@ -390,6 +478,7 @@ export function SeedFinderPage() {
               reason={reason}
               seedProduct={seedProduct}
               sellerInfo={sellerInfo}
+              essentialReason={filter === 'essentials' ? essentialReasonMap.get(plant.slug) : undefined}
             />
           ))}
         </div>

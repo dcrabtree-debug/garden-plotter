@@ -230,12 +230,78 @@ function maximumBerriesLayout(plants: Plant[], towerCount: number): LayoutOption
   };
 }
 
+/**
+ * Strategy 4: Fragrant Edible Garden
+ * David's ideal: strawberries + tomatoes as the backbone, companion herbs
+ * for pest protection, fragrant plants woven into every tier for sensory
+ * richness. Every pocket is edible OR a proven companion.
+ *
+ * Tier layout (top→bottom = tier 1→5):
+ *   1 (top):    Fragrant herbs — lavender, thyme, dianthus, chamomile (drought-tolerant, fragrant)
+ *   2:          Tumbling Tom + basil + scented geranium — fruit hangs clean, max fragrance
+ *   3 (middle): Strawberry + lemon balm + chives — kid-height picking, fragrant companions
+ *   4:          Strawberry + corsican mint + lettuce — shade-tolerant, walk-by fragrance
+ *   5 (bottom): Bean + nasturtium + night-scented stock — trailing + evening fragrance
+ */
+function fragrantEdibleLayout(plants: Plant[], towerCount: number): LayoutOption {
+  const suitable = plants.filter((p) => p.greenstalkSuitability !== 'unsuitable');
+  const f = (slug: string) => findPlant(suitable, slug);
+
+  const strawberry = f('strawberry');
+  const tomato = f('tomato');
+  const basil = f('basil');
+  const bean = f('french-bean');
+  const lettuce = f('lettuce');
+  const chives = f('chives');
+  const thyme = f('thyme');
+  const nasturtium = f('nasturtium');
+  const lemonBalm = f('lemon-balm');
+  const corsicanMint = f('corsican-mint');
+  const dianthus = f('dianthus');
+  const scentedGeranium = f('scented-geranium');
+  const nightStock = f('night-scented-stock');
+  const chamomile = f('chamomile');
+  const lavender = f('lavender');
+
+  // Tower 1: "Fragrant Snacker"
+  const tower1 = fillTower([
+    { tier: 1, plants: alternate(lavender ?? thyme, dianthus ?? chamomile ?? thyme, 6) },
+    { tier: 2, plants: alternate(tomato, scentedGeranium ?? basil, 6) },
+    { tier: 3, plants: alternate(strawberry, lemonBalm ?? chives, 6) },
+    { tier: 4, plants: alternate(strawberry, corsicanMint ?? lettuce, 6) },
+    { tier: 5, plants: alternate(bean, nightStock ?? nasturtium, 6) },
+  ], 6);
+
+  // Tower 2: "Evening Scent Tower"
+  const tower2 = fillTower([
+    { tier: 1, plants: alternate(thyme, chamomile ?? dianthus ?? chives, 6) },
+    { tier: 2, plants: alternate(tomato, basil, 6) },
+    { tier: 3, plants: alternate(strawberry, chives, 6) },
+    { tier: 4, plants: alternate(strawberry, lemonBalm ?? lettuce, 6) },
+    { tier: 5, plants: alternate(nasturtium, nightStock ?? bean, 6) },
+  ], 6);
+
+  const templates = [tower1, tower2];
+  const towers = Array.from({ length: towerCount }, (_, i) => templates[i % templates.length]);
+
+  return {
+    id: 'fragrant-edible',
+    name: 'Fragrant Edible Garden',
+    description: 'Strawberries + tomatoes as backbone with fragrant plants woven into every tier. Lavender and dianthus at the top for sun and scent. Scented geraniums with tomatoes on tier 2. Lemon balm and Corsican mint at kid-height. Night-scented stock at the base for evening fragrance. Every pocket is edible or a proven companion.',
+    strategy: 'continuous-harvest',
+    towers,
+    tower1: towers[0],
+    tower2: towers[1] ?? towers[0],
+  };
+}
+
 export function generateLayouts(
   plants: Plant[],
   companionMap: CompanionMap,
   towerCount: number = 2
 ): LayoutOption[] {
   return [
+    fragrantEdibleLayout(plants, towerCount),
     familyHarvestLayout(plants, towerCount),
     companionOptimalLayout(plants, towerCount),
     maximumBerriesLayout(plants, towerCount),

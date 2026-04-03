@@ -15,6 +15,7 @@ import { PlantDetail } from '../components/plant-palette/PlantDetail';
 import { usePlannerStore } from '../state/planner-store';
 import { usePlantDb } from '../data/use-plant-db';
 import { useCompanionDb } from '../data/use-companion-db';
+import { generateLayouts, type LayoutOption } from '../lib/auto-populate';
 import type { Plant } from '../types/plant';
 
 export function PlannerPage() {
@@ -27,6 +28,8 @@ export function PlannerPage() {
   const [draggedPlant, setDraggedPlant] = useState<Plant | null>(null);
   const [selectedPlant, setSelectedPlant] = useState<Plant | null>(null);
   const [plantToPlace, setPlantToPlace] = useState<Plant | null>(null);
+  const [showAutoPopulate, setShowAutoPopulate] = useState(false);
+  const [layouts, setLayouts] = useState<LayoutOption[]>([]);
 
   const mouseSensor = useSensor(MouseSensor, {
     activationConstraint: { distance: 5 },
@@ -135,6 +138,52 @@ export function PlannerPage() {
     [plantToPlace, assignPlant]
   );
 
+  const handleAutoPopulate = useCallback(() => {
+    const generated = generateLayouts(plants, companionMap);
+    setLayouts(generated);
+    setShowAutoPopulate(true);
+  }, [plants, companionMap]);
+
+  const applyLayout = useCallback(
+    (layout: LayoutOption) => {
+      // Clear both towers first
+      for (const tower of towers) {
+        for (const tier of tower.tiers) {
+          for (let i = 0; i < tier.pockets.length; i++) {
+            if (tier.pockets[i].plantSlug) {
+              removePlant(tower.id, tier.tierNumber, i);
+            }
+          }
+        }
+      }
+
+      // Apply tower 1
+      const t1 = towers[0];
+      if (t1) {
+        for (let tier = 0; tier < layout.tower1.length; tier++) {
+          for (let pocket = 0; pocket < layout.tower1[tier].length; pocket++) {
+            const slug = layout.tower1[tier][pocket];
+            if (slug) assignPlant(t1.id, tier + 1, pocket, slug);
+          }
+        }
+      }
+
+      // Apply tower 2
+      const t2 = towers[1];
+      if (t2) {
+        for (let tier = 0; tier < layout.tower2.length; tier++) {
+          for (let pocket = 0; pocket < layout.tower2[tier].length; pocket++) {
+            const slug = layout.tower2[tier][pocket];
+            if (slug) assignPlant(t2.id, tier + 1, pocket, slug);
+          }
+        }
+      }
+
+      setShowAutoPopulate(false);
+    },
+    [towers, assignPlant, removePlant]
+  );
+
   return (
     <DndContext
       sensors={sensors}
@@ -154,9 +203,17 @@ export function PlannerPage() {
         {/* Main: Tower views */}
         <div className="flex-1 overflow-auto p-6">
           <div className="mb-4">
-            <h1 className="text-xl font-semibold text-stone-800">
-              GreenStalk Planner
-            </h1>
+            <div className="flex items-center justify-between">
+              <h1 className="text-xl font-semibold text-stone-800">
+                GreenStalk Planner
+              </h1>
+              <button
+                onClick={handleAutoPopulate}
+                className="px-3 py-1.5 text-xs bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors flex items-center gap-1.5"
+              >
+                <span>✨</span> Auto-Populate
+              </button>
+            </div>
             <p className="text-sm text-stone-400">
               {plantToPlace ? (
                 <>
@@ -212,6 +269,108 @@ export function PlannerPage() {
           companionMap={companionMap}
           onClose={() => setSelectedPlant(null)}
         />
+      )}
+
+      {/* Auto-populate modal */}
+      {showAutoPopulate && (
+        <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[80vh] overflow-y-auto">
+            <div className="p-6 border-b border-stone-100">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h2 className="text-lg font-bold text-stone-800">
+                    Auto-Populate Towers
+                  </h2>
+                  <p className="text-sm text-stone-400 mt-0.5">
+                    Choose a layout strategy. You can manually adjust after applying.
+                  </p>
+                </div>
+                <button
+                  onClick={() => setShowAutoPopulate(false)}
+                  className="text-stone-400 hover:text-stone-600 text-xl"
+                >
+                  ×
+                </button>
+              </div>
+            </div>
+
+            <div className="p-6 space-y-4">
+              {layouts.map((layout) => {
+                // Count filled pockets
+                const t1Count = layout.tower1.flat().filter(Boolean).length;
+                const t2Count = layout.tower2.flat().filter(Boolean).length;
+                const uniquePlants = new Set([
+                  ...layout.tower1.flat().filter(Boolean),
+                  ...layout.tower2.flat().filter(Boolean),
+                ]);
+
+                return (
+                  <div
+                    key={layout.id}
+                    className="border border-stone-200 rounded-xl p-4 hover:border-emerald-300 hover:bg-emerald-50/30 transition-colors"
+                  >
+                    <div className="flex items-start justify-between">
+                      <div className="flex-1">
+                        <h3 className="text-sm font-bold text-stone-800">
+                          {layout.name === 'Family Harvest' ? '👨‍👩‍👧‍👦 ' : layout.name === 'Companion Optimal' ? '🤝 ' : '📅 '}
+                          {layout.name}
+                        </h3>
+                        <p className="text-xs text-stone-500 mt-1">
+                          {layout.description}
+                        </p>
+                        <div className="flex gap-3 mt-2 text-[10px] text-stone-400">
+                          <span>{t1Count + t2Count}/60 pockets filled</span>
+                          <span>{uniquePlants.size} unique plants</span>
+                        </div>
+
+                        {/* Preview: show tier contents */}
+                        <div className="mt-3 grid grid-cols-2 gap-3">
+                          {[
+                            { label: 'Tower 1', grid: layout.tower1 },
+                            { label: 'Tower 2', grid: layout.tower2 },
+                          ].map(({ label, grid }) => (
+                            <div key={label}>
+                              <div className="text-[9px] font-semibold text-stone-400 mb-1">{label}</div>
+                              {grid.map((tier, ti) => (
+                                <div key={ti} className="flex gap-0.5 mb-0.5">
+                                  {tier.map((slug, pi) => {
+                                    const p = slug ? plantMap.get(slug) : null;
+                                    return (
+                                      <div
+                                        key={pi}
+                                        className={`w-5 h-5 rounded text-[10px] flex items-center justify-center ${
+                                          p ? 'bg-stone-100' : 'bg-stone-50'
+                                        }`}
+                                        title={p?.commonName ?? 'empty'}
+                                      >
+                                        {p ? p.emoji : ''}
+                                      </div>
+                                    );
+                                  })}
+                                </div>
+                              ))}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      <button
+                        onClick={() => applyLayout(layout)}
+                        className="ml-4 px-4 py-2 bg-emerald-600 text-white text-xs font-semibold rounded-lg hover:bg-emerald-700 transition-colors shrink-0"
+                      >
+                        Apply
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="p-4 border-t border-stone-100 text-[10px] text-stone-400 text-center">
+              Applying a layout will clear existing plants. You can manually adjust afterwards.
+            </div>
+          </div>
+        </div>
       )}
     </DndContext>
   );

@@ -67,7 +67,7 @@ export function CalendarPage() {
   }
 
   return (
-    <div className="p-6 max-w-5xl mx-auto">
+    <div className="h-full overflow-y-auto p-6 max-w-5xl mx-auto">
       <h1 className="text-xl font-semibold text-stone-800 mb-1">
         Seasonal Calendar
       </h1>

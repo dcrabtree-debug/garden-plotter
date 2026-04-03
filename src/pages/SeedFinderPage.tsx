@@ -1,0 +1,301 @@
+import { useState, useMemo } from 'react';
+import { usePlantDb } from '../data/use-plant-db';
+import { useSeedLinks } from '../data/use-seed-links';
+import { getMonthName, isInWindow } from '../lib/calendar-utils';
+import type { Plant } from '../types/plant';
+
+type BuyTiming = 'buy-now' | 'buy-soon' | 'not-yet';
+
+function getTimingForMonth(plant: Plant, month: number): { timing: BuyTiming; reason: string } {
+  const pw = plant.plantingWindow;
+
+  // If we should sow indoors this month or next
+  if (pw.sowIndoors) {
+    if (isInWindow(month, pw.sowIndoors)) {
+      return { timing: 'buy-now', reason: `Sow indoors now (${getMonthName(pw.sowIndoors[0])}-${getMonthName(pw.sowIndoors[1])})` };
+    }
+    const nextMonth = month === 12 ? 1 : month + 1;
+    if (isInWindow(nextMonth, pw.sowIndoors)) {
+      return { timing: 'buy-soon', reason: `Sow indoors next month (${getMonthName(pw.sowIndoors[0])})` };
+    }
+  }
+
+  // If we should sow outdoors this month or next
+  if (pw.sowOutdoors) {
+    if (isInWindow(month, pw.sowOutdoors)) {
+      return { timing: 'buy-now', reason: `Sow outdoors now (${getMonthName(pw.sowOutdoors[0])}-${getMonthName(pw.sowOutdoors[1])})` };
+    }
+    const nextMonth = month === 12 ? 1 : month + 1;
+    if (isInWindow(nextMonth, pw.sowOutdoors)) {
+      return { timing: 'buy-soon', reason: `Sow outdoors next month (${getMonthName(pw.sowOutdoors[0])})` };
+    }
+  }
+
+  // If we should transplant this month
+  if (pw.transplant && isInWindow(month, pw.transplant)) {
+    return { timing: 'buy-now', reason: `Transplant now — buy young plants (${getMonthName(pw.transplant[0])}-${getMonthName(pw.transplant[1])})` };
+  }
+
+  return { timing: 'not-yet', reason: 'Not in season yet' };
+}
+
+interface SeedLink {
+  seller: string;
+  url: string;
+  price: string;
+  logo: string;
+}
+
+interface SeedProduct {
+  plantSlug: string;
+  varietyName: string;
+  links: SeedLink[];
+}
+
+const SELLER_INFO: Record<string, { name: string; badge: string; note: string }> = {
+  'Thompson & Morgan': {
+    name: 'Thompson & Morgan',
+    badge: 'RHS Gold Medal',
+    note: 'One of the UK\'s most respected seed companies',
+  },
+  'Suttons Seeds': {
+    name: 'Suttons Seeds',
+    badge: 'Royal Warrant',
+    note: 'Holds a Royal Warrant, RHS Partner Garden',
+  },
+  'RHS Shop': {
+    name: 'RHS Shop',
+    badge: 'RHS Official',
+    note: 'The Royal Horticultural Society\'s own seed range',
+  },
+  'Mr Fothergill\'s': {
+    name: 'Mr Fothergill\'s',
+    badge: 'Est. 1978',
+    note: 'Long-established, RHS show exhibitor',
+  },
+  'Kings Seeds': {
+    name: 'Kings Seeds',
+    badge: 'Organic Range',
+    note: 'Organic seeds, RHS approved',
+  },
+};
+
+function SeedCard({
+  plant,
+  timing,
+  reason,
+  seedProduct,
+}: {
+  plant: Plant;
+  timing: BuyTiming;
+  reason: string;
+  seedProduct: SeedProduct | null;
+}) {
+  const [expanded, setExpanded] = useState(false);
+
+  return (
+    <div
+      className={`rounded-2xl border-2 p-4 transition-all ${
+        timing === 'buy-now'
+          ? 'border-emerald-300 bg-emerald-50'
+          : timing === 'buy-soon'
+            ? 'border-amber-300 bg-amber-50'
+            : 'border-stone-200 bg-stone-50 opacity-60'
+      }`}
+    >
+      <div className="flex items-start gap-3">
+        <span className="text-4xl">{plant.emoji}</span>
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2">
+            <h3 className="text-sm font-bold text-stone-800 truncate">
+              {plant.commonName}
+            </h3>
+            {timing === 'buy-now' && (
+              <span className="text-[10px] px-2 py-0.5 bg-emerald-200 text-emerald-800 rounded-full font-semibold shrink-0">
+                BUY NOW
+              </span>
+            )}
+            {timing === 'buy-soon' && (
+              <span className="text-[10px] px-2 py-0.5 bg-amber-200 text-amber-800 rounded-full font-semibold shrink-0">
+                BUY SOON
+              </span>
+            )}
+          </div>
+          <p className="text-xs text-stone-500 mt-0.5">{reason}</p>
+          {seedProduct && (
+            <p className="text-[10px] text-stone-400 mt-0.5">
+              Variety: <span className="font-medium">{seedProduct.varietyName}</span>
+            </p>
+          )}
+        </div>
+      </div>
+
+      {/* Buy links */}
+      {seedProduct && seedProduct.links.length > 0 && (
+        <div className="mt-3 space-y-1.5">
+          {(expanded ? seedProduct.links : seedProduct.links.slice(0, 2)).map((link, i) => {
+            const sellerMeta = SELLER_INFO[link.seller];
+            return (
+              <a
+                key={i}
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-3 py-2 bg-white rounded-xl border border-stone-200 hover:border-emerald-300 hover:shadow-sm transition-all group"
+              >
+                <span className="text-base">{link.logo}</span>
+                <div className="flex-1 min-w-0">
+                  <div className="text-xs font-medium text-stone-700 group-hover:text-emerald-700 truncate">
+                    {link.seller}
+                  </div>
+                  {sellerMeta && (
+                    <div className="text-[9px] text-stone-400">{sellerMeta.badge}</div>
+                  )}
+                </div>
+                <div className="text-xs font-bold text-stone-600">{link.price}</div>
+                <span className="text-stone-300 group-hover:text-emerald-500 transition-colors">
+                  &rarr;
+                </span>
+              </a>
+            );
+          })}
+          {seedProduct.links.length > 2 && !expanded && (
+            <button
+              onClick={() => setExpanded(true)}
+              className="text-[10px] text-stone-400 hover:text-stone-600 ml-1"
+            >
+              +{seedProduct.links.length - 2} more sellers
+            </button>
+          )}
+        </div>
+      )}
+
+      {!seedProduct && timing !== 'not-yet' && (
+        <div className="mt-2 text-[10px] text-stone-400">
+          Links being compiled — check back soon
+        </div>
+      )}
+    </div>
+  );
+}
+
+export function SeedFinderPage() {
+  const { plants } = usePlantDb();
+  const seedLinks = useSeedLinks();
+  const currentMonth = new Date().getMonth() + 1;
+  const [selectedMonth, setSelectedMonth] = useState(currentMonth);
+  const [filter, setFilter] = useState<'all' | 'buy-now' | 'buy-soon'>('all');
+
+  const plantsWithTiming = useMemo(() => {
+    return plants
+      .map((plant) => {
+        const { timing, reason } = getTimingForMonth(plant, selectedMonth);
+        const seedProduct = seedLinks.find((s) => s.plantSlug === plant.slug) ?? null;
+        return { plant, timing, reason, seedProduct };
+      })
+      .sort((a, b) => {
+        const order: Record<BuyTiming, number> = { 'buy-now': 0, 'buy-soon': 1, 'not-yet': 2 };
+        return order[a.timing] - order[b.timing];
+      });
+  }, [plants, selectedMonth, seedLinks]);
+
+  const filtered = useMemo(() => {
+    if (filter === 'all') return plantsWithTiming;
+    return plantsWithTiming.filter((p) => p.timing === filter);
+  }, [plantsWithTiming, filter]);
+
+  const buyNowCount = plantsWithTiming.filter((p) => p.timing === 'buy-now').length;
+  const buySoonCount = plantsWithTiming.filter((p) => p.timing === 'buy-soon').length;
+
+  return (
+    <div className="h-full overflow-y-auto">
+      <div className="max-w-4xl mx-auto px-4 py-6">
+        {/* Header */}
+        <div className="mb-6">
+          <h1 className="text-2xl font-bold text-stone-800">Seed Finder</h1>
+          <p className="text-sm text-stone-500 mt-1">
+            What to buy now for your Surrey garden. All sellers are RHS-endorsed or hold Royal Warrants.
+          </p>
+        </div>
+
+        {/* Controls */}
+        <div className="flex items-center gap-4 mb-5 flex-wrap">
+          <div>
+            <label className="text-[10px] text-stone-500 uppercase tracking-wide block mb-1">Month</label>
+            <select
+              value={selectedMonth}
+              onChange={(e) => setSelectedMonth(Number(e.target.value))}
+              className="px-3 py-1.5 text-sm border border-stone-200 rounded-lg bg-white"
+            >
+              {Array.from({ length: 12 }, (_, i) => i + 1).map((m) => (
+                <option key={m} value={m}>
+                  {getMonthName(m)} {m === currentMonth ? '(now)' : ''}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="flex gap-1.5">
+            <button
+              onClick={() => setFilter('all')}
+              className={`text-xs px-3 py-1.5 rounded-lg ${
+                filter === 'all' ? 'bg-stone-800 text-white' : 'bg-stone-100 text-stone-500'
+              }`}
+            >
+              All ({plantsWithTiming.length})
+            </button>
+            <button
+              onClick={() => setFilter('buy-now')}
+              className={`text-xs px-3 py-1.5 rounded-lg ${
+                filter === 'buy-now' ? 'bg-emerald-700 text-white' : 'bg-emerald-50 text-emerald-700'
+              }`}
+            >
+              Buy Now ({buyNowCount})
+            </button>
+            <button
+              onClick={() => setFilter('buy-soon')}
+              className={`text-xs px-3 py-1.5 rounded-lg ${
+                filter === 'buy-soon' ? 'bg-amber-700 text-white' : 'bg-amber-50 text-amber-700'
+              }`}
+            >
+              Buy Soon ({buySoonCount})
+            </button>
+          </div>
+        </div>
+
+        {/* Trusted sellers banner */}
+        <div className="bg-stone-50 rounded-xl border border-stone-200 p-3 mb-5">
+          <h3 className="text-[10px] text-stone-500 uppercase tracking-wide mb-2">Trusted Sellers</h3>
+          <div className="flex gap-4 flex-wrap text-xs text-stone-600">
+            {Object.values(SELLER_INFO).map((s) => (
+              <span key={s.name} className="flex items-center gap-1">
+                <span className="font-medium">{s.name}</span>
+                <span className="text-[9px] text-stone-400">({s.badge})</span>
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* Seed cards grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          {filtered.map(({ plant, timing, reason, seedProduct }) => (
+            <SeedCard
+              key={plant.slug}
+              plant={plant}
+              timing={timing}
+              reason={reason}
+              seedProduct={seedProduct}
+            />
+          ))}
+        </div>
+
+        {filtered.length === 0 && (
+          <div className="text-center py-12 text-stone-400">
+            <div className="text-4xl mb-3">🌱</div>
+            <div>No seeds to buy for {getMonthName(selectedMonth)} with this filter.</div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}

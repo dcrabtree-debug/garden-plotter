@@ -20,6 +20,7 @@ import type { Plant } from '../types/plant';
 export function PlannerPage() {
   const towers = usePlannerStore((s) => s.towers);
   const assignPlant = usePlannerStore((s) => s.assignPlant);
+  const removePlant = usePlannerStore((s) => s.removePlant);
   const { plants, plantMap } = usePlantDb();
   const { companionMap } = useCompanionDb();
 
@@ -59,15 +60,48 @@ export function PlannerPage() {
       const { active, over } = event;
       if (!over) return;
 
-      const plant = (active.data.current as { plant: Plant })?.plant;
-      if (!plant) return;
+      const activeData = active.data.current as Record<string, unknown> | undefined;
 
-      const parsed = parsePocketId(over.id as string);
-      if (!parsed) return;
+      // Case 1: Dragging from palette to pocket
+      const plant = activeData?.plant as Plant | undefined;
+      if (plant) {
+        const parsed = parsePocketId(over.id as string);
+        if (!parsed) return;
+        assignPlant(parsed.towerId, parsed.tierNumber, parsed.pocketIndex, plant.slug);
+        return;
+      }
 
-      assignPlant(parsed.towerId, parsed.tierNumber, parsed.pocketIndex, plant.slug);
+      // Case 2: Dragging from one pocket to another (rearrange)
+      if (activeData?.type === 'pocket') {
+        const sourcePocketId = activeData.pocketId as string;
+        const sourceSlug = activeData.plantSlug as string | null;
+        if (!sourceSlug) return;
+
+        const targetParsed = parsePocketId(over.id as string);
+        if (!targetParsed) return;
+
+        const sourceParsed = parsePocketId(sourcePocketId);
+        if (!sourceParsed) return;
+
+        // Get the target pocket's current plant (for swap)
+        const targetTower = towers.find((t) => t.id === targetParsed.towerId);
+        const targetTier = targetTower?.tiers.find((t) => t.tierNumber === targetParsed.tierNumber);
+        const targetPocket = targetTier?.pockets[targetParsed.pocketIndex];
+        const targetSlug = targetPocket?.plantSlug ?? null;
+
+        // Remove from source
+        removePlant(sourceParsed.towerId, sourceParsed.tierNumber, sourceParsed.pocketIndex);
+
+        // Place source plant in target
+        assignPlant(targetParsed.towerId, targetParsed.tierNumber, targetParsed.pocketIndex, sourceSlug);
+
+        // If target had a plant, swap it to the source
+        if (targetSlug) {
+          assignPlant(sourceParsed.towerId, sourceParsed.tierNumber, sourceParsed.pocketIndex, targetSlug);
+        }
+      }
     },
-    [assignPlant]
+    [assignPlant, removePlant, towers]
   );
 
   // Click-to-place: select plant from palette, then click empty pocket

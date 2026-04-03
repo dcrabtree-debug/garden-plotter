@@ -1,0 +1,465 @@
+[
+  {
+    "slug": "everbearing-strawberry",
+    "commonName": "Everbearing Strawberry",
+    "variety": "Mara des Bois",
+    "sellers": [
+      {
+        "seller": "Thompson & Morgan",
+        "url": "https://www.thompson-morgan.com/p/strawberry-mara-des-bois/t65255pTM",
+        "priceGBP": 12.99,
+        "note": "Bare root plants (not seeds)"
+      },
+      {
+        "seller": "Suttons Seeds",
+        "url": "https://www.suttons.co.uk/vegetable-fruit-plants/all-fruits/strawberry-plants-mara-des-bois_MH-27496",
+        "priceGBP": 14.99,
+        "note": "Bare root plants (not seeds)"
+      }
+    ]
+  },
+  {
+    "slug": "tumbling-tom-tomato",
+    "commonName": "Tumbling Tom Tomato",
+    "variety": "Tumbling Tom Red",
+    "sellers": [
+      {
+        "seller": "Thompson & Morgan",
+        "url": "https://www.thompson-morgan.com/p/tomato-tumbling-tom-red-seeds/515TM",
+        "priceGBP": 2.99
+      },
+      {
+        "seller": "Suttons Seeds",
+        "url": "https://www.suttons.co.uk/vegetable-seeds/popular-seeds/tomato-seeds-tumbling-tom-red_MH-1405",
+        "priceGBP": 2.99
+      }
+    ]
+  },
+  {
+    "slug": "sweet-basil",
+    "commonName": "Sweet Basil",
+    "variety": "Sweet Green",
+    "sellers": [
+      {
+        "seller": "Suttons Seeds",
+        "url": "https://www.suttons.co.uk/vegetable-seeds/herb-seeds/herb-seed-basil-sweet_MH-1170",
+        "priceGBP": 2.49
+      },
+      {
+        "seller": "Mr Fothergill's",
+        "url": "https://mr-fothergills.co.uk/products/basil-sweet-seeds",
+        "priceGBP": 1.99
+      }
+    ]
+  },
+  {
+    "slug": "dwarf-french-bean",
+    "commonName": "Dwarf French Bean",
+    "variety": "Tendergreen",
+    "sellers": [
+      {
+        "seller": "Thompson & Morgan",
+        "url": "https://www.thompson-morgan.com/p/dwarf-bean-tendergreen-seeds/168TM",
+        "priceGBP": 3.49
+      },
+      {
+        "seller": "Mr Fothergill's",
+        "url": "https://mr-fothergills.co.uk/products/dwarf-french-bean-tendergreen",
+        "priceGBP": 2.99
+      }
+    ]
+  },
+  {
+    "slug": "perpetual-spinach",
+    "commonName": "Perpetual Spinach",
+    "variety": "Perpetual Spinach (Spinach Beet)",
+    "sellers": [
+      {
+        "seller": "Thompson & Morgan",
+        "url": "https://www.thompson-morgan.com/p/spinach-perpetual-spinach-beet-seeds/697TM",
+        "priceGBP": 2.49
+      },
+      {
+        "seller": "Suttons Seeds",
+        "url": "https://www.suttons.co.uk/vegetable-seeds/popular-seeds/spinach-seeds-perpetual-spinach_MH883",
+        "priceGBP": 2.49
+      },
+      {
+        "seller": "Mr Fothergill's",
+        "url": "https://mr-fothergills.co.uk/products/beet-leaf-perpetual-spinach-seeds",
+        "priceGBP": 1.99
+      }
+    ]
+  },
+  {
+    "slug": "swiss-chard",
+    "commonName": "Swiss Chard",
+    "variety": "Bright Lights",
+    "sellers": [
+      {
+        "seller": "Thompson & Morgan",
+        "url": "https://www.thompson-morgan.com/p/swiss-chard-bright-lights-seeds/45TM",
+        "priceGBP": 2.99
+      },
+      {
+        "seller": "Suttons Seeds",
+        "url": "https://www.suttons.co.uk/swiss-chard-bright-lights_mh-8478",
+        "priceGBP": 2.99
+      }
+    ]
+  },
+  {
+    "slug": "rocket",
+    "commonName": "Rocket / Arugula",
+    "variety": "Cultivated Rocket",
+    "sellers": [
+      {
+        "seller": "Thompson & Morgan",
+        "url": "https://www.thompson-morgan.com/p/rocket-seeds/570TM",
+        "priceGBP": 2.29
+      },
+      {
+        "seller": "Mr Fothergill's",
+        "url": "https://mr-fothergills.co.uk/products/rocket-cultivated-seeds",
+        "priceGBP": 1.99
+      },
+      {
+        "seller": "Kings Seeds",
+        "url": "https://www.kingsseeds.com/herb-seeds-herb-seeds-rocket",
+        "priceGBP": 1.89
+      }
+    ]
+  },
+  {
+    "slug": "radish",
+    "commonName": "Radish",
+    "variety": "French Breakfast 3",
+    "sellers": [
+      {
+        "seller": "Thompson & Morgan",
+        "url": "https://www.thompson-morgan.com/p/radish-french-breakfast-3/542TM",
+        "priceGBP": 2.29
+      },
+      {
+        "seller": "Suttons Seeds",
+        "url": "https://www.suttons.co.uk/vegetable-seeds/popular-seeds/radish-seeds-french-breakfast-3_MH1482",
+        "priceGBP": 2.49
+      }
+    ]
+  },
+  {
+    "slug": "lettuce",
+    "commonName": "Lettuce (Mixed)",
+    "variety": "Mixed Salad Leaves",
+    "sellers": [
+      {
+        "seller": "Thompson & Morgan",
+        "url": "https://www.thompson-morgan.com/p/lettuce-ultimate-mixed/393TM",
+        "priceGBP": 2.99
+      },
+      {
+        "seller": "Suttons Seeds",
+        "url": "https://www.suttons.co.uk/vegetable-seeds/lettuce-leaf-seeds/lettuce-seeds-mixed-varieties_MH-32530",
+        "priceGBP": 2.99
+      },
+      {
+        "seller": "Mr Fothergill's",
+        "url": "https://mr-fothergills.co.uk/products/lettuce-mixed-salad-leaves",
+        "priceGBP": 2.19
+      }
+    ]
+  },
+  {
+    "slug": "spring-onion",
+    "commonName": "Spring Onion",
+    "variety": "White Lisbon",
+    "sellers": [
+      {
+        "seller": "Thompson & Morgan",
+        "url": "https://www.thompson-morgan.com/p/spring-onion-white-lisbon-seeds/528TM",
+        "priceGBP": 2.29
+      },
+      {
+        "seller": "Suttons Seeds",
+        "url": "https://www.suttons.co.uk/vegetable-seeds/all/onion-salad-seeds-white-lisbon_mh275",
+        "priceGBP": 2.49
+      },
+      {
+        "seller": "Kings Seeds",
+        "url": "https://www.kingsseeds.com/13217-onion-white-lisbon-rhs-agm-ppp-a-allium-bgb40557-c-lot-see-pkt-dgb",
+        "priceGBP": 1.89
+      }
+    ]
+  },
+  {
+    "slug": "kale",
+    "commonName": "Kale",
+    "variety": "Nero di Toscana (Cavolo Nero)",
+    "sellers": [
+      {
+        "seller": "Thompson & Morgan",
+        "url": "https://www.thompson-morgan.com/p/kale-nero-di-toscana/40TM",
+        "priceGBP": 2.49
+      },
+      {
+        "seller": "Mr Fothergill's",
+        "url": "https://mr-fothergills.co.uk/products/kale-dwarf-green-curled-seeds",
+        "priceGBP": 1.99
+      }
+    ]
+  },
+  {
+    "slug": "pea",
+    "commonName": "Pea",
+    "variety": "Kelvedon Wonder",
+    "sellers": [
+      {
+        "seller": "Thompson & Morgan",
+        "url": "https://www.thompson-morgan.com/p/pea-kelvedon-wonder-seeds/107TM",
+        "priceGBP": 3.99
+      },
+      {
+        "seller": "Suttons Seeds",
+        "url": "https://www.suttons.co.uk/vegetable-seeds/pea-seeds/pea-seeds-kelvedon-wonder_MH-1566",
+        "priceGBP": 3.99
+      },
+      {
+        "seller": "Kings Seeds",
+        "url": "https://www.kingsseeds.com/30310-pea-kelvedon-wonder1kg-ppp-apisum-sativum-bgb40557-clot-pkt-dgb",
+        "priceGBP": 2.29
+      }
+    ]
+  },
+  {
+    "slug": "beetroot",
+    "commonName": "Beetroot",
+    "variety": "Boltardy",
+    "sellers": [
+      {
+        "seller": "Thompson & Morgan",
+        "url": "https://www.thompson-morgan.com/p/beetroot-boltardy-globe-seeds/288TM",
+        "priceGBP": 2.49
+      },
+      {
+        "seller": "Suttons Seeds",
+        "url": "https://www.suttons.co.uk/vegetable-seeds/all/beetroot-seeds-boltardy_mh-1022",
+        "priceGBP": 2.49
+      },
+      {
+        "seller": "Kings Seeds",
+        "url": "https://www.kingsseeds.com/10502-beetroot-boltardy",
+        "priceGBP": 1.89
+      }
+    ]
+  },
+  {
+    "slug": "carrot",
+    "commonName": "Carrot",
+    "variety": "Nantes 2",
+    "sellers": [
+      {
+        "seller": "Thompson & Morgan",
+        "url": "https://www.thompson-morgan.com/p/carrot-nantes-2-seeds/345TM",
+        "priceGBP": 2.49
+      },
+      {
+        "seller": "Mr Fothergill's",
+        "url": "https://mr-fothergills.co.uk/products/carrot-nantes-2-organic-seeds",
+        "priceGBP": 2.49
+      }
+    ]
+  },
+  {
+    "slug": "courgette",
+    "commonName": "Courgette",
+    "variety": "Black Beauty",
+    "sellers": [
+      {
+        "seller": "Thompson & Morgan",
+        "url": "https://www.thompson-morgan.com/p/organic-courgette-black-beauty-seeds/w79851TM",
+        "priceGBP": 2.99
+      },
+      {
+        "seller": "Mr Fothergill's",
+        "url": "https://mr-fothergills.co.uk/products/courgette-black-beauty-seeds",
+        "priceGBP": 2.49
+      },
+      {
+        "seller": "Suttons Seeds",
+        "url": "https://www.suttons.co.uk/vegetable-seeds/courgette-seeds/courgette-seeds-f1-defender_MH-1138",
+        "priceGBP": 3.49,
+        "note": "F1 Defender variety (Suttons does not stock Black Beauty)"
+      }
+    ]
+  },
+  {
+    "slug": "thyme",
+    "commonName": "Thyme",
+    "variety": "Common Thyme",
+    "sellers": [
+      {
+        "seller": "Thompson & Morgan",
+        "url": "https://www.thompson-morgan.com/p/thyme-old-english-seeds/488TM",
+        "priceGBP": 2.49
+      },
+      {
+        "seller": "Suttons Seeds",
+        "url": "https://www.suttons.co.uk/vegetable-seeds/herb-seeds/herb-seed-thyme-common_MH-1195",
+        "priceGBP": 2.49
+      }
+    ]
+  },
+  {
+    "slug": "oregano",
+    "commonName": "Oregano",
+    "variety": "Greek Oregano",
+    "sellers": [
+      {
+        "seller": "Thompson & Morgan",
+        "url": "https://www.thompson-morgan.com/p/oregano-seeds/827TM",
+        "priceGBP": 2.49
+      },
+      {
+        "seller": "Mr Fothergill's",
+        "url": "https://mr-fothergills.co.uk/products/oregano-greek-seeds",
+        "priceGBP": 1.99
+      }
+    ]
+  },
+  {
+    "slug": "parsley",
+    "commonName": "Parsley",
+    "variety": "Plain Leaved 2 (Flat Leaf)",
+    "sellers": [
+      {
+        "seller": "Thompson & Morgan",
+        "url": "https://www.thompson-morgan.com/p/parsley-plain-leaved-sheeps-2-flat-leaved-seeds/850TM",
+        "priceGBP": 2.29
+      },
+      {
+        "seller": "Suttons Seeds",
+        "url": "https://www.suttons.co.uk/vegetable-seeds/herb-seeds/parsley-seeds-plain-leaved-2_MH-1329",
+        "priceGBP": 2.49
+      }
+    ]
+  },
+  {
+    "slug": "chives",
+    "commonName": "Chives",
+    "variety": "Common Chives",
+    "sellers": [
+      {
+        "seller": "Thompson & Morgan",
+        "url": "https://www.thompson-morgan.com/p/chives-seeds/476TM",
+        "priceGBP": 2.49
+      },
+      {
+        "seller": "Suttons Seeds",
+        "url": "https://www.suttons.co.uk/vegetable-seeds/herb-seeds/herb-seed-chives_MH-1174",
+        "priceGBP": 2.49
+      },
+      {
+        "seller": "Mr Fothergill's",
+        "url": "https://mr-fothergills.co.uk/products/chive-seeds",
+        "priceGBP": 1.99
+      }
+    ]
+  },
+  {
+    "slug": "mint",
+    "commonName": "Mint",
+    "variety": "Garden Mint",
+    "sellers": [
+      {
+        "seller": "Thompson & Morgan",
+        "url": "https://www.thompson-morgan.com/p/mint/857TM",
+        "priceGBP": 2.49
+      },
+      {
+        "seller": "Mr Fothergill's",
+        "url": "https://mr-fothergills.co.uk/products/mint-seeds",
+        "priceGBP": 1.99
+      }
+    ]
+  },
+  {
+    "slug": "nasturtium",
+    "commonName": "Nasturtium (Mixed)",
+    "variety": "Tom Thumb Mixed",
+    "sellers": [
+      {
+        "seller": "Thompson & Morgan",
+        "url": "https://www.thompson-morgan.com/p/nasturtium-tom-thumb-mixed-seeds/1757TM",
+        "priceGBP": 2.49
+      },
+      {
+        "seller": "Suttons Seeds",
+        "url": "https://www.suttons.co.uk/flower-seeds/all/nasturtium-seeds-jewel-mix_MH-676",
+        "priceGBP": 2.99
+      },
+      {
+        "seller": "Mr Fothergill's",
+        "url": "https://mr-fothergills.co.uk/products/nasturtium-jewel-mixed-seeds",
+        "priceGBP": 1.99
+      }
+    ]
+  },
+  {
+    "slug": "marigold",
+    "commonName": "Marigold (French, Mixed)",
+    "variety": "Boy-O-Boy Mixed",
+    "sellers": [
+      {
+        "seller": "Suttons Seeds",
+        "url": "https://www.suttons.co.uk/flower-seeds/all/marigold-french-seeds-boyoboy-mix_MH-644",
+        "priceGBP": 2.49
+      },
+      {
+        "seller": "Mr Fothergill's",
+        "url": "https://mr-fothergills.co.uk/products/marigold-french-boy-o-boy-mixed-seeds",
+        "priceGBP": 1.99
+      }
+    ]
+  },
+  {
+    "slug": "dwarf-sweet-pea",
+    "commonName": "Dwarf Sweet Pea",
+    "variety": "Pink Cupid",
+    "sellers": [
+      {
+        "seller": "Thompson & Morgan",
+        "url": "https://www.thompson-morgan.com/p/sweet-pea-pink-cupid-seeds/1875TM",
+        "priceGBP": 3.49
+      },
+      {
+        "seller": "Suttons Seeds",
+        "url": "https://www.suttons.co.uk/flower-seeds/all/sweet-pea-seeds-patio-mix_mh-853",
+        "priceGBP": 3.49,
+        "note": "Patio Mix (dwarf variety)"
+      }
+    ]
+  },
+  {
+    "slug": "sunflower",
+    "commonName": "Sunflower",
+    "variety": "Teddy Bear (Dwarf)",
+    "sellers": [
+      {
+        "seller": "Thompson & Morgan",
+        "url": "https://www.thompson-morgan.com/p/sunflower-teddy-bear-seeds/6306TM",
+        "priceGBP": 2.49
+      },
+      {
+        "seller": "Mr Fothergill's",
+        "url": "https://mr-fothergills.co.uk/products/rhs-sunflower-teddy-bear",
+        "priceGBP": 2.49
+      },
+      {
+        "seller": "Suttons Seeds",
+        "url": "https://www.suttons.co.uk/flower-seeds/all/sunflower-seeds-giant-yellow_MH-818",
+        "priceGBP": 2.49,
+        "note": "Giant Yellow variety (for tall option)"
+      }
+    ]
+  }
+]

@@ -1,15 +1,19 @@
 import { useState } from 'react';
 import { PlannerPage } from './pages/PlannerPage';
 import { GardenPage } from './pages/GardenPage';
+import { HarvestPage } from './pages/HarvestPage';
+import { SeedFinderPage } from './pages/SeedFinderPage';
 import { CalendarPage } from './pages/CalendarPage';
 import { KnowledgeBasePage } from './pages/KnowledgeBasePage';
 import { SettingsPage } from './pages/SettingsPage';
 
-type Page = 'planner' | 'garden' | 'calendar' | 'knowledge' | 'settings';
+type Page = 'planner' | 'garden' | 'harvest' | 'seeds' | 'calendar' | 'knowledge' | 'settings';
 
 const navItems: { id: Page; label: string; icon: string }[] = [
   { id: 'planner', label: 'GreenStalk', icon: '\ud83c\udf31' },
   { id: 'garden', label: 'Garden', icon: '\ud83c\udfe1' },
+  { id: 'harvest', label: 'Harvest', icon: '\ud83c\udf53' },
+  { id: 'seeds', label: 'Seeds', icon: '\ud83d\udecd\ufe0f' },
   { id: 'calendar', label: 'Calendar', icon: '\ud83d\udcc5' },
   { id: 'knowledge', label: 'Plants', icon: '\ud83d\udcda' },
   { id: 'settings', label: 'Settings', icon: '\u2699\ufe0f' },
@@ -53,6 +57,8 @@ function App() {
       <main className="flex-1 overflow-hidden">
         {page === 'planner' && <PlannerPage />}
         {page === 'garden' && <GardenPage />}
+        {page === 'harvest' && <HarvestPage />}
+        {page === 'seeds' && <SeedFinderPage />}
         {page === 'calendar' && <CalendarPage />}
         {page === 'knowledge' && <KnowledgeBasePage />}
         {page === 'settings' && <SettingsPage />}

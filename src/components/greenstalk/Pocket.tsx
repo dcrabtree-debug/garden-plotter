@@ -1,4 +1,4 @@
-import { useDroppable } from '@dnd-kit/core';
+import { useDroppable, useDraggable } from '@dnd-kit/core';
 import type { CompanionStatus } from '../../lib/companion-engine';
 import type { Plant } from '../../types/plant';
 import type { TierSuitability } from '../../lib/tier-rules';
@@ -8,7 +8,6 @@ interface PocketProps {
   plant: Plant | null;
   companionStatus: CompanionStatus;
   tierSuitability?: TierSuitability;
-  isDragOver?: boolean;
   onRemove: () => void;
   onClick: () => void;
 }
@@ -33,7 +32,23 @@ export function Pocket({
   onRemove,
   onClick,
 }: PocketProps) {
-  const { isOver, setNodeRef } = useDroppable({ id });
+  const { isOver, setNodeRef: setDropRef } = useDroppable({ id });
+
+  // Make occupied pockets draggable so plants can be rearranged
+  const {
+    attributes,
+    listeners,
+    setNodeRef: setDragRef,
+    isDragging,
+  } = useDraggable({
+    id: `pocket-drag-${id}`,
+    data: {
+      type: 'pocket',
+      pocketId: id,
+      plantSlug: plant?.slug ?? null,
+    },
+    disabled: !plant, // only draggable when occupied
+  });
 
   const suitabilityRing =
     tierSuitability === 'ideal'
@@ -42,16 +57,24 @@ export function Pocket({
         ? 'ring-2 ring-amber-300'
         : '';
 
+  // Combine refs: droppable + draggable on the same element
+  const setRefs = (el: HTMLElement | null) => {
+    setDropRef(el);
+    setDragRef(el);
+  };
+
   return (
     <div
-      ref={setNodeRef}
+      ref={setRefs}
       onClick={onClick}
+      {...(plant ? { ...attributes, ...listeners } : {})}
       className={`
-        relative w-16 h-16 rounded-xl border-2 flex flex-col items-center justify-center
+        group relative w-16 h-16 rounded-xl border-2 flex flex-col items-center justify-center
         cursor-pointer transition-all duration-150 select-none
         ${plant ? statusColors[companionStatus] : 'border-dashed border-stone-300'}
         ${plant ? statusBg[companionStatus] : 'bg-white'}
         ${isOver ? 'scale-110 shadow-lg border-blue-400 bg-blue-50' : ''}
+        ${isDragging ? 'opacity-40 scale-95' : ''}
         ${!plant && !isOver ? 'hover:border-stone-400 hover:bg-stone-50' : ''}
         ${!plant && tierSuitability ? 'hover:scale-105' : ''}
         ${suitabilityRing}
@@ -68,7 +91,7 @@ export function Pocket({
               e.stopPropagation();
               onRemove();
             }}
-            className="absolute -top-1.5 -right-1.5 w-4 h-4 rounded-full bg-stone-400 text-white text-[10px] leading-none flex items-center justify-center opacity-0 hover:opacity-100 group-hover:opacity-100 transition-opacity"
+            className="absolute -top-1.5 -right-1.5 w-4 h-4 rounded-full bg-red-500 text-white text-[10px] leading-none flex items-center justify-center opacity-0 group-hover:opacity-100 hover:bg-red-600 transition-opacity z-10"
             title="Remove plant"
           >
             x

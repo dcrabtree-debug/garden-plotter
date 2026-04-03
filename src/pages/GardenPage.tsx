@@ -3,6 +3,7 @@ import { useGardenStore } from '../state/garden-store';
 import { usePlantDb } from '../data/use-plant-db';
 import { PlantDetail } from '../components/plant-palette/PlantDetail';
 import { useCompanionDb } from '../data/use-companion-db';
+import { useRegion } from '../data/use-region';
 import { generateGardenLayouts, type GardenLayoutOption } from '../lib/garden-auto-populate';
 import type { CellType, GardenFacing } from '../types/planner';
 import type { Plant } from '../types/plant';
@@ -117,7 +118,8 @@ export function GardenPage() {
     resetGarden, clearPaint,
   } = useGardenStore();
 
-  const { plants, plantMap } = usePlantDb();
+  const region = useRegion();
+  const { plants, plantMap } = usePlantDb(region);
   const { companionMap } = useCompanionDb();
   const [isPainting, setIsPainting] = useState(false);
   const [plantToPlace, setPlantToPlace] = useState<Plant | null>(null);

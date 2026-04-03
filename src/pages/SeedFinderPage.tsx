@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { usePlantDb } from '../data/use-plant-db';
 import { useSeedLinks } from '../data/use-seed-links';
-import { usePlannerStore } from '../state/planner-store';
+import { useRegion } from '../data/use-region';
 import { getMonthName, isInWindow } from '../lib/calendar-utils';
 import type { Plant } from '../types/plant';
 
@@ -218,10 +218,9 @@ function SeedCard({
 }
 
 export function SeedFinderPage() {
-  const { plants } = usePlantDb();
-  const location = usePlannerStore((s) => s.settings.location);
-  const isUS = location.includes('USA') || location.includes('CA,') || location.includes('Manhattan');
-  const region = isUS ? 'us' : 'uk';
+  const region = useRegion();
+  const { plants } = usePlantDb(region);
+  const isUS = region === 'us';
   const seedLinks = useSeedLinks(region);
   const sellerInfo = isUS ? SELLER_INFO_US : SELLER_INFO_UK;
   const currentMonth = new Date().getMonth() + 1;

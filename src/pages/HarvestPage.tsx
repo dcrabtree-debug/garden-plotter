@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useHarvestStore } from '../state/harvest-store';
 import { usePlantDb } from '../data/use-plant-db';
+import { useRegion } from '../data/use-region';
 import type { Harvester } from '../types/harvest';
 import type { Plant } from '../types/plant';
 
@@ -123,7 +124,8 @@ function HarvestButton({
 }
 
 function HarvesterSection({ harvester }: { harvester: Harvester }) {
-  const { plantMap } = usePlantDb();
+  const region = useRegion();
+  const { plantMap } = usePlantDb(region);
   const {
     addHarvest,
     getCountForHarvester,
@@ -232,7 +234,8 @@ function HarvesterSection({ harvester }: { harvester: Harvester }) {
 
 function HarvestLog() {
   const { entries, harvesters } = useHarvestStore();
-  const { plantMap } = usePlantDb();
+  const region = useRegion();
+  const { plantMap } = usePlantDb(region);
 
   const recentEntries = [...entries]
     .sort((a, b) => b.timestamp - a.timestamp)

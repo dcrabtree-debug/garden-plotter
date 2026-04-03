@@ -100,6 +100,7 @@ interface PlannerStore {
   clearTower: (towerId: string) => void;
   addTower: () => void;
   removeTower: (towerId: string) => void;
+  updateSettings: (settings: Settings) => void;
   importState: (payload: SaveState) => void;
   exportState: () => SaveState;
   resetAll: () => void;
@@ -202,6 +203,14 @@ export const usePlannerStore = create<PlannerStore>((set, get) => {
       set((state) => {
         const towers = state.towers.filter((t) => t.id !== towerId);
         const newState = { ...state, towers };
+        saveState(makeSaveState(newState.towers, newState.settings));
+        return newState;
+      });
+    },
+
+    updateSettings: (settings) => {
+      set((state) => {
+        const newState = { ...state, settings };
         saveState(makeSaveState(newState.towers, newState.settings));
         return newState;
       });

@@ -15,6 +15,7 @@ import { PlantDetail } from '../components/plant-palette/PlantDetail';
 import { usePlannerStore } from '../state/planner-store';
 import { usePlantDb } from '../data/use-plant-db';
 import { useCompanionDb } from '../data/use-companion-db';
+import { useRegion } from '../data/use-region';
 import { generateLayouts, type LayoutOption } from '../lib/auto-populate';
 import type { Plant } from '../types/plant';
 
@@ -22,7 +23,10 @@ export function PlannerPage() {
   const towers = usePlannerStore((s) => s.towers);
   const assignPlant = usePlannerStore((s) => s.assignPlant);
   const removePlant = usePlannerStore((s) => s.removePlant);
-  const { plants, plantMap } = usePlantDb();
+  const addTower = usePlannerStore((s) => s.addTower);
+  const removeTowerAction = usePlannerStore((s) => s.removeTower);
+  const region = useRegion();
+  const { plants, plantMap } = usePlantDb(region);
   const { companionMap } = useCompanionDb();
 
   const [draggedPlant, setDraggedPlant] = useState<Plant | null>(null);
@@ -139,14 +143,14 @@ export function PlannerPage() {
   );
 
   const handleAutoPopulate = useCallback(() => {
-    const generated = generateLayouts(plants, companionMap);
+    const generated = generateLayouts(plants, companionMap, towers.length);
     setLayouts(generated);
     setShowAutoPopulate(true);
-  }, [plants, companionMap]);
+  }, [plants, companionMap, towers.length]);
 
   const applyLayout = useCallback(
     (layout: LayoutOption) => {
-      // Clear both towers first
+      // Clear all towers first
       for (const tower of towers) {
         for (const tier of tower.tiers) {
           for (let i = 0; i < tier.pockets.length; i++) {
@@ -157,24 +161,14 @@ export function PlannerPage() {
         }
       }
 
-      // Apply tower 1
-      const t1 = towers[0];
-      if (t1) {
-        for (let tier = 0; tier < layout.tower1.length; tier++) {
-          for (let pocket = 0; pocket < layout.tower1[tier].length; pocket++) {
-            const slug = layout.tower1[tier][pocket];
-            if (slug) assignPlant(t1.id, tier + 1, pocket, slug);
-          }
-        }
-      }
-
-      // Apply tower 2
-      const t2 = towers[1];
-      if (t2) {
-        for (let tier = 0; tier < layout.tower2.length; tier++) {
-          for (let pocket = 0; pocket < layout.tower2[tier].length; pocket++) {
-            const slug = layout.tower2[tier][pocket];
-            if (slug) assignPlant(t2.id, tier + 1, pocket, slug);
+      // Apply layout to each tower
+      for (let t = 0; t < towers.length && t < layout.towers.length; t++) {
+        const tower = towers[t];
+        const grid = layout.towers[t];
+        for (let tier = 0; tier < grid.length; tier++) {
+          for (let pocket = 0; pocket < grid[tier].length; pocket++) {
+            const slug = grid[tier][pocket];
+            if (slug) assignPlant(tower.id, tier + 1, pocket, slug);
           }
         }
       }
@@ -237,15 +231,38 @@ export function PlannerPage() {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {towers.map((tower) => (
-              <TowerView
-                key={tower.id}
-                tower={tower}
-                plantMap={plantMap}
-                companionMap={companionMap}
-                draggedPlant={draggedPlant ?? plantToPlace}
-                onPocketClick={handlePocketClick}
-              />
+              <div key={tower.id} className="relative group">
+                <TowerView
+                  tower={tower}
+                  plantMap={plantMap}
+                  companionMap={companionMap}
+                  draggedPlant={draggedPlant ?? plantToPlace}
+                  onPocketClick={handlePocketClick}
+                />
+                {towers.length > 1 && (
+                  <button
+                    onClick={() => {
+                      const planted = tower.tiers.some(t => t.pockets.some(p => p.plantSlug));
+                      if (planted && !window.confirm(`Remove "${tower.name}"? This tower has plants.`)) return;
+                      removeTowerAction(tower.id);
+                    }}
+                    className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-red-500 text-white text-xs flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600 shadow-sm"
+                    title="Remove this GreenStalk"
+                  >
+                    ×
+                  </button>
+                )}
+              </div>
             ))}
+
+            {/* Add tower button */}
+            <button
+              onClick={addTower}
+              className="border-2 border-dashed border-stone-300 dark:border-stone-600 rounded-2xl p-8 flex flex-col items-center justify-center gap-2 text-stone-400 dark:text-stone-500 hover:border-emerald-400 dark:hover:border-emerald-600 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors min-h-[200px]"
+            >
+              <span className="text-3xl">+</span>
+              <span className="text-sm font-medium">Add GreenStalk</span>
+            </button>
           </div>
         </div>
       </div>
@@ -297,12 +314,9 @@ export function PlannerPage() {
             <div className="p-6 space-y-4">
               {layouts.map((layout) => {
                 // Count filled pockets
-                const t1Count = layout.tower1.flat().filter(Boolean).length;
-                const t2Count = layout.tower2.flat().filter(Boolean).length;
-                const uniquePlants = new Set([
-                  ...layout.tower1.flat().filter(Boolean),
-                  ...layout.tower2.flat().filter(Boolean),
-                ]);
+                const totalCount = layout.towers.reduce((acc, t) => acc + t.flat().filter(Boolean).length, 0);
+                const totalPockets = layout.towers.length * 30;
+                const uniquePlants = new Set(layout.towers.flatMap(t => t.flat().filter(Boolean)));
 
                 return (
                   <div
@@ -319,16 +333,13 @@ export function PlannerPage() {
                           {layout.description}
                         </p>
                         <div className="flex gap-3 mt-2 text-[10px] text-stone-400">
-                          <span>{t1Count + t2Count}/60 pockets filled</span>
+                          <span>{totalCount}/{totalPockets} pockets filled</span>
                           <span>{uniquePlants.size} unique plants</span>
                         </div>
 
                         {/* Preview: show tier contents */}
-                        <div className="mt-3 grid grid-cols-2 gap-3">
-                          {[
-                            { label: 'Tower 1', grid: layout.tower1 },
-                            { label: 'Tower 2', grid: layout.tower2 },
-                          ].map(({ label, grid }) => (
+                        <div className={`mt-3 grid gap-3 ${layout.towers.length <= 2 ? 'grid-cols-2' : layout.towers.length <= 4 ? 'grid-cols-4' : 'grid-cols-3'}`}>
+                          {layout.towers.map((grid, idx) => ({ label: `Tower ${idx + 1}`, grid })).map(({ label, grid }) => (
                             <div key={label}>
                               <div className="text-[9px] font-semibold text-stone-400 mb-1">{label}</div>
                               {grid.map((tier, ti) => (

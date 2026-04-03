@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { usePlannerStore } from '../state/planner-store';
 import { usePlantDb } from '../data/use-plant-db';
+import { useRegion } from '../data/use-region';
 import {
   getMonthName,
   isInWindow,
@@ -33,7 +34,8 @@ function CalendarBar({
 
 export function CalendarPage() {
   const towers = usePlannerStore((s) => s.towers);
-  const { plantMap } = usePlantDb();
+  const region = useRegion();
+  const { plantMap } = usePlantDb(region);
   const currentMonth = getCurrentMonth();
 
   const plantedSlugs = useMemo(() => {

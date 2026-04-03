@@ -8,6 +8,8 @@ export interface LayoutOption {
   name: string;
   description: string;
   strategy: LayoutStrategy;
+  towers: (string | null)[][][];
+  // Backwards compat getters
   tower1: (string | null)[][];
   tower2: (string | null)[][];
 }
@@ -64,7 +66,7 @@ function alternate(a: Plant | undefined, b: Plant | undefined, count: number): P
  *   4:          Strawberries + spinach — more berries, spinach loves shade
  *   5 (bottom): Beans + nasturtium + marigold — trailing on ground only
  */
-function familyHarvestLayout(plants: Plant[]): LayoutOption {
+function familyHarvestLayout(plants: Plant[], towerCount: number): LayoutOption {
   const suitable = plants.filter((p) => p.greenstalkSuitability !== 'unsuitable');
   const f = (slug: string) => findPlant(suitable, slug);
 
@@ -97,13 +99,17 @@ function familyHarvestLayout(plants: Plant[]): LayoutOption {
     { tier: 5, plants: alternate(bean, marigold, 6) },         // beans + pest protection at base
   ], 6);
 
+  const templates = [tower1, tower2];
+  const towers = Array.from({ length: towerCount }, (_, i) => templates[i % templates.length]);
+
   return {
     id: 'family-harvest',
     name: 'Kids\' Picking Towers',
     description: 'Tumbling Tom tomatoes on tier 2 so fruit hangs clean (no staking needed). Strawberries at kid-height for Max and Noelle. Nasturtiums at the bottom where trailing can\'t shade other tiers. Herbs at the top.',
     strategy: 'family-harvest',
-    tower1,
-    tower2,
+    towers,
+    tower1: towers[0],
+    tower2: towers[1] ?? towers[0],
   };
 }
 
@@ -120,7 +126,7 @@ function familyHarvestLayout(plants: Plant[]): LayoutOption {
  *   4:          Strawberry + spinach — shade-tolerant companion pair
  *   5 (bottom): Bean + nasturtium/marigold — nitrogen fixer + pest deterrents
  */
-function companionOptimalLayout(plants: Plant[]): LayoutOption {
+function companionOptimalLayout(plants: Plant[], towerCount: number): LayoutOption {
   const suitable = plants.filter((p) => p.greenstalkSuitability !== 'unsuitable');
   const f = (slug: string) => findPlant(suitable, slug);
 
@@ -155,13 +161,17 @@ function companionOptimalLayout(plants: Plant[]): LayoutOption {
     { tier: 5, plants: alternate(bean, marigold, 6) },         // nitrogen fixer + pest deterrent at base
   ], 6);
 
+  const templates = [tower1, tower2];
+  const towers = Array.from({ length: towerCount }, (_, i) => templates[i % templates.length]);
+
   return {
     id: 'companion-optimal',
     name: 'Companion Powerhouse',
     description: 'Every pocket is a proven companion. Tumbling Tom on tier 2 with basil (fruit hangs clean, no staking). Chives + thyme deter pests at the top. Nasturtiums trail safely at the bottom. Beans fix nitrogen. Zero foes.',
     strategy: 'companion-optimal',
-    tower1,
-    tower2,
+    towers,
+    tower1: towers[0],
+    tower2: towers[1] ?? towers[0],
   };
 }
 
@@ -178,7 +188,7 @@ function companionOptimalLayout(plants: Plant[]): LayoutOption {
  *   4:          Strawberry (all 6) — maximum berries
  *   5 (bottom): Strawberry + marigold — berries + compact pest deterrent
  */
-function maximumBerriesLayout(plants: Plant[]): LayoutOption {
+function maximumBerriesLayout(plants: Plant[], towerCount: number): LayoutOption {
   const suitable = plants.filter((p) => p.greenstalkSuitability !== 'unsuitable');
   const f = (slug: string) => findPlant(suitable, slug);
 
@@ -206,23 +216,28 @@ function maximumBerriesLayout(plants: Plant[]): LayoutOption {
     { tier: 5, plants: alternate(strawberry, marigold, 6) },   // berries + pest protection at base
   ], 6);
 
+  const templates = [tower1, tower2];
+  const towers = Array.from({ length: towerCount }, (_, i) => templates[i % templates.length]);
+
   return {
     id: 'maximum-berries',
     name: 'Maximum Berries & Tomatoes',
     description: 'Maximum berry harvest: strawberries on 4 of 5 tiers. Tumbling Tom on tier 2 so fruit hangs clean. Chives and marigolds for minimal pest protection. No nasturtiums — more room for berries.',
     strategy: 'continuous-harvest',
-    tower1,
-    tower2,
+    towers,
+    tower1: towers[0],
+    tower2: towers[1] ?? towers[0],
   };
 }
 
 export function generateLayouts(
   plants: Plant[],
-  companionMap: CompanionMap
+  companionMap: CompanionMap,
+  towerCount: number = 2
 ): LayoutOption[] {
   return [
-    familyHarvestLayout(plants),
-    companionOptimalLayout(plants),
-    maximumBerriesLayout(plants),
+    familyHarvestLayout(plants, towerCount),
+    companionOptimalLayout(plants, towerCount),
+    maximumBerriesLayout(plants, towerCount),
   ];
 }

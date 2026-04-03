@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { usePlantDb } from '../data/use-plant-db';
 import { useCompanionDb } from '../data/use-companion-db';
+import { useRegion } from '../data/use-region';
 import { PlantDetail } from '../components/plant-palette/PlantDetail';
 import type { Plant, PlantCategory } from '../types/plant';
 import { isInWindow, getMonthName } from '../lib/calendar-utils';
@@ -86,7 +87,8 @@ function PlantRow({
 }
 
 export function KnowledgeBasePage() {
-  const { plants, searchPlants } = usePlantDb();
+  const region = useRegion();
+  const { plants, searchPlants } = usePlantDb(region);
   const { companionMap } = useCompanionDb();
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState<PlantCategory | 'all'>('all');
@@ -108,7 +110,7 @@ export function KnowledgeBasePage() {
         Plant Knowledge Base
       </h1>
       <p className="text-sm text-stone-400 mb-4">
-        {plants.length} plants in database — Surrey, UK growing conditions —{' '}
+        {plants.length} plants in database — {region === 'us' ? 'Manhattan Beach, CA' : 'Surrey, UK'} growing conditions —{' '}
         {getMonthName(currentMonth)} {new Date().getFullYear()}
       </p>
 

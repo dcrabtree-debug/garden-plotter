@@ -73,22 +73,20 @@ export function SettingsPage() {
     }
   };
 
+  const updateSettings = usePlannerStore((s) => s.updateSettings);
+
   const handleLocationChange = (presetId: string) => {
     const preset = LOCATION_PRESETS.find((p) => p.id === presetId);
     if (!preset) return;
     setSelectedPreset(presetId);
-    // Update the planner store settings
-    const store = usePlannerStore.getState();
-    const newSettings = {
-      ...store.settings,
+    updateSettings({
+      ...settings,
       location: preset.name,
       lastFrostDate: preset.lastFrostDate,
       firstFrostDate: preset.firstFrostDate,
       latitude: preset.latitude,
       longitude: preset.longitude,
-    };
-    // Directly update settings in store
-    usePlannerStore.setState({ settings: newSettings });
+    });
   };
 
   const activePreset = LOCATION_PRESETS.find((p) => p.id === selectedPreset);

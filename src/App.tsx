@@ -7,6 +7,7 @@ import { CalendarPage } from './pages/CalendarPage';
 import { KnowledgeBasePage } from './pages/KnowledgeBasePage';
 import { SettingsPage } from './pages/SettingsPage';
 import { useDarkMode } from './hooks/use-dark-mode';
+import { usePlannerStore } from './state/planner-store';
 
 type Page = 'planner' | 'garden' | 'harvest' | 'seeds' | 'calendar' | 'knowledge' | 'settings';
 
@@ -23,6 +24,7 @@ const navItems: { id: Page; label: string; icon: string }[] = [
 function App() {
   const [page, setPage] = useState<Page>('planner');
   const { isDark, toggle: toggleDark } = useDarkMode();
+  const location = usePlannerStore((s) => s.settings.location);
 
   return (
     <div className="h-screen flex flex-col bg-stone-100 dark:bg-stone-900 transition-colors">
@@ -34,7 +36,7 @@ function App() {
             Garden Plotter
           </h1>
           <span className="text-[10px] text-stone-400 dark:text-stone-500 ml-1">
-            Surrey, UK
+            {location.includes('Manhattan') ? 'Manhattan Beach, CA' : 'Surrey, UK'}
           </span>
         </div>
         <div className="flex items-center gap-2">

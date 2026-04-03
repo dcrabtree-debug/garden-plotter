@@ -1,6 +1,6 @@
 [
   {
-    "slug": "everbearing-strawberry",
+    "slug": "strawberry-everbearing",
     "commonName": "Everbearing Strawberry",
     "variety": "Mara des Bois",
     "sellers": [
@@ -19,7 +19,7 @@
     ]
   },
   {
-    "slug": "tumbling-tom-tomato",
+    "slug": "tomato-tumbling",
     "commonName": "Tumbling Tom Tomato",
     "variety": "Tumbling Tom Red",
     "sellers": [
@@ -36,7 +36,7 @@
     ]
   },
   {
-    "slug": "sweet-basil",
+    "slug": "basil-sweet",
     "commonName": "Sweet Basil",
     "variety": "Sweet Green",
     "sellers": [

@@ -4,7 +4,7 @@
     "commonName": "Everbearing Strawberry",
     "botanicalName": "Fragaria × ananassa",
     "category": "fruit",
-    "emoji": "\ud83c\udf53",
+    "emoji": "🍓",
     "sun": "full-sun",
     "water": "moderate",
     "spacingCm": 25,
@@ -32,7 +32,7 @@
     "commonName": "Tumbling Tom Tomato",
     "botanicalName": "Solanum lycopersicum",
     "category": "vegetable",
-    "emoji": "\ud83c\udf45",
+    "emoji": "🍅",
     "sun": "full-sun",
     "water": "high",
     "spacingCm": 30,
@@ -60,7 +60,7 @@
     "commonName": "Sweet Basil",
     "botanicalName": "Ocimum basilicum",
     "category": "herb",
-    "emoji": "\ud83c\udf3f",
+    "emoji": "🌿",
     "sun": "full-sun",
     "water": "moderate",
     "spacingCm": 20,
@@ -88,7 +88,7 @@
     "commonName": "Dwarf French Bean",
     "botanicalName": "Phaseolus vulgaris",
     "category": "legume",
-    "emoji": "\ud83e\uded8",
+    "emoji": "🫘",
     "sun": "full-sun",
     "water": "moderate",
     "spacingCm": 15,
@@ -116,7 +116,7 @@
     "commonName": "Perpetual Spinach",
     "botanicalName": "Beta vulgaris var. cicla",
     "category": "vegetable",
-    "emoji": "\ud83e\udd6c",
+    "emoji": "🥬",
     "sun": "partial-shade",
     "water": "moderate",
     "spacingCm": 20,
@@ -143,7 +143,7 @@
     "commonName": "Swiss Chard",
     "botanicalName": "Beta vulgaris subsp. cicla",
     "category": "vegetable",
-    "emoji": "\ud83e\udd6c",
+    "emoji": "🥬",
     "sun": "partial-shade",
     "water": "moderate",
     "spacingCm": 25,
@@ -171,7 +171,7 @@
     "commonName": "Thyme",
     "botanicalName": "Thymus vulgaris",
     "category": "herb",
-    "emoji": "\ud83c\udf3f",
+    "emoji": "🌿",
     "sun": "full-sun",
     "water": "low",
     "spacingCm": 20,
@@ -199,7 +199,7 @@
     "commonName": "Oregano",
     "botanicalName": "Origanum vulgare",
     "category": "herb",
-    "emoji": "\ud83c\udf3f",
+    "emoji": "🌿",
     "sun": "full-sun",
     "water": "low",
     "spacingCm": 25,
@@ -226,7 +226,7 @@
     "commonName": "Parsley",
     "botanicalName": "Petroselinum crispum",
     "category": "herb",
-    "emoji": "\ud83c\udf3f",
+    "emoji": "🌿",
     "sun": "partial-shade",
     "water": "moderate",
     "spacingCm": 20,
@@ -254,7 +254,7 @@
     "commonName": "Nasturtium",
     "botanicalName": "Tropaeolum majus",
     "category": "flower",
-    "emoji": "\ud83c\udf3a",
+    "emoji": "🌺",
     "sun": "full-sun",
     "water": "low",
     "spacingCm": 25,
@@ -282,7 +282,7 @@
     "commonName": "Dwarf Sweet Pea",
     "botanicalName": "Lathyrus odoratus",
     "category": "flower",
-    "emoji": "\ud83c\udf38",
+    "emoji": "🌸",
     "sun": "full-sun",
     "water": "moderate",
     "spacingCm": 15,
@@ -310,7 +310,7 @@
     "commonName": "Lettuce",
     "botanicalName": "Lactuca sativa",
     "category": "vegetable",
-    "emoji": "\ud83e\udd6c",
+    "emoji": "🥬",
     "sun": "partial-shade",
     "water": "moderate",
     "spacingCm": 20,
@@ -338,7 +338,7 @@
     "commonName": "Chives",
     "botanicalName": "Allium schoenoprasum",
     "category": "herb",
-    "emoji": "\ud83e\uddc5",
+    "emoji": "🧅",
     "sun": "full-sun",
     "water": "moderate",
     "spacingCm": 15,
@@ -366,7 +366,7 @@
     "commonName": "Mint",
     "botanicalName": "Mentha spicata",
     "category": "herb",
-    "emoji": "\ud83c\udf3f",
+    "emoji": "🌿",
     "sun": "partial-shade",
     "water": "high",
     "spacingCm": 30,
@@ -394,7 +394,7 @@
     "commonName": "French Marigold",
     "botanicalName": "Tagetes patula",
     "category": "flower",
-    "emoji": "\ud83c\udf3b",
+    "emoji": "🌻",
     "sun": "full-sun",
     "water": "moderate",
     "spacingCm": 20,
@@ -421,7 +421,7 @@
     "commonName": "Radish",
     "botanicalName": "Raphanus sativus",
     "category": "vegetable",
-    "emoji": "\ud83e\uded1",
+    "emoji": "🫑",
     "sun": "full-sun",
     "water": "moderate",
     "spacingCm": 5,
@@ -449,7 +449,7 @@
     "commonName": "Rocket (Arugula)",
     "botanicalName": "Eruca vesicaria",
     "category": "vegetable",
-    "emoji": "\ud83e\udd6c",
+    "emoji": "🥬",
     "sun": "partial-shade",
     "water": "moderate",
     "spacingCm": 15,
@@ -476,7 +476,7 @@
     "commonName": "Spring Onion",
     "botanicalName": "Allium cepa",
     "category": "vegetable",
-    "emoji": "\ud83e\uddc5",
+    "emoji": "🧅",
     "sun": "full-sun",
     "water": "moderate",
     "spacingCm": 5,
@@ -503,7 +503,7 @@
     "commonName": "Kale",
     "botanicalName": "Brassica oleracea var. sabellica",
     "category": "vegetable",
-    "emoji": "\ud83e\udd6c",
+    "emoji": "🥬",
     "sun": "full-sun",
     "water": "moderate",
     "spacingCm": 30,
@@ -531,7 +531,7 @@
     "commonName": "Chilli Pepper",
     "botanicalName": "Capsicum annuum",
     "category": "vegetable",
-    "emoji": "\ud83c\udf36\ufe0f",
+    "emoji": "🌶️",
     "sun": "full-sun",
     "water": "moderate",
     "spacingCm": 30,
@@ -553,5 +553,1328 @@
     ],
     "notes": "Start indoors early (January-February) for UK growing season. Needs maximum sun.",
     "sources": ["https://www.rhs.org.uk/vegetables/chilli-peppers/grow-your-own"]
+  },
+
+  {
+    "slug": "runner-bean",
+    "commonName": "Runner Bean",
+    "botanicalName": "Phaseolus coccineus",
+    "category": "vegetable",
+    "emoji": "🫘",
+    "sun": "full-sun",
+    "water": "high",
+    "spacingCm": 15,
+    "depthCm": 20,
+    "growthHabit": "climbing",
+    "daysToHarvest": [60, 75],
+    "plantingWindow": {
+      "sowIndoors": [4, 5],
+      "sowOutdoors": [5, 6],
+      "transplant": [5, 6],
+      "harvest": [7, 10]
+    },
+    "greenstalkSuitability": "unsuitable",
+    "greenstalkNotes": "Vigorous climber reaching 2m+ needs strong cane support. Far too tall and heavy for pockets.",
+    "idealTiers": [],
+    "varieties": [
+      { "name": "Scarlet Emperor", "notes": "Classic red-flowered variety, heavy cropper", "containerFriendly": false },
+      { "name": "Painted Lady", "notes": "Bicolour flowers, heritage variety", "containerFriendly": false },
+      { "name": "Hestia", "notes": "Dwarf bushy variety, no support needed", "containerFriendly": true }
+    ],
+    "notes": "Needs 2m cane wigwam or frame. Pick regularly to keep cropping. Frost tender — do not sow outdoors until late May in Surrey.",
+    "sources": ["https://www.rhs.org.uk/vegetables/runner-beans/grow-your-own"]
+  },
+  {
+    "slug": "broad-bean",
+    "commonName": "Broad Bean",
+    "botanicalName": "Vicia faba",
+    "category": "vegetable",
+    "emoji": "🫘",
+    "sun": "full-sun",
+    "water": "moderate",
+    "spacingCm": 23,
+    "depthCm": 20,
+    "growthHabit": "upright",
+    "daysToHarvest": [80, 100],
+    "plantingWindow": {
+      "sowIndoors": [1, 2],
+      "sowOutdoors": [2, 4],
+      "transplant": [3, 4],
+      "harvest": [5, 7]
+    },
+    "greenstalkSuitability": "poor",
+    "greenstalkNotes": "Tall stems (90cm+) and deep tap roots make this unsuitable for pockets. Better in ground or deep raised beds.",
+    "idealTiers": [],
+    "varieties": [
+      { "name": "Aquadulce Claudia", "notes": "Best for autumn/early spring sowing, very hardy", "containerFriendly": false },
+      { "name": "The Sutton", "notes": "Dwarf variety at 30cm, good for containers", "containerFriendly": true }
+    ],
+    "notes": "One of the earliest crops. Autumn sow Aquadulce in November for May harvest. Pinch out tips when first pods set to deter blackfly.",
+    "sources": ["https://www.rhs.org.uk/vegetables/broad-beans/grow-your-own"]
+  },
+  {
+    "slug": "pea",
+    "commonName": "Garden Pea",
+    "botanicalName": "Pisum sativum",
+    "category": "vegetable",
+    "emoji": "🟢",
+    "sun": "full-sun",
+    "water": "moderate",
+    "spacingCm": 8,
+    "depthCm": 15,
+    "growthHabit": "climbing",
+    "daysToHarvest": [60, 80],
+    "plantingWindow": {
+      "sowIndoors": [2, 3],
+      "sowOutdoors": [3, 6],
+      "transplant": [4, 5],
+      "harvest": [6, 9]
+    },
+    "greenstalkSuitability": "poor",
+    "greenstalkNotes": "Most varieties need support netting and reach 1m+. Only dwarf varieties could work but yields are low.",
+    "idealTiers": [],
+    "varieties": [
+      { "name": "Kelvedon Wonder", "notes": "Compact first early, reliable cropper", "containerFriendly": true },
+      { "name": "Hurst Green Shaft", "notes": "Maincrop, excellent flavour, long pods", "containerFriendly": false },
+      { "name": "Tom Thumb", "notes": "True dwarf at 25cm, no support needed", "containerFriendly": true }
+    ],
+    "notes": "Succession sow every 3 weeks March-June for continuous harvest. Mice love the seeds — start in guttering indoors.",
+    "sources": ["https://www.rhs.org.uk/vegetables/peas/grow-your-own"]
+  },
+  {
+    "slug": "courgette",
+    "commonName": "Courgette",
+    "botanicalName": "Cucurbita pepo",
+    "category": "vegetable",
+    "emoji": "🥒",
+    "sun": "full-sun",
+    "water": "high",
+    "spacingCm": 90,
+    "depthCm": 25,
+    "growthHabit": "bushy",
+    "daysToHarvest": [45, 60],
+    "plantingWindow": {
+      "sowIndoors": [4, 5],
+      "sowOutdoors": [5, 6],
+      "transplant": [5, 6],
+      "harvest": [7, 10]
+    },
+    "greenstalkSuitability": "unsuitable",
+    "greenstalkNotes": "Enormous leaves and 90cm spread make this impossible in pockets. Needs ground or very large containers.",
+    "idealTiers": [],
+    "varieties": [
+      { "name": "Black Beauty", "notes": "Dark green, classic variety, heavy cropper", "containerFriendly": false },
+      { "name": "Defender", "notes": "RHS AGM, virus resistant, reliable", "containerFriendly": false }
+    ],
+    "notes": "Incredibly productive — two plants can feed a family. Harvest at 15cm for best flavour. Sow on edge to prevent rot.",
+    "sources": ["https://www.rhs.org.uk/vegetables/courgettes/grow-your-own"]
+  },
+  {
+    "slug": "cucumber",
+    "commonName": "Cucumber",
+    "botanicalName": "Cucumis sativus",
+    "category": "vegetable",
+    "emoji": "🥒",
+    "sun": "full-sun",
+    "water": "high",
+    "spacingCm": 60,
+    "depthCm": 20,
+    "growthHabit": "climbing",
+    "daysToHarvest": [50, 70],
+    "plantingWindow": {
+      "sowIndoors": [3, 4],
+      "sowOutdoors": null,
+      "transplant": [5, 6],
+      "harvest": [7, 9]
+    },
+    "greenstalkSuitability": "unsuitable",
+    "greenstalkNotes": "Vigorous vining habit and large leaf canopy far too expansive for pockets. Needs trellis or greenhouse.",
+    "idealTiers": [],
+    "varieties": [
+      { "name": "Marketmore", "notes": "Outdoor ridge type, reliable in UK", "containerFriendly": false },
+      { "name": "Mini Munch", "notes": "Compact snack cucumber, patio-friendly", "containerFriendly": true }
+    ],
+    "notes": "Outdoor ridge types best for Surrey. Sow indoors on edge in April, plant out after last frost. Keep well watered.",
+    "sources": ["https://www.rhs.org.uk/vegetables/cucumbers/grow-your-own"]
+  },
+  {
+    "slug": "beetroot",
+    "commonName": "Beetroot",
+    "botanicalName": "Beta vulgaris",
+    "category": "vegetable",
+    "emoji": "🟣",
+    "sun": "full-sun",
+    "water": "moderate",
+    "spacingCm": 10,
+    "depthCm": 15,
+    "growthHabit": "rosette",
+    "daysToHarvest": [60, 90],
+    "plantingWindow": {
+      "sowIndoors": [2, 3],
+      "sowOutdoors": [3, 7],
+      "transplant": [4, 5],
+      "harvest": [6, 10]
+    },
+    "greenstalkSuitability": "good",
+    "greenstalkNotes": "Baby beet varieties work well in pockets. Pull at golf-ball size for best results in limited depth.",
+    "idealTiers": [3, 4, 5],
+    "varieties": [
+      { "name": "Boltardy", "notes": "Bolt-resistant, ideal for early sowings", "containerFriendly": true },
+      { "name": "Chioggia", "notes": "Candy-stripe interior, mild and sweet", "containerFriendly": true }
+    ],
+    "notes": "Soak seed clusters overnight before sowing. Each cluster produces 2-3 seedlings — thin to strongest. Leaves also edible.",
+    "sources": ["https://www.rhs.org.uk/vegetables/beetroot/grow-your-own"]
+  },
+  {
+    "slug": "carrot",
+    "commonName": "Carrot",
+    "botanicalName": "Daucus carota",
+    "category": "vegetable",
+    "emoji": "🥕",
+    "sun": "full-sun",
+    "water": "moderate",
+    "spacingCm": 8,
+    "depthCm": 20,
+    "growthHabit": "rosette",
+    "daysToHarvest": [70, 100],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": [3, 7],
+      "transplant": null,
+      "harvest": [6, 11]
+    },
+    "greenstalkSuitability": "good",
+    "greenstalkNotes": "Short-rooted varieties essential for pockets. Elevated position helps deter carrot fly which flies low.",
+    "idealTiers": [2, 3, 4],
+    "varieties": [
+      { "name": "Paris Market", "notes": "Round roots ideal for shallow containers", "containerFriendly": true },
+      { "name": "Chantenay Red Cored", "notes": "Short stumpy roots, excellent flavour", "containerFriendly": true },
+      { "name": "Nantes", "notes": "Medium length, sweet and cylindrical", "containerFriendly": true }
+    ],
+    "notes": "Use short-rooted types in containers. Sow thinly to avoid thinning (which attracts carrot fly). Companion plant with onion family.",
+    "sources": ["https://www.rhs.org.uk/vegetables/carrots/grow-your-own"]
+  },
+  {
+    "slug": "parsnip",
+    "commonName": "Parsnip",
+    "botanicalName": "Pastinaca sativa",
+    "category": "vegetable",
+    "emoji": "🥕",
+    "sun": "full-sun",
+    "water": "moderate",
+    "spacingCm": 15,
+    "depthCm": 30,
+    "growthHabit": "rosette",
+    "daysToHarvest": [120, 150],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": [2, 5],
+      "transplant": null,
+      "harvest": [10, 2]
+    },
+    "greenstalkSuitability": "unsuitable",
+    "greenstalkNotes": "Deep tap root (30cm+) far exceeds pocket depth. Must be grown in ground or very deep raised beds.",
+    "idealTiers": [],
+    "varieties": [
+      { "name": "Tender and True", "notes": "Long, smooth roots, excellent flavour", "containerFriendly": false },
+      { "name": "Gladiator", "notes": "Canker-resistant F1, vigorous", "containerFriendly": false }
+    ],
+    "notes": "Always use fresh seed — viability drops drastically after one year. Sow February onwards in Surrey. Flavour improves after frost.",
+    "sources": ["https://www.rhs.org.uk/vegetables/parsnips/grow-your-own"]
+  },
+  {
+    "slug": "potato-early",
+    "commonName": "Early Potato",
+    "botanicalName": "Solanum tuberosum",
+    "category": "vegetable",
+    "emoji": "🥔",
+    "sun": "full-sun",
+    "water": "moderate",
+    "spacingCm": 30,
+    "depthCm": 15,
+    "growthHabit": "bushy",
+    "daysToHarvest": [70, 90],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": [3, 4],
+      "transplant": null,
+      "harvest": [6, 7]
+    },
+    "greenstalkSuitability": "unsuitable",
+    "greenstalkNotes": "Requires earthing up and deep soil (30cm+). Pockets far too shallow. Use potato bags or ground planting.",
+    "idealTiers": [],
+    "varieties": [
+      { "name": "Charlotte", "notes": "Waxy salad potato, excellent flavour", "containerFriendly": true },
+      { "name": "Rocket", "notes": "Very early, ready in 60 days", "containerFriendly": true }
+    ],
+    "notes": "Chit tubers from late January. Plant in Surrey mid-March, protect from late frost with fleece. Harvest when flowers open.",
+    "sources": ["https://www.rhs.org.uk/vegetables/potatoes/grow-your-own"]
+  },
+  {
+    "slug": "potato-maincrop",
+    "commonName": "Maincrop Potato",
+    "botanicalName": "Solanum tuberosum",
+    "category": "vegetable",
+    "emoji": "🥔",
+    "sun": "full-sun",
+    "water": "moderate",
+    "spacingCm": 38,
+    "depthCm": 15,
+    "growthHabit": "bushy",
+    "daysToHarvest": [100, 140],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": [4, 5],
+      "transplant": null,
+      "harvest": [8, 10]
+    },
+    "greenstalkSuitability": "unsuitable",
+    "greenstalkNotes": "Needs deep earthing up and 38cm spacing. Far too large and deep-rooting for pockets.",
+    "idealTiers": [],
+    "varieties": [
+      { "name": "King Edward", "notes": "Classic floury roasting potato", "containerFriendly": false },
+      { "name": "Desiree", "notes": "Red skin, good all-rounder, blight tolerant", "containerFriendly": false }
+    ],
+    "notes": "Plant mid-April in Surrey. Earth up regularly. Leave in ground until foliage dies back. Cure for 2 weeks before storing.",
+    "sources": ["https://www.rhs.org.uk/vegetables/potatoes/grow-your-own"]
+  },
+  {
+    "slug": "onion-sets",
+    "commonName": "Onion from Sets",
+    "botanicalName": "Allium cepa",
+    "category": "vegetable",
+    "emoji": "🧅",
+    "sun": "full-sun",
+    "water": "low",
+    "spacingCm": 10,
+    "depthCm": 10,
+    "growthHabit": "upright",
+    "daysToHarvest": [90, 120],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": [3, 4],
+      "transplant": null,
+      "harvest": [7, 9]
+    },
+    "greenstalkSuitability": "good",
+    "greenstalkNotes": "Sets work in pockets if planted shallowly. Slim upright habit fits well. Harvest when tops fall over.",
+    "idealTiers": [3, 4, 5],
+    "varieties": [
+      { "name": "Stuttgarter Giant", "notes": "Reliable, flat globe shape, stores well", "containerFriendly": true },
+      { "name": "Red Baron", "notes": "Deep red, mild flavour, good raw", "containerFriendly": true }
+    ],
+    "notes": "Sets far easier than seed. Plant with tips just showing. Do not damage necks when weeding. Dry thoroughly before storing.",
+    "sources": ["https://www.rhs.org.uk/vegetables/onions/grow-your-own"]
+  },
+  {
+    "slug": "garlic",
+    "commonName": "Garlic",
+    "botanicalName": "Allium sativum",
+    "category": "vegetable",
+    "emoji": "🧄",
+    "sun": "full-sun",
+    "water": "low",
+    "spacingCm": 10,
+    "depthCm": 10,
+    "growthHabit": "upright",
+    "daysToHarvest": [150, 240],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": [10, 2],
+      "transplant": null,
+      "harvest": [6, 7]
+    },
+    "greenstalkSuitability": "good",
+    "greenstalkNotes": "Compact upright habit fits pockets well. Needs cold period so plant autumn for best results.",
+    "idealTiers": [3, 4, 5],
+    "varieties": [
+      { "name": "Solent Wight", "notes": "UK bred softneck, stores well", "containerFriendly": true },
+      { "name": "Elephant Garlic", "notes": "Huge mild cloves, actually a leek relative", "containerFriendly": true }
+    ],
+    "notes": "Plant individual cloves October-February. Needs cold period for bulb formation. Harvest when lower leaves yellow. Dry for 3 weeks.",
+    "sources": ["https://www.rhs.org.uk/vegetables/garlic/grow-your-own"]
+  },
+  {
+    "slug": "leek",
+    "commonName": "Leek",
+    "botanicalName": "Allium porrum",
+    "category": "vegetable",
+    "emoji": "🥬",
+    "sun": "full-sun",
+    "water": "moderate",
+    "spacingCm": 15,
+    "depthCm": 20,
+    "growthHabit": "upright",
+    "daysToHarvest": [120, 150],
+    "plantingWindow": {
+      "sowIndoors": [1, 2],
+      "sowOutdoors": [3, 4],
+      "transplant": [5, 6],
+      "harvest": [9, 3]
+    },
+    "greenstalkSuitability": "poor",
+    "greenstalkNotes": "Needs deep planting and earthing up for white stems. Pocket depth insufficient for blanching.",
+    "idealTiers": [],
+    "varieties": [
+      { "name": "Musselburgh", "notes": "Very hardy, reliable winter standby", "containerFriendly": false },
+      { "name": "Blue Solaise", "notes": "Blue-green leaves, extremely cold-hardy", "containerFriendly": false }
+    ],
+    "notes": "Transplant seedlings into deep dibbed holes. Fill with water not soil. Extremely hardy — stands in ground all winter in Surrey.",
+    "sources": ["https://www.rhs.org.uk/vegetables/leeks/grow-your-own"]
+  },
+  {
+    "slug": "sweetcorn",
+    "commonName": "Sweetcorn",
+    "botanicalName": "Zea mays",
+    "category": "vegetable",
+    "emoji": "🌽",
+    "sun": "full-sun",
+    "water": "moderate",
+    "spacingCm": 35,
+    "depthCm": 25,
+    "growthHabit": "upright",
+    "daysToHarvest": [80, 100],
+    "plantingWindow": {
+      "sowIndoors": [4, 5],
+      "sowOutdoors": [5, 6],
+      "transplant": [5, 6],
+      "harvest": [8, 9]
+    },
+    "greenstalkSuitability": "unsuitable",
+    "greenstalkNotes": "Grows to 2m tall with extensive root system. Must be planted in blocks for wind pollination.",
+    "idealTiers": [],
+    "varieties": [
+      { "name": "Swift", "notes": "Extra-early F1, suited to UK climate", "containerFriendly": false },
+      { "name": "Lark", "notes": "Supersweet, good for shorter seasons", "containerFriendly": false }
+    ],
+    "notes": "Plant in blocks (minimum 4x4) not rows for wind pollination. Harvest when tassels turn brown and juice is milky.",
+    "sources": ["https://www.rhs.org.uk/vegetables/sweetcorn/grow-your-own"]
+  },
+  {
+    "slug": "broccoli-sprouting",
+    "commonName": "Sprouting Broccoli",
+    "botanicalName": "Brassica oleracea var. italica",
+    "category": "vegetable",
+    "emoji": "🥦",
+    "sun": "full-sun",
+    "water": "moderate",
+    "spacingCm": 60,
+    "depthCm": 20,
+    "growthHabit": "upright",
+    "daysToHarvest": [180, 270],
+    "plantingWindow": {
+      "sowIndoors": [3, 4],
+      "sowOutdoors": [4, 5],
+      "transplant": [5, 6],
+      "harvest": [1, 4]
+    },
+    "greenstalkSuitability": "unsuitable",
+    "greenstalkNotes": "Very large plant (60cm+ spread) that occupies ground for 9 months. Far too big for pockets.",
+    "idealTiers": [],
+    "varieties": [
+      { "name": "Purple Sprouting Early", "notes": "Harvests February-March, very hardy", "containerFriendly": false },
+      { "name": "White Sprouting", "notes": "Milder flavour, ready slightly later", "containerFriendly": false }
+    ],
+    "notes": "Sow spring, harvest following winter/spring. Occupies ground for 9+ months. Worth it for hungry gap production in Feb-April.",
+    "sources": ["https://www.rhs.org.uk/vegetables/broccoli/grow-your-own"]
+  },
+  {
+    "slug": "cauliflower",
+    "commonName": "Cauliflower",
+    "botanicalName": "Brassica oleracea var. botrytis",
+    "category": "vegetable",
+    "emoji": "🥦",
+    "sun": "full-sun",
+    "water": "high",
+    "spacingCm": 60,
+    "depthCm": 20,
+    "growthHabit": "rosette",
+    "daysToHarvest": [90, 150],
+    "plantingWindow": {
+      "sowIndoors": [1, 3],
+      "sowOutdoors": [3, 5],
+      "transplant": [4, 6],
+      "harvest": [6, 11]
+    },
+    "greenstalkSuitability": "unsuitable",
+    "greenstalkNotes": "Large plant requiring 60cm spacing and very rich, firm soil. Not feasible in pockets.",
+    "idealTiers": [],
+    "varieties": [
+      { "name": "All The Year Round", "notes": "Versatile, sow at intervals for succession", "containerFriendly": false },
+      { "name": "Graffiti", "notes": "Purple heads, striking colour, good flavour", "containerFriendly": false }
+    ],
+    "notes": "Most demanding brassica. Needs very firm, rich soil and consistent watering. Protect curds by bending leaves over them.",
+    "sources": ["https://www.rhs.org.uk/vegetables/cauliflowers/grow-your-own"]
+  },
+  {
+    "slug": "cabbage",
+    "commonName": "Cabbage",
+    "botanicalName": "Brassica oleracea var. capitata",
+    "category": "vegetable",
+    "emoji": "🥬",
+    "sun": "full-sun",
+    "water": "moderate",
+    "spacingCm": 45,
+    "depthCm": 20,
+    "growthHabit": "rosette",
+    "daysToHarvest": [80, 150],
+    "plantingWindow": {
+      "sowIndoors": [2, 3],
+      "sowOutdoors": [3, 5],
+      "transplant": [4, 6],
+      "harvest": [6, 3]
+    },
+    "greenstalkSuitability": "unsuitable",
+    "greenstalkNotes": "Large heads need 45cm+ spacing and deep root run. Pockets too small and shallow.",
+    "idealTiers": [],
+    "varieties": [
+      { "name": "Hispi", "notes": "Pointed spring cabbage, quick to mature", "containerFriendly": false },
+      { "name": "January King", "notes": "Extremely hardy savoy type, stands all winter", "containerFriendly": false }
+    ],
+    "notes": "Choose varieties by season: spring, summer, autumn, winter types give year-round supply. Net against pigeons and cabbage white butterflies.",
+    "sources": ["https://www.rhs.org.uk/vegetables/cabbages/grow-your-own"]
+  },
+  {
+    "slug": "brussels-sprouts",
+    "commonName": "Brussels Sprouts",
+    "botanicalName": "Brassica oleracea var. gemmifera",
+    "category": "vegetable",
+    "emoji": "🟢",
+    "sun": "full-sun",
+    "water": "moderate",
+    "spacingCm": 60,
+    "depthCm": 20,
+    "growthHabit": "upright",
+    "daysToHarvest": [150, 200],
+    "plantingWindow": {
+      "sowIndoors": [2, 3],
+      "sowOutdoors": [3, 4],
+      "transplant": [5, 6],
+      "harvest": [10, 2]
+    },
+    "greenstalkSuitability": "unsuitable",
+    "greenstalkNotes": "Tall stems (90cm+) and 60cm spacing far exceed pocket capacity. Needs very firm ground and staking.",
+    "idealTiers": [],
+    "varieties": [
+      { "name": "Bosworth", "notes": "F1 hybrid, tight buttons, good disease resistance", "containerFriendly": false },
+      { "name": "Red Bull", "notes": "Red-purple sprouts, striking on plate", "containerFriendly": false }
+    ],
+    "notes": "Plant in very firm soil and stake. Harvest from the bottom up. Flavour improves after frost. Net against pigeons.",
+    "sources": ["https://www.rhs.org.uk/vegetables/brussels-sprouts/grow-your-own"]
+  },
+  {
+    "slug": "turnip",
+    "commonName": "Turnip",
+    "botanicalName": "Brassica rapa var. rapa",
+    "category": "vegetable",
+    "emoji": "🟣",
+    "sun": "full-sun",
+    "water": "moderate",
+    "spacingCm": 15,
+    "depthCm": 15,
+    "growthHabit": "rosette",
+    "daysToHarvest": [40, 75],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": [3, 8],
+      "transplant": null,
+      "harvest": [5, 11]
+    },
+    "greenstalkSuitability": "good",
+    "greenstalkNotes": "Baby turnips work well in pockets. Pull at golf-ball size before they outgrow the pocket depth.",
+    "idealTiers": [3, 4, 5],
+    "varieties": [
+      { "name": "Snowball", "notes": "White, fast-maturing, mild flavour", "containerFriendly": true },
+      { "name": "Purple Top Milan", "notes": "Flat roots, very quick, distinctive colour", "containerFriendly": true }
+    ],
+    "notes": "Fast-growing. Pull young as baby turnips for sweetest flavour. Older roots become woody and hot. Leaves also edible as turnip tops.",
+    "sources": ["https://www.rhs.org.uk/vegetables/turnips/grow-your-own"]
+  },
+  {
+    "slug": "squash",
+    "commonName": "Squash/Pumpkin",
+    "botanicalName": "Cucurbita maxima",
+    "category": "vegetable",
+    "emoji": "🎃",
+    "sun": "full-sun",
+    "water": "high",
+    "spacingCm": 90,
+    "depthCm": 25,
+    "growthHabit": "trailing",
+    "daysToHarvest": [80, 130],
+    "plantingWindow": {
+      "sowIndoors": [4, 5],
+      "sowOutdoors": [5, 6],
+      "transplant": [5, 6],
+      "harvest": [8, 10]
+    },
+    "greenstalkSuitability": "unsuitable",
+    "greenstalkNotes": "Massive trailing vines spread 2m+. Fruit far too heavy for pockets. Needs large ground area.",
+    "idealTiers": [],
+    "varieties": [
+      { "name": "Crown Prince", "notes": "Blue-grey skin, superb flavour, stores well", "containerFriendly": false },
+      { "name": "Uchiki Kuri", "notes": "Red onion shape, chestnut flavour", "containerFriendly": false }
+    ],
+    "notes": "Plant on compost heap for extra fertility. Cure in sun for 10 days after harvest for long storage. Pinch out growing tips after 3 fruits set.",
+    "sources": ["https://www.rhs.org.uk/vegetables/squash/grow-your-own"]
+  },
+  {
+    "slug": "celery",
+    "commonName": "Celery",
+    "botanicalName": "Apium graveolens",
+    "category": "vegetable",
+    "emoji": "🥬",
+    "sun": "full-sun",
+    "water": "high",
+    "spacingCm": 25,
+    "depthCm": 20,
+    "growthHabit": "upright",
+    "daysToHarvest": [120, 150],
+    "plantingWindow": {
+      "sowIndoors": [3, 4],
+      "sowOutdoors": null,
+      "transplant": [5, 6],
+      "harvest": [8, 11]
+    },
+    "greenstalkSuitability": "poor",
+    "greenstalkNotes": "Requires constantly moist, rich soil and is typically trenched or wrapped for blanching. Difficult in pockets.",
+    "idealTiers": [],
+    "varieties": [
+      { "name": "Victoria", "notes": "Self-blanching, easier to grow", "containerFriendly": true },
+      { "name": "Giant Red", "notes": "Red stalks, no blanching needed", "containerFriendly": true }
+    ],
+    "notes": "Self-blanching types are easiest. Needs very consistent watering — any dry spell causes stringy, bitter stalks. Start indoors as slow to germinate.",
+    "sources": ["https://www.rhs.org.uk/vegetables/celery/grow-your-own"]
+  },
+  {
+    "slug": "pepper-sweet",
+    "commonName": "Sweet Pepper",
+    "botanicalName": "Capsicum annuum",
+    "category": "vegetable",
+    "emoji": "🫑",
+    "sun": "full-sun",
+    "water": "moderate",
+    "spacingCm": 40,
+    "depthCm": 20,
+    "growthHabit": "bushy",
+    "daysToHarvest": [80, 110],
+    "plantingWindow": {
+      "sowIndoors": [1, 3],
+      "sowOutdoors": null,
+      "transplant": [5, 6],
+      "harvest": [7, 10]
+    },
+    "greenstalkSuitability": "poor",
+    "greenstalkNotes": "Large bushy plants with heavy fruit. Compact patio varieties may work in top tiers with support.",
+    "idealTiers": [1, 2],
+    "varieties": [
+      { "name": "Redskin", "notes": "Dwarf patio variety, no staking needed", "containerFriendly": true },
+      { "name": "Marconi Rosso", "notes": "Long sweet Italian type, heavy cropper", "containerFriendly": false }
+    ],
+    "notes": "Start very early indoors (January-February) for UK season. Needs warmest, most sheltered spot. Green peppers are just unripe — leave for red.",
+    "sources": ["https://www.rhs.org.uk/vegetables/peppers/grow-your-own"]
+  },
+  {
+    "slug": "aubergine",
+    "commonName": "Aubergine",
+    "botanicalName": "Solanum melongena",
+    "category": "vegetable",
+    "emoji": "🍆",
+    "sun": "full-sun",
+    "water": "moderate",
+    "spacingCm": 45,
+    "depthCm": 25,
+    "growthHabit": "bushy",
+    "daysToHarvest": [100, 130],
+    "plantingWindow": {
+      "sowIndoors": [1, 3],
+      "sowOutdoors": null,
+      "transplant": [5, 6],
+      "harvest": [7, 10]
+    },
+    "greenstalkSuitability": "poor",
+    "greenstalkNotes": "Heavy fruit and large root system. Compact varieties may manage in top tiers but yields will be limited.",
+    "idealTiers": [1, 2],
+    "varieties": [
+      { "name": "Moneymaker", "notes": "Reliable in UK, medium-sized fruits", "containerFriendly": true },
+      { "name": "Pinstripe", "notes": "Compact patio type, striped fruits", "containerFriendly": true }
+    ],
+    "notes": "Needs long warm season — start indoors January. Greenhouse ideal in Surrey. Restrict to 4-5 fruits per plant for best size.",
+    "sources": ["https://www.rhs.org.uk/vegetables/aubergines/grow-your-own"]
+  },
+  {
+    "slug": "asparagus",
+    "commonName": "Asparagus",
+    "botanicalName": "Asparagus officinalis",
+    "category": "vegetable",
+    "emoji": "🌿",
+    "sun": "full-sun",
+    "water": "moderate",
+    "spacingCm": 38,
+    "depthCm": 30,
+    "growthHabit": "upright",
+    "daysToHarvest": [730, 1095],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": [3, 4],
+      "transplant": [3, 4],
+      "harvest": [4, 6]
+    },
+    "greenstalkSuitability": "unsuitable",
+    "greenstalkNotes": "Deep-rooted perennial requiring permanent raised beds. Crowns need 30cm+ depth. Completely unsuitable for pockets.",
+    "idealTiers": [],
+    "varieties": [
+      { "name": "Connover's Colossal", "notes": "Heritage variety, heavy yielder", "containerFriendly": false },
+      { "name": "Gijnlim", "notes": "All-male F1, very productive", "containerFriendly": false }
+    ],
+    "notes": "Long-term investment — do not harvest for first 2 years. Plant crowns in trenches. Productive for 20+ years once established.",
+    "sources": ["https://www.rhs.org.uk/vegetables/asparagus/grow-your-own"]
+  },
+
+  {
+    "slug": "rosemary",
+    "commonName": "Rosemary",
+    "botanicalName": "Salvia rosmarinus",
+    "category": "herb",
+    "emoji": "🌿",
+    "sun": "full-sun",
+    "water": "low",
+    "spacingCm": 45,
+    "depthCm": 20,
+    "growthHabit": "bushy",
+    "daysToHarvest": [90, 120],
+    "plantingWindow": {
+      "sowIndoors": [3, 4],
+      "sowOutdoors": [4, 5],
+      "transplant": [4, 6],
+      "harvest": [1, 12]
+    },
+    "greenstalkSuitability": "poor",
+    "greenstalkNotes": "Woody shrub that eventually grows large. Young plants fit pockets but will outgrow them within a season.",
+    "idealTiers": [1, 2],
+    "varieties": [
+      { "name": "Miss Jessopp's Upright", "notes": "Columnar habit, good for containers initially", "containerFriendly": true },
+      { "name": "Prostrate Rosemary", "notes": "Trailing habit, ideal for walls and edges", "containerFriendly": true }
+    ],
+    "notes": "Evergreen perennial. Hates wet feet — needs excellent drainage. Better as a permanent garden shrub than container plant long-term.",
+    "sources": ["https://www.rhs.org.uk/herbs/rosemary/grow-your-own"]
+  },
+  {
+    "slug": "sage",
+    "commonName": "Sage",
+    "botanicalName": "Salvia officinalis",
+    "category": "herb",
+    "emoji": "🌿",
+    "sun": "full-sun",
+    "water": "low",
+    "spacingCm": 40,
+    "depthCm": 15,
+    "growthHabit": "bushy",
+    "daysToHarvest": [75, 100],
+    "plantingWindow": {
+      "sowIndoors": [3, 4],
+      "sowOutdoors": [4, 5],
+      "transplant": [5, 6],
+      "harvest": [1, 12]
+    },
+    "greenstalkSuitability": "good",
+    "greenstalkNotes": "Young plants work well in pockets with good drainage. Prune regularly to prevent it becoming leggy.",
+    "idealTiers": [2, 3],
+    "varieties": [
+      { "name": "Common Sage", "notes": "Grey-green leaves, classic culinary sage", "containerFriendly": true },
+      { "name": "Purple Sage", "notes": "Purple-flushed leaves, ornamental and edible", "containerFriendly": true }
+    ],
+    "notes": "Evergreen sub-shrub. Replace every 3-4 years as plants become woody. Blue flowers attract bees. Harvest lightly in first year.",
+    "sources": ["https://www.rhs.org.uk/herbs/sage/grow-your-own"]
+  },
+  {
+    "slug": "coriander",
+    "commonName": "Coriander",
+    "botanicalName": "Coriandrum sativum",
+    "category": "herb",
+    "emoji": "🌿",
+    "sun": "partial-shade",
+    "water": "moderate",
+    "spacingCm": 15,
+    "depthCm": 10,
+    "growthHabit": "upright",
+    "daysToHarvest": [40, 60],
+    "plantingWindow": {
+      "sowIndoors": [3, 4],
+      "sowOutdoors": [4, 8],
+      "transplant": null,
+      "harvest": [5, 10]
+    },
+    "greenstalkSuitability": "ideal",
+    "greenstalkNotes": "Shallow roots and quick growth cycle perfect for pockets. Succession sow for continuous supply.",
+    "idealTiers": [2, 3, 4],
+    "varieties": [
+      { "name": "Leisure", "notes": "Slow-bolting, good leaf production", "containerFriendly": true },
+      { "name": "Confetti", "notes": "Feathery leaves, very slow to bolt", "containerFriendly": true }
+    ],
+    "notes": "Bolts quickly in heat — sow in partial shade and succession sow every 3 weeks. Direct sow as it hates root disturbance.",
+    "sources": ["https://www.rhs.org.uk/herbs/coriander/grow-your-own"]
+  },
+  {
+    "slug": "dill",
+    "commonName": "Dill",
+    "botanicalName": "Anethum graveolens",
+    "category": "herb",
+    "emoji": "🌿",
+    "sun": "full-sun",
+    "water": "moderate",
+    "spacingCm": 20,
+    "depthCm": 10,
+    "growthHabit": "upright",
+    "daysToHarvest": [40, 60],
+    "plantingWindow": {
+      "sowIndoors": [3, 4],
+      "sowOutdoors": [4, 7],
+      "transplant": null,
+      "harvest": [5, 9]
+    },
+    "greenstalkSuitability": "good",
+    "greenstalkNotes": "Compact varieties work in pockets. Tall flowering stems may need pinching. Do not plant near fennel — they cross-pollinate.",
+    "idealTiers": [2, 3],
+    "varieties": [
+      { "name": "Bouquet", "notes": "Compact, heavy leaf production", "containerFriendly": true },
+      { "name": "Fernleaf", "notes": "Dwarf variety bred for containers", "containerFriendly": true }
+    ],
+    "notes": "Direct sow as dill hates transplanting. Keep away from fennel. Succession sow every 3-4 weeks. Both leaves and seeds are useful.",
+    "sources": ["https://www.rhs.org.uk/herbs/dill/grow-your-own"]
+  },
+  {
+    "slug": "bay-laurel",
+    "commonName": "Bay Laurel",
+    "botanicalName": "Laurus nobilis",
+    "category": "herb",
+    "emoji": "🌿",
+    "sun": "full-sun",
+    "water": "low",
+    "spacingCm": 120,
+    "depthCm": 40,
+    "growthHabit": "upright",
+    "daysToHarvest": [365, 730],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": null,
+      "transplant": [3, 5],
+      "harvest": [1, 12]
+    },
+    "greenstalkSuitability": "unsuitable",
+    "greenstalkNotes": "Evergreen tree growing to 12m. Even small specimens far too large and deep-rooting for pockets.",
+    "idealTiers": [],
+    "varieties": [
+      { "name": "Common Bay", "notes": "Standard culinary bay, can be clipped to shape", "containerFriendly": true },
+      { "name": "Aurea", "notes": "Golden-leaved form, slightly less vigorous", "containerFriendly": true }
+    ],
+    "notes": "Excellent in large pots clipped as standards. Protect from cold winds in severe winters. Pick leaves year-round. Slow growing.",
+    "sources": ["https://www.rhs.org.uk/herbs/bay/grow-your-own"]
+  },
+  {
+    "slug": "fennel",
+    "commonName": "Fennel",
+    "botanicalName": "Foeniculum vulgare",
+    "category": "herb",
+    "emoji": "🌿",
+    "sun": "full-sun",
+    "water": "moderate",
+    "spacingCm": 30,
+    "depthCm": 20,
+    "growthHabit": "upright",
+    "daysToHarvest": [60, 90],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": [4, 7],
+      "transplant": null,
+      "harvest": [6, 10]
+    },
+    "greenstalkSuitability": "poor",
+    "greenstalkNotes": "Herb fennel grows tall (1.5m). Florence fennel bulbs need deep soil. Both challenging in pockets.",
+    "idealTiers": [],
+    "varieties": [
+      { "name": "Bronze Fennel", "notes": "Ornamental herb fennel, purple-bronze foliage", "containerFriendly": true },
+      { "name": "Zefa Fino", "notes": "Florence type, bolt-resistant, good bulb formation", "containerFriendly": false }
+    ],
+    "notes": "Herb fennel (for fronds/seeds) is perennial and tall. Florence fennel (for bulbs) is annual and bolt-prone. Keep away from dill.",
+    "sources": ["https://www.rhs.org.uk/herbs/fennel/grow-your-own"]
+  },
+
+  {
+    "slug": "raspberry",
+    "commonName": "Raspberry",
+    "botanicalName": "Rubus idaeus",
+    "category": "fruit",
+    "emoji": "🫐",
+    "sun": "full-sun",
+    "water": "moderate",
+    "spacingCm": 40,
+    "depthCm": 25,
+    "growthHabit": "upright",
+    "daysToHarvest": [365, 545],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": null,
+      "transplant": [11, 3],
+      "harvest": [6, 10]
+    },
+    "greenstalkSuitability": "unsuitable",
+    "greenstalkNotes": "Tall canes (1.5m+) need post and wire support. Extensive suckering root system unsuitable for pockets.",
+    "idealTiers": [],
+    "varieties": [
+      { "name": "Glen Ample", "notes": "Summer-fruiting, spine-free, heavy cropper", "containerFriendly": false },
+      { "name": "Autumn Bliss", "notes": "Autumn-fruiting, cut all canes in Feb", "containerFriendly": false }
+    ],
+    "notes": "Plant bare-root canes November-March. Summer types fruit on last year's canes; autumn types on current year's growth.",
+    "sources": ["https://www.rhs.org.uk/fruit/raspberries/grow-your-own"]
+  },
+  {
+    "slug": "blackberry",
+    "commonName": "Blackberry",
+    "botanicalName": "Rubus fruticosus",
+    "category": "fruit",
+    "emoji": "🫐",
+    "sun": "partial-shade",
+    "water": "moderate",
+    "spacingCm": 250,
+    "depthCm": 25,
+    "growthHabit": "trailing",
+    "daysToHarvest": [365, 545],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": null,
+      "transplant": [11, 3],
+      "harvest": [7, 9]
+    },
+    "greenstalkSuitability": "unsuitable",
+    "greenstalkNotes": "Extremely vigorous trailing canes need 2.5m+ wire support. Far too large for any container system.",
+    "idealTiers": [],
+    "varieties": [
+      { "name": "Loch Ness", "notes": "Thornless, upright habit, heavy cropper", "containerFriendly": false },
+      { "name": "Navaho", "notes": "Thornless, compact, self-supporting", "containerFriendly": false }
+    ],
+    "notes": "Thornless varieties much easier to manage. Train on wires or against walls. Prune out fruited canes after harvest.",
+    "sources": ["https://www.rhs.org.uk/fruit/blackberries/grow-your-own"]
+  },
+  {
+    "slug": "blueberry",
+    "commonName": "Blueberry",
+    "botanicalName": "Vaccinium corymbosum",
+    "category": "fruit",
+    "emoji": "🫐",
+    "sun": "full-sun",
+    "water": "high",
+    "spacingCm": 120,
+    "depthCm": 30,
+    "growthHabit": "bushy",
+    "daysToHarvest": [365, 730],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": null,
+      "transplant": [10, 3],
+      "harvest": [7, 9]
+    },
+    "greenstalkSuitability": "unsuitable",
+    "greenstalkNotes": "Requires ericaceous (acid) compost and grows into a large shrub. Not feasible in GreenStalk pockets.",
+    "idealTiers": [],
+    "varieties": [
+      { "name": "Bluecrop", "notes": "Most reliable variety for UK, heavy cropper", "containerFriendly": true },
+      { "name": "Top Hat", "notes": "True dwarf variety, ideal for pots", "containerFriendly": true }
+    ],
+    "notes": "Must have acid soil (pH 4.5-5.5). Use ericaceous compost in pots. Water with rainwater not tap. Net against birds.",
+    "sources": ["https://www.rhs.org.uk/fruit/blueberries/grow-your-own"]
+  },
+  {
+    "slug": "gooseberry",
+    "commonName": "Gooseberry",
+    "botanicalName": "Ribes uva-crispa",
+    "category": "fruit",
+    "emoji": "🟢",
+    "sun": "partial-shade",
+    "water": "moderate",
+    "spacingCm": 120,
+    "depthCm": 30,
+    "growthHabit": "bushy",
+    "daysToHarvest": [365, 545],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": null,
+      "transplant": [11, 3],
+      "harvest": [6, 8]
+    },
+    "greenstalkSuitability": "unsuitable",
+    "greenstalkNotes": "Thorny bush reaching 1.5m. Far too large for pockets. Grows well in large pots or open ground.",
+    "idealTiers": [],
+    "varieties": [
+      { "name": "Invicta", "notes": "Mildew-resistant, green, heavy cropper", "containerFriendly": true },
+      { "name": "Hinnonmaki Red", "notes": "Red dessert type, excellent flavour", "containerFriendly": true }
+    ],
+    "notes": "Tolerates partial shade better than most fruit. Thin green fruits in May for cooking; leave remainder to ripen for dessert.",
+    "sources": ["https://www.rhs.org.uk/fruit/gooseberries/grow-your-own"]
+  },
+  {
+    "slug": "blackcurrant",
+    "commonName": "Blackcurrant",
+    "botanicalName": "Ribes nigrum",
+    "category": "fruit",
+    "emoji": "🫐",
+    "sun": "full-sun",
+    "water": "moderate",
+    "spacingCm": 150,
+    "depthCm": 30,
+    "growthHabit": "bushy",
+    "daysToHarvest": [365, 545],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": null,
+      "transplant": [11, 3],
+      "harvest": [7, 8]
+    },
+    "greenstalkSuitability": "unsuitable",
+    "greenstalkNotes": "Large spreading bush to 1.5m each way. Needs deep, rich soil. Completely unsuitable for pockets.",
+    "idealTiers": [],
+    "varieties": [
+      { "name": "Ben Connan", "notes": "Compact, frost-resistant flowers, heavy crops", "containerFriendly": false },
+      { "name": "Big Ben", "notes": "Very large berries, good fresh eating", "containerFriendly": false }
+    ],
+    "notes": "Plant 5cm deeper than nursery mark to encourage new basal shoots. Prune out one-third of oldest wood annually after fruiting.",
+    "sources": ["https://www.rhs.org.uk/fruit/blackcurrants/grow-your-own"]
+  },
+  {
+    "slug": "redcurrant",
+    "commonName": "Redcurrant",
+    "botanicalName": "Ribes rubrum",
+    "category": "fruit",
+    "emoji": "🔴",
+    "sun": "partial-shade",
+    "water": "moderate",
+    "spacingCm": 120,
+    "depthCm": 30,
+    "growthHabit": "bushy",
+    "daysToHarvest": [365, 545],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": null,
+      "transplant": [11, 3],
+      "harvest": [7, 8]
+    },
+    "greenstalkSuitability": "unsuitable",
+    "greenstalkNotes": "Mature bush reaches 1.2m. Can be trained as cordons against walls but pockets are too small.",
+    "idealTiers": [],
+    "varieties": [
+      { "name": "Jonkheer van Tets", "notes": "Early ripening, heavy yields", "containerFriendly": true },
+      { "name": "Rovada", "notes": "Late, very long trusses, excellent flavour", "containerFriendly": true }
+    ],
+    "notes": "Tolerates shade and north-facing walls as cordons. Unlike blackcurrants, fruit on older wood — spur prune like apples.",
+    "sources": ["https://www.rhs.org.uk/fruit/redcurrants/grow-your-own"]
+  },
+  {
+    "slug": "apple-dwarf",
+    "commonName": "Apple on Dwarf Rootstock",
+    "botanicalName": "Malus domestica",
+    "category": "fruit",
+    "emoji": "🍎",
+    "sun": "full-sun",
+    "water": "moderate",
+    "spacingCm": 150,
+    "depthCm": 40,
+    "growthHabit": "upright",
+    "daysToHarvest": [730, 1460],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": null,
+      "transplant": [11, 3],
+      "harvest": [8, 10]
+    },
+    "greenstalkSuitability": "unsuitable",
+    "greenstalkNotes": "Even on M27 dwarfing rootstock, trees need large pots (50L+) and deep root run. Not suitable for pockets.",
+    "idealTiers": [],
+    "varieties": [
+      { "name": "Braeburn", "notes": "Reliable cropper, good flavour, stores well", "containerFriendly": true },
+      { "name": "James Grieve", "notes": "Dual-purpose, self-fertile, excellent for Surrey", "containerFriendly": true }
+    ],
+    "notes": "M27 rootstock for smallest trees (2m). Most need a pollination partner. Plant bare-root November-March. First crop year 3-4.",
+    "sources": ["https://www.rhs.org.uk/fruit/apples/grow-your-own"]
+  },
+  {
+    "slug": "pear",
+    "commonName": "Pear",
+    "botanicalName": "Pyrus communis",
+    "category": "fruit",
+    "emoji": "🍐",
+    "sun": "full-sun",
+    "water": "moderate",
+    "spacingCm": 200,
+    "depthCm": 40,
+    "growthHabit": "upright",
+    "daysToHarvest": [730, 1825],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": null,
+      "transplant": [11, 3],
+      "harvest": [8, 10]
+    },
+    "greenstalkSuitability": "unsuitable",
+    "greenstalkNotes": "Tree fruit requiring deep permanent planting. Even Quince C rootstock produces 3m+ trees.",
+    "idealTiers": [],
+    "varieties": [
+      { "name": "Conference", "notes": "Most reliable UK pear, partially self-fertile", "containerFriendly": false },
+      { "name": "Concorde", "notes": "Compact, self-fertile, sweet flavour", "containerFriendly": true }
+    ],
+    "notes": "Quince C rootstock for smallest trees. Most need pollination partner. Flower earlier than apples so more frost-vulnerable in Surrey.",
+    "sources": ["https://www.rhs.org.uk/fruit/pears/grow-your-own"]
+  },
+  {
+    "slug": "plum",
+    "commonName": "Plum",
+    "botanicalName": "Prunus domestica",
+    "category": "fruit",
+    "emoji": "🟣",
+    "sun": "full-sun",
+    "water": "moderate",
+    "spacingCm": 250,
+    "depthCm": 40,
+    "growthHabit": "upright",
+    "daysToHarvest": [730, 1460],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": null,
+      "transplant": [11, 3],
+      "harvest": [7, 9]
+    },
+    "greenstalkSuitability": "unsuitable",
+    "greenstalkNotes": "Even on Pixy rootstock, plum trees are substantial. No container system can support them long-term.",
+    "idealTiers": [],
+    "varieties": [
+      { "name": "Victoria", "notes": "Self-fertile, dual-purpose, most popular UK plum", "containerFriendly": false },
+      { "name": "Opal", "notes": "Early season, self-fertile, excellent flavour", "containerFriendly": false }
+    ],
+    "notes": "Pixy rootstock for smallest trees. Victoria is self-fertile and ideal for Surrey. Never prune in winter — risk of silver leaf disease.",
+    "sources": ["https://www.rhs.org.uk/fruit/plums/grow-your-own"]
+  },
+  {
+    "slug": "fig",
+    "commonName": "Fig",
+    "botanicalName": "Ficus carica",
+    "category": "fruit",
+    "emoji": "🟤",
+    "sun": "full-sun",
+    "water": "moderate",
+    "spacingCm": 200,
+    "depthCm": 40,
+    "growthHabit": "bushy",
+    "daysToHarvest": [730, 1095],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": null,
+      "transplant": [3, 5],
+      "harvest": [8, 9]
+    },
+    "greenstalkSuitability": "unsuitable",
+    "greenstalkNotes": "Large spreading tree, even container-grown specimens need 40L+ pots. Completely unsuitable for pockets.",
+    "idealTiers": [],
+    "varieties": [
+      { "name": "Brown Turkey", "notes": "Most reliable for UK outdoors, heavy cropper", "containerFriendly": true },
+      { "name": "Brunswick", "notes": "Large fruit, very hardy for UK", "containerFriendly": true }
+    ],
+    "notes": "Restrict roots for best fruiting — plant against south-facing wall in Surrey with brick-lined pit. Protect embryo figs in winter.",
+    "sources": ["https://www.rhs.org.uk/fruit/figs/grow-your-own"]
+  },
+  {
+    "slug": "rhubarb",
+    "commonName": "Rhubarb",
+    "botanicalName": "Rheum rhabarbarum",
+    "category": "fruit",
+    "emoji": "🌿",
+    "sun": "partial-shade",
+    "water": "moderate",
+    "spacingCm": 90,
+    "depthCm": 30,
+    "growthHabit": "rosette",
+    "daysToHarvest": [365, 730],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": null,
+      "transplant": [11, 3],
+      "harvest": [3, 7]
+    },
+    "greenstalkSuitability": "unsuitable",
+    "greenstalkNotes": "Huge leaves and deep crown far exceed pocket dimensions. Needs permanent ground position.",
+    "idealTiers": [],
+    "varieties": [
+      { "name": "Timperley Early", "notes": "Earliest variety, thin stems, good for forcing", "containerFriendly": false },
+      { "name": "Victoria", "notes": "Reliable, heavy cropper, thick stems", "containerFriendly": false }
+    ],
+    "notes": "Plant crowns with bud tip at soil surface. Do not harvest in first year. Pull (do not cut) stems. Leaves are poisonous.",
+    "sources": ["https://www.rhs.org.uk/fruit/rhubarb/grow-your-own"]
+  },
+
+  {
+    "slug": "calendula",
+    "commonName": "Calendula/Pot Marigold",
+    "botanicalName": "Calendula officinalis",
+    "category": "flower",
+    "emoji": "🌼",
+    "sun": "full-sun",
+    "water": "low",
+    "spacingCm": 25,
+    "depthCm": 10,
+    "growthHabit": "bushy",
+    "daysToHarvest": [45, 60],
+    "plantingWindow": {
+      "sowIndoors": [3, 4],
+      "sowOutdoors": [4, 5],
+      "transplant": [5, 6],
+      "harvest": [6, 10]
+    },
+    "greenstalkSuitability": "ideal",
+    "greenstalkNotes": "Compact habit perfect for pockets. Edible petals add colour to salads. Attracts hoverflies which eat aphids.",
+    "idealTiers": [2, 3, 4],
+    "varieties": [
+      { "name": "Indian Prince", "notes": "Deep orange, dark-backed petals", "containerFriendly": true },
+      { "name": "Neon", "notes": "Bright double flowers, compact", "containerFriendly": true }
+    ],
+    "notes": "Hardy annual that often self-seeds. Edible petals used as poor man's saffron. Excellent companion plant attracting beneficial insects.",
+    "sources": ["https://www.rhs.org.uk/plants/calendula"]
+  },
+  {
+    "slug": "borage",
+    "commonName": "Borage",
+    "botanicalName": "Borago officinalis",
+    "category": "flower",
+    "emoji": "🔵",
+    "sun": "full-sun",
+    "water": "low",
+    "spacingCm": 30,
+    "depthCm": 15,
+    "growthHabit": "bushy",
+    "daysToHarvest": [50, 70],
+    "plantingWindow": {
+      "sowIndoors": [3, 4],
+      "sowOutdoors": [4, 5],
+      "transplant": null,
+      "harvest": [6, 10]
+    },
+    "greenstalkSuitability": "good",
+    "greenstalkNotes": "Can grow large but works in pockets when young. Star-shaped blue flowers are highly attractive to bees.",
+    "idealTiers": [2, 3],
+    "varieties": [
+      { "name": "Common Borage", "notes": "Blue star flowers, classic herb", "containerFriendly": true },
+      { "name": "White Borage", "notes": "White-flowered form, slightly smaller", "containerFriendly": true }
+    ],
+    "notes": "Cucumber-flavoured flowers and leaves. Outstanding bee plant. Self-seeds prolifically. Direct sow as hates transplanting.",
+    "sources": ["https://www.rhs.org.uk/plants/borage"]
+  },
+  {
+    "slug": "sunflower",
+    "commonName": "Sunflower",
+    "botanicalName": "Helianthus annuus",
+    "category": "flower",
+    "emoji": "🌻",
+    "sun": "full-sun",
+    "water": "moderate",
+    "spacingCm": 45,
+    "depthCm": 15,
+    "growthHabit": "upright",
+    "daysToHarvest": [55, 75],
+    "plantingWindow": {
+      "sowIndoors": [3, 4],
+      "sowOutdoors": [4, 5],
+      "transplant": [5, 6],
+      "harvest": [7, 9]
+    },
+    "greenstalkSuitability": "poor",
+    "greenstalkNotes": "Dwarf varieties only. Standard sunflowers (1.5m+) are far too tall and top-heavy for pockets.",
+    "idealTiers": [1, 2],
+    "varieties": [
+      { "name": "Teddy Bear", "notes": "Dwarf double at 45cm, fluffy golden heads", "containerFriendly": true },
+      { "name": "Little Becka", "notes": "Dwarf bicolour, multi-headed, 30cm", "containerFriendly": true }
+    ],
+    "notes": "Dwarf varieties essential for containers. Standard tall types need open ground and staking. Seeds provide food for birds.",
+    "sources": ["https://www.rhs.org.uk/plants/sunflowers"]
+  },
+  {
+    "slug": "lavender",
+    "commonName": "Lavender",
+    "botanicalName": "Lavandula angustifolia",
+    "category": "flower",
+    "emoji": "💜",
+    "sun": "full-sun",
+    "water": "low",
+    "spacingCm": 40,
+    "depthCm": 15,
+    "growthHabit": "bushy",
+    "daysToHarvest": [90, 120],
+    "plantingWindow": {
+      "sowIndoors": [2, 3],
+      "sowOutdoors": null,
+      "transplant": [4, 6],
+      "harvest": [6, 8]
+    },
+    "greenstalkSuitability": "good",
+    "greenstalkNotes": "Compact varieties work well in pockets with excellent drainage. Will persist as a perennial if protected from frost.",
+    "idealTiers": [1, 2],
+    "varieties": [
+      { "name": "Hidcote", "notes": "Compact, deep purple, classic UK variety", "containerFriendly": true },
+      { "name": "Munstead", "notes": "Compact, early flowering, reliable", "containerFriendly": true }
+    ],
+    "notes": "Needs excellent drainage and full sun. Trim after flowering but never cut into old wood. Outstanding bee and butterfly plant.",
+    "sources": ["https://www.rhs.org.uk/plants/lavender"]
+  },
+  {
+    "slug": "cornflower",
+    "commonName": "Cornflower",
+    "botanicalName": "Centaurea cyanus",
+    "category": "flower",
+    "emoji": "🔵",
+    "sun": "full-sun",
+    "water": "low",
+    "spacingCm": 20,
+    "depthCm": 10,
+    "growthHabit": "upright",
+    "daysToHarvest": [50, 70],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": [3, 5],
+      "transplant": null,
+      "harvest": [6, 9]
+    },
+    "greenstalkSuitability": "good",
+    "greenstalkNotes": "Dwarf varieties work well in pockets. Tall varieties may flop. Excellent cut flower and pollinator plant.",
+    "idealTiers": [2, 3, 4],
+    "varieties": [
+      { "name": "Blue Boy", "notes": "Classic intense blue, tall variety", "containerFriendly": false },
+      { "name": "Dwarf Blue Midget", "notes": "Compact at 25cm, perfect for containers", "containerFriendly": true }
+    ],
+    "notes": "Hardy annual — can also be autumn-sown for earlier flowers. Excellent for pollinators and cutting. Edible petals for cake decoration.",
+    "sources": ["https://www.rhs.org.uk/plants/cornflowers"]
+  },
+  {
+    "slug": "sweet-william",
+    "commonName": "Sweet William",
+    "botanicalName": "Dianthus barbatus",
+    "category": "flower",
+    "emoji": "🌸",
+    "sun": "full-sun",
+    "water": "low",
+    "spacingCm": 25,
+    "depthCm": 10,
+    "growthHabit": "bushy",
+    "daysToHarvest": [60, 90],
+    "plantingWindow": {
+      "sowIndoors": [2, 3],
+      "sowOutdoors": [5, 6],
+      "transplant": [9, 10],
+      "harvest": [5, 7]
+    },
+    "greenstalkSuitability": "good",
+    "greenstalkNotes": "Compact clump-forming habit works well in pockets. Dense flower heads add vibrant colour.",
+    "idealTiers": [2, 3, 4],
+    "varieties": [
+      { "name": "Holborn Glory", "notes": "Bicolour, zoned flowers, heritage variety", "containerFriendly": true },
+      { "name": "Dash Mix", "notes": "First-year flowering, compact, multi-colour", "containerFriendly": true }
+    ],
+    "notes": "Biennial — sow one year, flowers the next. Modern varieties like Dash flower in first year. Delightfully fragrant. Attracts butterflies.",
+    "sources": ["https://www.rhs.org.uk/plants/sweet-william"]
   }
 ]

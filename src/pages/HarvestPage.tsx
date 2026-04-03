@@ -172,7 +172,7 @@ function HarvesterSection({ harvester }: { harvester: Harvester }) {
   );
 
   return (
-    <div className="bg-white rounded-3xl shadow-md overflow-hidden">
+    <div className="bg-white dark:bg-stone-800 rounded-3xl shadow-md overflow-hidden">
       {/* Harvester header */}
       <div
         className="px-6 py-4 flex items-center justify-between"
@@ -249,7 +249,7 @@ function HarvestLog() {
   }
 
   return (
-    <div className="bg-white rounded-3xl shadow-md p-5">
+    <div className="bg-white dark:bg-stone-800 rounded-3xl shadow-md p-5">
       <h3 className="text-lg font-bold text-stone-700 mb-3">Recent Harvests</h3>
       <div className="space-y-2 max-h-64 overflow-y-auto">
         {recentEntries.map((entry) => {
@@ -286,7 +286,7 @@ function Scoreboard() {
   const { harvesters, getCountForHarvester, getEarnedMilestones } = useHarvestStore();
 
   return (
-    <div className="bg-white rounded-3xl shadow-md p-5">
+    <div className="bg-white dark:bg-stone-800 rounded-3xl shadow-md p-5">
       <h3 className="text-lg font-bold text-stone-700 mb-3">Scoreboard</h3>
       <div className="grid grid-cols-2 gap-4">
         {harvesters.map((h) => {
@@ -327,7 +327,7 @@ export function HarvestPage() {
       <div className="max-w-5xl mx-auto px-4 py-6 space-y-6">
         {/* Header */}
         <div className="text-center">
-          <h1 className="text-3xl font-bold text-stone-800">
+          <h1 className="text-3xl font-bold text-stone-800 dark:text-stone-100">
             🌱 Harvest Tracker
           </h1>
           <p className="text-stone-500 mt-1">

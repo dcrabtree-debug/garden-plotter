@@ -192,7 +192,7 @@ export function PlannerPage() {
     >
       <div className="flex h-full">
         {/* Sidebar: Plant Palette */}
-        <div className="w-64 border-r border-stone-200 bg-stone-50 flex-shrink-0 overflow-hidden flex flex-col">
+        <div className="w-64 border-r border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 flex-shrink-0 overflow-hidden flex flex-col">
           <PlantPalette
             plants={plants}
             onSelectPlant={handlePaletteSelect}
@@ -204,7 +204,7 @@ export function PlannerPage() {
         <div className="flex-1 overflow-auto p-6">
           <div className="mb-4">
             <div className="flex items-center justify-between">
-              <h1 className="text-xl font-semibold text-stone-800">
+              <h1 className="text-xl font-semibold text-stone-800 dark:text-stone-100">
                 GreenStalk Planner
               </h1>
               <button

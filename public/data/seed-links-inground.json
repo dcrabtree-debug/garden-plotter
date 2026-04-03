@@ -145,7 +145,7 @@
           },
           {
             "seller": "Kings Seeds",
-            "url": "https://www.kingsseeds.com/beetroot-boltardy-seeds",
+            "url": "https://www.kingsseeds.com/search?q=Boltardy",
             "priceGBP": 1.89
           }
         ]
@@ -162,12 +162,12 @@
           },
           {
             "seller": "Mr Fothergill's",
-            "url": "https://mr-fothergills.co.uk/products/beetroot-chioggia-seeds",
+            "url": "https://mr-fothergills.co.uk/search?q=Chioggia",
             "priceGBP": 2.29
           },
           {
             "seller": "Kings Seeds",
-            "url": "https://www.kingsseeds.com/beetroot-chioggia-seeds",
+            "url": "https://www.kingsseeds.com/search?q=Chioggia",
             "priceGBP": 1.89
           }
         ]
@@ -311,7 +311,7 @@
           },
           {
             "seller": "Mr Fothergill's",
-            "url": "https://mr-fothergills.co.uk/products/broad-bean-aquadulce-claudia-seeds",
+            "url": "https://mr-fothergills.co.uk/search?q=Aquadulce+Claudia",
             "priceGBP": 3.49
           }
         ]
@@ -333,7 +333,7 @@
           },
           {
             "seller": "Kings Seeds",
-            "url": "https://www.kingsseeds.com/broad-bean-the-sutton-seeds",
+            "url": "https://www.kingsseeds.com/search?q=The+Sutton",
             "priceGBP": 2.99
           }
         ]
@@ -484,12 +484,12 @@
           },
           {
             "seller": "Mr Fothergill's",
-            "url": "https://mr-fothergills.co.uk/products/carrot-nantes-2-seeds",
+            "url": "https://mr-fothergills.co.uk/search?q=Nantes+2",
             "priceGBP": 2.49
           },
           {
             "seller": "Kings Seeds",
-            "url": "https://www.kingsseeds.com/carrot-nantes-2-seeds",
+            "url": "https://www.kingsseeds.com/search?q=Nantes+2",
             "priceGBP": 1.89
           }
         ]
@@ -511,7 +511,7 @@
           },
           {
             "seller": "Mr Fothergill's",
-            "url": "https://mr-fothergills.co.uk/products/carrot-autumn-king-2-seeds",
+            "url": "https://mr-fothergills.co.uk/search?q=Autumn+King+2",
             "priceGBP": 1.99
           }
         ]
@@ -528,7 +528,7 @@
           },
           {
             "seller": "Mr Fothergill's",
-            "url": "https://mr-fothergills.co.uk/products/carrot-rainbow-mix-seeds",
+            "url": "https://mr-fothergills.co.uk/search?q=Rainbow+Mix",
             "priceGBP": 2.49
           },
           {
@@ -624,7 +624,7 @@
     "commonName": "Chilli Pepper",
     "varieties": [
       {
-        "name": "Jalapeño",
+        "name": "Jalape\u00f1o",
         "why": "Reliable outdoor variety in UK, medium heat, thick-walled, heavy yields",
         "context": "inground",
         "sellers": [
@@ -641,7 +641,7 @@
           },
           {
             "seller": "Mr Fothergill's",
-            "url": "https://mr-fothergills.co.uk/products/chilli-pepper-jalapeno-seeds",
+            "url": "https://mr-fothergills.co.uk/search?q=Jalape\u00f1o",
             "priceGBP": 2.49
           }
         ]
@@ -658,12 +658,12 @@
           },
           {
             "seller": "Mr Fothergill's",
-            "url": "https://mr-fothergills.co.uk/products/pepper-hungarian-hot-wax-seeds",
+            "url": "https://mr-fothergills.co.uk/search?q=Hungarian+Hot+Wax",
             "priceGBP": 2.49
           },
           {
             "seller": "Kings Seeds",
-            "url": "https://www.kingsseeds.com/pepper-hungarian-hot-wax-seeds",
+            "url": "https://www.kingsseeds.com/search?q=Hungarian+Hot+Wax",
             "priceGBP": 2.29
           }
         ]
@@ -687,7 +687,7 @@
           },
           {
             "seller": "Mr Fothergill's",
-            "url": "https://mr-fothergills.co.uk/products/courgette-black-beauty-seeds",
+            "url": "https://mr-fothergills.co.uk/search?q=Black+Beauty",
             "priceGBP": 2.49
           },
           {
@@ -714,7 +714,7 @@
           },
           {
             "seller": "Kings Seeds",
-            "url": "https://www.kingsseeds.com/courgette-defender-f1-seeds",
+            "url": "https://www.kingsseeds.com/search?q=F1+Defender",
             "priceGBP": 2.99
           }
         ]
@@ -731,12 +731,12 @@
           },
           {
             "seller": "Mr Fothergill's",
-            "url": "https://mr-fothergills.co.uk/products/courgette-romanesco-seeds",
+            "url": "https://mr-fothergills.co.uk/search?q=Romanesco",
             "priceGBP": 2.49
           },
           {
             "seller": "Kings Seeds",
-            "url": "https://www.kingsseeds.com/courgette-romanesco-seeds",
+            "url": "https://www.kingsseeds.com/search?q=Romanesco",
             "priceGBP": 2.29
           }
         ]
@@ -760,12 +760,12 @@
           },
           {
             "seller": "Mr Fothergill's",
-            "url": "https://mr-fothergills.co.uk/products/cucumber-marketmore-seeds",
+            "url": "https://mr-fothergills.co.uk/search?q=Marketmore",
             "priceGBP": 2.49
           },
           {
             "seller": "Kings Seeds",
-            "url": "https://www.kingsseeds.com/cucumber-marketmore-seeds",
+            "url": "https://www.kingsseeds.com/search?q=Marketmore",
             "priceGBP": 2.29
           }
         ]
@@ -782,7 +782,7 @@
           },
           {
             "seller": "Mr Fothergill's",
-            "url": "https://mr-fothergills.co.uk/products/cucumber-crystal-lemon-seeds",
+            "url": "https://mr-fothergills.co.uk/search?q=Crystal+Lemon",
             "priceGBP": 2.49
           },
           {
@@ -859,7 +859,7 @@
           },
           {
             "seller": "Kings Seeds",
-            "url": "https://www.kingsseeds.com/bean-dwarf-french-the-prince-seeds",
+            "url": "https://www.kingsseeds.com/search?q=The+Prince",
             "priceGBP": 2.49
           }
         ]
@@ -881,7 +881,7 @@
           },
           {
             "seller": "Mr Fothergill's",
-            "url": "https://mr-fothergills.co.uk/products/climbing-french-bean-cobra-seeds",
+            "url": "https://mr-fothergills.co.uk/search?q=Cobra",
             "priceGBP": 3.49
           }
         ]
@@ -911,12 +911,12 @@
           },
           {
             "seller": "Mr Fothergill's",
-            "url": "https://mr-fothergills.co.uk/products/strawberry-cambridge-favourite-runners",
+            "url": "https://mr-fothergills.co.uk/search?q=Cambridge+Favourite",
             "priceGBP": 10.99
           },
           {
             "seller": "Kings Seeds",
-            "url": "https://www.kingsseeds.com/strawberry-cambridge-favourite-runners",
+            "url": "https://www.kingsseeds.com/search?q=Cambridge+Favourite",
             "priceGBP": 9.99
           }
         ]
@@ -956,12 +956,12 @@
           },
           {
             "seller": "Mr Fothergill's",
-            "url": "https://mr-fothergills.co.uk/products/strawberry-royal-sovereign-runners",
+            "url": "https://mr-fothergills.co.uk/search?q=Royal+Sovereign",
             "priceGBP": 11.99
           },
           {
             "seller": "Kings Seeds",
-            "url": "https://www.kingsseeds.com/strawberry-royal-sovereign-runners",
+            "url": "https://www.kingsseeds.com/search?q=Royal+Sovereign",
             "priceGBP": 10.99
           }
         ]
@@ -1056,7 +1056,7 @@
           },
           {
             "seller": "Mr Fothergill's",
-            "url": "https://mr-fothergills.co.uk/products/garlic-solent-wight",
+            "url": "https://mr-fothergills.co.uk/search?q=Solent+Wight",
             "priceGBP": 8.99
           }
         ]
@@ -1078,7 +1078,7 @@
           },
           {
             "seller": "Kings Seeds",
-            "url": "https://www.kingsseeds.com/garlic-elephant-bulbs",
+            "url": "https://www.kingsseeds.com/search?q=Elephant+Garlic",
             "priceGBP": 10.99
           }
         ]
@@ -1145,7 +1145,7 @@
           },
           {
             "seller": "Mr Fothergill's",
-            "url": "https://mr-fothergills.co.uk/products/kale-redbor-f1-seeds",
+            "url": "https://mr-fothergills.co.uk/search?q=Redbor",
             "priceGBP": 2.49
           }
         ]
@@ -1162,12 +1162,12 @@
           },
           {
             "seller": "Kings Seeds",
-            "url": "https://www.kingsseeds.com/kale-nero-di-toscana-seeds",
+            "url": "https://www.kingsseeds.com/search?q=Cavolo+Nero+(Nero+di+Toscana)",
             "priceGBP": 1.89
           },
           {
             "seller": "Mr Fothergill's",
-            "url": "https://mr-fothergills.co.uk/products/kale-nero-di-toscana-seeds",
+            "url": "https://mr-fothergills.co.uk/search?q=Cavolo+Nero+(Nero+di+Toscana)",
             "priceGBP": 2.29
           }
         ]
@@ -1238,7 +1238,7 @@
           },
           {
             "seller": "Kings Seeds",
-            "url": "https://www.kingsseeds.com/lettuce-webbs-wonderful-seeds",
+            "url": "https://www.kingsseeds.com/search?q=Iceberg+(Webbs+Wonderful)",
             "priceGBP": 1.89
           }
         ]
@@ -1255,12 +1255,12 @@
           },
           {
             "seller": "Mr Fothergill's",
-            "url": "https://mr-fothergills.co.uk/products/lettuce-all-year-round-seeds",
+            "url": "https://mr-fothergills.co.uk/search?q=All+The+Year+Round",
             "priceGBP": 1.99
           },
           {
             "seller": "Kings Seeds",
-            "url": "https://www.kingsseeds.com/lettuce-all-year-round-seeds",
+            "url": "https://www.kingsseeds.com/search?q=All+The+Year+Round",
             "priceGBP": 1.89
           }
         ]
@@ -1290,7 +1290,7 @@
           },
           {
             "seller": "Mr Fothergill's",
-            "url": "https://mr-fothergills.co.uk/products/onion-set-sturon",
+            "url": "https://mr-fothergills.co.uk/search?q=Sturon",
             "priceGBP": 7.99
           }
         ]
@@ -1312,7 +1312,7 @@
           },
           {
             "seller": "Kings Seeds",
-            "url": "https://www.kingsseeds.com/onion-red-baron-sets",
+            "url": "https://www.kingsseeds.com/search?q=Red+Baron",
             "priceGBP": 7.99
           }
         ]
@@ -1342,7 +1342,7 @@
           },
           {
             "seller": "Mr Fothergill's",
-            "url": "https://mr-fothergills.co.uk/products/parsnip-tender-and-true-seeds",
+            "url": "https://mr-fothergills.co.uk/search?q=Tender+and+True",
             "priceGBP": 1.99
           }
         ]
@@ -1359,7 +1359,7 @@
           },
           {
             "seller": "Kings Seeds",
-            "url": "https://www.kingsseeds.com/parsnip-gladiator-f1-seeds",
+            "url": "https://www.kingsseeds.com/search?q=Gladiator",
             "priceGBP": 2.29
           },
           {
@@ -1394,7 +1394,7 @@
           },
           {
             "seller": "Kings Seeds",
-            "url": "https://www.kingsseeds.com/pea-kelvedon-wonder-seeds",
+            "url": "https://www.kingsseeds.com/search?q=Kelvedon+Wonder",
             "priceGBP": 2.29
           }
         ]
@@ -1411,12 +1411,12 @@
           },
           {
             "seller": "Mr Fothergill's",
-            "url": "https://mr-fothergills.co.uk/products/pea-alderman-seeds",
+            "url": "https://mr-fothergills.co.uk/search?q=Alderman+(Tall+Telegraph)",
             "priceGBP": 2.99
           },
           {
             "seller": "Kings Seeds",
-            "url": "https://www.kingsseeds.com/pea-alderman-tall-telegraph-seeds",
+            "url": "https://www.kingsseeds.com/search?q=Alderman+(Tall+Telegraph)",
             "priceGBP": 2.29
           }
         ]
@@ -1483,7 +1483,7 @@
           },
           {
             "seller": "Mr Fothergill's",
-            "url": "https://mr-fothergills.co.uk/products/beet-leaf-perpetual-spinach-seeds",
+            "url": "https://mr-fothergills.co.uk/search?q=Perpetual+Spinach",
             "priceGBP": 1.99
           }
         ]
@@ -1500,12 +1500,12 @@
           },
           {
             "seller": "Kings Seeds",
-            "url": "https://www.kingsseeds.com/spinach-giant-winter-seeds",
+            "url": "https://www.kingsseeds.com/search?q=Giant+Winter",
             "priceGBP": 1.89
           },
           {
             "seller": "Mr Fothergill's",
-            "url": "https://mr-fothergills.co.uk/products/spinach-giant-winter-seeds",
+            "url": "https://mr-fothergills.co.uk/search?q=Giant+Winter",
             "priceGBP": 1.99
           }
         ]
@@ -1572,7 +1572,7 @@
           },
           {
             "seller": "Mr Fothergill's",
-            "url": "https://mr-fothergills.co.uk/products/seed-potato-charlotte",
+            "url": "https://mr-fothergills.co.uk/search?q=Charlotte",
             "priceGBP": 8.99
           }
         ]
@@ -1594,7 +1594,7 @@
           },
           {
             "seller": "Kings Seeds",
-            "url": "https://www.kingsseeds.com/seed-potato-rocket",
+            "url": "https://www.kingsseeds.com/search?q=Rocket",
             "priceGBP": 8.99
           }
         ]
@@ -1665,7 +1665,7 @@
           },
           {
             "seller": "Mr Fothergill's",
-            "url": "https://mr-fothergills.co.uk/products/pumpkin-jack-o-lantern-seeds",
+            "url": "https://mr-fothergills.co.uk/search?q=Jack+OLantern",
             "priceGBP": 2.49
           }
         ]
@@ -1682,12 +1682,12 @@
           },
           {
             "seller": "Mr Fothergill's",
-            "url": "https://mr-fothergills.co.uk/products/pumpkin-atlantic-giant-seeds",
+            "url": "https://mr-fothergills.co.uk/search?q=Atlantic+Giant",
             "priceGBP": 2.49
           },
           {
             "seller": "Kings Seeds",
-            "url": "https://www.kingsseeds.com/pumpkin-atlantic-giant-seeds",
+            "url": "https://www.kingsseeds.com/search?q=Atlantic+Giant",
             "priceGBP": 2.29
           }
         ]
@@ -1711,12 +1711,12 @@
           },
           {
             "seller": "Mr Fothergill's",
-            "url": "https://mr-fothergills.co.uk/products/radish-scarlet-globe-seeds",
+            "url": "https://mr-fothergills.co.uk/search?q=Scarlet+Globe",
             "priceGBP": 1.99
           },
           {
             "seller": "Kings Seeds",
-            "url": "https://www.kingsseeds.com/radish-scarlet-globe-seeds",
+            "url": "https://www.kingsseeds.com/search?q=Scarlet+Globe",
             "priceGBP": 1.89
           }
         ]
@@ -1733,12 +1733,12 @@
           },
           {
             "seller": "Mr Fothergill's",
-            "url": "https://mr-fothergills.co.uk/products/radish-mooli-seeds",
+            "url": "https://mr-fothergills.co.uk/search?q=Mooli+(April+Cross)",
             "priceGBP": 2.29
           },
           {
             "seller": "Kings Seeds",
-            "url": "https://www.kingsseeds.com/radish-mooli-april-cross-seeds",
+            "url": "https://www.kingsseeds.com/search?q=Mooli+(April+Cross)",
             "priceGBP": 1.89
           }
         ]
@@ -1880,12 +1880,12 @@
           },
           {
             "seller": "Mr Fothergill's",
-            "url": "https://mr-fothergills.co.uk/products/rocket-cultivated-seeds",
+            "url": "https://mr-fothergills.co.uk/search?q=Cultivated+Rocket",
             "priceGBP": 1.99
           },
           {
             "seller": "Kings Seeds",
-            "url": "https://www.kingsseeds.com/herb-rocket-cultivated-seeds",
+            "url": "https://www.kingsseeds.com/search?q=Cultivated+Rocket",
             "priceGBP": 1.89
           }
         ]
@@ -1914,12 +1914,12 @@
           },
           {
             "seller": "Mr Fothergill's",
-            "url": "https://mr-fothergills.co.uk/products/runner-bean-scarlet-emperor-seeds",
+            "url": "https://mr-fothergills.co.uk/search?q=Scarlet+Emperor",
             "priceGBP": 3.49
           },
           {
             "seller": "Kings Seeds",
-            "url": "https://www.kingsseeds.com/bean-runner-scarlet-emperor-seeds",
+            "url": "https://www.kingsseeds.com/search?q=Scarlet+Emperor",
             "priceGBP": 2.99
           }
         ]
@@ -1941,7 +1941,7 @@
           },
           {
             "seller": "Mr Fothergill's",
-            "url": "https://mr-fothergills.co.uk/products/runner-bean-enorma-seeds",
+            "url": "https://mr-fothergills.co.uk/search?q=Enorma",
             "priceGBP": 3.49
           }
         ]
@@ -1970,7 +1970,7 @@
           },
           {
             "seller": "Kings Seeds",
-            "url": "https://www.kingsseeds.com/onion-white-lisbon-winter-hardy-seeds",
+            "url": "https://www.kingsseeds.com/search?q=White+Lisbon+Winter+Hardy",
             "priceGBP": 1.89
           }
         ]
@@ -1987,12 +1987,12 @@
           },
           {
             "seller": "Mr Fothergill's",
-            "url": "https://mr-fothergills.co.uk/products/spring-onion-lilia-seeds",
+            "url": "https://mr-fothergills.co.uk/search?q=Lilia",
             "priceGBP": 2.29
           },
           {
             "seller": "Kings Seeds",
-            "url": "https://www.kingsseeds.com/onion-spring-lilia-red-seeds",
+            "url": "https://www.kingsseeds.com/search?q=Lilia",
             "priceGBP": 1.89
           }
         ]
@@ -2016,12 +2016,12 @@
           },
           {
             "seller": "Mr Fothergill's",
-            "url": "https://mr-fothergills.co.uk/products/squash-butternut-waltham-seeds",
+            "url": "https://mr-fothergills.co.uk/search?q=Butternut+Waltham",
             "priceGBP": 2.49
           },
           {
             "seller": "Kings Seeds",
-            "url": "https://www.kingsseeds.com/squash-butternut-waltham-seeds",
+            "url": "https://www.kingsseeds.com/search?q=Butternut+Waltham",
             "priceGBP": 2.29
           }
         ]
@@ -2043,7 +2043,7 @@
           },
           {
             "seller": "Mr Fothergill's",
-            "url": "https://mr-fothergills.co.uk/products/squash-crown-prince-seeds",
+            "url": "https://mr-fothergills.co.uk/search?q=Crown+Prince",
             "priceGBP": 2.49
           }
         ]
@@ -2072,7 +2072,7 @@
           },
           {
             "seller": "Mr Fothergill's",
-            "url": "https://mr-fothergills.co.uk/products/sunflower-giant-single-seeds",
+            "url": "https://mr-fothergills.co.uk/search?q=Giant+Single",
             "priceGBP": 1.99
           }
         ]
@@ -2089,12 +2089,12 @@
           },
           {
             "seller": "Mr Fothergill's",
-            "url": "https://mr-fothergills.co.uk/products/sunflower-russian-giant-seeds",
+            "url": "https://mr-fothergills.co.uk/search?q=Russian+Giant",
             "priceGBP": 1.99
           },
           {
             "seller": "Kings Seeds",
-            "url": "https://www.kingsseeds.com/sunflower-russian-giant-seeds",
+            "url": "https://www.kingsseeds.com/search?q=Russian+Giant",
             "priceGBP": 1.89
           }
         ]
@@ -2123,7 +2123,7 @@
           },
           {
             "seller": "Mr Fothergill's",
-            "url": "https://mr-fothergills.co.uk/products/basil-sweet-genovese-seeds",
+            "url": "https://mr-fothergills.co.uk/search?q=Sweet+Genovese",
             "priceGBP": 1.99
           }
         ]
@@ -2140,12 +2140,12 @@
           },
           {
             "seller": "Mr Fothergill's",
-            "url": "https://mr-fothergills.co.uk/products/basil-lettuce-leaf-seeds",
+            "url": "https://mr-fothergills.co.uk/search?q=Lettuce+Leaf",
             "priceGBP": 1.99
           },
           {
             "seller": "Kings Seeds",
-            "url": "https://www.kingsseeds.com/herb-basil-lettuce-leaf-seeds",
+            "url": "https://www.kingsseeds.com/search?q=Lettuce+Leaf",
             "priceGBP": 2.29
           }
         ]
@@ -2216,7 +2216,7 @@
           },
           {
             "seller": "Mr Fothergill's",
-            "url": "https://mr-fothergills.co.uk/products/sweetcorn-swift-f1-seeds",
+            "url": "https://mr-fothergills.co.uk/search?q=Swift",
             "priceGBP": 3.49
           }
         ]
@@ -2233,7 +2233,7 @@
           },
           {
             "seller": "Kings Seeds",
-            "url": "https://www.kingsseeds.com/sweetcorn-lark-f1-seeds",
+            "url": "https://www.kingsseeds.com/search?q=Lark",
             "priceGBP": 2.99
           },
           {
@@ -2262,12 +2262,12 @@
           },
           {
             "seller": "Mr Fothergill's",
-            "url": "https://mr-fothergills.co.uk/products/swiss-chard-fordhook-giant-seeds",
+            "url": "https://mr-fothergills.co.uk/search?q=Fordhook+Giant",
             "priceGBP": 1.99
           },
           {
             "seller": "Kings Seeds",
-            "url": "https://www.kingsseeds.com/swiss-chard-fordhook-giant-seeds",
+            "url": "https://www.kingsseeds.com/search?q=Fordhook+Giant",
             "priceGBP": 1.89
           }
         ]
@@ -2289,7 +2289,7 @@
           },
           {
             "seller": "Mr Fothergill's",
-            "url": "https://mr-fothergills.co.uk/products/swiss-chard-rhubarb-seeds",
+            "url": "https://mr-fothergills.co.uk/search?q=Rhubarb+Chard",
             "priceGBP": 2.29
           }
         ]
@@ -2319,12 +2319,12 @@
           },
           {
             "seller": "Mr Fothergill's",
-            "url": "https://mr-fothergills.co.uk/products/tomato-gardeners-delight-seeds",
+            "url": "https://mr-fothergills.co.uk/search?q=Gardeners+Delight",
             "priceGBP": 2.49
           },
           {
             "seller": "Kings Seeds",
-            "url": "https://www.kingsseeds.com/tomato-gardeners-delight-seeds",
+            "url": "https://www.kingsseeds.com/search?q=Gardeners+Delight",
             "priceGBP": 2.29
           }
         ]
@@ -2341,12 +2341,12 @@
           },
           {
             "seller": "Mr Fothergill's",
-            "url": "https://mr-fothergills.co.uk/products/tomato-moneymaker-seeds",
+            "url": "https://mr-fothergills.co.uk/search?q=Moneymaker",
             "priceGBP": 1.99
           },
           {
             "seller": "Kings Seeds",
-            "url": "https://www.kingsseeds.com/tomato-moneymaker-seeds",
+            "url": "https://www.kingsseeds.com/search?q=Moneymaker",
             "priceGBP": 1.89
           }
         ]
@@ -2369,7 +2369,7 @@
           },
           {
             "seller": "Mr Fothergill's",
-            "url": "https://mr-fothergills.co.uk/products/tomato-sungold-f1-seeds",
+            "url": "https://mr-fothergills.co.uk/search?q=Sungold",
             "priceGBP": 3.49
           }
         ]
@@ -2424,7 +2424,7 @@
     "varieties": [
       {
         "name": "Common Lemon Balm",
-        "why": "Genuinely clay-tolerant fragrant herb — one of the few that thrives on heavy Surrey soil. Lemon-mint tea, bee magnet, practically indestructible.",
+        "why": "Genuinely clay-tolerant fragrant herb \u2014 one of the few that thrives on heavy Surrey soil. Lemon-mint tea, bee magnet, practically indestructible.",
         "context": "inground",
         "sellers": [
           {
@@ -2435,7 +2435,7 @@
           },
           {
             "seller": "Mr Fothergill's",
-            "url": "https://mr-fothergills.co.uk/products/lemon-balm-seeds",
+            "url": "https://mr-fothergills.co.uk/search?q=Common+Lemon+Balm",
             "priceGBP": 2.25
           }
         ]
@@ -2473,7 +2473,7 @@
           },
           {
             "seller": "Herb Farm",
-            "url": "https://www.herbfarm.co.uk/product/corsican-mint/",
+            "url": "https://www.herbfarm.co.uk/?s=Corsican+Mint",
             "priceGBP": 4.5
           }
         ]
@@ -2535,7 +2535,7 @@
           },
           {
             "seller": "Mr Fothergill's",
-            "url": "https://mr-fothergills.co.uk/products/nicotiana-sylvestris-seeds",
+            "url": "https://mr-fothergills.co.uk/search?q=Nicotiana+sylvestris",
             "priceGBP": 2.49
           }
         ]
@@ -2559,12 +2559,12 @@
           },
           {
             "seller": "Mr Fothergill's",
-            "url": "https://mr-fothergills.co.uk/products/night-scented-stock-seeds",
+            "url": "https://mr-fothergills.co.uk/search?q=Night-Scented+Stock",
             "priceGBP": 1.99
           },
           {
             "seller": "Kings Seeds",
-            "url": "https://www.kingsseeds.com/flower-seeds",
+            "url": "https://www.kingsseeds.com/search?q=Night-Scented+Stock",
             "priceGBP": 1.49
           }
         ]
@@ -2627,7 +2627,7 @@
           },
           {
             "seller": "Herb Farm",
-            "url": "https://www.herbfarm.co.uk/product/lemon-verbena/",
+            "url": "https://www.herbfarm.co.uk/?s=Common+Lemon+Verbena",
             "priceGBP": 5.95
           }
         ]

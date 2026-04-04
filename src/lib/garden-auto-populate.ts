@@ -41,13 +41,20 @@ function getPlantableCells(cells: GardenCell[][]): PlantableCell[] {
   for (let row = 0; row < cells.length; row++) {
     for (let col = 0; col < cells[row].length; col++) {
       const cell = cells[row][col];
-      if (cell.type === 'veg-patch' || cell.type === 'raised-bed' || cell.type === 'flower-bed') {
-        result.push({ row, col, type: cell.type, sunHours: cell.sunHours ?? 6 });
+      if (cell.type === 'veg-patch' || cell.type === 'raised-bed' || cell.type === 'flower-bed' || cell.type === 'conservatory') {
+        result.push({ row, col, type: cell.type, sunHours: cell.sunHours ?? (cell.type === 'conservatory' ? 3 : 6) });
       }
     }
   }
   return result;
 }
+
+// Plants suitable for a conservatory (filtered light, frost-free)
+const CONSERVATORY_SLUGS = [
+  'dwarf-lemon', 'dwarf-olive', 'fern-hardy', 'bay-laurel',
+  'basil-sweet', 'mint', 'parsley', 'coriander', 'chives',
+  'lemon-balm', 'lemon-verbena',
+];
 
 function plantNeedsSun(plant: Plant): number {
   if (plant.sun === 'full-sun') return 6;
@@ -187,6 +194,46 @@ function tryPlaceWithReasoning(
   return true;
 }
 
+/** Fill conservatory cells with shade-tolerant houseplants & herbs */
+function fillConservatory(
+  conservatoryCells: PlantableCell[],
+  plants: Plant[],
+  config: GardenConfig,
+  companionMap: CompanionMap,
+  ctx: PlacementContext
+): void {
+  // Dwarf tree focal point first, then herbs to fill
+  for (const cell of conservatoryCells) {
+    if (ctx.usedCells.has(`${cell.row}-${cell.col}`)) continue;
+    for (const slug of CONSERVATORY_SLUGS) {
+      const plant = plants.find((p) => p.slug === slug);
+      if (!plant) continue;
+      if (tryPlaceWithReasoning(slug, cell, plant, config, companionMap, ctx,
+        ['Conservatory: shade-tolerant, frost-free zone — ideal for tender plants and herbs'])) break;
+    }
+  }
+}
+
+/** Fill empty veg/raised-bed cells with soil-improving green manures */
+function fillSoilImprovers(
+  emptyCells: PlantableCell[],
+  plants: Plant[],
+  config: GardenConfig,
+  companionMap: CompanionMap,
+  ctx: PlacementContext
+): void {
+  const soilSlugs = ['comfrey', 'crimson-clover', 'phacelia', 'borage'];
+  for (const cell of emptyCells) {
+    if (ctx.usedCells.has(`${cell.row}-${cell.col}`)) continue;
+    for (const slug of soilSlugs) {
+      const plant = plants.find((p) => p.slug === slug);
+      if (!plant) continue;
+      if (tryPlaceWithReasoning(slug, cell, plant, config, companionMap, ctx,
+        ['Soil improver: fills bare soil, fixes nitrogen or mines minerals'])) break;
+    }
+  }
+}
+
 function emptyResult(id: string, name: string, strategy: GardenLayoutStrategy): GardenLayoutOption {
   return {
     id, name, description: 'Paint some veg patches first!', strategy,
@@ -298,6 +345,14 @@ function sunOptimizedLayout(
     }
   }
 
+  // Phase 5: Conservatory plants
+  const conservatoryCells = sortedCells.filter((c) => c.type === 'conservatory');
+  fillConservatory(conservatoryCells, plants, config, companionMap, ctx);
+
+  // Phase 6: Soil improvers in remaining empty cells
+  const remainingCells = vegCells.filter((c) => !ctx.usedCells.has(`${c.row}-${c.col}`));
+  fillSoilImprovers(remainingCells, plants, config, companionMap, ctx);
+
   return {
     id: 'sun-optimized', name: 'Sun-Optimized', strategy: 'sun-optimized',
     description: `Sun-hungry crops in your sunniest spots with proven companions adjacent. Tall plants toward the far end to avoid shading. Foes kept apart. ${ctx.companionPairs} companion pairings, ${ctx.conflictsAvoided} conflicts avoided.`,
@@ -377,9 +432,17 @@ function kitchenGardenLayout(
     }
   }
 
+  // Conservatory: herbs and tender plants
+  const conservatoryCells2 = [...plantable].filter((c) => c.type === 'conservatory');
+  fillConservatory(conservatoryCells2, plants, config, companionMap, ctx);
+
+  // Soil improvers in any unfilled veg beds
+  const remaining2 = plantable.filter((c) => (c.type === 'veg-patch' || c.type === 'raised-bed') && !ctx.usedCells.has(`${c.row}-${c.col}`));
+  fillSoilImprovers(remaining2, plants, config, companionMap, ctx);
+
   return {
     id: 'kitchen-garden', name: 'Kitchen Garden', strategy: 'kitchen-garden',
-    description: `Herbs near the house for quick cooking access, salad greens in the middle, main crops at the far end. Companion plants grouped together. ${ctx.companionPairs} companion pairings.`,
+    description: `Herbs near the house for quick cooking access, salad greens in the middle, main crops at the far end. Conservatory filled with tender herbs and dwarf trees. ${ctx.companionPairs} companion pairings.`,
     placements: ctx.placements, reasoning: ctx.reasoning,
     stats: computeStats(ctx, cells),
   };
@@ -458,9 +521,17 @@ function maximumYieldLayout(
     }
   }
 
+  // Conservatory plants
+  const conservatoryCells3 = sorted.filter((c) => c.type === 'conservatory');
+  fillConservatory(conservatoryCells3, plants, config, companionMap, ctx);
+
+  // Soil improvers in remaining cells
+  const remaining3 = sorted.filter((c) => (c.type === 'veg-patch' || c.type === 'raised-bed') && !ctx.usedCells.has(`${c.row}-${c.col}`));
+  fillSoilImprovers(remaining3, plants, config, companionMap, ctx);
+
   return {
     id: 'maximum-yield', name: 'Maximum Yield', strategy: 'maximum-yield',
-    description: `Every cell filled with the highest-producing crop that also benefits from its neighbours. ${ctx.companionPairs} companion pairings, ${ctx.conflictsAvoided} conflicts avoided.`,
+    description: `Every cell filled with the highest-producing crop that also benefits from its neighbours. Soil improvers fill remaining gaps. ${ctx.companionPairs} companion pairings, ${ctx.conflictsAvoided} conflicts avoided.`,
     placements: ctx.placements, reasoning: ctx.reasoning,
     stats: computeStats(ctx, cells),
   };

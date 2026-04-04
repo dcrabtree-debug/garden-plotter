@@ -1111,5 +1111,131 @@
     "relationship": "friend",
     "reason": "Dianthus family attracts beneficial hoverflies",
     "source": "https://www.rhs.org.uk/companion-planting"
+  },
+  {
+    "plantA": "comfrey",
+    "plantB": "tomato-tumbling",
+    "relationship": "friend",
+    "reason": "Comfrey leaves make potassium-rich mulch that boosts tomato fruiting",
+    "source": "https://www.rhs.org.uk/soil-composts-mulches/comfrey"
+  },
+  {
+    "plantA": "comfrey",
+    "plantB": "strawberry-everbearing",
+    "relationship": "friend",
+    "reason": "Comfrey leaf mulch feeds strawberry plants and suppresses weeds around crowns",
+    "source": "https://www.rhs.org.uk/soil-composts-mulches/comfrey"
+  },
+  {
+    "plantA": "comfrey",
+    "plantB": "apple-dwarf",
+    "relationship": "friend",
+    "reason": "Comfrey grown under fruit trees feeds them via potassium-rich leaf drop",
+    "source": "https://www.rhs.org.uk/soil-composts-mulches/comfrey"
+  },
+  {
+    "plantA": "comfrey",
+    "plantB": "raspberry",
+    "relationship": "friend",
+    "reason": "Comfrey leaf mulch provides the high potassium raspberries crave for fruiting",
+    "source": "https://www.rhs.org.uk/soil-composts-mulches/comfrey"
+  },
+  {
+    "plantA": "comfrey",
+    "plantB": "courgette",
+    "relationship": "friend",
+    "reason": "Comfrey liquid feed is ideal for heavy-feeding courgettes",
+    "source": "https://www.rhs.org.uk/soil-composts-mulches/comfrey"
+  },
+  {
+    "plantA": "comfrey",
+    "plantB": "potato-early",
+    "relationship": "friend",
+    "reason": "Line potato trenches with comfrey leaves for a slow-release potassium boost",
+    "source": "https://www.rhs.org.uk/soil-composts-mulches/comfrey"
+  },
+  {
+    "plantA": "crimson-clover",
+    "plantB": "tomato-tumbling",
+    "relationship": "friend",
+    "reason": "Clover fixes nitrogen in soil, benefiting the following season's tomato crop",
+    "source": "https://www.rhs.org.uk/soil-composts-mulches/green-manures"
+  },
+  {
+    "plantA": "crimson-clover",
+    "plantB": "cabbage",
+    "relationship": "friend",
+    "reason": "Nitrogen fixed by clover benefits heavy-feeding brassicas planted after it",
+    "source": "https://www.rhs.org.uk/soil-composts-mulches/green-manures"
+  },
+  {
+    "plantA": "crimson-clover",
+    "plantB": "lettuce",
+    "relationship": "friend",
+    "reason": "Clover as living mulch fixes nitrogen and suppresses weeds between lettuce rows",
+    "source": "https://www.rhs.org.uk/soil-composts-mulches/green-manures"
+  },
+  {
+    "plantA": "phacelia",
+    "plantB": "strawberry-everbearing",
+    "relationship": "friend",
+    "reason": "Phacelia is the UK's top pollinator plant — dramatically improves strawberry pollination",
+    "source": "https://www.rhs.org.uk/soil-composts-mulches/green-manures"
+  },
+  {
+    "plantA": "phacelia",
+    "plantB": "courgette",
+    "relationship": "friend",
+    "reason": "Phacelia attracts pollinators essential for courgette fruit set",
+    "source": "https://www.rhs.org.uk/soil-composts-mulches/green-manures"
+  },
+  {
+    "plantA": "phacelia",
+    "plantB": "cucumber",
+    "relationship": "friend",
+    "reason": "Phacelia attracts hoverflies that prey on cucumber aphids",
+    "source": "https://www.rhs.org.uk/soil-composts-mulches/green-manures"
+  },
+  {
+    "plantA": "phacelia",
+    "plantB": "runner-bean",
+    "relationship": "friend",
+    "reason": "Phacelia attracts bumblebees essential for runner bean pollination",
+    "source": "https://www.rhs.org.uk/soil-composts-mulches/green-manures"
+  },
+  {
+    "plantA": "dwarf-lemon",
+    "plantB": "basil-sweet",
+    "relationship": "friend",
+    "reason": "Mediterranean companions — basil repels whitefly and thrives in same warm conditions",
+    "source": "https://www.rhs.org.uk/companion-planting"
+  },
+  {
+    "plantA": "dwarf-lemon",
+    "plantB": "lavender",
+    "relationship": "friend",
+    "reason": "Lavender attracts pollinators for citrus flowering and both prefer well-drained soil",
+    "source": "https://www.rhs.org.uk/companion-planting"
+  },
+  {
+    "plantA": "dwarf-olive",
+    "plantB": "rosemary",
+    "relationship": "friend",
+    "reason": "Mediterranean companions — both thrive in dry, sunny, well-drained conditions",
+    "source": "https://www.rhs.org.uk/companion-planting"
+  },
+  {
+    "plantA": "dwarf-olive",
+    "plantB": "lavender",
+    "relationship": "friend",
+    "reason": "Classic Mediterranean pairing — both drought-tolerant and attract pollinators",
+    "source": "https://www.rhs.org.uk/companion-planting"
+  },
+  {
+    "plantA": "borage",
+    "plantB": "comfrey",
+    "relationship": "friend",
+    "reason": "Both are dynamic accumulators — borage mines calcium while comfrey mines potassium",
+    "source": "https://www.rhs.org.uk/soil-composts-mulches/comfrey"
   }
 ]

@@ -38,7 +38,9 @@ export type CellType =
   | 'shed'
   | 'raised-bed'
   | 'water-feature'
-  | 'compost';
+  | 'compost'
+  | 'greenstalk'
+  | 'conservatory';
 
 export interface GardenCell {
   type: CellType;

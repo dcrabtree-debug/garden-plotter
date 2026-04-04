@@ -114,7 +114,7 @@ export function YieldPage() {
         </div>
 
         {/* Category winners */}
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           {[
             { label: 'Best Herb', items: topHerbs, color: 'emerald' },
             { label: 'Best Veg', items: topVeg, color: 'amber' },
@@ -155,23 +155,23 @@ export function YieldPage() {
               const barMax = isValueSort ? maxValue : maxKg;
 
               return (
-                <div key={est.plant.slug} className="flex items-center gap-3 px-4 py-2.5 hover:bg-stone-50 dark:hover:bg-stone-700/50 transition-colors">
-                  <span className={`w-5 text-[10px] font-bold text-right ${
+                <div key={est.plant.slug} className="flex items-center gap-2 sm:gap-3 px-2 sm:px-4 py-2.5 hover:bg-stone-50 dark:hover:bg-stone-700/50 transition-colors">
+                  <span className={`w-5 text-[10px] font-bold text-right shrink-0 ${
                     i < 3 ? 'text-amber-500' : i < 10 ? 'text-stone-500' : 'text-stone-300 dark:text-stone-600'
                   }`}>
                     {i + 1}
                   </span>
-                  <span className="text-lg w-7 text-center">{est.plant.emoji}</span>
-                  <div className="w-32 min-w-0">
+                  <span className="text-lg w-7 text-center shrink-0">{est.plant.emoji}</span>
+                  <div className="w-20 sm:w-32 min-w-0 shrink-0">
                     <div className="text-xs font-medium text-stone-800 dark:text-stone-200 truncate">{est.plant.commonName}</div>
-                    <div className="text-[9px] text-stone-400">{est.plant.category} · {est.harvestDays}d harvest</div>
+                    <div className="text-[9px] text-stone-400 hidden sm:block">{est.plant.category} · {est.harvestDays}d harvest</div>
                   </div>
                   <YieldBar
                     value={barValue}
                     max={barMax}
                     color={isValueSort ? 'bg-amber-400 dark:bg-amber-500' : 'bg-emerald-400 dark:bg-emerald-500'}
                   />
-                  <div className="w-20 text-right">
+                  <div className="w-16 sm:w-20 text-right shrink-0">
                     {isValueSort ? (
                       <>
                         <div className="text-xs font-bold text-amber-600 dark:text-amber-400">{currency}{value.toFixed(2)}</div>

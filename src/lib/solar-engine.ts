@@ -232,11 +232,30 @@ export function classifySunZone(hours: number): SunZone {
 }
 
 export const SUN_ZONE_COLORS: Record<SunZone, string> = {
-  'full-sun': '#f5dfa0',
-  'partial-sun': '#c8e6c9',
-  'light-shade': '#b3d4e8',
-  'deep-shade': '#90a4ae',
+  'full-sun': '#ff9800',     // vivid orange — prime growing spots
+  'partial-sun': '#fdd835',  // bright yellow — good for most crops
+  'light-shade': '#81d4fa',  // sky blue — leafy greens, herbs
+  'deep-shade': '#546e7a',   // blue-gray — ferns, hostas only
 };
+
+/** Continuous color for sun hours (0-12+) — smooth gradient for heatmap */
+export function sunHoursColor(hours: number): string {
+  // 0h = deep blue-gray → 3h = cool blue → 6h = warm yellow → 10h+ = hot orange-red
+  const t = Math.min(hours / 10, 1); // normalize to 0-1
+  if (t < 0.1) return '#546e7a'; // deep shade
+  if (t < 0.3) return lerpColor('#81d4fa', '#aed581', (t - 0.1) / 0.2); // blue → green
+  if (t < 0.6) return lerpColor('#aed581', '#fdd835', (t - 0.3) / 0.3); // green → yellow
+  return lerpColor('#fdd835', '#ff6d00', (t - 0.6) / 0.4); // yellow → deep orange
+}
+
+function lerpColor(a: string, b: string, t: number): string {
+  const ar = parseInt(a.slice(1, 3), 16), ag = parseInt(a.slice(3, 5), 16), ab = parseInt(a.slice(5, 7), 16);
+  const br = parseInt(b.slice(1, 3), 16), bg = parseInt(b.slice(3, 5), 16), bb = parseInt(b.slice(5, 7), 16);
+  const r = Math.round(ar + (br - ar) * t);
+  const g = Math.round(ag + (bg - ag) * t);
+  const bl = Math.round(ab + (bb - ab) * t);
+  return `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${bl.toString(16).padStart(2, '0')}`;
+}
 
 // BST offset (last Sunday in March to last Sunday in October)
 export function isBST(month: number): boolean {

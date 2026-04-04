@@ -22,7 +22,7 @@
           },
           {
             "seller": "Territorial Seed Company",
-            "url": "https://www.territorialseed.com/product/albion-strawberry-plants",
+            "url": "https://www.territorialseed.com/products/albion-strawberry-plants",
             "priceUSD": 12.75
           }
         ]
@@ -40,7 +40,7 @@
           },
           {
             "seller": "Territorial Seed Company",
-            "url": "https://www.territorialseed.com/product/seascape-strawberry-plants",
+            "url": "https://www.territorialseed.com/products/seascape-strawberry-plants",
             "priceUSD": 12.75
           },
           {
@@ -62,7 +62,7 @@
           },
           {
             "seller": "Territorial Seed Company",
-            "url": "https://www.territorialseed.com/product/san-andreas-strawberry-plants",
+            "url": "https://www.territorialseed.com/products/san-andreas-strawberry-plants",
             "priceUSD": 13.75
           },
           {
@@ -93,12 +93,6 @@
             "seller": "Park Seed",
             "url": "https://www.parkseed.com/tumbling-tom-red-tomato-seeds/p/05267/",
             "priceUSD": 5.95
-          },
-          {
-            "seller": "Johnny's Selected Seeds",
-            "url": "https://www.johnnyseeds.com/vegetables/tomatoes/cherry-tomatoes/tumbling-tom-red-f1-tomato-seed-2467.html",
-            "priceUSD": 5.45,
-            "badge": "USDA Organic"
           }
         ]
       },
@@ -136,11 +130,6 @@
             "priceUSD": 5.95
           },
           {
-            "seller": "Johnny's Selected Seeds",
-            "url": "https://www.johnnyseeds.com/vegetables/tomatoes/cherry-tomatoes/patio-choice-yellow-tomato-seed-2470.html",
-            "priceUSD": 5.45
-          },
-          {
             "seller": "Park Seed",
             "url": "https://www.parkseed.com/patio-choice-yellow-tomato-seeds/p/05272/",
             "priceUSD": 4.95
@@ -161,7 +150,7 @@
           {
             "seller": "Baker Creek Heirloom",
             "url": "https://www.rareseeds.com/spicy-globe-basil",
-            "priceUSD": 2.50,
+            "priceUSD": 2.5,
             "badge": "Non-GMO Pledge",
             "recommended": true
           },
@@ -172,7 +161,7 @@
           },
           {
             "seller": "Johnny's Selected Seeds",
-            "url": "https://www.johnnyseeds.com/herbs/basil/sweet-basil/spicy-globe-basil-seed-975.html",
+            "url": "https://www.johnnyseeds.com/herbs/basil/fine-leaf-basil/spicy-bush-basil-seed-907.html",
             "priceUSD": 4.25
           }
         ]
@@ -182,12 +171,6 @@
         "why": "AAS Winner, compact bushy habit, slow to bolt, bred for containers",
         "context": "greenstalk",
         "sellers": [
-          {
-            "seller": "Johnny's Selected Seeds",
-            "url": "https://www.johnnyseeds.com/herbs/basil/sweet-basil/dolce-fresca-basil-seed-4350.html",
-            "priceUSD": 4.75,
-            "badge": "AAS Winner"
-          },
           {
             "seller": "Burpee",
             "url": "https://www.burpee.com/herbs/basil/basil-dolce-fresca-prod003210.html",
@@ -214,14 +197,9 @@
           {
             "seller": "Baker Creek Heirloom",
             "url": "https://www.rareseeds.com/contender-bush-bean",
-            "priceUSD": 3.50,
+            "priceUSD": 3.5,
             "badge": "Non-GMO Pledge",
             "recommended": true
-          },
-          {
-            "seller": "Johnny's Selected Seeds",
-            "url": "https://www.johnnyseeds.com/vegetables/beans/bush-beans/contender-bush-bean-seed-2040.html",
-            "priceUSD": 5.25
           },
           {
             "seller": "Burpee",
@@ -238,7 +216,7 @@
           {
             "seller": "Baker Creek Heirloom",
             "url": "https://www.rareseeds.com/royal-burgundy-bush-bean",
-            "priceUSD": 3.50,
+            "priceUSD": 3.5,
             "badge": "Non-GMO Pledge"
           },
           {
@@ -258,12 +236,6 @@
         "why": "AAS Winner, bred specifically for containers, compact 16-inch plants",
         "context": "greenstalk",
         "sellers": [
-          {
-            "seller": "Johnny's Selected Seeds",
-            "url": "https://www.johnnyseeds.com/vegetables/beans/bush-beans/mascotte-bush-bean-seed-2055.html",
-            "priceUSD": 5.95,
-            "badge": "AAS Winner"
-          },
           {
             "seller": "Burpee",
             "url": "https://www.burpee.com/bean-bush-mascotte-prod003215.html",
@@ -301,7 +273,7 @@
           },
           {
             "seller": "Territorial Seed Company",
-            "url": "https://www.territorialseed.com/product/space-spinach-seeds",
+            "url": "https://www.territorialseed.com/products/space-spinach-seeds",
             "priceUSD": 3.95
           }
         ]
@@ -314,7 +286,7 @@
           {
             "seller": "Baker Creek Heirloom",
             "url": "https://www.rareseeds.com/bloomsdale-long-standing-spinach",
-            "priceUSD": 2.50,
+            "priceUSD": 2.5,
             "badge": "Non-GMO Pledge"
           },
           {
@@ -324,7 +296,7 @@
           },
           {
             "seller": "Territorial Seed Company",
-            "url": "https://www.territorialseed.com/product/bloomsdale-spinach-seeds",
+            "url": "https://www.territorialseed.com/products/bloomsdale-spinach-seeds",
             "priceUSD": 3.45
           }
         ]
@@ -377,7 +349,7 @@
           },
           {
             "seller": "Territorial Seed Company",
-            "url": "https://www.territorialseed.com/product/peppermint-swiss-chard-seeds",
+            "url": "https://www.territorialseed.com/products/peppermint-swiss-chard-seeds",
             "priceUSD": 3.95
           }
         ]
@@ -403,11 +375,11 @@
           {
             "seller": "Baker Creek Heirloom",
             "url": "https://www.rareseeds.com/arugula-rocket-salad",
-            "priceUSD": 2.50
+            "priceUSD": 2.5
           },
           {
             "seller": "Territorial Seed Company",
-            "url": "https://www.territorialseed.com/product/astro-arugula-seeds",
+            "url": "https://www.territorialseed.com/products/astro-arugula-seeds",
             "priceUSD": 3.45
           }
         ]
@@ -425,11 +397,11 @@
           {
             "seller": "Baker Creek Heirloom",
             "url": "https://www.rareseeds.com/wild-arugula",
-            "priceUSD": 2.50
+            "priceUSD": 2.5
           },
           {
             "seller": "Territorial Seed Company",
-            "url": "https://www.territorialseed.com/product/sylvetta-wild-arugula-seeds",
+            "url": "https://www.territorialseed.com/products/sylvetta-wild-arugula-seeds",
             "priceUSD": 3.45
           }
         ]
@@ -448,7 +420,7 @@
           {
             "seller": "Baker Creek Heirloom",
             "url": "https://www.rareseeds.com/french-breakfast-radish",
-            "priceUSD": 2.50,
+            "priceUSD": 2.5,
             "badge": "Non-GMO Pledge",
             "recommended": true
           },
@@ -472,7 +444,7 @@
           {
             "seller": "Baker Creek Heirloom",
             "url": "https://www.rareseeds.com/cherry-belle-radish",
-            "priceUSD": 2.50
+            "priceUSD": 2.5
           },
           {
             "seller": "Burpee",
@@ -481,7 +453,7 @@
           },
           {
             "seller": "Territorial Seed Company",
-            "url": "https://www.territorialseed.com/product/cherry-belle-radish-seeds",
+            "url": "https://www.territorialseed.com/products/cherry-belle-radish-seeds",
             "priceUSD": 3.25
           }
         ]
@@ -500,7 +472,7 @@
           {
             "seller": "Baker Creek Heirloom",
             "url": "https://www.rareseeds.com/buttercrunch-lettuce",
-            "priceUSD": 2.50,
+            "priceUSD": 2.5,
             "badge": "AAS Winner",
             "recommended": true
           },
@@ -547,11 +519,11 @@
           {
             "seller": "Baker Creek Heirloom",
             "url": "https://www.rareseeds.com/tom-thumb-lettuce",
-            "priceUSD": 2.50
+            "priceUSD": 2.5
           },
           {
             "seller": "Territorial Seed Company",
-            "url": "https://www.territorialseed.com/product/tom-thumb-lettuce-seeds",
+            "url": "https://www.territorialseed.com/products/tom-thumb-lettuce-seeds",
             "priceUSD": 3.45
           },
           {
@@ -575,7 +547,7 @@
           {
             "seller": "Baker Creek Heirloom",
             "url": "https://www.rareseeds.com/evergreen-bunching-onion",
-            "priceUSD": 2.50,
+            "priceUSD": 2.5,
             "badge": "Non-GMO Pledge",
             "recommended": true
           },
@@ -599,11 +571,11 @@
           {
             "seller": "Johnny's Selected Seeds",
             "url": "https://www.johnnyseeds.com/vegetables/onions/scallions/tokyo-long-white-scallion-seed-2375.html",
-            "priceUSD": 4.50
+            "priceUSD": 4.5
           },
           {
             "seller": "Territorial Seed Company",
-            "url": "https://www.territorialseed.com/product/tokyo-long-white-bunching-onion-seeds",
+            "url": "https://www.territorialseed.com/products/tokyo-long-white-bunching-onion-seeds",
             "priceUSD": 3.75
           },
           {
@@ -627,7 +599,7 @@
           {
             "seller": "Baker Creek Heirloom",
             "url": "https://www.rareseeds.com/dwarf-blue-curled-scotch-kale",
-            "priceUSD": 2.50,
+            "priceUSD": 2.5,
             "badge": "Non-GMO Pledge",
             "recommended": true
           },
@@ -638,7 +610,7 @@
           },
           {
             "seller": "Territorial Seed Company",
-            "url": "https://www.territorialseed.com/product/dwarf-blue-curled-scotch-kale-seeds",
+            "url": "https://www.territorialseed.com/products/dwarf-blue-curled-scotch-kale-seeds",
             "priceUSD": 3.75
           }
         ]
@@ -651,7 +623,7 @@
           {
             "seller": "Baker Creek Heirloom",
             "url": "https://www.rareseeds.com/lacinato-kale",
-            "priceUSD": 2.50
+            "priceUSD": 2.5
           },
           {
             "seller": "Johnny's Selected Seeds",
@@ -661,7 +633,7 @@
           },
           {
             "seller": "Territorial Seed Company",
-            "url": "https://www.territorialseed.com/product/lacinato-kale-seeds",
+            "url": "https://www.territorialseed.com/products/lacinato-kale-seeds",
             "priceUSD": 3.75
           }
         ]
@@ -711,11 +683,6 @@
             "seller": "Park Seed",
             "url": "https://www.parkseed.com/basket-of-fire-pepper-seeds/p/05460/",
             "priceUSD": 5.45
-          },
-          {
-            "seller": "Johnny's Selected Seeds",
-            "url": "https://www.johnnyseeds.com/vegetables/peppers/hot-peppers/basket-of-fire-pepper-seed-2420.html",
-            "priceUSD": 5.25
           }
         ]
       }
@@ -733,13 +700,13 @@
           {
             "seller": "Baker Creek Heirloom",
             "url": "https://www.rareseeds.com/tom-thumb-pea",
-            "priceUSD": 3.50,
+            "priceUSD": 3.5,
             "badge": "Non-GMO Pledge",
             "recommended": true
           },
           {
             "seller": "Territorial Seed Company",
-            "url": "https://www.territorialseed.com/product/tom-thumb-pea-seeds",
+            "url": "https://www.territorialseed.com/products/tom-thumb-pea-seeds",
             "priceUSD": 4.25
           },
           {
@@ -790,13 +757,13 @@
           },
           {
             "seller": "Johnny's Selected Seeds",
-            "url": "https://www.johnnyseeds.com/herbs/thyme/english-thyme-seed-2931.html",
+            "url": "https://www.johnnyseeds.com/herbs/thyme/german-winter-thyme-seed-940.html",
             "priceUSD": 4.25
           },
           {
             "seller": "Baker Creek Heirloom",
             "url": "https://www.rareseeds.com/english-thyme",
-            "priceUSD": 2.50
+            "priceUSD": 2.5
           }
         ]
       },
@@ -835,14 +802,14 @@
         "sellers": [
           {
             "seller": "Johnny's Selected Seeds",
-            "url": "https://www.johnnyseeds.com/herbs/oregano/greek-oregano-seed-802.html",
-            "priceUSD": 4.50,
+            "url": "https://www.johnnyseeds.com/herbs/oregano/greek-oregano-herb-seed-930.html",
+            "priceUSD": 4.5,
             "recommended": true
           },
           {
             "seller": "Baker Creek Heirloom",
             "url": "https://www.rareseeds.com/greek-oregano",
-            "priceUSD": 2.50
+            "priceUSD": 2.5
           },
           {
             "seller": "Park Seed",
@@ -871,12 +838,7 @@
           {
             "seller": "Baker Creek Heirloom",
             "url": "https://www.rareseeds.com/triple-curled-parsley",
-            "priceUSD": 2.50
-          },
-          {
-            "seller": "Johnny's Selected Seeds",
-            "url": "https://www.johnnyseeds.com/herbs/parsley/triple-curled-parsley-seed-4215.html",
-            "priceUSD": 3.95
+            "priceUSD": 2.5
           }
         ]
       },
@@ -888,7 +850,7 @@
           {
             "seller": "Baker Creek Heirloom",
             "url": "https://www.rareseeds.com/italian-giant-parsley",
-            "priceUSD": 2.50
+            "priceUSD": 2.5
           },
           {
             "seller": "Johnny's Selected Seeds",
@@ -923,11 +885,11 @@
           {
             "seller": "Baker Creek Heirloom",
             "url": "https://www.rareseeds.com/common-chives",
-            "priceUSD": 2.50
+            "priceUSD": 2.5
           },
           {
             "seller": "Territorial Seed Company",
-            "url": "https://www.territorialseed.com/product/common-chives-seeds",
+            "url": "https://www.territorialseed.com/products/common-chives-seeds",
             "priceUSD": 3.45
           }
         ]
@@ -978,7 +940,7 @@
           },
           {
             "seller": "Territorial Seed Company",
-            "url": "https://www.territorialseed.com/product/chocolate-mint-plants",
+            "url": "https://www.territorialseed.com/products/chocolate-mint-plants",
             "priceUSD": 9.95
           }
         ]
@@ -1030,7 +992,7 @@
           },
           {
             "seller": "Territorial Seed Company",
-            "url": "https://www.territorialseed.com/product/alaska-nasturtium-seeds",
+            "url": "https://www.territorialseed.com/products/alaska-nasturtium-seeds",
             "priceUSD": 3.95
           }
         ]
@@ -1055,7 +1017,7 @@
           {
             "seller": "Baker Creek Heirloom",
             "url": "https://www.rareseeds.com/french-marigold-petite-mix",
-            "priceUSD": 2.50
+            "priceUSD": 2.5
           },
           {
             "seller": "Park Seed",
@@ -1088,7 +1050,7 @@
           },
           {
             "seller": "Territorial Seed Company",
-            "url": "https://www.territorialseed.com/product/bijou-mix-sweet-pea-seeds",
+            "url": "https://www.territorialseed.com/products/bijou-mix-sweet-pea-seeds",
             "priceUSD": 4.95
           }
         ]
@@ -1140,7 +1102,7 @@
           },
           {
             "seller": "Territorial Seed Company",
-            "url": "https://www.territorialseed.com/product/elf-sunflower-seeds",
+            "url": "https://www.territorialseed.com/products/elf-sunflower-seeds",
             "priceUSD": 3.95
           }
         ]
@@ -1158,8 +1120,8 @@
         "sellers": [
           {
             "seller": "Johnny's Selected Seeds",
-            "url": "https://www.johnnyseeds.com/herbs/cilantro/calypso-cilantro-seed-4200.html",
-            "priceUSD": 4.50,
+            "url": "https://www.johnnyseeds.com/herbs/cilantro-coriander/calypso-cilantro-coriander-seed-3803.html",
+            "priceUSD": 4.5,
             "recommended": true
           },
           {
@@ -1169,7 +1131,7 @@
           },
           {
             "seller": "Territorial Seed Company",
-            "url": "https://www.territorialseed.com/product/calypso-cilantro-seeds",
+            "url": "https://www.territorialseed.com/products/calypso-cilantro-seeds",
             "priceUSD": 3.95
           }
         ]
@@ -1195,7 +1157,7 @@
           {
             "seller": "Baker Creek Heirloom",
             "url": "https://www.rareseeds.com/fernleaf-dill",
-            "priceUSD": 2.50
+            "priceUSD": 2.5
           },
           {
             "seller": "Burpee",
@@ -1255,11 +1217,6 @@
             "seller": "Park Seed",
             "url": "https://www.parkseed.com/blue-spires-rosemary-seeds/p/05670/",
             "priceUSD": 4.95
-          },
-          {
-            "seller": "Johnny's Selected Seeds",
-            "url": "https://www.johnnyseeds.com/herbs/rosemary/blue-spires-rosemary-seed-2920.html",
-            "priceUSD": 4.50
           }
         ]
       }

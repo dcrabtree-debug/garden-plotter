@@ -6,21 +6,21 @@
  * Garden dimensions: ~10m wide × 12m deep
  * Grid: 0.5m cells = 20 columns × 24 rows
  *
- * Orientation (from satellite + photos):
- *   Row 0 = house wall (SE, street side)
- *   Row 23 = back of garden (NW)
- *   Col 0 = left (SW) — neighbour 19A side
- *   Col 19 = right (NE) — fence border side
+ * Orientation (corrected per owner):
+ *   Row 0 = house wall (NE, street side — faces NE)
+ *   Row 23 = back of garden (SW)
+ *   Col 0 = left (NW) — neighbour 19A side
+ *   Col 19 = right (SE) — fence border side
  *
  * Photo-verified features:
- * - Conservatory (SW corner, rows 0-2, cols 0-5) — glass, faces NW
+ * - Conservatory (NW corner, rows 0-2, cols 0-5) — glass, faces SW
  * - Main lawn (rows 3-18) — OFF LIMITS, rental property
  * - Right fence border (cols 18-19) — Cordylines + Euphorbia in narrow bed
  * - Back patio (rows 19-21) — PAVED, GreenStalk positions only
  * - Raised bed (rows 21-22, cols 7-12) — black metal edging, near hedge,
  *     hostas + perennials (shade bed under laurel canopy)
- * - Shed (rows 21-23, cols 0-3) — wooden, glazed panels, back-left/NW corner
- * - Laurel hedge (rows 22-23, cols 0-17) — 3-4m tall, NW boundary, shades PM
+ * - Shed (rows 21-23, cols 0-3) — wooden, glazed panels, N corner
+ * - Laurel hedge (rows 22-23, cols 0-17) — 3-4m tall, SW boundary, shades PM
  * - Back gate (rows 21-22, cols 16-19) — white picket, right side
  * - Gooseberry/currant shrubs near back gate
  */
@@ -31,7 +31,7 @@ export const ESHER_CONFIG: GardenConfig = {
   widthM: 10,
   depthM: 12,
   cellSizeM: 0.5,
-  facing: 'SE',
+  facing: 'NE',
   houseWallHeightM: 7,
   fenceHeightM: 1.8,
   latitude: 51.3867,
@@ -70,12 +70,20 @@ export function createEsherGarden(): { config: GardenConfig; cells: GardenCell[]
     overrides.push({ row: 1, col: c, type: 'patio' });
   }
 
-  // ── Conservatory (SW corner: rows 0-2, cols 0-5) ──
+  // ── Conservatory (NW corner: rows 0-2, cols 0-5) ──
+  // Victorian-style glass, faces SW — filtered light, frost-free in winter
   for (let r = 0; r <= 2; r++) {
     for (let c = 0; c <= 5; c++) {
-      overrides.push({ row: r, col: c, type: 'patio', label: 'Conservatory' });
+      overrides.push({ row: r, col: c, type: 'conservatory', label: 'Conservatory' });
     }
   }
+  // Pre-populate conservatory with suitable plants
+  overrides.push({ row: 1, col: 1, type: 'conservatory', plantSlug: 'dwarf-lemon', label: 'Conservatory' });
+  overrides.push({ row: 1, col: 3, type: 'conservatory', plantSlug: 'dwarf-olive', label: 'Conservatory' });
+  overrides.push({ row: 1, col: 5, type: 'conservatory', plantSlug: 'fern-hardy', label: 'Conservatory' });
+  overrides.push({ row: 2, col: 1, type: 'conservatory', plantSlug: 'basil-sweet', label: 'Conservatory' });
+  overrides.push({ row: 2, col: 3, type: 'conservatory', plantSlug: 'mint', label: 'Conservatory' });
+  overrides.push({ row: 2, col: 5, type: 'conservatory', plantSlug: 'parsley', label: 'Conservatory' });
 
   // ── Left fence border (col 0, rows 3-18) ──
   for (let r = 3; r <= 18; r++) {
@@ -104,12 +112,12 @@ export function createEsherGarden(): { config: GardenConfig; cells: GardenCell[]
   // ── GreenStalk positions on patio ──
   for (let r = 19; r <= 20; r++) {
     for (let c = 5; c <= 6; c++) {
-      overrides.push({ row: r, col: c, type: 'veg-patch', label: 'GreenStalk 1' });
+      overrides.push({ row: r, col: c, type: 'greenstalk', label: 'GreenStalk 1' });
     }
   }
   for (let r = 19; r <= 20; r++) {
     for (let c = 14; c <= 15; c++) {
-      overrides.push({ row: r, col: c, type: 'veg-patch', label: 'GreenStalk 2' });
+      overrides.push({ row: r, col: c, type: 'greenstalk', label: 'GreenStalk 2' });
     }
   }
 
@@ -128,7 +136,7 @@ export function createEsherGarden(): { config: GardenConfig; cells: GardenCell[]
     }
   }
 
-  // ── Laurel hedge (rows 22-23) — NW boundary ──
+  // ── Laurel hedge (rows 22-23) — SW boundary ──
   for (let c = 0; c <= 19; c++) {
     overrides.push({ row: 23, col: c, type: 'tree', label: 'Laurel hedge' });
   }
@@ -208,6 +216,7 @@ export interface EsherLayoutOption {
 }
 
 function zoneLabel(row: number, col: number): string {
+  if (row <= 2 && col <= 5) return 'Conservatory (filtered light, frost-free)';
   if (row >= 21 && row <= 22 && col >= 7 && col <= 12) return 'Raised bed (partial shade, near hedge)';
   if (col >= 18) return 'Right fence border';
   if (col === 0) return 'Left fence border';

@@ -192,7 +192,7 @@ export function SetupGuidePage() {
             <p className="text-[10px] text-emerald-600 dark:text-emerald-400 mt-1 mb-3">
               6 Titan Tall Tomato Cages available — tall, sturdy metal cages ideal for climbing crops
             </p>
-            <div className="grid grid-cols-3 gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
               {[
                 { crop: 'Runner Beans', count: 2, note: 'Climbers need the height' },
                 { crop: 'Cucumbers', count: 2, note: 'Keeps fruit clean, saves space' },

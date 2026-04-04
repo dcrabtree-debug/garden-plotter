@@ -56,7 +56,7 @@ export function PlantDetail({ plant, companionMap, onClose }: PlantDetailProps) 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/30" onClick={onClose}>
       <div
-        className="bg-white dark:bg-stone-800 rounded-2xl shadow-xl w-full max-w-lg max-h-[85vh] overflow-y-auto"
+        className="bg-white dark:bg-stone-800 rounded-2xl shadow-xl w-full max-w-[calc(100vw-2rem)] sm:max-w-lg max-h-[85vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="p-5">

@@ -347,7 +347,7 @@ export function PlannerPage() {
       {/* Auto-populate modal */}
       {showAutoPopulate && (
         <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-stone-800 rounded-2xl shadow-2xl max-w-2xl w-full max-h-[80vh] overflow-y-auto">
+          <div className="bg-white dark:bg-stone-800 rounded-2xl shadow-2xl max-w-[calc(100vw-2rem)] sm:max-w-2xl w-full max-h-[80vh] overflow-y-auto">
             <div className="p-6 border-b border-stone-100 dark:border-stone-700">
               <div className="flex items-center justify-between">
                 <div>

@@ -321,6 +321,36 @@ export function GardenPage() {
     setSunHours(grid);
   }, [selectedMonth, config, cols, rows, setSunHours]);
 
+  // GreenStalk positions: detect cells with type 'greenstalk', grouped into towers
+  // (moved above handleCellInteraction to avoid use-before-declaration)
+  const greenStalkCells = useMemo(() => {
+    const positions: { row: number; col: number; towerIndex: number }[] = [];
+    const visited = new Set<string>();
+    let towerIdx = 0;
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        const key = `${r},${c}`;
+        if (visited.has(key)) continue;
+        if (cells[r]?.[c]?.type !== 'greenstalk') continue;
+        const cluster: { row: number; col: number }[] = [];
+        const queue = [{ row: r, col: c }];
+        while (queue.length > 0) {
+          const { row: cr, col: cc } = queue.shift()!;
+          const k = `${cr},${cc}`;
+          if (visited.has(k)) continue;
+          if (cr < 0 || cr >= rows || cc < 0 || cc >= cols) continue;
+          if (cells[cr]?.[cc]?.type !== 'greenstalk') continue;
+          visited.add(k);
+          cluster.push({ row: cr, col: cc });
+          queue.push({ row: cr - 1, col: cc }, { row: cr + 1, col: cc }, { row: cr, col: cc - 1 }, { row: cr, col: cc + 1 });
+        }
+        for (const pos of cluster) positions.push({ ...pos, towerIndex: towerIdx });
+        towerIdx++;
+      }
+    }
+    return positions;
+  }, [cells, rows, cols]);
+
   const handleCellInteraction = useCallback(
     (row: number, col: number) => {
       // Moving a GreenStalk cluster
@@ -382,36 +412,6 @@ export function GardenPage() {
       setZoom((z) => Math.min(3, Math.max(0.5, z - e.deltaY * 0.002)));
     }
   }, []);
-
-  // GreenStalk positions: detect cells with type 'greenstalk', grouped into towers
-  const greenStalkCells = useMemo(() => {
-    const positions: { row: number; col: number; towerIndex: number }[] = [];
-    const visited = new Set<string>();
-    let towerIdx = 0;
-    for (let r = 0; r < rows; r++) {
-      for (let c = 0; c < cols; c++) {
-        const key = `${r},${c}`;
-        if (visited.has(key)) continue;
-        if (cells[r]?.[c]?.type !== 'greenstalk') continue;
-        // Flood-fill to find the connected cluster
-        const cluster: { row: number; col: number }[] = [];
-        const queue = [{ row: r, col: c }];
-        while (queue.length > 0) {
-          const { row: cr, col: cc } = queue.shift()!;
-          const k = `${cr},${cc}`;
-          if (visited.has(k)) continue;
-          if (cr < 0 || cr >= rows || cc < 0 || cc >= cols) continue;
-          if (cells[cr]?.[cc]?.type !== 'greenstalk') continue;
-          visited.add(k);
-          cluster.push({ row: cr, col: cc });
-          queue.push({ row: cr - 1, col: cc }, { row: cr + 1, col: cc }, { row: cr, col: cc - 1 }, { row: cr, col: cc + 1 });
-        }
-        for (const pos of cluster) positions.push({ ...pos, towerIndex: towerIdx });
-        towerIdx++;
-      }
-    }
-    return positions;
-  }, [cells, rows, cols]);
 
   // Bloom visualization data
   const bloomGrid = useMemo(() => {

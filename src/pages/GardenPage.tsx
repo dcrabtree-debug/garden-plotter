@@ -5,6 +5,7 @@ import { PlantDetail } from '../components/plant-palette/PlantDetail';
 import { useCompanionDb } from '../data/use-companion-db';
 import { useRegion } from '../data/use-region';
 import { generateGardenLayouts, type GardenLayoutOption, type PlacementReason } from '../lib/garden-auto-populate';
+import { createEsherGarden, generateEsherLayouts, type EsherLayoutOption } from '../lib/esher-garden-template';
 import { checkPair } from '../lib/companion-engine';
 import type { CellType, GardenFacing } from '../types/planner';
 import type { Plant } from '../types/plant';
@@ -123,7 +124,7 @@ export function GardenPage() {
     setSunHours, setSelectedMonth, setSelectedHour,
     toggleSunOverlay, toggleShadowOverlay, toggleCompanionOverlay,
     toggleSpacingWarnings, toggleRotationWarnings, saveSeasonSnapshot,
-    resetGarden, clearPaint,
+    loadTemplate, resetGarden, clearPaint,
   } = useGardenStore();
 
   const region = useRegion();
@@ -134,6 +135,8 @@ export function GardenPage() {
   const [selectedPlant, setSelectedPlant] = useState<Plant | null>(null);
   const [showPlantPanel, setShowPlantPanel] = useState(false);
   const [showAutoPopulate, setShowAutoPopulate] = useState(false);
+  const [showEsherLayouts, setShowEsherLayouts] = useState(false);
+  const [esherLayouts, setEsherLayouts] = useState<EsherLayoutOption[]>([]);
   const [showSaveSeasonConfirm, setShowSaveSeasonConfirm] = useState(false);
   const [gardenLayouts, setGardenLayouts] = useState<GardenLayoutOption[]>([]);
   const [gardenPlan, setGardenPlan] = useState<PlacementReason[] | null>(null);
@@ -547,6 +550,17 @@ export function GardenPage() {
               </button>
               <button
                 onClick={() => {
+                  const { config: esherConfig, cells: esherCells } = createEsherGarden();
+                  loadTemplate(esherConfig, esherCells);
+                  setEsherLayouts(generateEsherLayouts());
+                  setShowEsherLayouts(true);
+                }}
+                className="px-3 py-1.5 text-xs bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition-colors flex items-center gap-1.5"
+              >
+                <span>🏡</span> Load My Garden
+              </button>
+              <button
+                onClick={() => {
                   const layouts = generateGardenLayouts(plants, cells, config, companionMap);
                   setGardenLayouts(layouts);
                   setShowAutoPopulate(true);
@@ -933,6 +947,82 @@ export function GardenPage() {
 
             <div className="p-4 border-t border-stone-100 dark:border-stone-700 text-[10px] text-stone-400 text-center">
               Paint veg patches, raised beds, and flower beds first. Auto-populate only fills painted zones.
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Esher Avenue layout picker */}
+      {showEsherLayouts && (
+        <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-stone-800 rounded-2xl shadow-2xl max-w-2xl w-full max-h-[80vh] overflow-y-auto">
+            <div className="p-6 border-b border-stone-100 dark:border-stone-700">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h2 className="text-lg font-bold text-stone-800 dark:text-stone-100">
+                    🏡 21 Esher Avenue — Garden Loaded!
+                  </h2>
+                  <p className="text-sm text-stone-400 mt-0.5">
+                    Your garden map has been pre-populated with the real layout: lawn, terrace, raised bed, shed, conservatory, fencing, and existing plants (strawberries, lavender, herbs, gooseberry, redcurrant, sweet peas). Choose a planting strategy for the available spaces:
+                  </p>
+                </div>
+                <button
+                  onClick={() => setShowEsherLayouts(false)}
+                  className="text-stone-400 hover:text-stone-600 text-xl"
+                >×</button>
+              </div>
+            </div>
+
+            <div className="p-6 space-y-4">
+              {esherLayouts.map((layout) => (
+                <div
+                  key={layout.id}
+                  className="border border-stone-200 dark:border-stone-600 rounded-xl p-4 hover:border-emerald-300 hover:bg-emerald-50/30 dark:hover:bg-emerald-900/10 transition-colors"
+                >
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <h3 className="text-sm font-bold text-stone-800 dark:text-stone-200">
+                        {layout.emoji} {layout.name}
+                      </h3>
+                      <p className="text-xs text-stone-500 dark:text-stone-400 mt-1">
+                        {layout.description}
+                      </p>
+                      <div className="flex gap-3 mt-2 text-[10px] text-stone-400 flex-wrap">
+                        <span>{layout.stats.totalPlants} plants</span>
+                        <span>{layout.stats.uniqueVarieties} varieties</span>
+                        <span className="text-emerald-600 dark:text-emerald-400">{layout.stats.companionPairs} companion pairs</span>
+                        <span className="text-amber-600 dark:text-amber-400">~{layout.stats.estimatedYieldKg}kg yield</span>
+                        <span className="font-semibold text-emerald-600 dark:text-emerald-400">~£{layout.stats.estimatedValueGBP} value</span>
+                      </div>
+                    </div>
+
+                    <button
+                      onClick={() => {
+                        const store = useGardenStore.getState();
+                        for (const p of layout.placements) {
+                          store.plantInCell(p.row, p.col, p.plantSlug);
+                        }
+                        setShowEsherLayouts(false);
+                      }}
+                      className="ml-4 px-4 py-2 bg-emerald-600 text-white text-xs font-semibold rounded-lg hover:bg-emerald-700 transition-colors shrink-0"
+                    >
+                      Apply
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="p-4 border-t border-stone-100 dark:border-stone-700 flex justify-between items-center">
+              <span className="text-[10px] text-stone-400">
+                Existing plants preserved. Layouts only add to empty plantable spots.
+              </span>
+              <button
+                onClick={() => setShowEsherLayouts(false)}
+                className="px-3 py-1.5 text-xs text-stone-400 border border-stone-200 dark:border-stone-600 rounded-lg hover:bg-stone-100 dark:hover:bg-stone-700"
+              >
+                Skip — I'll place plants manually
+              </button>
             </div>
           </div>
         </div>

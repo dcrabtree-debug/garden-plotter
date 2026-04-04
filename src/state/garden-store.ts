@@ -230,6 +230,7 @@ interface GardenStore {
   toggleSpacingWarnings: () => void;
   toggleRotationWarnings: () => void;
   saveSeasonSnapshot: (plantMap: Map<string, Plant>) => string;
+  loadTemplate: (config: GardenConfig, cells: GardenCell[][]) => void;
   resetGarden: () => void;
   clearPaint: () => void;
 }
@@ -370,6 +371,17 @@ export const useGardenStore = create<GardenStore>((set, get) => {
       saveRotationHistoryToStorage(history);
       set({ rotationHistory: history });
       return getSeasonLabel(key);
+    },
+
+    loadTemplate: (config, cells) => {
+      const garden: Garden = {
+        id: 'garden-1',
+        name: '21 Esher Avenue',
+        config,
+        cells,
+      };
+      saveGarden(garden);
+      set({ garden });
     },
 
     resetGarden: () => {

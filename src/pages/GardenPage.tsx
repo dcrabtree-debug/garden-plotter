@@ -211,7 +211,7 @@ function PlantedPlantsSidebar({ cells, plants, companionMap }: PlantedPlantsSide
         }
 
         return (
-          <div key={location} className="bg-white dark:bg-stone-750 rounded-lg border border-stone-200 dark:border-stone-600 p-2">
+          <div key={location} className="bg-white dark:bg-stone-700 rounded-lg border border-stone-200 dark:border-stone-600 p-2">
             <h3 className="text-[10px] font-semibold text-stone-500 dark:text-stone-400 uppercase tracking-wider mb-1.5">
               {location}
             </h3>
@@ -286,6 +286,7 @@ export function GardenPage() {
   const [raisedBedMode, setRaisedBedMode] = useState<Record<string, 'keep' | 'replant'>>({});
   const [mobilePanel, setMobilePanel] = useState<'tools' | 'plants' | null>(null);
   const [showSaveSeasonConfirm, setShowSaveSeasonConfirm] = useState(false);
+  const [movingGreenStalk, setMovingGreenStalk] = useState<number | null>(null); // tower index being moved
   const [gardenLayouts, setGardenLayouts] = useState<GardenLayoutOption[]>([]);
   const [gardenPlan, setGardenPlan] = useState<PlacementReason[] | null>(null);
   const [showPlan, setShowPlan] = useState(false);
@@ -322,6 +323,40 @@ export function GardenPage() {
 
   const handleCellInteraction = useCallback(
     (row: number, col: number) => {
+      // Moving a GreenStalk cluster
+      if (movingGreenStalk !== null) {
+        const cell = cells[row]?.[col];
+        if (cell && (cell.type === 'patio' || cell.type === 'lawn' || cell.type === 'veg-patch')) {
+          const store = useGardenStore.getState();
+          // Get the cluster being moved
+          const cluster = greenStalkCells.filter((g) => g.towerIndex === movingGreenStalk);
+          if (cluster.length > 0) {
+            // Clear old positions
+            for (const g of cluster) store.paintCellAs(g.row, g.col, 'patio');
+            // Place at new position (2x2 block)
+            for (let dr = 0; dr < 2; dr++) {
+              for (let dc = 0; dc < 2; dc++) {
+                const nr = row + dr;
+                const nc = col + dc;
+                if (nr < rows && nc < cols) {
+                  store.paintCellAs(nr, nc, 'greenstalk' as CellType);
+                }
+              }
+            }
+          }
+          setMovingGreenStalk(null);
+        }
+        return;
+      }
+      // Check if clicking on a GreenStalk cell to start moving
+      const clickedCell = cells[row]?.[col];
+      if (clickedCell?.type === 'greenstalk' && !plantToPlace && activeTool === 'greenstalk') {
+        const gsCell = greenStalkCells.find((g) => g.row === row && g.col === col);
+        if (gsCell) {
+          setMovingGreenStalk(gsCell.towerIndex);
+          return;
+        }
+      }
       if (plantToPlace) {
         const cell = cells[row]?.[col];
         if (cell && (cell.type === 'veg-patch' || cell.type === 'raised-bed' || cell.type === 'flower-bed' || cell.type === 'conservatory')) {
@@ -331,7 +366,7 @@ export function GardenPage() {
         paintCell(row, col);
       }
     },
-    [plantToPlace, cells, paintCell]
+    [plantToPlace, cells, paintCell, movingGreenStalk, greenStalkCells, activeTool, rows, cols]
   );
 
   const baseCellSize = useMemo(() => {

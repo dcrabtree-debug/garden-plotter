@@ -218,6 +218,7 @@ interface GardenStore {
   toggleLock: () => void;
   setTool: (tool: CellType) => void;
   paintCell: (row: number, col: number) => void;
+  paintCellAs: (row: number, col: number, type: CellType) => void;
   paintArea: (row: number, col: number, size: number) => void;
   plantInCell: (row: number, col: number, slug: string) => void;
   removePlantFromCell: (row: number, col: number) => void;
@@ -268,6 +269,20 @@ export const useGardenStore = create<GardenStore>((set, get) => {
           } else {
             cells[row][col] = { ...cells[row][col], type: state.activeTool, plantSlug: null };
           }
+        }
+        garden.cells = cells;
+        saveGarden(garden);
+        return { garden };
+      });
+    },
+
+    paintCellAs: (row, col, type) => {
+      if (get().locked) return;
+      set((state) => {
+        const garden = { ...state.garden };
+        const cells = garden.cells.map((r) => r.map((c) => ({ ...c })));
+        if (row >= 0 && row < cells.length && col >= 0 && col < cells[0].length) {
+          cells[row][col] = { ...cells[row][col], type, plantSlug: null };
         }
         garden.cells = cells;
         saveGarden(garden);

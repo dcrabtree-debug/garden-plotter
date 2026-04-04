@@ -8,8 +8,8 @@ import { generateGardenLayouts, type GardenLayoutOption, type PlacementReason } 
 import { createEsherGarden, generateEsherLayouts, type EsherLayoutOption } from '../lib/esher-garden-template';
 import { generateLayouts as generateGSLayouts, extractTowerSlugs } from '../lib/auto-populate';
 import { findBestPairing } from '../lib/cross-system-scoring';
-import { checkPair } from '../lib/companion-engine';
-import type { CellType, GardenFacing } from '../types/planner';
+import { checkPair, getFriends, getConflicts } from '../lib/companion-engine';
+import type { CellType, GardenFacing, GardenCell } from '../types/planner';
 import type { Plant } from '../types/plant';
 import {
   calculateSunHoursGrid,
@@ -113,6 +113,139 @@ function ZoneGuide() {
           <span className="text-stone-700 dark:text-stone-300"><span className="font-medium">Deep shade (&lt;1h):</span> Ferns, hostas, wild garlic</span>
         </div>
       </div>
+    </div>
+  );
+}
+
+// ─── Planted Plants Sidebar ───────────────────────────────────────────────
+
+interface PlantedPlantsSidebarProps {
+  cells: GardenCell[][];
+  plants: Plant[];
+  companionMap: import('../types/companion').CompanionMap;
+}
+
+function getLocationName(row: number, col: number, cells: GardenCell[][]): string {
+  const cell = cells[row]?.[col];
+  if (!cell) return 'Unknown';
+  if (row >= 21 && row <= 22 && col >= 7 && col <= 12 && cell.type === 'raised-bed') return 'Raised Bed';
+  if (col >= 18) return 'Right Fence Border';
+  if (col === 0) return 'Left Fence Border';
+  if (row >= 21 && col >= 16) return 'Back Gate Area';
+  if (cell.type === 'veg-patch') return 'GreenStalk Zone';
+  if (cell.type === 'patio') return 'Back Patio';
+  if (cell.type === 'flower-bed') return 'Flower Bed';
+  return 'Garden';
+}
+
+function PlantedPlantsSidebar({ cells, plants, companionMap }: PlantedPlantsSidebarProps) {
+  const plantMap = useMemo(() => {
+    const m = new Map<string, Plant>();
+    for (const p of plants) m.set(p.slug, p);
+    return m;
+  }, [plants]);
+
+  // Collect all planted cells grouped by location
+  const grouped = useMemo(() => {
+    const locations = new Map<string, { slug: string; row: number; col: number; plant: Plant }[]>();
+
+    for (let r = 0; r < cells.length; r++) {
+      for (let c = 0; c < cells[r].length; c++) {
+        const cell = cells[r][c];
+        if (!cell.plantSlug) continue;
+        const plant = plantMap.get(cell.plantSlug);
+        if (!plant) continue;
+        const loc = getLocationName(r, c, cells);
+        if (!locations.has(loc)) locations.set(loc, []);
+        locations.get(loc)!.push({ slug: cell.plantSlug, row: r, col: c, plant });
+      }
+    }
+
+    return locations;
+  }, [cells, plantMap]);
+
+  // For each plant, find companions among other planted plants
+  const allPlantedSlugs = useMemo(() => {
+    const slugs = new Set<string>();
+    for (const group of grouped.values()) {
+      for (const item of group) slugs.add(item.slug);
+    }
+    return [...slugs];
+  }, [grouped]);
+
+  const totalPlants = useMemo(() => {
+    let n = 0;
+    for (const g of grouped.values()) n += g.length;
+    return n;
+  }, [grouped]);
+
+  if (totalPlants === 0) {
+    return (
+      <div className="text-center text-stone-400 text-xs mt-8">
+        <div className="text-2xl mb-2">🌱</div>
+        No plants placed yet.
+        <br />Use "Load My Garden" or paint beds and place plants.
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-3">
+      <h2 className="text-sm font-bold text-stone-700 dark:text-stone-200 flex items-center gap-1.5">
+        <span>🌿</span> Planted ({totalPlants})
+      </h2>
+
+      {[...grouped.entries()].map(([location, items]) => {
+        // Deduplicate: show count per species
+        const speciesCounts = new Map<string, { plant: Plant; count: number }>();
+        for (const item of items) {
+          const existing = speciesCounts.get(item.slug);
+          if (existing) existing.count++;
+          else speciesCounts.set(item.slug, { plant: item.plant, count: 1 });
+        }
+
+        return (
+          <div key={location} className="bg-white dark:bg-stone-750 rounded-lg border border-stone-200 dark:border-stone-600 p-2">
+            <h3 className="text-[10px] font-semibold text-stone-500 dark:text-stone-400 uppercase tracking-wider mb-1.5">
+              {location}
+            </h3>
+            <div className="space-y-1">
+              {[...speciesCounts.entries()].map(([slug, { plant, count }]) => {
+                const friends = getFriends(slug, allPlantedSlugs, companionMap);
+                const foes = getConflicts(slug, allPlantedSlugs, companionMap);
+
+                return (
+                  <div key={slug} className="flex items-start gap-1.5 text-[10px]">
+                    <span className="text-sm shrink-0">{plant.emoji}</span>
+                    <div className="min-w-0">
+                      <div className="font-medium text-stone-700 dark:text-stone-300 truncate">
+                        {plant.commonName}
+                        {count > 1 && <span className="text-stone-400 ml-1">×{count}</span>}
+                      </div>
+                      {friends.length > 0 && (
+                        <div className="text-emerald-600 dark:text-emerald-400 truncate">
+                          💚 {friends.map((f) => {
+                            const name = plantMap.get(f.plantB)?.commonName ?? f.plantB;
+                            return name;
+                          }).join(', ')}
+                        </div>
+                      )}
+                      {foes.length > 0 && (
+                        <div className="text-red-500 dark:text-red-400 truncate">
+                          ⚠️ {foes.map((f) => {
+                            const name = plantMap.get(f.plantB)?.commonName ?? f.plantB;
+                            return name;
+                          }).join(', ')}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 }
@@ -870,6 +1003,11 @@ export function GardenPage() {
             )}
           </div>
         )}
+      </div>
+
+      {/* Right sidebar: Planted plants grouped by location & companions */}
+      <div className="w-64 border-l border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 flex-shrink-0 overflow-y-auto p-3">
+        <PlantedPlantsSidebar cells={cells} plants={plants} companionMap={companionMap} />
       </div>
 
       {/* Plant detail modal */}

@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { getRecommendedSuccessions, type SuccessionPlan } from '../lib/succession-engine';
 import { usePlannerStore } from '../state/planner-store';
 import { useGardenStore } from '../state/garden-store';
 import { usePlantDb } from '../data/use-plant-db';
@@ -752,6 +753,57 @@ export function CarePage() {
             </div>
           </section>
         )}
+
+        {/* 📐 Succession Planner */}
+        {selectedMonth >= 4 && selectedMonth <= 7 && (() => {
+          const successions = getRecommendedSuccessions(plants);
+          const multiHarvest = successions.filter((s) => s.totalHarvests >= 2);
+          if (multiHarvest.length === 0) return null;
+          return (
+            <section className="bg-white dark:bg-stone-800 rounded-2xl shadow-sm border border-stone-200 dark:border-stone-700 p-5">
+              <h2 className="text-lg font-semibold text-stone-800 dark:text-stone-100 flex items-center gap-2">
+                <span>📐</span> Succession Planner
+              </h2>
+              <p className="text-xs text-stone-400 mt-0.5 mb-3">
+                Squeeze 2-3 harvests from the same pocket — never leave space empty
+              </p>
+              <div className="space-y-2.5">
+                {multiHarvest.map((plan) => (
+                  <div key={plan.first.cropSlug} className="bg-stone-50 dark:bg-stone-700/50 rounded-xl p-3 border border-stone-100 dark:border-stone-700">
+                    <div className="flex items-center gap-1.5 mb-1.5 flex-wrap">
+                      <span className="text-base">{plan.first.emoji}</span>
+                      <span className="text-xs font-semibold text-stone-700 dark:text-stone-200">{plan.first.cropName}</span>
+                      {plan.second && (
+                        <>
+                          <span className="text-stone-400 text-xs">→</span>
+                          <span className="text-base">{plan.second.emoji}</span>
+                          <span className="text-xs font-semibold text-stone-700 dark:text-stone-200">{plan.second.cropName}</span>
+                        </>
+                      )}
+                      {plan.third && (
+                        <>
+                          <span className="text-stone-400 text-xs">→</span>
+                          <span className="text-base">{plan.third.emoji}</span>
+                          <span className="text-xs font-semibold text-stone-700 dark:text-stone-200">{plan.third.cropName}</span>
+                        </>
+                      )}
+                      <span className={`ml-auto text-[9px] font-bold px-2 py-0.5 rounded-full ${
+                        plan.utilizationPct >= 80
+                          ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300'
+                          : plan.utilizationPct >= 50
+                            ? 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300'
+                            : 'bg-stone-100 dark:bg-stone-600 text-stone-500 dark:text-stone-300'
+                      }`}>
+                        {plan.utilizationPct}% utilization
+                      </span>
+                    </div>
+                    <p className="text-[10px] text-stone-500 dark:text-stone-400">{plan.reasoning}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+          );
+        })()}
 
         {/* 📋 Monthly tasks */}
         <section className="bg-white dark:bg-stone-800 rounded-2xl shadow-sm border border-stone-200 dark:border-stone-700 p-5">

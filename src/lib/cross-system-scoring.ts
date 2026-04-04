@@ -146,10 +146,10 @@ export function findBestPairing(
   otherLayouts: LayoutWithSlugs[],
   system: 'greenstalk' | 'in-ground',
   companionMap: CompanionMap
-): CrossSystemPairing | null {
-  if (otherLayouts.length === 0) return null;
+): CrossSystemPairing | undefined {
+  if (otherLayouts.length === 0) return undefined;
 
-  let best: CrossSystemPairing | null = null;
+  let best: CrossSystemPairing | undefined = undefined;
 
   for (const other of otherLayouts) {
     // Determine which is esher vs gs for affinity lookup

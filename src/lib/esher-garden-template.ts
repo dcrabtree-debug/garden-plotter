@@ -120,9 +120,10 @@ export function createEsherGarden(): { config: GardenConfig; cells: GardenCell[]
     }
   }
 
-  // ── Shed (rows 21-23, cols 0-3) — NW corner ──
+  // ── Shed (rows 21-23, cols 16-19) — back-right/N corner ──
+  // Photo 9: wooden shed, glazed panels. User confirmed: back-right looking from house.
   for (let r = 21; r <= 23; r++) {
-    for (let c = 0; c <= 3; c++) {
+    for (let c = 16; c <= 19; c++) {
       overrides.push({ row: r, col: c, type: 'shed', label: 'Shed' });
     }
   }
@@ -135,14 +136,15 @@ export function createEsherGarden(): { config: GardenConfig; cells: GardenCell[]
     overrides.push({ row: 22, col: c, type: 'tree', label: 'Hedge canopy' });
   }
 
-  // ── Back gate (rows 21-22, cols 16-19) ──
+  // ── Back gate area (rows 21-22, cols 4-6) — left side ──
   for (let r = 21; r <= 22; r++) {
-    for (let c = 16; c <= 19; c++) {
+    for (let c = 4; c <= 6; c++) {
       overrides.push({ row: r, col: c, type: 'path', label: 'Back gate' });
     }
   }
-  overrides.push({ row: 21, col: 17, type: 'flower-bed', plantSlug: 'gooseberry', label: 'Gooseberry' });
-  overrides.push({ row: 21, col: 18, type: 'flower-bed', plantSlug: 'redcurrant', label: 'Redcurrant' });
+  // Gooseberry/currant near back gate
+  overrides.push({ row: 21, col: 4, type: 'flower-bed', plantSlug: 'gooseberry', label: 'Gooseberry' });
+  overrides.push({ row: 21, col: 5, type: 'flower-bed', plantSlug: 'redcurrant', label: 'Redcurrant' });
 
   // ── Sweet peas on right fence ──
   overrides.push({ row: 8, col: 18, type: 'flower-bed', plantSlug: 'dwarf-sweet-pea' });

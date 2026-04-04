@@ -2,6 +2,8 @@ import { useState, useMemo } from 'react';
 import { usePlantDb } from '../data/use-plant-db';
 import { useSeedLinks, type SeedContext, type SeedLink, type SeedProduct, type SeedVariety } from '../data/use-seed-links';
 import { useRegion } from '../data/use-region';
+import { usePlannerStore } from '../state/planner-store';
+import { useGardenStore } from '../state/garden-store';
 import { getMonthName, isInWindow } from '../lib/calendar-utils';
 import type { Plant } from '../types/plant';
 
@@ -322,7 +324,7 @@ export function SeedFinderPage() {
   const sellerInfo = isUS ? SELLER_INFO_US : SELLER_INFO_UK;
   const currentMonth = new Date().getMonth() + 1;
   const [selectedMonth, setSelectedMonth] = useState(currentMonth);
-  const [filter, setFilter] = useState<'essentials' | 'all' | 'buy-now' | 'buy-soon'>('essentials');
+  const [filter, setFilter] = useState<'shopping-list' | 'essentials' | 'all' | 'buy-now' | 'buy-soon'>('shopping-list');
 
   // Pick the right essentials list
   const essentialsDefs = useMemo(() => {
@@ -332,6 +334,98 @@ export function SeedFinderPage() {
 
   const essentialSlugs = useMemo(() => new Set(essentialsDefs.map(e => e.slug)), [essentialsDefs]);
   const essentialReasonMap = useMemo(() => new Map(essentialsDefs.map(e => [e.slug, e.reason])), [essentialsDefs]);
+
+  // ─── Shopping list: read from both GreenStalk + In-Ground stores ───────────
+  const towers = usePlannerStore((s) => s.towers);
+  const garden = useGardenStore((s) => s.garden);
+
+  // Seed links for both contexts (needed for shopping list which spans both)
+  const gsLinks = useSeedLinks(region, 'greenstalk');
+  const igLinks = useSeedLinks(region, 'inground');
+
+  const shoppingList = useMemo(() => {
+    // Count plants needed per slug, separated by source
+    const gsCounts = new Map<string, number>();
+    const igCounts = new Map<string, number>();
+
+    for (const tower of towers) {
+      for (const tier of tower.tiers) {
+        for (const pocket of tier.pockets) {
+          if (pocket.plantSlug) {
+            gsCounts.set(pocket.plantSlug, (gsCounts.get(pocket.plantSlug) ?? 0) + 1);
+          }
+        }
+      }
+    }
+
+    for (const row of garden.cells) {
+      for (const cell of row) {
+        if (cell.plantSlug) {
+          igCounts.set(cell.plantSlug, (igCounts.get(cell.plantSlug) ?? 0) + 1);
+        }
+      }
+    }
+
+    // Merge into a unified list
+    const allSlugs = new Set([...gsCounts.keys(), ...igCounts.keys()]);
+    const items: {
+      slug: string;
+      plant: Plant | undefined;
+      gsQty: number;
+      igQty: number;
+      totalQty: number;
+      source: string;
+      seedProduct: SeedProduct | null;
+      bestPrice: number;
+      bestSeller: string;
+      bestUrl: string;
+    }[] = [];
+
+    for (const slug of allSlugs) {
+      const plant = plants.find((p) => p.slug === slug);
+      const gsQty = gsCounts.get(slug) ?? 0;
+      const igQty = igCounts.get(slug) ?? 0;
+      const totalQty = gsQty + igQty;
+
+      const source = gsQty > 0 && igQty > 0 ? 'Both' : gsQty > 0 ? 'GreenStalk' : 'In-Ground';
+
+      // Find seed product from either context
+      const sp = gsLinks.find((s) => s.plantSlug === slug)
+        ?? igLinks.find((s) => s.plantSlug === slug)
+        ?? null;
+
+      // Find cheapest recommended seller
+      let bestPrice = 0;
+      let bestSeller = '';
+      let bestUrl = '';
+      if (sp) {
+        for (const v of sp.varieties) {
+          for (const link of v.links) {
+            const priceNum = parseFloat(link.price.replace(/[£$,]/g, ''));
+            if (priceNum > 0 && (bestPrice === 0 || priceNum < bestPrice)) {
+              bestPrice = priceNum;
+              bestSeller = link.seller;
+              bestUrl = link.url;
+            }
+          }
+        }
+      }
+
+      items.push({ slug, plant, gsQty, igQty, totalQty, source, seedProduct: sp, bestPrice, bestSeller, bestUrl });
+    }
+
+    // Sort: plants with pricing first, then by total quantity desc
+    items.sort((a, b) => {
+      if (a.bestPrice > 0 && b.bestPrice === 0) return -1;
+      if (b.bestPrice > 0 && a.bestPrice === 0) return 1;
+      return b.totalQty - a.totalQty;
+    });
+
+    const totalBudget = items.reduce((sum, item) => sum + item.bestPrice, 0);
+    const itemsWithPrices = items.filter((i) => i.bestPrice > 0).length;
+
+    return { items, totalBudget, itemsWithPrices, totalItems: items.length };
+  }, [towers, garden.cells, plants, gsLinks, igLinks]);
 
   const plantsWithTiming = useMemo(() => {
     return plants
@@ -354,11 +448,14 @@ export function SeedFinderPage() {
       });
   }, [plants, selectedMonth, seedLinks]);
 
+  const shoppingListSlugs = useMemo(() => new Set(shoppingList.items.map((i) => i.slug)), [shoppingList.items]);
+
   const filtered = useMemo(() => {
+    if (filter === 'shopping-list') return plantsWithTiming.filter((p) => shoppingListSlugs.has(p.plant.slug));
     if (filter === 'essentials') return plantsWithTiming.filter((p) => essentialSlugs.has(p.plant.slug));
     if (filter === 'all') return plantsWithTiming;
     return plantsWithTiming.filter((p) => p.timing === filter);
-  }, [plantsWithTiming, filter, essentialSlugs]);
+  }, [plantsWithTiming, filter, essentialSlugs, shoppingListSlugs]);
 
   const buyNowCount = plantsWithTiming.filter((p) => p.timing === 'buy-now').length;
   const buySoonCount = plantsWithTiming.filter((p) => p.timing === 'buy-soon').length;
@@ -417,7 +514,15 @@ export function SeedFinderPage() {
             </select>
           </div>
 
-          <div className="flex gap-1.5">
+          <div className="flex gap-1.5 flex-wrap">
+            <button
+              onClick={() => setFilter('shopping-list')}
+              className={`text-xs px-3 py-1.5 rounded-lg font-bold ${
+                filter === 'shopping-list' ? 'bg-violet-600 text-white shadow-sm' : 'bg-violet-50 dark:bg-violet-900/20 text-violet-700 dark:text-violet-400'
+              }`}
+            >
+              🛒 My List ({shoppingList.totalItems})
+            </button>
             <button
               onClick={() => setFilter('essentials')}
               className={`text-xs px-3 py-1.5 rounded-lg font-medium ${
@@ -467,6 +572,111 @@ export function SeedFinderPage() {
             ))}
           </div>
         </div>
+
+        {/* Shopping list summary */}
+        {filter === 'shopping-list' && shoppingList.items.length > 0 && (
+          <div className="bg-gradient-to-br from-violet-50 to-indigo-50 dark:from-violet-900/20 dark:to-indigo-900/20 rounded-2xl border border-violet-200 dark:border-violet-800/40 p-4 sm:p-5 mb-5">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+              <div>
+                <h2 className="text-lg font-bold text-stone-800 dark:text-stone-100 flex items-center gap-2">
+                  🛒 My Shopping List
+                </h2>
+                <p className="text-xs text-stone-500 dark:text-stone-400 mt-0.5">
+                  Everything in your GreenStalk towers + in-ground garden plan
+                </p>
+              </div>
+              <div className="flex items-center gap-3 text-sm">
+                <div className="bg-white dark:bg-stone-800 rounded-lg px-3 py-1.5 border border-violet-200 dark:border-violet-700">
+                  <div className="text-[10px] text-stone-400 uppercase">Items</div>
+                  <div className="font-bold text-stone-800 dark:text-stone-200">{shoppingList.totalItems}</div>
+                </div>
+                <div className="bg-white dark:bg-stone-800 rounded-lg px-3 py-1.5 border border-violet-200 dark:border-violet-700">
+                  <div className="text-[10px] text-stone-400 uppercase">Est. Budget</div>
+                  <div className="font-bold text-emerald-600 dark:text-emerald-400">
+                    {isUS ? '$' : '£'}{shoppingList.totalBudget.toFixed(2)}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Compact table */}
+            <div className="bg-white dark:bg-stone-800 rounded-xl border border-violet-100 dark:border-stone-700 overflow-hidden">
+              <table className="w-full text-xs">
+                <thead>
+                  <tr className="bg-violet-50 dark:bg-violet-900/30 text-[10px] uppercase tracking-wider text-stone-500">
+                    <th className="text-left px-3 py-2">Plant</th>
+                    <th className="text-center px-2 py-2 hidden sm:table-cell">GS</th>
+                    <th className="text-center px-2 py-2 hidden sm:table-cell">Ground</th>
+                    <th className="text-center px-2 py-2">Qty</th>
+                    <th className="text-left px-2 py-2">Source</th>
+                    <th className="text-right px-3 py-2">Price</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-stone-100 dark:divide-stone-700/50">
+                  {shoppingList.items.map((item) => (
+                    <tr key={item.slug} className="hover:bg-violet-50/50 dark:hover:bg-violet-900/10">
+                      <td className="px-3 py-1.5 font-medium text-stone-700 dark:text-stone-300">
+                        <span className="mr-1">{item.plant?.emoji ?? '🌱'}</span>
+                        <span className="truncate">{item.plant?.commonName ?? item.slug}</span>
+                      </td>
+                      <td className="text-center px-2 py-1.5 text-stone-400 hidden sm:table-cell">
+                        {item.gsQty > 0 ? item.gsQty : '–'}
+                      </td>
+                      <td className="text-center px-2 py-1.5 text-stone-400 hidden sm:table-cell">
+                        {item.igQty > 0 ? item.igQty : '–'}
+                      </td>
+                      <td className="text-center px-2 py-1.5 font-semibold text-stone-600 dark:text-stone-300">
+                        {item.totalQty}
+                      </td>
+                      <td className="px-2 py-1.5">
+                        {item.bestSeller ? (
+                          <a href={item.bestUrl} target="_blank" rel="noopener noreferrer"
+                            className="text-violet-600 dark:text-violet-400 hover:underline truncate block max-w-[120px]">
+                            {item.bestSeller}
+                          </a>
+                        ) : (
+                          <span className="text-stone-300 dark:text-stone-600">–</span>
+                        )}
+                      </td>
+                      <td className="text-right px-3 py-1.5 font-medium text-stone-600 dark:text-stone-300">
+                        {item.bestPrice > 0 ? `${isUS ? '$' : '£'}${item.bestPrice.toFixed(2)}` : '–'}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+                <tfoot>
+                  <tr className="bg-violet-50 dark:bg-violet-900/30 font-bold text-stone-700 dark:text-stone-200">
+                    <td colSpan={3} className="px-3 py-2 hidden sm:table-cell">
+                      Total ({shoppingList.itemsWithPrices}/{shoppingList.totalItems} priced)
+                    </td>
+                    <td colSpan={1} className="px-3 py-2 sm:hidden">
+                      Total
+                    </td>
+                    <td className="sm:hidden" />
+                    <td />
+                    <td className="text-right px-3 py-2 text-emerald-600 dark:text-emerald-400">
+                      {isUS ? '$' : '£'}{shoppingList.totalBudget.toFixed(2)}
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+
+            {shoppingList.totalItems === 0 && (
+              <p className="text-center text-stone-400 text-sm py-4">
+                No plants in your plan yet. Use the GreenStalk Planner or Garden page to place plants.
+              </p>
+            )}
+          </div>
+        )}
+
+        {filter === 'shopping-list' && shoppingList.items.length === 0 && (
+          <div className="text-center py-12 text-stone-400">
+            <div className="text-4xl mb-3">🛒</div>
+            <p>No plants in your plan yet.</p>
+            <p className="text-xs mt-1">Place plants on the GreenStalk or Garden page, then come back here for your shopping list.</p>
+          </div>
+        )}
 
         {/* Seed cards grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">

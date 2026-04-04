@@ -273,6 +273,7 @@ export function GardenPage() {
   const [showEsherLayouts, setShowEsherLayouts] = useState(false);
   const [esherLayouts, setEsherLayouts] = useState<EsherLayoutOption[]>([]);
   const [raisedBedMode, setRaisedBedMode] = useState<Record<string, 'keep' | 'replant'>>({});
+  const [mobilePanel, setMobilePanel] = useState<'tools' | 'plants' | null>(null);
   const [showSaveSeasonConfirm, setShowSaveSeasonConfirm] = useState(false);
   const [gardenLayouts, setGardenLayouts] = useState<GardenLayoutOption[]>([]);
   const [gardenPlan, setGardenPlan] = useState<PlacementReason[] | null>(null);
@@ -424,9 +425,34 @@ export function GardenPage() {
   );
 
   return (
-    <div className="flex h-full overflow-hidden">
+    <div className="flex h-full overflow-hidden relative">
+      {/* Mobile sidebar toggles */}
+      <div className="sm:hidden fixed bottom-4 left-4 right-4 z-40 flex justify-between pointer-events-none">
+        <button
+          onClick={() => setMobilePanel(mobilePanel === 'tools' ? null : 'tools')}
+          className="pointer-events-auto px-3 py-2 bg-stone-800 text-white text-xs rounded-full shadow-lg flex items-center gap-1.5"
+        >
+          <span>🛠</span> Tools
+        </button>
+        <button
+          onClick={() => setMobilePanel(mobilePanel === 'plants' ? null : 'plants')}
+          className="pointer-events-auto px-3 py-2 bg-stone-800 text-white text-xs rounded-full shadow-lg flex items-center gap-1.5"
+        >
+          <span>🌿</span> Plants
+        </button>
+      </div>
+
+      {/* Mobile overlay backdrop */}
+      {mobilePanel && (
+        <div className="sm:hidden fixed inset-0 bg-black/30 z-30" onClick={() => setMobilePanel(null)} />
+      )}
+
       {/* Left sidebar: tools + config */}
-      <div className="w-64 border-r border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 flex-shrink-0 overflow-y-auto p-3 space-y-4">
+      <div className={`w-64 border-r border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 flex-shrink-0 overflow-y-auto p-3 space-y-4 ${
+        mobilePanel === 'tools'
+          ? 'fixed inset-y-0 left-0 z-40 shadow-2xl'
+          : 'hidden sm:block'
+      }`}>
         {/* Garden name */}
         <div>
           <input
@@ -673,10 +699,10 @@ export function GardenPage() {
       </div>
 
       {/* Main: Garden grid */}
-      <div className="flex-1 overflow-auto p-6">
+      <div className="flex-1 overflow-auto p-3 sm:p-6">
         <div className="mb-3">
-          <div className="flex items-center justify-between">
-            <h1 className="text-xl font-semibold text-stone-800 dark:text-stone-100">In-Ground Garden Plotter</h1>
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+            <h1 className="text-lg sm:text-xl font-semibold text-stone-800 dark:text-stone-100">In-Ground Garden Plotter</h1>
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setShowSaveSeasonConfirm(true)}
@@ -1006,7 +1032,11 @@ export function GardenPage() {
       </div>
 
       {/* Right sidebar: Planted plants grouped by location & companions */}
-      <div className="w-64 border-l border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 flex-shrink-0 overflow-y-auto p-3">
+      <div className={`w-64 border-l border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 flex-shrink-0 overflow-y-auto p-3 ${
+        mobilePanel === 'plants'
+          ? 'fixed inset-y-0 right-0 z-40 shadow-2xl'
+          : 'hidden sm:block'
+      }`}>
         <PlantedPlantsSidebar cells={cells} plants={plants} companionMap={companionMap} />
       </div>
 

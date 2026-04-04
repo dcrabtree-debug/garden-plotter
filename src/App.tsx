@@ -37,14 +37,14 @@ function App() {
   return (
     <div className="h-screen flex flex-col bg-stone-100 dark:bg-stone-900 transition-colors">
       {/* Header */}
-      <header className="bg-white dark:bg-stone-800 border-b border-emerald-200/40 dark:border-emerald-900/30 px-4 py-4 flex-shrink-0">
+      <header className="bg-white dark:bg-stone-800 border-b border-emerald-200/40 dark:border-emerald-900/30 px-3 sm:px-4 py-2.5 sm:py-4 flex-shrink-0">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <span className="text-2xl">{'\ud83c\udf3f'}</span>
-            <h1 className="text-xl font-bold tracking-tight text-stone-800 dark:text-stone-100">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <span className="text-xl sm:text-2xl">{'\ud83c\udf3f'}</span>
+            <h1 className="text-base sm:text-xl font-bold tracking-tight text-stone-800 dark:text-stone-100">
               Garden Plotter
             </h1>
-            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-stone-100 text-stone-500 dark:bg-stone-700 dark:text-stone-400">
+            <span className="hidden sm:inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-stone-100 text-stone-500 dark:bg-stone-700 dark:text-stone-400">
               {'\ud83c\udf0d'} {location.includes('Manhattan') ? 'Manhattan Beach, CA' : 'Surrey, UK'}
             </span>
           </div>
@@ -58,19 +58,20 @@ function App() {
         </div>
 
         {/* Tab navigation */}
-        <nav className="mt-3 -mb-1 flex gap-2 overflow-x-auto scrollbar-hide">
+        <nav className="mt-2 sm:mt-3 -mb-1 flex gap-1.5 sm:gap-2 overflow-x-auto scrollbar-hide pb-0.5">
           {navItems.map((item) => (
             <button
               key={item.id}
               onClick={() => setPage(item.id)}
-              className={`px-3.5 py-1.5 rounded-full text-sm font-medium whitespace-nowrap flex items-center gap-1.5 transition-all duration-200 ${
+              className={`px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full text-xs sm:text-sm font-medium whitespace-nowrap flex items-center gap-1 sm:gap-1.5 transition-all duration-200 ${
                 page === item.id
                   ? 'bg-emerald-600 text-white shadow-sm dark:bg-emerald-500 dark:text-white'
                   : 'text-stone-500 hover:text-stone-700 hover:bg-stone-100 dark:text-stone-400 dark:hover:text-stone-200 dark:hover:bg-stone-700/50'
               }`}
             >
-              <span className="text-sm">{item.icon}</span>
-              {item.label}
+              <span className="text-xs sm:text-sm">{item.icon}</span>
+              <span className="hidden sm:inline">{item.label}</span>
+              <span className="sm:hidden">{item.label.split(' ')[0]}</span>
             </button>
           ))}
         </nav>

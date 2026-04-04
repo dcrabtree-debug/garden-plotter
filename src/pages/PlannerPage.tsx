@@ -35,6 +35,7 @@ export function PlannerPage() {
   const [selectedPlant, setSelectedPlant] = useState<Plant | null>(null);
   const [plantToPlace, setPlantToPlace] = useState<Plant | null>(null);
   const [showAutoPopulate, setShowAutoPopulate] = useState(false);
+  const [showMobilePalette, setShowMobilePalette] = useState(false);
   const [layouts, setLayouts] = useState<LayoutOption[]>([]);
 
   const mouseSensor = useSensor(MouseSensor, {
@@ -203,18 +204,35 @@ export function PlannerPage() {
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
     >
-      <div className="flex h-full">
+      <div className="flex h-full relative">
+        {/* Mobile palette toggle */}
+        <button
+          onClick={() => setShowMobilePalette(!showMobilePalette)}
+          className="sm:hidden fixed bottom-4 left-4 z-40 px-3 py-2 bg-stone-800 text-white text-xs rounded-full shadow-lg flex items-center gap-1.5"
+        >
+          <span>🌱</span> Plants
+        </button>
+
+        {/* Mobile overlay backdrop */}
+        {showMobilePalette && (
+          <div className="sm:hidden fixed inset-0 bg-black/30 z-30" onClick={() => setShowMobilePalette(false)} />
+        )}
+
         {/* Sidebar: Plant Palette */}
-        <div className="w-64 border-r border-stone-200 dark:border-stone-700/50 bg-stone-50 dark:bg-stone-900/50 dark:backdrop-blur-sm flex-shrink-0 overflow-hidden flex flex-col">
+        <div className={`w-64 border-r border-stone-200 dark:border-stone-700/50 bg-stone-50 dark:bg-stone-900/50 dark:backdrop-blur-sm flex-shrink-0 overflow-hidden flex flex-col ${
+          showMobilePalette
+            ? 'fixed inset-y-0 left-0 z-40 shadow-2xl'
+            : 'hidden sm:flex'
+        }`}>
           <PlantPalette
             plants={plants}
-            onSelectPlant={handlePaletteSelect}
+            onSelectPlant={(p) => { handlePaletteSelect(p); setShowMobilePalette(false); }}
             activePlantSlug={plantToPlace?.slug ?? null}
           />
         </div>
 
         {/* Main: Tower views */}
-        <div className="flex-1 overflow-auto p-6">
+        <div className="flex-1 overflow-auto p-3 sm:p-6">
           <div className="mb-4">
             <div className="flex items-center justify-between">
               <h1 className="text-xl font-semibold text-stone-800 dark:text-stone-100">

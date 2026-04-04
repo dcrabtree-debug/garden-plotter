@@ -171,7 +171,7 @@ export function SettingsPage() {
   const activePreset = LOCATION_PRESETS.find((p) => p.id === selectedPreset);
 
   return (
-    <div className="h-full overflow-y-auto p-6 max-w-2xl mx-auto">
+    <div className="h-full overflow-y-auto p-3 sm:p-6 max-w-2xl mx-auto">
       <h1 className="text-xl font-semibold text-stone-800 dark:text-stone-100 mb-6">Settings</h1>
 
       <div className="space-y-6">
@@ -230,7 +230,7 @@ export function SettingsPage() {
             ))}
           </div>
           {activePreset && (
-            <div className="mt-3 grid grid-cols-2 gap-3 text-xs text-stone-500 dark:text-stone-400">
+            <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-stone-500 dark:text-stone-400">
               <div>
                 <span className="font-medium">Latitude:</span> {activePreset.latitude}
               </div>

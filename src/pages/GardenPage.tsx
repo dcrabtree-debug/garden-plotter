@@ -310,8 +310,10 @@ export function GardenPage() {
   );
 
   const cellSize = useMemo(() => {
-    const maxWidth = 800;
-    return Math.min(Math.floor(maxWidth / cols), 28);
+    // On mobile, fit grid within viewport width minus sidebar/padding
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
+    const maxWidth = isMobile ? Math.min(window.innerWidth - 32, 400) : 800;
+    return Math.min(Math.floor(maxWidth / cols), isMobile ? 18 : 28);
   }, [cols]);
 
   // Real-time shadow grid for the selected hour
@@ -703,7 +705,7 @@ export function GardenPage() {
         <div className="mb-3">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
             <h1 className="text-lg sm:text-xl font-semibold text-stone-800 dark:text-stone-100">In-Ground Garden Plotter</h1>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <button
                 onClick={() => setShowSaveSeasonConfirm(true)}
                 className="px-3 py-1.5 text-xs bg-violet-600 text-white rounded-lg hover:bg-violet-700 transition-colors flex items-center gap-1.5"
@@ -1052,8 +1054,8 @@ export function GardenPage() {
       {/* Auto-populate modal */}
       {showAutoPopulate && (
         <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-stone-800 rounded-2xl shadow-2xl max-w-2xl w-full max-h-[80vh] overflow-y-auto">
-            <div className="p-6 border-b border-stone-100 dark:border-stone-700">
+          <div className="bg-white dark:bg-stone-800 rounded-2xl shadow-2xl max-w-[calc(100vw-2rem)] sm:max-w-2xl w-full max-h-[80vh] overflow-y-auto">
+            <div className="p-4 sm:p-6 border-b border-stone-100 dark:border-stone-700">
               <div className="flex items-center justify-between">
                 <div>
                   <h2 className="text-lg font-bold text-stone-800 dark:text-stone-100">
@@ -1140,11 +1142,11 @@ export function GardenPage() {
       {/* Esher Avenue layout picker */}
       {showEsherLayouts && (
         <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-stone-800 rounded-2xl shadow-2xl max-w-2xl w-full max-h-[80vh] overflow-y-auto">
-            <div className="p-6 border-b border-stone-100 dark:border-stone-700">
+          <div className="bg-white dark:bg-stone-800 rounded-2xl shadow-2xl max-w-[calc(100vw-2rem)] sm:max-w-2xl w-full max-h-[80vh] overflow-y-auto">
+            <div className="p-4 sm:p-6 border-b border-stone-100 dark:border-stone-700">
               <div className="flex items-center justify-between">
                 <div>
-                  <h2 className="text-lg font-bold text-stone-800 dark:text-stone-100">
+                  <h2 className="text-base sm:text-lg font-bold text-stone-800 dark:text-stone-100">
                     🏡 21 Esher Avenue — Garden Loaded!
                   </h2>
                   <p className="text-sm text-stone-400 mt-0.5">
@@ -1279,7 +1281,7 @@ export function GardenPage() {
       {/* Save Season confirmation modal */}
       {showSaveSeasonConfirm && (
         <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-stone-800 rounded-2xl shadow-2xl max-w-md w-full">
+          <div className="bg-white dark:bg-stone-800 rounded-2xl shadow-2xl max-w-[calc(100vw-2rem)] sm:max-w-md w-full">
             <div className="p-6">
               <h2 className="text-lg font-bold text-stone-800 dark:text-stone-100 flex items-center gap-2">
                 <span>&#128197;</span> Save Season Snapshot

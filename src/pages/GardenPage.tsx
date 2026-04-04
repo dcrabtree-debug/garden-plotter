@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback, useEffect, useMemo } from 'react';
+import { useState, useRef, useCallback, useEffect, useMemo, type WheelEvent as ReactWheelEvent } from 'react';
 import { useGardenStore, getSpacingWarnings, getRotationWarnings, getCurrentSeasonKey, getSeasonLabel } from '../state/garden-store';
 import { usePlantDb } from '../data/use-plant-db';
 import { PlantDetail } from '../components/plant-palette/PlantDetail';
@@ -6,6 +6,7 @@ import { useCompanionDb } from '../data/use-companion-db';
 import { useRegion } from '../data/use-region';
 import { generateGardenLayouts, type GardenLayoutOption, type PlacementReason } from '../lib/garden-auto-populate';
 import { createEsherGarden, generateEsherLayouts, type EsherLayoutOption } from '../lib/esher-garden-template';
+import { usePlannerStore } from '../state/planner-store';
 import { generateLayouts as generateGSLayouts, extractTowerSlugs } from '../lib/auto-populate';
 import { findBestPairing } from '../lib/cross-system-scoring';
 import { checkPair, getFriends, getConflicts } from '../lib/companion-engine';
@@ -22,6 +23,7 @@ import {
   formatTime,
   classifySunZone,
   SUN_ZONE_COLORS,
+  sunHoursColor,
 } from '../lib/solar-engine';
 import { getMonthName } from '../lib/calendar-utils';
 
@@ -265,6 +267,7 @@ export function GardenPage() {
   const region = useRegion();
   const { plants, plantMap } = usePlantDb(region);
   const { companionMap } = useCompanionDb();
+  const towers = usePlannerStore((s) => s.towers);
   const [isPainting, setIsPainting] = useState(false);
   const [plantToPlace, setPlantToPlace] = useState<Plant | null>(null);
   const [selectedPlant, setSelectedPlant] = useState<Plant | null>(null);
@@ -278,6 +281,10 @@ export function GardenPage() {
   const [gardenLayouts, setGardenLayouts] = useState<GardenLayoutOption[]>([]);
   const [gardenPlan, setGardenPlan] = useState<PlacementReason[] | null>(null);
   const [showPlan, setShowPlan] = useState(false);
+  const [zoom, setZoom] = useState(1);
+  const [showGreenStalks, setShowGreenStalks] = useState(true);
+  const [showBloom, setShowBloom] = useState(false);
+  const [hoveredCell, setHoveredCell] = useState<{ row: number; col: number } | null>(null);
   const gridRef = useRef<HTMLDivElement>(null);
 
   const { config, cells } = garden;
@@ -309,12 +316,91 @@ export function GardenPage() {
     [plantToPlace, cells, paintCell]
   );
 
-  const cellSize = useMemo(() => {
-    // On mobile, fit grid within viewport width minus sidebar/padding
+  const baseCellSize = useMemo(() => {
     const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
     const maxWidth = isMobile ? Math.min(window.innerWidth - 32, 400) : 800;
     return Math.min(Math.floor(maxWidth / cols), isMobile ? 18 : 28);
   }, [cols]);
+  const cellSize = Math.round(baseCellSize * zoom);
+
+  const handleWheel = useCallback((e: ReactWheelEvent) => {
+    if (e.ctrlKey || e.metaKey) {
+      e.preventDefault();
+      setZoom((z) => Math.min(3, Math.max(0.5, z - e.deltaY * 0.002)));
+    }
+  }, []);
+
+  // GreenStalk positions: detect cells labeled as GreenStalk in veg-patch on patio rows
+  const greenStalkCells = useMemo(() => {
+    const positions: { row: number; col: number; towerIndex: number }[] = [];
+    // GreenStalks sit on veg-patch cells surrounded by patio — detect clusters
+    const visited = new Set<string>();
+    let towerIdx = 0;
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        const key = `${r},${c}`;
+        if (visited.has(key)) continue;
+        const cell = cells[r]?.[c];
+        if (cell?.type !== 'veg-patch') continue;
+        // Found a veg-patch cell — flood-fill to find the cluster
+        const cluster: { row: number; col: number }[] = [];
+        const queue = [{ row: r, col: c }];
+        while (queue.length > 0) {
+          const { row: cr, col: cc } = queue.shift()!;
+          const k = `${cr},${cc}`;
+          if (visited.has(k)) continue;
+          if (cr < 0 || cr >= rows || cc < 0 || cc >= cols) continue;
+          if (cells[cr]?.[cc]?.type !== 'veg-patch') continue;
+          visited.add(k);
+          cluster.push({ row: cr, col: cc });
+          queue.push({ row: cr - 1, col: cc }, { row: cr + 1, col: cc }, { row: cr, col: cc - 1 }, { row: cr, col: cc + 1 });
+        }
+        if (cluster.length >= 2) {
+          for (const pos of cluster) positions.push({ ...pos, towerIndex: towerIdx });
+          towerIdx++;
+        }
+      }
+    }
+    return positions;
+  }, [cells, rows, cols]);
+
+  // Bloom visualization data
+  const bloomGrid = useMemo(() => {
+    if (!showBloom) return null;
+    const currentMonth = selectedMonth;
+    const grid: { inBloom: boolean; color: string }[][] = Array.from(
+      { length: rows },
+      () => Array.from({ length: cols }, () => ({ inBloom: false, color: '' }))
+    );
+    const bloomColors: Record<string, string> = {
+      'vegetable': '#4caf50',
+      'herb': '#66bb6a',
+      'fruit': '#e91e63',
+      'flower': '#e040fb',
+      'legume': '#8bc34a',
+    };
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        const slug = cells[r][c].plantSlug;
+        if (!slug) continue;
+        const plant = plantMap.get(slug);
+        if (!plant) continue;
+        const hw = plant.plantingWindow.harvest;
+        if (hw) {
+          // Approximate bloom as 1-2 months before harvest
+          const bloomStart = hw[0] >= 2 ? hw[0] - 1 : hw[0];
+          const bloomEnd = hw[1];
+          const inRange = bloomStart <= bloomEnd
+            ? currentMonth >= bloomStart && currentMonth <= bloomEnd
+            : currentMonth >= bloomStart || currentMonth <= bloomEnd;
+          if (inRange) {
+            grid[r][c] = { inBloom: true, color: bloomColors[plant.category] ?? '#e040fb' };
+          }
+        }
+      }
+    }
+    return grid;
+  }, [showBloom, selectedMonth, cells, rows, cols, plantMap]);
 
   // Real-time shadow grid for the selected hour
   const shadowGrid = useMemo(() => {
@@ -637,7 +723,52 @@ export function GardenPage() {
               />
               Crop rotation warnings
             </label>
+            <label className="flex items-center gap-2 text-xs text-stone-600 dark:text-stone-400 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={showGreenStalks}
+                onChange={() => setShowGreenStalks(!showGreenStalks)}
+                className="rounded border-stone-300 accent-emerald-500"
+              />
+              GreenStalk towers
+            </label>
+            <label className="flex items-center gap-2 text-xs text-stone-600 dark:text-stone-400 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={showBloom}
+                onChange={() => setShowBloom(!showBloom)}
+                className="rounded border-stone-300 accent-pink-500"
+              />
+              Bloom visualization
+            </label>
           </div>
+
+          {/* Zoom control */}
+          <div>
+            <h3 className="text-[10px] font-semibold text-stone-500 uppercase tracking-wide mb-1.5">Zoom</h3>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setZoom((z) => Math.max(0.5, z - 0.25))}
+                className="w-7 h-7 rounded bg-stone-200 dark:bg-stone-700 text-stone-600 dark:text-stone-300 text-sm font-bold hover:bg-stone-300 dark:hover:bg-stone-600 transition-colors flex items-center justify-center"
+              >−</button>
+              <input
+                type="range"
+                min={0.5}
+                max={3}
+                step={0.1}
+                value={zoom}
+                onChange={(e) => setZoom(Number(e.target.value))}
+                className="flex-1 accent-emerald-500"
+              />
+              <button
+                onClick={() => setZoom((z) => Math.min(3, z + 0.25))}
+                className="w-7 h-7 rounded bg-stone-200 dark:bg-stone-700 text-stone-600 dark:text-stone-300 text-sm font-bold hover:bg-stone-300 dark:hover:bg-stone-600 transition-colors flex items-center justify-center"
+              >+</button>
+              <span className="text-[10px] text-stone-400 w-8 text-right">{Math.round(zoom * 100)}%</span>
+            </div>
+            <p className="text-[9px] text-stone-400 mt-1">Ctrl/Cmd + scroll to zoom</p>
+          </div>
+
           <label className="text-[10px] text-stone-500 block mt-2">
             Month
             <select
@@ -682,6 +813,46 @@ export function GardenPage() {
         <SolarPanel month={selectedMonth} />
         <SoilCard />
         <ZoneGuide />
+
+        {/* GreenStalk Placement Advisor */}
+        {showGreenStalks && (
+          <div className="bg-emerald-50 dark:bg-emerald-900/20 rounded-xl border border-emerald-200 dark:border-emerald-800 p-4">
+            <h3 className="text-sm font-semibold text-emerald-900 dark:text-emerald-300 mb-2">🌱 GreenStalk Placement</h3>
+            <div className="space-y-1.5 text-xs text-emerald-800 dark:text-emerald-400">
+              {greenStalkCells.length > 0 ? (
+                <>
+                  <div>{new Set(greenStalkCells.map(g => g.towerIndex)).size} tower(s) placed on map</div>
+                  {(() => {
+                    // Calculate avg sun at each tower position
+                    const towerSun = new Map<number, number[]>();
+                    for (const g of greenStalkCells) {
+                      if (!towerSun.has(g.towerIndex)) towerSun.set(g.towerIndex, []);
+                      const h = cells[g.row]?.[g.col]?.sunHours;
+                      if (h !== null && h !== undefined) towerSun.get(g.towerIndex)!.push(h);
+                    }
+                    return [...towerSun.entries()].map(([idx, hours]) => {
+                      const avg = hours.length > 0 ? hours.reduce((s, h) => s + h, 0) / hours.length : 0;
+                      const tower = towers[idx];
+                      return (
+                        <div key={idx} className={`text-[10px] px-2 py-1 rounded ${avg >= 6 ? 'bg-emerald-100 dark:bg-emerald-900/30' : avg >= 3 ? 'bg-amber-100 dark:bg-amber-900/30' : 'bg-red-100 dark:bg-red-900/30'}`}>
+                          <span className="font-semibold">{tower?.name ?? `Tower ${idx + 1}`}:</span> {avg.toFixed(1)}h sun/day
+                          {avg >= 6 ? ' ☀️ Ideal!' : avg >= 3 ? ' 🌤 OK for leafy crops' : ' ⚠️ Too shady — move to sunnier spot'}
+                        </div>
+                      );
+                    });
+                  })()}
+                  <div className="text-[9px] text-emerald-600 dark:text-emerald-500 mt-1">
+                    Tip: GreenStalks need 6+ hours sun for tomatoes & peppers. Place on the sunniest patio area.
+                  </div>
+                </>
+              ) : (
+                <div className="text-[10px]">
+                  Load the Esher Avenue template to see GreenStalk positions, or paint veg-patch cells where you want to place them.
+                </div>
+              )}
+            </div>
+          </div>
+        )}
 
         {/* Actions */}
         <div className="space-y-1.5">
@@ -766,9 +937,10 @@ export function GardenPage() {
         {/* Grid */}
         <div
           ref={gridRef}
-          className="inline-block border border-stone-300 rounded-lg overflow-hidden select-none"
+          className="inline-block border border-stone-300 rounded-lg overflow-hidden select-none relative"
           style={{ lineHeight: 0 }}
-          onMouseLeave={() => setIsPainting(false)}
+          onMouseLeave={() => { setIsPainting(false); setHoveredCell(null); }}
+          onWheel={handleWheel}
         >
           {cells.map((row, ri) => (
             <div key={ri} className="flex" style={{ height: cellSize }}>
@@ -777,11 +949,10 @@ export function GardenPage() {
                 const hasPlant = cell.plantSlug !== null;
                 const plant = hasPlant ? plantMap.get(cell.plantSlug!) : null;
 
-                // Overlay colors (transparent, layered on top)
+                // Overlay colors — continuous gradient heatmap
                 let sunOverlayColor: string | null = null;
                 if (showSunOverlay && cell.sunHours !== null) {
-                  const zone = classifySunZone(cell.sunHours);
-                  sunOverlayColor = SUN_ZONE_COLORS[zone];
+                  sunOverlayColor = sunHoursColor(cell.sunHours);
                 }
 
                 const isInShadow = showShadowOverlay && shadowGrid?.[ri]?.[ci];
@@ -833,6 +1004,7 @@ export function GardenPage() {
                     }}
                     onMouseEnter={() => {
                       if (isPainting && !plantToPlace) handleCellInteraction(ri, ci);
+                      if (hasPlant) setHoveredCell({ row: ri, col: ci });
                     }}
                     onMouseUp={() => setIsPainting(false)}
                     onClick={() => {
@@ -845,7 +1017,7 @@ export function GardenPage() {
                         style={{
                           position: 'absolute', inset: 0,
                           backgroundColor: sunOverlayColor,
-                          opacity: 0.45,
+                          opacity: 0.65,
                           pointerEvents: 'none',
                         }}
                       />
@@ -936,16 +1108,189 @@ export function GardenPage() {
                         {cell.sunHours}
                       </span>
                     )}
+                    {/* Bloom glow overlay */}
+                    {bloomGrid?.[ri]?.[ci]?.inBloom && (
+                      <div
+                        style={{
+                          position: 'absolute', inset: 0,
+                          backgroundColor: bloomGrid[ri][ci].color,
+                          opacity: 0.4,
+                          borderRadius: '50%',
+                          transform: 'scale(1.1)',
+                          filter: 'blur(2px)',
+                          pointerEvents: 'none',
+                          zIndex: 1,
+                        }}
+                      />
+                    )}
+                    {/* GreenStalk tower marker */}
+                    {showGreenStalks && greenStalkCells.some((g) => g.row === ri && g.col === ci) && (
+                      <div
+                        style={{
+                          position: 'absolute', inset: 0,
+                          border: '2px solid #10b981',
+                          borderRadius: 4,
+                          pointerEvents: 'none',
+                          zIndex: 4,
+                          boxShadow: '0 0 6px rgba(16,185,129,0.5)',
+                        }}
+                      />
+                    )}
                   </div>
                 );
               })}
             </div>
           ))}
+
+          {/* GreenStalk tower labels (positioned above grid) */}
+          {showGreenStalks && (() => {
+            // Group by towerIndex and render label at cluster center
+            const towerGroups = new Map<number, typeof greenStalkCells>();
+            for (const g of greenStalkCells) {
+              if (!towerGroups.has(g.towerIndex)) towerGroups.set(g.towerIndex, []);
+              towerGroups.get(g.towerIndex)!.push(g);
+            }
+            return [...towerGroups.entries()].map(([idx, positions]) => {
+              const avgRow = positions.reduce((s, p) => s + p.row, 0) / positions.length;
+              const avgCol = positions.reduce((s, p) => s + p.col, 0) / positions.length;
+              const tower = towers[idx];
+              const plantCount = tower ? tower.tiers.reduce((s, t) => s + t.pockets.filter(p => p.plantSlug).length, 0) : 0;
+              return (
+                <div
+                  key={idx}
+                  style={{
+                    position: 'absolute',
+                    left: avgCol * cellSize - 20,
+                    top: (avgRow - 0.8) * cellSize,
+                    pointerEvents: 'none',
+                    zIndex: 5,
+                  }}
+                  className="flex flex-col items-center"
+                >
+                  <div className="bg-emerald-600 text-white text-[8px] font-bold px-1.5 py-0.5 rounded shadow whitespace-nowrap">
+                    🌱 {tower?.name ?? `GreenStalk ${idx + 1}`}
+                  </div>
+                  {plantCount > 0 && (
+                    <div className="text-[7px] text-emerald-600 font-semibold mt-0.5">
+                      {plantCount}/30 planted
+                    </div>
+                  )}
+                </div>
+              );
+            });
+          })()}
         </div>
+
+        {/* Rich tooltip on hover */}
+        {hoveredCell && (() => {
+          const hCell = cells[hoveredCell.row]?.[hoveredCell.col];
+          if (!hCell?.plantSlug) return null;
+          const hPlant = plantMap.get(hCell.plantSlug);
+          if (!hPlant) return null;
+          const sunH = hCell.sunHours;
+          const sunOk = sunH !== null && (
+            (hPlant.sun === 'full-sun' && sunH >= 6) ||
+            (hPlant.sun === 'partial-shade' && sunH >= 3) ||
+            (hPlant.sun === 'full-shade')
+          );
+          const sunWarning = sunH !== null && !sunOk;
+
+          // Companion info
+          const allSlugs: string[] = [];
+          for (let r = Math.max(0, hoveredCell.row - 2); r <= Math.min(rows - 1, hoveredCell.row + 2); r++) {
+            for (let c = Math.max(0, hoveredCell.col - 2); c <= Math.min(cols - 1, hoveredCell.col + 2); c++) {
+              if (r === hoveredCell.row && c === hoveredCell.col) continue;
+              const s = cells[r][c].plantSlug;
+              if (s && s !== hCell.plantSlug) allSlugs.push(s);
+            }
+          }
+          const uniqueNeighbours = [...new Set(allSlugs)];
+          const friends = companionMap.get(hPlant.slug);
+          const friendNames: string[] = [];
+          const foeNames: string[] = [];
+          if (friends) {
+            for (const s of uniqueNeighbours) {
+              const edge = friends.get(s);
+              if (edge?.relationship === 'friend') friendNames.push(plantMap.get(s)?.commonName ?? s);
+              if (edge?.relationship === 'foe') foeNames.push(plantMap.get(s)?.commonName ?? s);
+            }
+          }
+
+          // Position tooltip near the hovered cell
+          const tipLeft = (hoveredCell.col + 1) * cellSize + 8;
+          const tipTop = hoveredCell.row * cellSize;
+          const currentMonth = new Date().getMonth() + 1;
+
+          return (
+            <div
+              style={{
+                position: 'absolute',
+                left: Math.min(tipLeft, cols * cellSize - 200),
+                top: Math.max(0, tipTop - 20),
+                zIndex: 20,
+                pointerEvents: 'none',
+              }}
+              className="bg-white dark:bg-stone-800 rounded-xl shadow-xl border border-stone-200 dark:border-stone-700 p-3 w-56"
+            >
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-xl">{hPlant.emoji}</span>
+                <div>
+                  <div className="text-xs font-bold text-stone-800 dark:text-stone-100">{hPlant.commonName}</div>
+                  <div className="text-[9px] text-stone-400 italic">{hPlant.botanicalName}</div>
+                </div>
+              </div>
+
+              {/* Sun suitability */}
+              <div className={`text-[10px] px-2 py-1 rounded mb-1.5 ${
+                sunWarning
+                  ? 'bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-300'
+                  : 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-300'
+              }`}>
+                {sunH !== null ? `${sunH}h sun` : 'Sun unknown'} — needs {hPlant.sun.replace('-', ' ')}
+                {sunWarning && ' ⚠️ Not enough sun here!'}
+                {sunOk && ' ✓ Good spot'}
+              </div>
+
+              {/* Key care tips */}
+              <div className="space-y-0.5 text-[10px] text-stone-600 dark:text-stone-400 mb-1.5">
+                <div>💧 Water: {hPlant.water} · ⏱ Harvest: {hPlant.daysToHarvest[0]}-{hPlant.daysToHarvest[1]} days</div>
+                {hPlant.inGround.feeding && <div>🌿 {hPlant.inGround.feeding}</div>}
+                {hPlant.inGround.pests.length > 0 && (
+                  <div>🐛 Watch for: {hPlant.inGround.pests.slice(0, 2).join(', ')}</div>
+                )}
+              </div>
+
+              {/* Companion relationships */}
+              {friendNames.length > 0 && (
+                <div className="text-[10px] text-emerald-600 dark:text-emerald-400">
+                  💚 Friends nearby: {friendNames.join(', ')}
+                </div>
+              )}
+              {foeNames.length > 0 && (
+                <div className="text-[10px] text-red-500 dark:text-red-400">
+                  ⚠️ Foes nearby: {foeNames.join(', ')}
+                </div>
+              )}
+
+              {/* Placement reasoning */}
+              <div className="text-[9px] text-stone-400 mt-1.5 border-t border-stone-100 dark:border-stone-700 pt-1.5">
+                {hPlant.sun === 'full-sun' && sunH !== null && sunH >= 6
+                  ? '☀️ Placed here for maximum sun exposure — ideal for this sun-loving crop.'
+                  : hPlant.sun === 'partial-shade'
+                    ? '🌤 This crop thrives in partial shade — good match for this spot.'
+                    : hPlant.sun === 'full-shade'
+                      ? '🌿 Shade-tolerant plant — makes good use of this shaded area.'
+                      : sunWarning
+                        ? '⚠️ Consider moving to a sunnier spot for better yields.'
+                        : '📍 Placed based on available space and growing conditions.'}
+              </div>
+            </div>
+          );
+        })()}
 
         {/* Scale indicator */}
         <div className="mt-2 flex items-center gap-3 text-[10px] text-stone-400">
-          <span>1 cell = {config.cellSizeM}m</span>
+          <span>1 cell = {config.cellSizeM}m · Zoom {Math.round(zoom * 100)}%</span>
           <span className="flex-1 border-t border-stone-200" />
           <span>Garden end (away from house)</span>
         </div>
@@ -985,7 +1330,33 @@ export function GardenPage() {
               Rotation warning
             </span>
           )}
+          {showGreenStalks && (
+            <span className="flex items-center gap-1">
+              <span className="w-3 h-3 border-2 border-emerald-500 rounded-sm shadow-[0_0_4px_rgba(16,185,129,0.5)]" />
+              GreenStalk
+            </span>
+          )}
+          {showBloom && (
+            <span className="flex items-center gap-1">
+              <span className="w-3 h-3 rounded-full bg-gradient-to-r from-pink-400 to-purple-400" />
+              In bloom
+            </span>
+          )}
         </div>
+
+        {/* Sun heatmap gradient legend */}
+        {showSunOverlay && (
+          <div className="mt-2 flex items-center gap-2 text-[10px] text-stone-500">
+            <span>0h</span>
+            <div className="flex-1 h-3 rounded-full overflow-hidden flex">
+              {Array.from({ length: 20 }, (_, i) => (
+                <div key={i} className="flex-1" style={{ backgroundColor: sunHoursColor(i * 0.5) }} />
+              ))}
+            </div>
+            <span>10h+</span>
+            <span className="ml-2 text-stone-400">Sun hours per day</span>
+          </div>
+        )}
 
         {/* Garden Plan reasoning panel */}
         {gardenPlan && gardenPlan.length > 0 && (

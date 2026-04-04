@@ -170,6 +170,9 @@ export function createEsherGarden(): { config: GardenConfig; cells: GardenCell[]
 // Back patio is PAVED — GreenStalks only. Lawn is OFF LIMITS (rental).
 
 import type { CrossSystemPairing } from './cross-system-scoring';
+import type { Plant } from '../types/plant';
+import type { CompanionMap } from '../types/companion';
+import { getFriends, getConflicts } from './companion-engine';
 
 export interface PlacementDetail {
   plantSlug: string;
@@ -394,4 +397,186 @@ export function generateEsherLayouts(): EsherLayoutOption[] {
       stats: { totalPlants: 15, uniqueVarieties: 12, companionPairs: 10, estimatedYieldKg: 3, estimatedValueGBP: 25 },
     },
   ];
+}
+
+// ─── Dynamic paired layout based on actual GreenStalk contents ──────────────
+
+const FENCE_SLOTS = [
+  { row: 8, col: 18 },
+  { row: 12, col: 18 },
+  { row: 16, col: 18 },
+];
+
+const BED_CELLS = [
+  { row: 21, col: 7 }, { row: 21, col: 8 }, { row: 21, col: 9 },
+  { row: 21, col: 10 }, { row: 21, col: 11 }, { row: 21, col: 12 },
+  { row: 22, col: 7 }, { row: 22, col: 8 }, { row: 22, col: 9 },
+  { row: 22, col: 10 }, { row: 22, col: 11 }, { row: 22, col: 12 },
+];
+
+/**
+ * Generate a custom in-ground layout optimised to complement the user's
+ * ACTUAL GreenStalk tower contents.
+ *
+ * Scoring per candidate plant:
+ *   +5 for each friend relationship with a tower plant
+ *   -8 for each foe relationship with a tower plant
+ *   +3 if NOT already in the towers (diversity bonus)
+ *   +2 if shade-tolerant (for raised bed near hedge)
+ *   +2 if climbing habit (for fence border slots)
+ */
+export function generatePairedLayout(
+  actualTowerSlugs: string[],
+  plants: Plant[],
+  companionMap: CompanionMap
+): EsherLayoutOption {
+  const towerSet = new Set(actualTowerSlugs);
+  const uniqueTowerSlugs = [...towerSet];
+
+  // Score every available plant
+  function scoreForBed(plant: Plant): number {
+    let score = 0;
+    const friends = getFriends(plant.slug, uniqueTowerSlugs, companionMap);
+    const foes = getConflicts(plant.slug, uniqueTowerSlugs, companionMap);
+    score += friends.length * 5;
+    score -= foes.length * 8;
+    if (!towerSet.has(plant.slug)) score += 3; // diversity bonus
+    if (plant.sun === 'partial-shade' || plant.sun === 'full-shade') score += 2; // shade tolerance
+    // Penalise plants unsuitable for containers/raised beds
+    if (plant.greenstalkSuitability === 'unsuitable' && plant.growthHabit === 'climbing') score -= 2;
+    return score;
+  }
+
+  function scoreForFence(plant: Plant): number {
+    let score = 0;
+    const friends = getFriends(plant.slug, uniqueTowerSlugs, companionMap);
+    const foes = getConflicts(plant.slug, uniqueTowerSlugs, companionMap);
+    score += friends.length * 5;
+    score -= foes.length * 8;
+    if (!towerSet.has(plant.slug)) score += 3;
+    if (plant.growthHabit === 'climbing') score += 4; // climbing bonus for fence
+    return score;
+  }
+
+  // Get top plants for each zone
+  const bedCandidates = [...plants]
+    .map((p) => ({ plant: p, score: scoreForBed(p) }))
+    .sort((a, b) => b.score - a.score);
+
+  const fenceCandidates = [...plants]
+    .map((p) => ({ plant: p, score: scoreForFence(p) }))
+    .sort((a, b) => b.score - a.score);
+
+  // Pick unique plants (no duplicates across zones)
+  const used = new Set<string>();
+  const fencePicks: { plant: Plant; score: number }[] = [];
+  for (const c of fenceCandidates) {
+    if (fencePicks.length >= FENCE_SLOTS.length) break;
+    if (!used.has(c.plant.slug)) {
+      fencePicks.push(c);
+      used.add(c.plant.slug);
+    }
+  }
+
+  const bedPicks: { plant: Plant; score: number }[] = [];
+  for (const c of bedCandidates) {
+    if (bedPicks.length >= BED_CELLS.length) break;
+    if (!used.has(c.plant.slug) || bedPicks.length >= 6) {
+      // Allow some repeats in the 12-cell bed (e.g., multiple lettuce)
+      bedPicks.push(c);
+      used.add(c.plant.slug);
+    }
+  }
+
+  // Build placements
+  const placements: { row: number; col: number; plantSlug: string }[] = [];
+  const reasoning: PlacementDetail[] = [];
+
+  // Fence placements
+  for (let i = 0; i < FENCE_SLOTS.length && i < fencePicks.length; i++) {
+    const slot = FENCE_SLOTS[i];
+    const pick = fencePicks[i];
+    const friends = getFriends(pick.plant.slug, uniqueTowerSlugs, companionMap);
+    placements.push({ ...slot, plantSlug: pick.plant.slug });
+    reasoning.push({
+      plantSlug: pick.plant.slug,
+      plantName: pick.plant.commonName,
+      row: slot.row,
+      col: slot.col,
+      zone: zoneLabel(slot.row, slot.col),
+      reasons: [
+        friends.length > 0
+          ? `Companion to your tower plants: ${friends.map((f) => f.reason).slice(0, 2).join('; ')}`
+          : 'Adds diversity to complement your GreenStalk crops',
+        pick.plant.growthHabit === 'climbing'
+          ? 'Climbing habit — trains up the fence panel'
+          : 'Fits between existing Cordylines in the border',
+      ],
+    });
+  }
+
+  // Raised bed placements
+  const bedDetails: PlacementDetail[] = [];
+  const bedPlants: { row: number; col: number; plantSlug: string }[] = [];
+  for (let i = 0; i < BED_CELLS.length && i < bedPicks.length; i++) {
+    const cell = BED_CELLS[i];
+    const pick = bedPicks[i];
+    const friends = getFriends(pick.plant.slug, uniqueTowerSlugs, companionMap);
+    const foes = getConflicts(pick.plant.slug, uniqueTowerSlugs, companionMap);
+    bedPlants.push({ ...cell, plantSlug: pick.plant.slug });
+    bedDetails.push({
+      plantSlug: pick.plant.slug,
+      plantName: pick.plant.commonName,
+      row: cell.row,
+      col: cell.col,
+      zone: zoneLabel(cell.row, cell.col),
+      reasons: [
+        friends.length > 0
+          ? `Companions your towers: ${friends.map((f) => f.reason).slice(0, 2).join('; ')}`
+          : `Adds ${pick.plant.category} variety your towers don't have`,
+        towerSet.has(pick.plant.slug)
+          ? 'Also in your GreenStalks — grows bigger in ground'
+          : 'Not in your towers — maximises crop diversity',
+        foes.length > 0
+          ? `⚠️ Watch: ${foes[0].reason}`
+          : pick.plant.sun !== 'full-sun'
+            ? 'Shade-tolerant — ideal for hedge-side raised bed'
+            : 'Tolerates the partial shade near the hedge',
+      ],
+    });
+  }
+
+  // Count companion pairs
+  const allPlacedSlugs = [...placements.map((p) => p.plantSlug), ...bedPlants.map((p) => p.plantSlug)];
+  let companionPairs = 0;
+  for (const slug of allPlacedSlugs) {
+    companionPairs += getFriends(slug, uniqueTowerSlugs, companionMap).length;
+  }
+
+  const towerNames = uniqueTowerSlugs
+    .slice(0, 5)
+    .map((s) => plants.find((p) => p.slug === s)?.commonName ?? s)
+    .join(', ');
+  const moreCount = uniqueTowerSlugs.length > 5 ? ` +${uniqueTowerSlugs.length - 5} more` : '';
+
+  return {
+    id: 'paired-with-towers',
+    name: 'Paired with Your GreenStalks',
+    emoji: '🤝',
+    description: `Custom layout generated from your actual tower plants (${towerNames}${moreCount}). Every pick chosen to complement what's already growing.`,
+    placements,
+    reasoning,
+    raisedBedReplant: {
+      rationale: `Replant raised bed with crops that companion your GreenStalk plants — ${companionPairs} companion benefits across systems.`,
+      placements: bedPlants,
+      details: bedDetails,
+    },
+    stats: {
+      totalPlants: placements.length + bedPlants.length,
+      uniqueVarieties: new Set([...placements.map((p) => p.plantSlug), ...bedPlants.map((p) => p.plantSlug)]).size,
+      companionPairs,
+      estimatedYieldKg: 0, // Dynamic — can't pre-calculate
+      estimatedValueGBP: 0,
+    },
+  };
 }

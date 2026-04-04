@@ -5,7 +5,8 @@ import { PlantDetail } from '../components/plant-palette/PlantDetail';
 import { useCompanionDb } from '../data/use-companion-db';
 import { useRegion } from '../data/use-region';
 import { generateGardenLayouts, type GardenLayoutOption, type PlacementReason } from '../lib/garden-auto-populate';
-import { createEsherGarden, generateEsherLayouts, type EsherLayoutOption } from '../lib/esher-garden-template';
+import { createEsherGarden, generateEsherLayouts, generatePairedLayout, type EsherLayoutOption } from '../lib/esher-garden-template';
+import { usePlannerStore } from '../state/planner-store';
 import { generateLayouts as generateGSLayouts, extractTowerSlugs } from '../lib/auto-populate';
 import { findBestPairing } from '../lib/cross-system-scoring';
 import { checkPair, getFriends, getConflicts } from '../lib/companion-engine';
@@ -255,12 +256,16 @@ export function GardenPage() {
     garden, activeTool, selectedMonth, selectedHour,
     showSunOverlay, showShadowOverlay, showCompanionOverlay,
     showSpacingWarnings, showRotationWarnings, rotationHistory,
+    locked: gardenLocked, toggleLock: toggleGardenLock,
     setTool, paintCell, updateConfig, renameGarden,
     setSunHours, setSelectedMonth, setSelectedHour,
     toggleSunOverlay, toggleShadowOverlay, toggleCompanionOverlay,
     toggleSpacingWarnings, toggleRotationWarnings, saveSeasonSnapshot,
     loadTemplate, resetGarden, clearPaint,
   } = useGardenStore();
+
+  const plannerTowers = usePlannerStore((s) => s.towers);
+  const plannerLocked = usePlannerStore((s) => s.locked);
 
   const region = useRegion();
   const { plants, plantMap } = usePlantDb(region);
@@ -281,6 +286,16 @@ export function GardenPage() {
   const gridRef = useRef<HTMLDivElement>(null);
 
   const { config, cells } = garden;
+
+  // Check if GreenStalk towers have plants for the "Pair" button
+  const actualTowerSlugs = useMemo(() => {
+    return plannerTowers
+      .flatMap((t) => t.tiers)
+      .flatMap((ti) => ti.pockets)
+      .map((p) => p.plantSlug)
+      .filter((s): s is string => s !== null);
+  }, [plannerTowers]);
+  const hasTowerPlants = actualTowerSlugs.length > 0;
   const cols = cells[0]?.length ?? 0;
   const rows = cells.length;
 
@@ -702,8 +717,42 @@ export function GardenPage() {
       <div className="flex-1 overflow-auto p-3 sm:p-6">
         <div className="mb-3">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
-            <h1 className="text-lg sm:text-xl font-semibold text-stone-800 dark:text-stone-100">In-Ground Garden Plotter</h1>
             <div className="flex items-center gap-2">
+              <h1 className="text-lg sm:text-xl font-semibold text-stone-800 dark:text-stone-100">In-Ground Garden Plotter</h1>
+              <button
+                onClick={toggleGardenLock}
+                className={`px-2 py-1 text-xs rounded-lg border transition-all ${
+                  gardenLocked
+                    ? 'bg-emerald-100 dark:bg-emerald-900/30 border-emerald-300 dark:border-emerald-700 text-emerald-700 dark:text-emerald-400'
+                    : 'bg-stone-50 dark:bg-stone-700 border-stone-200 dark:border-stone-600 text-stone-400 hover:text-stone-600'
+                }`}
+                title={gardenLocked ? 'Unlock to edit' : 'Lock to prevent changes'}
+              >
+                {gardenLocked ? '🔒 Locked' : '🔓'}
+              </button>
+            </div>
+            <div className="flex items-center gap-2 flex-wrap">
+              {hasTowerPlants && (
+                <button
+                  onClick={() => {
+                    const { config: esherConfig, cells: esherCells } = createEsherGarden();
+                    loadTemplate(esherConfig, esherCells);
+                    const paired = generatePairedLayout(actualTowerSlugs, plants, companionMap);
+                    const staticLayouts = generateEsherLayouts();
+                    setEsherLayouts([paired, ...staticLayouts]);
+                    setRaisedBedMode({ 'paired-with-towers': 'replant' }); // default to replant for paired
+                    setShowEsherLayouts(true);
+                  }}
+                  disabled={gardenLocked}
+                  className={`px-3 py-1.5 text-xs rounded-lg transition-colors flex items-center gap-1.5 font-semibold ${
+                    gardenLocked
+                      ? 'bg-stone-200 dark:bg-stone-600 text-stone-400 cursor-not-allowed'
+                      : 'bg-indigo-600 text-white hover:bg-indigo-700'
+                  }`}
+                >
+                  <span>🤝</span> Pair with My GreenStalks
+                </button>
+              )}
               <button
                 onClick={() => setShowSaveSeasonConfirm(true)}
                 className="px-3 py-1.5 text-xs bg-violet-600 text-white rounded-lg hover:bg-violet-700 transition-colors flex items-center gap-1.5"
@@ -731,7 +780,10 @@ export function GardenPage() {
                   setEsherLayouts(enriched);
                   setShowEsherLayouts(true);
                 }}
-                className="px-3 py-1.5 text-xs bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition-colors flex items-center gap-1.5"
+                disabled={gardenLocked}
+                className={`px-3 py-1.5 text-xs rounded-lg transition-colors flex items-center gap-1.5 ${
+                  gardenLocked ? 'bg-stone-200 dark:bg-stone-600 text-stone-400 cursor-not-allowed' : 'bg-amber-600 text-white hover:bg-amber-700'
+                }`}
               >
                 <span>🏡</span> Load My Garden
               </button>
@@ -741,7 +793,10 @@ export function GardenPage() {
                   setGardenLayouts(layouts);
                   setShowAutoPopulate(true);
                 }}
-                className="px-3 py-1.5 text-xs bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors flex items-center gap-1.5"
+                disabled={gardenLocked}
+                className={`px-3 py-1.5 text-xs rounded-lg transition-colors flex items-center gap-1.5 ${
+                  gardenLocked ? 'bg-stone-200 dark:bg-stone-600 text-stone-400 cursor-not-allowed' : 'bg-emerald-600 text-white hover:bg-emerald-700'
+                }`}
               >
               <span>✨</span> Auto-Populate
             </button>

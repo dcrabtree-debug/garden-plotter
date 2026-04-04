@@ -23,6 +23,7 @@ import type { Plant } from '../types/plant';
 
 export function PlannerPage() {
   const towers = usePlannerStore((s) => s.towers);
+  const locked = usePlannerStore((s) => s.locked);
   const assignPlant = usePlannerStore((s) => s.assignPlant);
   const removePlant = usePlannerStore((s) => s.removePlant);
   const addTower = usePlannerStore((s) => s.addTower);
@@ -235,12 +236,30 @@ export function PlannerPage() {
         <div className="flex-1 overflow-auto p-3 sm:p-6">
           <div className="mb-4">
             <div className="flex items-center justify-between">
-              <h1 className="text-xl font-semibold text-stone-800 dark:text-stone-100">
-                GreenStalk Planner
-              </h1>
+              <div className="flex items-center gap-2">
+                <h1 className="text-xl font-semibold text-stone-800 dark:text-stone-100">
+                  GreenStalk Planner
+                </h1>
+                <button
+                  onClick={() => usePlannerStore.getState().toggleLock()}
+                  className={`px-2 py-1 text-xs rounded-lg border transition-all ${
+                    locked
+                      ? 'bg-emerald-100 dark:bg-emerald-900/30 border-emerald-300 dark:border-emerald-700 text-emerald-700 dark:text-emerald-400'
+                      : 'bg-stone-50 dark:bg-stone-700 border-stone-200 dark:border-stone-600 text-stone-400 hover:text-stone-600'
+                  }`}
+                  title={locked ? 'Unlock to edit' : 'Lock to prevent changes'}
+                >
+                  {locked ? '🔒 Locked' : '🔓'}
+                </button>
+              </div>
               <button
                 onClick={handleAutoPopulate}
-                className="shimmer relative overflow-hidden px-4 py-2 text-xs font-semibold bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white rounded-full shadow-lg shadow-emerald-500/20 transition-all duration-200 flex items-center gap-1.5"
+                disabled={locked}
+                className={`shimmer relative overflow-hidden px-4 py-2 text-xs font-semibold rounded-full shadow-lg transition-all duration-200 flex items-center gap-1.5 ${
+                  locked
+                    ? 'bg-stone-300 dark:bg-stone-600 text-stone-500 dark:text-stone-400 cursor-not-allowed shadow-none'
+                    : 'bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white shadow-emerald-500/20'
+                }`}
               >
                 <span>✨</span> Auto-Populate
               </button>

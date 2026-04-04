@@ -84,7 +84,9 @@ interface PlannerStore {
   towers: Tower[];
   raisedBeds: never[];
   settings: Settings;
+  locked: boolean;
 
+  toggleLock: () => void;
   assignPlant: (
     towerId: string,
     tierNumber: number,
@@ -113,8 +115,14 @@ export const usePlannerStore = create<PlannerStore>((set, get) => {
     towers: initial.towers,
     raisedBeds: [],
     settings: initial.settings,
+    locked: false,
+
+    toggleLock: () => {
+      set((state) => ({ locked: !state.locked }));
+    },
 
     assignPlant: (towerId, tierNumber, pocketIndex, slug) => {
+      if (get().locked) return;
       set((state) => {
         const towers = state.towers.map((tower) => {
           if (tower.id !== towerId) return tower;
@@ -143,6 +151,7 @@ export const usePlannerStore = create<PlannerStore>((set, get) => {
     },
 
     removePlant: (towerId, tierNumber, pocketIndex) => {
+      if (get().locked) return;
       set((state) => {
         const towers = state.towers.map((tower) => {
           if (tower.id !== towerId) return tower;
@@ -178,6 +187,7 @@ export const usePlannerStore = create<PlannerStore>((set, get) => {
     },
 
     clearTower: (towerId) => {
+      if (get().locked) return;
       set((state) => {
         const towers = state.towers.map((tower) => {
           if (tower.id !== towerId) return tower;

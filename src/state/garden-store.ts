@@ -213,7 +213,9 @@ interface GardenStore {
   showSpacingWarnings: boolean;
   showRotationWarnings: boolean;
   rotationHistory: RotationHistory;
+  locked: boolean;
 
+  toggleLock: () => void;
   setTool: (tool: CellType) => void;
   paintCell: (row: number, col: number) => void;
   paintArea: (row: number, col: number, size: number) => void;
@@ -241,6 +243,7 @@ export const useGardenStore = create<GardenStore>((set, get) => {
   return {
     garden: initial,
     activeTool: 'veg-patch',
+    locked: false,
     selectedMonth: new Date().getMonth() + 1,
     selectedHour: 12,
     showSunOverlay: false,
@@ -250,9 +253,12 @@ export const useGardenStore = create<GardenStore>((set, get) => {
     showRotationWarnings: true,
     rotationHistory: loadRotationHistory(),
 
+    toggleLock: () => set((state) => ({ locked: !state.locked })),
+
     setTool: (tool) => set({ activeTool: tool }),
 
     paintCell: (row, col) => {
+      if (get().locked) return;
       set((state) => {
         const garden = { ...state.garden };
         const cells = garden.cells.map((r) => r.map((c) => ({ ...c })));
@@ -270,6 +276,7 @@ export const useGardenStore = create<GardenStore>((set, get) => {
     },
 
     paintArea: (row, col, size) => {
+      if (get().locked) return;
       set((state) => {
         const garden = { ...state.garden };
         const cells = garden.cells.map((r) => r.map((c) => ({ ...c })));
@@ -287,6 +294,7 @@ export const useGardenStore = create<GardenStore>((set, get) => {
     },
 
     plantInCell: (row, col, slug) => {
+      if (get().locked) return;
       set((state) => {
         const garden = { ...state.garden };
         const cells = garden.cells.map((r) => r.map((c) => ({ ...c })));

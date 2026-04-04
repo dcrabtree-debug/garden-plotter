@@ -1,6 +1,10 @@
 import { useRef, useState } from 'react';
 import { usePlannerStore } from '../state/planner-store';
+import { usePlantDb } from '../data/use-plant-db';
+import { useRegion } from '../data/use-region';
 import { useDarkMode } from '../hooks/use-dark-mode';
+import { ESHER_ZONES, recommendPlantsForZone } from '../lib/microclimate-zones';
+import { assessRenterRisk } from '../lib/renter-mode';
 
 const LOCATION_PRESETS = [
   {
@@ -22,6 +26,81 @@ const LOCATION_PRESETS = [
     zone: 'USDA 10b-11a',
   },
 ];
+
+function MicroclimateZonesSection() {
+  const region = useRegion();
+  const { plants } = usePlantDb(region);
+  const [expandedZone, setExpandedZone] = useState<string | null>(null);
+
+  return (
+    <div className="bg-white dark:bg-stone-800 rounded-2xl shadow-sm border border-stone-200 dark:border-stone-700 p-5">
+      <h2 className="text-sm font-semibold text-stone-700 dark:text-stone-300 mb-1">
+        🗺️ Microclimate Zones — 21 Esher Avenue
+      </h2>
+      <p className="text-[10px] text-stone-400 mb-3">
+        Each zone has different sun, shelter, and frost conditions. Tap a zone to see which plants fit best.
+      </p>
+      <div className="space-y-2">
+        {ESHER_ZONES.map((zone) => {
+          const isExpanded = expandedZone === zone.id;
+          const recs = isExpanded ? recommendPlantsForZone(zone, plants) : [];
+          const idealCount = recs.filter((r) => r.fit === 'ideal').length;
+          const goodCount = recs.filter((r) => r.fit === 'good').length;
+
+          return (
+            <div key={zone.id}>
+              <button
+                onClick={() => setExpandedZone(isExpanded ? null : zone.id)}
+                className={`w-full text-left px-3 py-2.5 rounded-xl border transition-colors ${
+                  isExpanded
+                    ? 'border-emerald-300 dark:border-emerald-700 bg-emerald-50 dark:bg-emerald-900/20'
+                    : 'border-stone-100 dark:border-stone-700 bg-stone-50 dark:bg-stone-700/50 hover:border-stone-200'
+                }`}
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="text-lg">{zone.emoji}</span>
+                    <div>
+                      <div className="text-xs font-semibold text-stone-800 dark:text-stone-200">{zone.name}</div>
+                      <div className="text-[10px] text-stone-400">
+                        {zone.sunHoursEstimate}h sun · {zone.shelterLevel} shelter · {zone.frostProtection ? 'Frost-free' : 'No frost protection'}
+                      </div>
+                    </div>
+                  </div>
+                  <span className="text-stone-400 text-xs">{isExpanded ? '▼' : '▶'}</span>
+                </div>
+              </button>
+              {isExpanded && (
+                <div className="mt-1.5 ml-8 space-y-1">
+                  <p className="text-[10px] text-stone-500 mb-2">{zone.description}</p>
+                  <div className="text-[10px] text-stone-400 mb-1.5">
+                    {idealCount} ideal · {goodCount} good · {recs.length} total matches
+                  </div>
+                  <div className="max-h-48 overflow-y-auto space-y-0.5">
+                    {recs.slice(0, 15).map((rec) => (
+                      <div key={rec.plant.slug} className="flex items-center gap-2 px-2 py-1 rounded-lg bg-stone-50 dark:bg-stone-700/30">
+                        <span className="text-sm">{rec.plant.emoji}</span>
+                        <span className="text-[10px] font-medium text-stone-700 dark:text-stone-200 flex-1 truncate">{rec.plant.commonName}</span>
+                        <span className={`text-[8px] px-1.5 py-0.5 rounded-full font-semibold ${
+                          rec.fit === 'ideal' ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300' :
+                          rec.fit === 'good' ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300' :
+                          'bg-stone-100 dark:bg-stone-600 text-stone-500 dark:text-stone-300'
+                        }`}>{rec.fit}</span>
+                      </div>
+                    ))}
+                    {recs.length > 15 && (
+                      <div className="text-[9px] text-stone-400 px-2">+{recs.length - 15} more</div>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
 
 export function SettingsPage() {
   const exportState = usePlannerStore((s) => s.exportState);
@@ -161,6 +240,32 @@ export function SettingsPage() {
             </div>
           )}
         </div>
+
+        {/* Renter Mode */}
+        <div className="bg-white dark:bg-stone-800 rounded-2xl shadow-sm border border-stone-200 dark:border-stone-700 p-5">
+          <h2 className="text-sm font-semibold text-stone-700 dark:text-stone-300 mb-3">
+            🏠 Renter Mode
+          </h2>
+          <div className="flex items-center justify-between mb-3">
+            <div>
+              <div className="text-sm text-stone-700 dark:text-stone-300">Renter-Safe Filtering</div>
+              <div className="text-xs text-stone-400">
+                Warns about plants that need permanent structures, stain paving, or spread invasively
+              </div>
+            </div>
+            <div className="px-3 py-1 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 text-xs font-semibold">
+              Always On
+            </div>
+          </div>
+          <div className="text-[10px] text-stone-400 space-y-1">
+            <p>🟢 <strong>Safe:</strong> Container-grown, fully reversible — GreenStalk pockets, pots, window boxes</p>
+            <p>🟡 <strong>Caution:</strong> Invasive species (mint, lemon balm) — keep in containers only</p>
+            <p>🔴 <strong>Risky:</strong> Needs permanent planting or structures — get landlord permission first</p>
+          </div>
+        </div>
+
+        {/* Microclimate Zones */}
+        <MicroclimateZonesSection />
 
         {/* Export / Import */}
         <div className="bg-white dark:bg-stone-800 rounded-2xl shadow-sm border border-stone-200 dark:border-stone-700 p-5">

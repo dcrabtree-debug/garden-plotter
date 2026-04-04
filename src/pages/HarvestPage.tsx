@@ -4,6 +4,7 @@ import { usePlannerStore } from '../state/planner-store';
 import { useGardenStore } from '../state/garden-store';
 import { usePlantDb } from '../data/use-plant-db';
 import { useRegion } from '../data/use-region';
+import { getGrowthProgress, calculateBadges, type Badge } from '../lib/kid-engagement';
 import type { Harvester } from '../types/harvest';
 import type { Plant } from '../types/plant';
 
@@ -555,6 +556,171 @@ function Scoreboard() {
   );
 }
 
+// ─── Growth Tracker (kid-friendly plant progress) ────────────────────────────
+
+function GrowthTracker() {
+  const towers = usePlannerStore((s) => s.towers);
+  const region = useRegion();
+  const { plantMap } = usePlantDb(region);
+
+  const plantedItems = useMemo(() => {
+    const items: { plant: Plant; plantedDate: string; source: string }[] = [];
+    for (const tower of towers) {
+      for (const tier of tower.tiers) {
+        for (const pocket of tier.pockets) {
+          if (!pocket.plantSlug || !pocket.plantedDate) continue;
+          const plant = plantMap.get(pocket.plantSlug);
+          if (plant) {
+            // De-dupe by slug
+            if (!items.find((i) => i.plant.slug === plant.slug)) {
+              items.push({ plant, plantedDate: pocket.plantedDate, source: `${tower.name}, Tier ${tier.tierNumber}` });
+            }
+          }
+        }
+      }
+    }
+    return items;
+  }, [towers, plantMap]);
+
+  if (plantedItems.length === 0) return null;
+
+  return (
+    <div className="bg-gradient-to-br from-emerald-900/20 to-emerald-950/10 rounded-2xl shadow-lg border border-emerald-700/30 p-5">
+      <h2 className="text-lg font-bold text-stone-800 dark:text-stone-200 flex items-center gap-2 mb-3">
+        <span>🌱</span> How are my plants growing?
+      </h2>
+      <div className="space-y-2.5">
+        {plantedItems.map(({ plant, plantedDate }) => {
+          const progress = getGrowthProgress(plantedDate, plant.daysToHarvest, plant.commonName);
+          return (
+            <div key={plant.slug} className="bg-white/10 dark:bg-stone-800/50 rounded-xl px-3 py-2.5 border border-stone-700/30">
+              <div className="flex items-center gap-2 mb-1.5">
+                <span className="text-xl">{progress.stageEmoji}</span>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-semibold text-stone-200">{plant.emoji} {plant.commonName}</span>
+                    <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-stone-700 text-stone-300">{progress.stageName}</span>
+                  </div>
+                </div>
+                <div className="text-right">
+                  {progress.daysRemaining > 0 ? (
+                    <span className="text-xs font-bold text-amber-400">{progress.daysRemaining}d</span>
+                  ) : (
+                    <span className="text-xs font-bold text-emerald-400">Ready! 🎉</span>
+                  )}
+                </div>
+              </div>
+              {/* Progress bar */}
+              <div className="h-2 bg-stone-700/50 rounded-full overflow-hidden mb-1.5">
+                <div
+                  className={`h-full rounded-full transition-all duration-500 ${
+                    progress.progressPct >= 95 ? 'bg-emerald-400' :
+                    progress.progressPct >= 75 ? 'bg-amber-400' :
+                    progress.progressPct >= 50 ? 'bg-blue-400' :
+                    'bg-stone-400'
+                  }`}
+                  style={{ width: `${progress.progressPct}%` }}
+                />
+              </div>
+              {/* Kid message */}
+              <p className="text-[10px] text-stone-400 italic">{progress.message}</p>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+// ─── Achievement Badges ──────────────────────────────────────────────────────
+
+function BadgesSection() {
+  const { harvesters } = useHarvestStore();
+
+  const stats = useMemo(() => {
+    let totalHarvests = 0;
+    const harvestedSlugs = new Set<string>();
+    const uniquePlants = new Set<string>();
+
+    for (const h of harvesters) {
+      for (const log of h.log) {
+        totalHarvests += log.count;
+        harvestedSlugs.add(log.plantSlug);
+        uniquePlants.add(log.plantSlug);
+      }
+    }
+
+    // Approximate days gardening from log dates
+    const dates = new Set<string>();
+    for (const h of harvesters) {
+      for (const log of h.log) {
+        dates.add(log.date.split('T')[0]);
+      }
+    }
+
+    return { totalHarvests, harvestedSlugs, uniquePlants, daysGardening: dates.size };
+  }, [harvesters]);
+
+  const badges = calculateBadges(
+    stats.totalHarvests,
+    stats.uniquePlants,
+    stats.daysGardening,
+    stats.harvestedSlugs
+  );
+
+  const unlocked = badges.filter((b) => b.unlocked);
+  const locked = badges.filter((b) => !b.unlocked);
+
+  return (
+    <div className="bg-gradient-to-br from-amber-900/20 to-amber-950/10 rounded-2xl shadow-lg border border-amber-700/30 p-5">
+      <h2 className="text-lg font-bold text-stone-800 dark:text-stone-200 flex items-center gap-2 mb-3">
+        <span>🏆</span> Badges
+        <span className="text-xs font-normal text-stone-400">
+          {unlocked.length}/{badges.length} unlocked
+        </span>
+      </h2>
+
+      {/* Unlocked badges */}
+      {unlocked.length > 0 && (
+        <div className="flex flex-wrap gap-2 mb-3">
+          {unlocked.map((badge) => (
+            <div
+              key={badge.id}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-100 dark:bg-amber-800/30 border border-amber-300 dark:border-amber-700"
+            >
+              <span className="text-lg">{badge.emoji}</span>
+              <div>
+                <div className="text-[10px] font-bold text-amber-800 dark:text-amber-200">{badge.name}</div>
+                <div className="text-[8px] text-amber-600 dark:text-amber-400">{badge.description}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Locked badges with progress */}
+      <div className="grid grid-cols-2 gap-2">
+        {locked.map((badge) => (
+          <div
+            key={badge.id}
+            className="flex items-center gap-2 px-2.5 py-2 rounded-xl bg-stone-800/50 border border-stone-700/50 opacity-60"
+          >
+            <span className="text-lg grayscale">{badge.emoji}</span>
+            <div className="flex-1 min-w-0">
+              <div className="text-[10px] font-medium text-stone-400">{badge.name}</div>
+              {badge.progress !== undefined && badge.target && (
+                <div className="h-1 bg-stone-700 rounded-full mt-0.5 overflow-hidden">
+                  <div className="h-full bg-stone-500 rounded-full" style={{ width: `${badge.progress * 100}%` }} />
+                </div>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export function HarvestPage() {
   const { harvesters } = useHarvestStore();
   const harvestSectionRef = useRef<HTMLDivElement>(null);
@@ -603,6 +769,12 @@ export function HarvestPage() {
             <HarvesterSection key={h.id} harvester={h} />
           ))}
         </div>
+
+        {/* Growth Tracker */}
+        <GrowthTracker />
+
+        {/* Badges */}
+        <BadgesSection />
 
         {/* Bottom panels */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

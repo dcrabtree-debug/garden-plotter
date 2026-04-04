@@ -5841,5 +5841,326 @@
     "sources": [
       "https://www.rhs.org.uk/herbs/lemon-verbena/grow-your-own"
     ]
+  },
+  {
+    "slug": "dwarf-olive",
+    "commonName": "Dwarf Olive",
+    "botanicalName": "Olea europaea (compact)",
+    "category": "fruit",
+    "emoji": "🫒",
+    "sun": "partial-shade",
+    "water": "low",
+    "spacingCm": 80,
+    "depthCm": 20,
+    "growthHabit": "bushy",
+    "daysToHarvest": [365, 730],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": null,
+      "transplant": [4, 5],
+      "harvest": [9, 11]
+    },
+    "hardiness": "H4",
+    "soil": {
+      "phRange": [6.5, 8],
+      "type": "Well-drained, tolerates poor soil",
+      "notes": "Excellent in pots. Tolerates clay if drainage is good. Drought-tolerant once established."
+    },
+    "inGround": {
+      "rowSpacingCm": 100,
+      "plantSpacingCm": 80,
+      "sowDepthCm": 20,
+      "bedType": "either",
+      "expectedYieldPerM2": "Ornamental; may fruit in warm conservatory",
+      "rotation": "permanent",
+      "feeding": "Balanced liquid feed monthly spring-summer",
+      "pests": ["scale insect"],
+      "diseases": [],
+      "commonProblems": "Needs winter protection below -5°C. May not fruit in UK without warm conservatory or south wall."
+    },
+    "greenstalkSuitability": "unsuitable",
+    "greenstalkNotes": "Too large and slow-growing for GreenStalk. Best in a large pot in the conservatory or on a sunny patio.",
+    "idealTiers": [],
+    "varieties": [
+      {
+        "name": "Arbequina",
+        "notes": "Compact, self-fertile, most likely to fruit in UK conservatory",
+        "containerFriendly": true
+      },
+      {
+        "name": "Cipressino",
+        "notes": "Narrow columnar habit, architectural, very hardy",
+        "containerFriendly": true
+      }
+    ],
+    "notes": "Beautiful architectural plant for a conservatory or sheltered patio. Evergreen silver-green leaves. Tolerates filtered light better than citrus. May produce small olives in a warm conservatory after 3-5 years. Hardy to -10°C when established.",
+    "sources": [
+      "https://www.rhs.org.uk/plants/olives/grow-your-own"
+    ]
+  },
+  {
+    "slug": "dwarf-lemon",
+    "commonName": "Dwarf Lemon",
+    "botanicalName": "Citrus × limon (dwarf)",
+    "category": "fruit",
+    "emoji": "🍋",
+    "sun": "full-sun",
+    "water": "moderate",
+    "spacingCm": 80,
+    "depthCm": 20,
+    "growthHabit": "bushy",
+    "daysToHarvest": [180, 365],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": null,
+      "transplant": [5, 6],
+      "harvest": [10, 3]
+    },
+    "hardiness": "H2",
+    "soil": {
+      "phRange": [5.5, 6.5],
+      "type": "Ericaceous, well-drained",
+      "notes": "Use citrus-specific compost. Needs acidic soil — do NOT use garden soil or multi-purpose."
+    },
+    "inGround": {
+      "rowSpacingCm": 100,
+      "plantSpacingCm": 80,
+      "sowDepthCm": 20,
+      "bedType": "raised",
+      "expectedYieldPerM2": "10-20 lemons/year in ideal conditions",
+      "rotation": "permanent",
+      "feeding": "Citrus feed fortnightly spring-summer, monthly autumn-winter",
+      "pests": ["scale insect", "mealybug", "red spider mite"],
+      "diseases": [],
+      "commonProblems": "Needs minimum 10°C in winter — conservatory essential in Surrey. Leaf drop if temperature fluctuates. Yellow leaves = overwatering or iron deficiency."
+    },
+    "greenstalkSuitability": "unsuitable",
+    "greenstalkNotes": "Too large and requires specific citrus compost. Must overwinter in conservatory.",
+    "idealTiers": [],
+    "varieties": [
+      {
+        "name": "Meyer",
+        "notes": "Most cold-tolerant citrus, sweeter fruit, compact — best for UK conservatory",
+        "containerFriendly": true
+      },
+      {
+        "name": "Improved Dwarf",
+        "notes": "Stays under 1.5m in pot, fruits reliably in warm conservatory",
+        "containerFriendly": true
+      }
+    ],
+    "notes": "Challenging but rewarding in a Surrey conservatory. Needs 6+ hours of light (supplement with grow light in winter). Move outside to sunny patio May-September. Fragrant flowers are a bonus. Meyer lemon is the most forgiving variety for UK conditions.",
+    "sources": [
+      "https://www.rhs.org.uk/plants/citrus/grow-your-own"
+    ]
+  },
+  {
+    "slug": "fern-hardy",
+    "commonName": "Hardy Fern",
+    "botanicalName": "Dryopteris filix-mas",
+    "category": "flower",
+    "emoji": "🌿",
+    "sun": "full-shade",
+    "water": "moderate",
+    "spacingCm": 45,
+    "depthCm": 10,
+    "growthHabit": "rosette",
+    "daysToHarvest": [90, 120],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": null,
+      "transplant": [3, 5],
+      "harvest": [4, 10]
+    },
+    "hardiness": "H7",
+    "soil": {
+      "phRange": [5, 7],
+      "type": "Moist, humus-rich",
+      "notes": "Thrives in shade and damp conditions. Add leaf mould or compost."
+    },
+    "inGround": {
+      "rowSpacingCm": 50,
+      "plantSpacingCm": 45,
+      "sowDepthCm": 5,
+      "bedType": "either",
+      "expectedYieldPerM2": "Ornamental — fills shady gaps beautifully",
+      "rotation": "permanent",
+      "feeding": "Mulch annually with leaf mould",
+      "pests": [],
+      "diseases": [],
+      "commonProblems": "None — one of the most trouble-free garden plants. Deciduous but reliable."
+    },
+    "greenstalkSuitability": "unsuitable",
+    "greenstalkNotes": "Too large and shade-dependent for GreenStalk.",
+    "idealTiers": [],
+    "varieties": [
+      {
+        "name": "Male Fern",
+        "notes": "Shuttlecock form, 90cm tall, bombproof reliable",
+        "containerFriendly": true
+      },
+      {
+        "name": "Polystichum setiferum",
+        "notes": "Soft shield fern — evergreen, elegant arching fronds",
+        "containerFriendly": true
+      }
+    ],
+    "notes": "Perfect for the darkest corners of a conservatory or shady border. Requires zero sun. Elegant architectural foliage. Native to UK — fully hardy and maintenance-free.",
+    "sources": [
+      "https://www.rhs.org.uk/plants/ferns"
+    ]
+  },
+  {
+    "slug": "comfrey",
+    "commonName": "Comfrey",
+    "botanicalName": "Symphytum × uplandicum",
+    "category": "herb",
+    "emoji": "🌱",
+    "sun": "partial-shade",
+    "water": "moderate",
+    "spacingCm": 60,
+    "depthCm": 10,
+    "growthHabit": "bushy",
+    "daysToHarvest": [60, 90],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": [3, 5],
+      "transplant": [3, 5],
+      "harvest": [5, 10]
+    },
+    "hardiness": "H7",
+    "soil": {
+      "phRange": [5, 7.5],
+      "type": "Any — thrives in clay",
+      "notes": "Grows in almost any soil including heavy clay. Deep roots break up compacted subsoil and mine minerals."
+    },
+    "inGround": {
+      "rowSpacingCm": 80,
+      "plantSpacingCm": 60,
+      "sowDepthCm": 5,
+      "bedType": "either",
+      "expectedYieldPerM2": "4-5 cuts of leaves per season for mulch/feed",
+      "rotation": "permanent",
+      "feeding": "None needed — it feeds everything else",
+      "pests": [],
+      "diseases": [],
+      "commonProblems": "Extremely vigorous — very difficult to remove once established. Use Bocking 14 cultivar (sterile, no self-seeding). GROW IN A POT if renting."
+    },
+    "greenstalkSuitability": "unsuitable",
+    "greenstalkNotes": "Far too large and vigorous for GreenStalk. Grow in a large pot or dedicated corner.",
+    "idealTiers": [],
+    "varieties": [
+      {
+        "name": "Bocking 14",
+        "notes": "Sterile cultivar — won't self-seed. THE one to grow. High potassium leaves.",
+        "containerFriendly": true
+      }
+    ],
+    "notes": "The ultimate soil improver. Deep taproot mines potassium, nitrogen, and phosphorus from subsoil. Cut leaves 4-5 times/season for: (1) liquid feed — steep in water for 4 weeks, (2) mulch around tomatoes and fruit, (3) compost activator. MUST grow Bocking 14 cultivar (sterile). RENTER WARNING: Grow in a large pot — near-impossible to remove from ground.",
+    "sources": [
+      "https://www.rhs.org.uk/soil-composts-mulches/comfrey"
+    ]
+  },
+  {
+    "slug": "crimson-clover",
+    "commonName": "Crimson Clover",
+    "botanicalName": "Trifolium incarnatum",
+    "category": "flower",
+    "emoji": "🍀",
+    "sun": "full-sun",
+    "water": "low",
+    "spacingCm": 15,
+    "depthCm": 5,
+    "growthHabit": "spreading",
+    "daysToHarvest": [60, 90],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": [3, 5],
+      "transplant": null,
+      "harvest": [5, 10]
+    },
+    "hardiness": "H5",
+    "soil": {
+      "phRange": [5.5, 7.5],
+      "type": "Any — improves all soil types",
+      "notes": "Fixes atmospheric nitrogen into the soil. Dig in before flowering as green manure."
+    },
+    "inGround": {
+      "rowSpacingCm": 20,
+      "plantSpacingCm": 15,
+      "sowDepthCm": 1,
+      "bedType": "either",
+      "expectedYieldPerM2": "Green manure — adds ~50g nitrogen per m² when dug in",
+      "rotation": "legumes",
+      "feeding": "None needed — it IS the feed",
+      "pests": [],
+      "diseases": [],
+      "commonProblems": "Can become invasive if allowed to self-seed. Cut and dig in before seed heads form."
+    },
+    "greenstalkSuitability": "marginal",
+    "greenstalkNotes": "Can be used as a winter cover crop in empty GreenStalk pockets to fix nitrogen between seasons.",
+    "idealTiers": [3, 4, 5],
+    "varieties": [
+      {
+        "name": "Common Crimson",
+        "notes": "Beautiful red flower spikes. Sow autumn for spring nitrogen boost.",
+        "containerFriendly": true
+      }
+    ],
+    "notes": "Sow as a green manure after clearing summer crops. Fixes nitrogen from the air into the soil via root nodules. Dig in before flowering (about 8 weeks after sowing). Beautiful crimson flower spikes attract pollinators. Also works as a winter cover crop in GreenStalk pockets between seasons.",
+    "sources": [
+      "https://www.rhs.org.uk/soil-composts-mulches/green-manures"
+    ]
+  },
+  {
+    "slug": "phacelia",
+    "commonName": "Phacelia",
+    "botanicalName": "Phacelia tanacetifolia",
+    "category": "flower",
+    "emoji": "💜",
+    "sun": "full-sun",
+    "water": "low",
+    "spacingCm": 15,
+    "depthCm": 5,
+    "growthHabit": "upright",
+    "daysToHarvest": [45, 60],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": [3, 9],
+      "transplant": null,
+      "harvest": [5, 10]
+    },
+    "hardiness": "H3",
+    "soil": {
+      "phRange": [5.5, 8],
+      "type": "Any — improves soil structure",
+      "notes": "Dense root network breaks up compacted soil and improves drainage. Excellent for clay."
+    },
+    "inGround": {
+      "rowSpacingCm": 20,
+      "plantSpacingCm": 15,
+      "sowDepthCm": 1,
+      "bedType": "either",
+      "expectedYieldPerM2": "Green manure — improves soil structure, attracts beneficial insects",
+      "rotation": "any",
+      "feeding": "None needed",
+      "pests": [],
+      "diseases": [],
+      "commonProblems": "Frost-tender (H3) — dies back in autumn which is ideal for digging in as green manure."
+    },
+    "greenstalkSuitability": "marginal",
+    "greenstalkNotes": "Quick filler for empty pockets — attracts pollinators to the tower.",
+    "idealTiers": [3, 4, 5],
+    "varieties": [
+      {
+        "name": "Common Phacelia",
+        "notes": "Lavender-blue flowers, the #1 bee plant in the UK",
+        "containerFriendly": true
+      }
+    ],
+    "notes": "The single best green manure for Surrey clay soil. Grows fast (6-8 weeks to flower), breaks up compacted clay with its dense root network, and is THE top-rated bee and pollinator plant in the UK. Not related to any vegetable family so fits anywhere in crop rotation. Sow on any bare soil March-September, dig in before flowering or let it bloom for the bees.",
+    "sources": [
+      "https://www.rhs.org.uk/soil-composts-mulches/green-manures"
+    ]
   }
 ]

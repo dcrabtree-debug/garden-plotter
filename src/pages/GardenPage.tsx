@@ -33,6 +33,7 @@ const CELL_TOOLS: { type: CellType; label: string; color: string; emoji: string 
   { type: 'flower-bed', label: 'Flower Bed', color: '#e91e63', emoji: '\ud83c\udf3a' },
   { type: 'raised-bed', label: 'Raised Bed', color: '#795548', emoji: '\ud83e\udea8' },
   { type: 'greenstalk', label: 'GreenStalk', color: '#10b981', emoji: '\ud83c\udf31' },
+  { type: 'conservatory', label: 'Conservatory', color: '#80cbc4', emoji: '\ud83c\udfe1' },
   { type: 'patio', label: 'Patio', color: '#9e9e9e', emoji: '\ud83e\uddf1' },
   { type: 'path', label: 'Path', color: '#bcaaa4', emoji: '\ud83d\udeb6' },
   { type: 'tree', label: 'Tree', color: '#2e7d32', emoji: '\ud83c\udf33' },
@@ -48,6 +49,7 @@ const CELL_COLORS: Record<CellType, string> = {
   'veg-patch': '#8d6e63',
   'flower-bed': '#f48fb1',
   greenstalk: '#10b981',
+  conservatory: '#80cbc4',
   patio: '#bdbdbd',
   path: '#d7ccc8',
   tree: '#2e7d32',
@@ -308,7 +310,7 @@ export function GardenPage() {
     (row: number, col: number) => {
       if (plantToPlace) {
         const cell = cells[row]?.[col];
-        if (cell && (cell.type === 'veg-patch' || cell.type === 'raised-bed' || cell.type === 'flower-bed')) {
+        if (cell && (cell.type === 'veg-patch' || cell.type === 'raised-bed' || cell.type === 'flower-bed' || cell.type === 'conservatory')) {
           useGardenStore.getState().plantInCell(row, col, plantToPlace.slug);
         }
       } else {
@@ -981,7 +983,7 @@ export function GardenPage() {
                       border-r border-b border-stone-200/30 cursor-crosshair
                       flex items-center justify-center
                       hover:brightness-110 transition-colors duration-75
-                      ${plantToPlace && (cell.type === 'veg-patch' || cell.type === 'raised-bed' || cell.type === 'flower-bed') ? 'hover:ring-1 ring-inset ring-emerald-400' : ''}
+                      ${plantToPlace && (cell.type === 'veg-patch' || cell.type === 'raised-bed' || cell.type === 'flower-bed' || cell.type === 'conservatory') ? 'hover:ring-1 ring-inset ring-emerald-400' : ''}
                     `}
                     title={(() => {
                       const base = plant

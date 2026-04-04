@@ -71,11 +71,19 @@ export function createEsherGarden(): { config: GardenConfig; cells: GardenCell[]
   }
 
   // ── Conservatory (NW corner: rows 0-2, cols 0-5) ──
+  // Victorian-style glass, faces SW — filtered light, frost-free in winter
   for (let r = 0; r <= 2; r++) {
     for (let c = 0; c <= 5; c++) {
-      overrides.push({ row: r, col: c, type: 'patio', label: 'Conservatory' });
+      overrides.push({ row: r, col: c, type: 'conservatory', label: 'Conservatory' });
     }
   }
+  // Pre-populate conservatory with suitable plants
+  overrides.push({ row: 1, col: 1, type: 'conservatory', plantSlug: 'dwarf-lemon', label: 'Conservatory' });
+  overrides.push({ row: 1, col: 3, type: 'conservatory', plantSlug: 'dwarf-olive', label: 'Conservatory' });
+  overrides.push({ row: 1, col: 5, type: 'conservatory', plantSlug: 'fern-hardy', label: 'Conservatory' });
+  overrides.push({ row: 2, col: 1, type: 'conservatory', plantSlug: 'basil-sweet', label: 'Conservatory' });
+  overrides.push({ row: 2, col: 3, type: 'conservatory', plantSlug: 'mint', label: 'Conservatory' });
+  overrides.push({ row: 2, col: 5, type: 'conservatory', plantSlug: 'parsley', label: 'Conservatory' });
 
   // ── Left fence border (col 0, rows 3-18) ──
   for (let r = 3; r <= 18; r++) {
@@ -203,6 +211,7 @@ export interface EsherLayoutOption {
 }
 
 function zoneLabel(row: number, col: number): string {
+  if (row <= 2 && col <= 5) return 'Conservatory (filtered light, frost-free)';
   if (row >= 21 && row <= 22 && col >= 7 && col <= 12) return 'Raised bed (partial shade, near hedge)';
   if (col >= 18) return 'Right fence border';
   if (col === 0) return 'Left fence border';

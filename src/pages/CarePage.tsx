@@ -224,6 +224,43 @@ const HARDEN_STEPS: HardenStep[] = [
   { days: 'Days 13–14', exposure: 'Overnight (>5°C)', hours: 'Continuous', location: 'Ready to plant!' },
 ];
 
+// ─── Late Start mode (compressed first season 2026) ──────────────────────────
+
+interface LateStartCrop {
+  slug: string;
+  name: string;
+  emoji: string;
+  method: 'transplant' | 'direct-sow' | 'buy-plant';
+  daysToHarvest: number;
+  lastViableSowing: string; // "mid-May", "end-June" etc
+  firstHarvest: string;
+  confidence: 'safe' | 'tight' | 'risky';
+  tip: string;
+}
+
+const LATE_START_CROPS_UK: LateStartCrop[] = [
+  // SAFE — guaranteed harvest from late May start
+  { slug: 'radish', name: 'Radish', emoji: '🥕', method: 'direct-sow', daysToHarvest: 25, lastViableSowing: 'end Jul', firstHarvest: 'late Jun', confidence: 'safe', tip: 'Fastest crop. Sow direct late May, harvest late June. Succession sow every 10 days.' },
+  { slug: 'lettuce', name: 'Lettuce', emoji: '🥬', method: 'direct-sow', daysToHarvest: 30, lastViableSowing: 'end Jul', firstHarvest: 'early Jul', confidence: 'safe', tip: 'Cut-and-come-again varieties. First leaves in 4 weeks. Sow succession every 2 weeks.' },
+  { slug: 'rocket', name: 'Rocket', emoji: '🥬', method: 'direct-sow', daysToHarvest: 28, lastViableSowing: 'Sep', firstHarvest: 'late Jun', confidence: 'safe', tip: 'Even faster than lettuce. Direct sow, harvest in under 4 weeks.' },
+  { slug: 'spring-onion', name: 'Spring Onion', emoji: '🧅', method: 'direct-sow', daysToHarvest: 60, lastViableSowing: 'end Jul', firstHarvest: 'late Jul', confidence: 'safe', tip: 'Direct sow late May. Ready in 8-10 weeks.' },
+  { slug: 'dwarf-french-bean', name: 'French Bean', emoji: '🫘', method: 'direct-sow', daysToHarvest: 50, lastViableSowing: 'mid Jul', firstHarvest: 'mid Jul', confidence: 'safe', tip: 'Direct sow after last frost (mid-May is perfect). Prolific cropper until October frost.' },
+  { slug: 'basil-sweet', name: 'Sweet Basil', emoji: '🌿', method: 'buy-plant', daysToHarvest: 21, lastViableSowing: 'end Jun', firstHarvest: 'mid Jun', confidence: 'safe', tip: 'Buy as plug plants from garden centre. Harvest leaves from 3 weeks after planting.' },
+  { slug: 'chives', name: 'Chives', emoji: '🧅', method: 'buy-plant', daysToHarvest: 14, lastViableSowing: 'anytime', firstHarvest: 'early Jun', confidence: 'safe', tip: 'Buy as a pot from any supermarket. Divide and plant. Perennial — comes back every year.' },
+  { slug: 'thyme', name: 'Thyme', emoji: '🌿', method: 'buy-plant', daysToHarvest: 14, lastViableSowing: 'anytime', firstHarvest: 'early Jun', confidence: 'safe', tip: 'Buy as a plant. Perennial, drought-tolerant — perfect for GreenStalk top tiers.' },
+  { slug: 'nasturtium', name: 'Nasturtium', emoji: '🌸', method: 'direct-sow', daysToHarvest: 45, lastViableSowing: 'end Jun', firstHarvest: 'mid Jul', confidence: 'safe', tip: 'Fast-growing, direct sow. Edible flowers by mid-July. Trap crop for aphids.' },
+  { slug: 'mint', name: 'Mint', emoji: '🌿', method: 'buy-plant', daysToHarvest: 7, lastViableSowing: 'anytime', firstHarvest: 'late May', confidence: 'safe', tip: 'Buy as a pot plant. Harvest immediately. ONLY grow in containers — invasive in ground.' },
+  // TIGHT — will work but needs garden centre transplants, not seed
+  { slug: 'strawberry-everbearing', name: 'Strawberry', emoji: '🍓', method: 'buy-plant', daysToHarvest: 60, lastViableSowing: 'end May', firstHarvest: 'late Jul', confidence: 'tight', tip: 'Buy as bare-root or potted runners from garden centre. First fruit late July from May planting.' },
+  { slug: 'tomato-tumbling', name: 'Tumbling Tom Tomato', emoji: '🍅', method: 'transplant', daysToHarvest: 70, lastViableSowing: 'end May', firstHarvest: 'early Aug', confidence: 'tight', tip: 'Buy as garden centre transplants (NOT seed — too late to start from seed). First ripe fruit early August.' },
+  { slug: 'courgette', name: 'Courgette', emoji: '🥒', method: 'transplant', daysToHarvest: 50, lastViableSowing: 'end May', firstHarvest: 'mid Jul', confidence: 'tight', tip: 'Buy as transplant or direct sow late May. Fast-growing once warm. One plant = 20+ fruits.' },
+  { slug: 'pepper-chilli', name: 'Chilli Pepper', emoji: '🌶️', method: 'transplant', daysToHarvest: 90, lastViableSowing: 'end May', firstHarvest: 'late Aug', confidence: 'tight', tip: 'Must buy as garden centre transplant. Too late from seed. Needs warmest spot available.' },
+  { slug: 'perpetual-spinach', name: 'Spinach', emoji: '🥬', method: 'direct-sow', daysToHarvest: 45, lastViableSowing: 'end Jun', firstHarvest: 'mid Jul', confidence: 'tight', tip: 'Direct sow or buy plugs. Cut-and-come-again for 12+ months.' },
+  // RISKY — possible but challenging for first-year late start
+  { slug: 'runner-bean', name: 'Runner Bean', emoji: '🫘', method: 'direct-sow', daysToHarvest: 65, lastViableSowing: 'mid Jun', firstHarvest: 'late Jul', confidence: 'risky', tip: 'Direct sow late May or buy transplants. Needs tall support (Titan cages or cane wigwam). Tight timeline but possible.' },
+  { slug: 'cucumber', name: 'Cucumber', emoji: '🥒', method: 'transplant', daysToHarvest: 60, lastViableSowing: 'end May', firstHarvest: 'late Jul', confidence: 'risky', tip: 'Buy as transplant. Needs consistently warm weather. Use a Titan cage for support.' },
+];
+
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export function CarePage() {
@@ -365,6 +402,78 @@ export function CarePage() {
               </div>
             </div>
           </div>
+        )}
+
+        {/* 🚀 Late Start Mode (April-June only, UK only) */}
+        {!isUS && selectedMonth >= 4 && selectedMonth <= 6 && (
+          <section className="bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/10 rounded-2xl shadow-sm border border-amber-200 dark:border-amber-800 p-5">
+            <h2 className="text-lg font-semibold text-stone-800 dark:text-stone-100 flex items-center gap-2">
+              <span>🚀</span> Late Start Guide — First Season 2026
+            </h2>
+            <p className="text-xs text-stone-500 dark:text-stone-400 mt-0.5 mb-1">
+              {selectedMonth === 4
+                ? 'Moving in April 15 — no gear until mid-May. Start seeds in conservatory with temporary trays from the garden centre.'
+                : selectedMonth === 5
+                  ? 'GreenStalks arrive mid-May! Set up immediately. Buy transplants for tomatoes, peppers, strawberries — too late to start from seed.'
+                  : 'Last window for direct sowing fast crops. Buy any remaining plants as transplants.'}
+            </p>
+            <p className="text-[10px] text-amber-600 dark:text-amber-400 mb-3 font-medium">
+              {selectedMonth === 4 ? '⏳ 6 weeks until gear arrives' : selectedMonth === 5 ? '🌱 GreenStalks are here — plant everything!' : '⚡ Final sowing window for this season'}
+            </p>
+
+            {(['safe', 'tight', 'risky'] as const).map((confidence) => {
+              const crops = LATE_START_CROPS_UK.filter((c) => c.confidence === confidence);
+              if (crops.length === 0) return null;
+              const label = confidence === 'safe' ? '✅ Safe Bets' : confidence === 'tight' ? '⚡ Tight but Doable' : '⚠️ Risky — Worth a Try';
+              const desc = confidence === 'safe'
+                ? 'Guaranteed harvest from a late-May start'
+                : confidence === 'tight'
+                  ? 'Buy as transplants from garden centre — too late from seed'
+                  : 'Challenging for first year but possible with transplants';
+              return (
+                <div key={confidence} className="mb-4">
+                  <div className="flex items-center gap-2 mb-1.5">
+                    <span className={`text-xs font-bold ${
+                      confidence === 'safe' ? 'text-emerald-700 dark:text-emerald-400' :
+                      confidence === 'tight' ? 'text-amber-700 dark:text-amber-400' :
+                      'text-red-600 dark:text-red-400'
+                    }`}>{label}</span>
+                    <span className="text-[9px] text-stone-400">— {desc}</span>
+                  </div>
+                  <div className="space-y-1.5">
+                    {crops.map((crop) => (
+                      <div key={crop.slug} className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/70 dark:bg-stone-800/70 border border-stone-100 dark:border-stone-700">
+                        <span className="text-base">{crop.emoji}</span>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2">
+                            <span className="text-xs font-medium text-stone-800 dark:text-stone-200">{crop.name}</span>
+                            <span className={`text-[8px] px-1.5 py-0.5 rounded-full font-semibold ${
+                              crop.method === 'buy-plant' ? 'bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-300' :
+                              crop.method === 'transplant' ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300' :
+                              'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300'
+                            }`}>
+                              {crop.method === 'buy-plant' ? 'BUY PLANT' : crop.method === 'transplant' ? 'TRANSPLANT' : 'DIRECT SOW'}
+                            </span>
+                          </div>
+                          <div className="text-[10px] text-stone-400 mt-0.5">{crop.tip}</div>
+                        </div>
+                        <div className="flex-shrink-0 text-right">
+                          <div className="text-[10px] font-semibold text-stone-600 dark:text-stone-300">{crop.daysToHarvest}d</div>
+                          <div className="text-[8px] text-stone-400">→ {crop.firstHarvest}</div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
+
+            <div className="bg-white/50 dark:bg-stone-800/50 rounded-lg p-2.5 mt-2">
+              <p className="text-[10px] text-stone-500 dark:text-stone-400">
+                <strong>Shopping list for garden centre visit (mid-May):</strong> Tumbling Tom tomato transplants × 6, strawberry runners × 12, courgette transplant × 1, basil plugs × 4, chilli transplant × 2, sweet pea plugs × 6. Direct sow: lettuce, radish, rocket, beans, nasturtium, spring onion.
+              </p>
+            </div>
+          </section>
         )}
 
         {/* 🌱 What to sow / plant this month */}

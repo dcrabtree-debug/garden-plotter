@@ -635,31 +635,27 @@ function GrowthTracker() {
 // ─── Achievement Badges ──────────────────────────────────────────────────────
 
 function BadgesSection() {
-  const { harvesters } = useHarvestStore();
+  const entries = useHarvestStore((s) => s.entries);
 
   const stats = useMemo(() => {
     let totalHarvests = 0;
     const harvestedSlugs = new Set<string>();
     const uniquePlants = new Set<string>();
 
-    for (const h of harvesters) {
-      for (const log of h.log) {
-        totalHarvests += log.count;
-        harvestedSlugs.add(log.plantSlug);
-        uniquePlants.add(log.plantSlug);
-      }
+    for (const entry of entries) {
+      totalHarvests += entry.count;
+      harvestedSlugs.add(entry.plantSlug);
+      uniquePlants.add(entry.plantSlug);
     }
 
-    // Approximate days gardening from log dates
+    // Approximate days gardening from entry dates
     const dates = new Set<string>();
-    for (const h of harvesters) {
-      for (const log of h.log) {
-        dates.add(log.date.split('T')[0]);
-      }
+    for (const entry of entries) {
+      dates.add(entry.date.split('T')[0]);
     }
 
     return { totalHarvests, harvestedSlugs, uniquePlants, daysGardening: dates.size };
-  }, [harvesters]);
+  }, [entries]);
 
   const badges = calculateBadges(
     stats.totalHarvests,

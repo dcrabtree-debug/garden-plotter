@@ -1,5 +1,6 @@
 import type { Plant } from '../types/plant';
 import type { CompanionMap } from '../types/companion';
+import type { CrossSystemPairing } from './cross-system-scoring';
 
 export type LayoutStrategy = 'family-harvest' | 'companion-optimal' | 'continuous-harvest';
 
@@ -12,6 +13,12 @@ export interface LayoutOption {
   // Backwards compat getters
   tower1: (string | null)[][];
   tower2: (string | null)[][];
+  bestPairing?: CrossSystemPairing;
+}
+
+/** Extract unique plant slugs from a GreenStalk layout (flattened across all towers). */
+export function extractTowerSlugs(layout: LayoutOption): string[] {
+  return [...new Set(layout.towers.flat(2).filter((s): s is string => s !== null))];
 }
 
 // Helper: fill a tower grid

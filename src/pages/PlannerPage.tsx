@@ -16,7 +16,9 @@ import { usePlannerStore } from '../state/planner-store';
 import { usePlantDb } from '../data/use-plant-db';
 import { useCompanionDb } from '../data/use-companion-db';
 import { useRegion } from '../data/use-region';
-import { generateLayouts, type LayoutOption } from '../lib/auto-populate';
+import { generateLayouts, extractTowerSlugs, type LayoutOption } from '../lib/auto-populate';
+import { generateEsherLayouts } from '../lib/esher-garden-template';
+import { findBestPairing } from '../lib/cross-system-scoring';
 import type { Plant } from '../types/plant';
 
 export function PlannerPage() {
@@ -144,7 +146,24 @@ export function PlannerPage() {
 
   const handleAutoPopulate = useCallback(() => {
     const generated = generateLayouts(plants, companionMap, towers.length);
-    setLayouts(generated);
+    // Compute cross-system pairings with in-ground layouts
+    const esherLayouts = generateEsherLayouts();
+    const esherForPairing = esherLayouts.map((e) => ({
+      id: e.id,
+      name: e.name,
+      slugs: e.placements.map((p) => p.plantSlug),
+    }));
+    const enriched = generated.map((layout) => ({
+      ...layout,
+      bestPairing: findBestPairing(
+        extractTowerSlugs(layout),
+        layout.id,
+        esherForPairing,
+        'in-ground',
+        companionMap
+      ),
+    }));
+    setLayouts(enriched);
     setShowAutoPopulate(true);
   }, [plants, companionMap, towers.length]);
 
@@ -336,6 +355,16 @@ export function PlannerPage() {
                           <span>{totalCount}/{totalPockets} pockets filled</span>
                           <span>{uniquePlants.size} unique plants</span>
                         </div>
+
+                        {/* Best in-ground pairing badge */}
+                        {layout.bestPairing && (
+                          <div className="mt-2 px-2.5 py-1.5 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg text-[10px] text-indigo-700 dark:text-indigo-300 border border-indigo-100 dark:border-indigo-800/30">
+                            <span className="font-semibold">Best in-ground pairing:</span>{' '}
+                            {layout.bestPairing.layoutName}
+                            <span className="text-indigo-400 ml-1">({layout.bestPairing.score.total}/100)</span>
+                            <span className="block mt-0.5 text-indigo-500 dark:text-indigo-400">{layout.bestPairing.score.summary}</span>
+                          </div>
+                        )}
 
                         {/* Preview: show tier contents */}
                         <div className={`mt-3 grid gap-3 ${layout.towers.length <= 2 ? 'grid-cols-2' : layout.towers.length <= 4 ? 'grid-cols-4' : 'grid-cols-3'}`}>

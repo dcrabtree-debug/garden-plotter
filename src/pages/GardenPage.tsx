@@ -6,6 +6,8 @@ import { useCompanionDb } from '../data/use-companion-db';
 import { useRegion } from '../data/use-region';
 import { generateGardenLayouts, type GardenLayoutOption, type PlacementReason } from '../lib/garden-auto-populate';
 import { createEsherGarden, generateEsherLayouts, type EsherLayoutOption } from '../lib/esher-garden-template';
+import { generateLayouts as generateGSLayouts, extractTowerSlugs } from '../lib/auto-populate';
+import { findBestPairing } from '../lib/cross-system-scoring';
 import { checkPair } from '../lib/companion-engine';
 import type { CellType, GardenFacing } from '../types/planner';
 import type { Plant } from '../types/plant';
@@ -137,6 +139,7 @@ export function GardenPage() {
   const [showAutoPopulate, setShowAutoPopulate] = useState(false);
   const [showEsherLayouts, setShowEsherLayouts] = useState(false);
   const [esherLayouts, setEsherLayouts] = useState<EsherLayoutOption[]>([]);
+  const [raisedBedMode, setRaisedBedMode] = useState<Record<string, 'keep' | 'replant'>>({});
   const [showSaveSeasonConfirm, setShowSaveSeasonConfirm] = useState(false);
   const [gardenLayouts, setGardenLayouts] = useState<GardenLayoutOption[]>([]);
   const [gardenPlan, setGardenPlan] = useState<PlacementReason[] | null>(null);
@@ -552,7 +555,21 @@ export function GardenPage() {
                 onClick={() => {
                   const { config: esherConfig, cells: esherCells } = createEsherGarden();
                   loadTemplate(esherConfig, esherCells);
-                  setEsherLayouts(generateEsherLayouts());
+                  const layouts = generateEsherLayouts();
+                  // Compute cross-system pairings with GreenStalk
+                  const gsLayouts = generateGSLayouts(plants, companionMap, 2);
+                  const gsForPairing = gsLayouts.map((g) => ({ id: g.id, name: g.name, slugs: extractTowerSlugs(g) }));
+                  const enriched = layouts.map((layout) => ({
+                    ...layout,
+                    bestPairing: findBestPairing(
+                      layout.placements.map((p) => p.plantSlug),
+                      layout.id,
+                      gsForPairing,
+                      'greenstalk',
+                      companionMap
+                    ),
+                  }));
+                  setEsherLayouts(enriched);
                   setShowEsherLayouts(true);
                 }}
                 className="px-3 py-1.5 text-xs bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition-colors flex items-center gap-1.5"
@@ -974,7 +991,9 @@ export function GardenPage() {
             </div>
 
             <div className="p-6 space-y-4">
-              {esherLayouts.map((layout) => (
+              {esherLayouts.map((layout) => {
+                const bedMode = raisedBedMode[layout.id] ?? 'keep';
+                return (
                 <div
                   key={layout.id}
                   className="border border-stone-200 dark:border-stone-600 rounded-xl p-4 hover:border-emerald-300 hover:bg-emerald-50/30 dark:hover:bg-emerald-900/10 transition-colors"
@@ -994,6 +1013,33 @@ export function GardenPage() {
                         <span className="text-amber-600 dark:text-amber-400">~{layout.stats.estimatedYieldKg}kg yield</span>
                         <span className="font-semibold text-emerald-600 dark:text-emerald-400">~£{layout.stats.estimatedValueGBP} value</span>
                       </div>
+
+                      {/* Best GreenStalk pairing badge */}
+                      {layout.bestPairing && (
+                        <div className="mt-2 px-2.5 py-1.5 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg text-[10px] text-indigo-700 dark:text-indigo-300 border border-indigo-100 dark:border-indigo-800/30">
+                          <span className="font-semibold">Best GreenStalk pairing:</span>{' '}
+                          {layout.bestPairing.layoutName}
+                          <span className="text-indigo-400 ml-1">({layout.bestPairing.score.total}/100)</span>
+                          <span className="block mt-0.5 text-indigo-500 dark:text-indigo-400">{layout.bestPairing.score.summary}</span>
+                        </div>
+                      )}
+
+                      {/* Raised bed toggle */}
+                      <div className="mt-2 flex items-center gap-2">
+                        <button
+                          onClick={() => setRaisedBedMode((prev) => ({ ...prev, [layout.id]: bedMode === 'keep' ? 'replant' : 'keep' }))}
+                          className={`text-[10px] px-2 py-0.5 rounded border transition-colors ${
+                            bedMode === 'replant'
+                              ? 'bg-amber-100 dark:bg-amber-900/30 border-amber-300 dark:border-amber-700 text-amber-700 dark:text-amber-300'
+                              : 'bg-stone-50 dark:bg-stone-700 border-stone-200 dark:border-stone-600 text-stone-500 dark:text-stone-400'
+                          }`}
+                        >
+                          {bedMode === 'replant' ? '🔀 Replant raised bed' : '🌱 Keep existing raised bed'}
+                        </button>
+                        {bedMode === 'replant' && (
+                          <span className="text-[9px] text-amber-600 dark:text-amber-400">{layout.raisedBedReplant.rationale}</span>
+                        )}
+                      </div>
                     </div>
 
                     <button
@@ -1002,6 +1048,11 @@ export function GardenPage() {
                         for (const p of layout.placements) {
                           store.plantInCell(p.row, p.col, p.plantSlug);
                         }
+                        if (bedMode === 'replant') {
+                          for (const p of layout.raisedBedReplant.placements) {
+                            store.plantInCell(p.row, p.col, p.plantSlug);
+                          }
+                        }
                         setShowEsherLayouts(false);
                       }}
                       className="ml-4 px-4 py-2 bg-emerald-600 text-white text-xs font-semibold rounded-lg hover:bg-emerald-700 transition-colors shrink-0"
@@ -1009,13 +1060,42 @@ export function GardenPage() {
                       Apply
                     </button>
                   </div>
+
+                  {/* Expandable placement reasoning */}
+                  <details className="mt-3">
+                    <summary className="text-[10px] text-stone-400 cursor-pointer hover:text-emerald-600 select-none">
+                      Show placement reasoning ({layout.reasoning.length} decisions{bedMode === 'replant' ? ` + ${layout.raisedBedReplant.details.length} raised bed` : ''})
+                    </summary>
+                    <div className="mt-2 max-h-52 overflow-y-auto divide-y divide-stone-100 dark:divide-stone-700/50 text-[10px]">
+                      {(bedMode === 'replant'
+                        ? [...layout.reasoning, ...layout.raisedBedReplant.details]
+                        : layout.reasoning
+                      ).map((item, i) => {
+                        const plant = plants.find((p) => p.slug === item.plantSlug);
+                        return (
+                          <div key={i} className="py-1.5 flex items-start gap-2">
+                            <span className="text-sm">{plant?.emoji ?? '🌱'}</span>
+                            <div>
+                              <div className="font-semibold text-stone-600 dark:text-stone-300">
+                                {item.plantName} — {item.zone}
+                              </div>
+                              {item.reasons.map((r, ri) => (
+                                <div key={ri} className="text-stone-400 dark:text-stone-500 leading-relaxed">{r}</div>
+                              ))}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </details>
                 </div>
-              ))}
+                );
+              })}
             </div>
 
             <div className="p-4 border-t border-stone-100 dark:border-stone-700 flex justify-between items-center">
               <span className="text-[10px] text-stone-400">
-                Existing plants preserved. Layouts only add to empty plantable spots.
+                Existing plants preserved unless "Replant raised bed" is toggled.
               </span>
               <button
                 onClick={() => setShowEsherLayouts(false)}

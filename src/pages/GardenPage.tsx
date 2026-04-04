@@ -32,6 +32,7 @@ const CELL_TOOLS: { type: CellType; label: string; color: string; emoji: string 
   { type: 'veg-patch', label: 'Veg Patch', color: '#5d4037', emoji: '\ud83e\udd6c' },
   { type: 'flower-bed', label: 'Flower Bed', color: '#e91e63', emoji: '\ud83c\udf3a' },
   { type: 'raised-bed', label: 'Raised Bed', color: '#795548', emoji: '\ud83e\udea8' },
+  { type: 'greenstalk', label: 'GreenStalk', color: '#10b981', emoji: '\ud83c\udf31' },
   { type: 'patio', label: 'Patio', color: '#9e9e9e', emoji: '\ud83e\uddf1' },
   { type: 'path', label: 'Path', color: '#bcaaa4', emoji: '\ud83d\udeb6' },
   { type: 'tree', label: 'Tree', color: '#2e7d32', emoji: '\ud83c\udf33' },
@@ -46,6 +47,7 @@ const CELL_COLORS: Record<CellType, string> = {
   lawn: '#6fa37e',
   'veg-patch': '#8d6e63',
   'flower-bed': '#f48fb1',
+  greenstalk: '#10b981',
   patio: '#bdbdbd',
   path: '#d7ccc8',
   tree: '#2e7d32',
@@ -330,19 +332,17 @@ export function GardenPage() {
     }
   }, []);
 
-  // GreenStalk positions: detect cells labeled as GreenStalk in veg-patch on patio rows
+  // GreenStalk positions: detect cells with type 'greenstalk', grouped into towers
   const greenStalkCells = useMemo(() => {
     const positions: { row: number; col: number; towerIndex: number }[] = [];
-    // GreenStalks sit on veg-patch cells surrounded by patio — detect clusters
     const visited = new Set<string>();
     let towerIdx = 0;
     for (let r = 0; r < rows; r++) {
       for (let c = 0; c < cols; c++) {
         const key = `${r},${c}`;
         if (visited.has(key)) continue;
-        const cell = cells[r]?.[c];
-        if (cell?.type !== 'veg-patch') continue;
-        // Found a veg-patch cell — flood-fill to find the cluster
+        if (cells[r]?.[c]?.type !== 'greenstalk') continue;
+        // Flood-fill to find the connected cluster
         const cluster: { row: number; col: number }[] = [];
         const queue = [{ row: r, col: c }];
         while (queue.length > 0) {
@@ -350,15 +350,13 @@ export function GardenPage() {
           const k = `${cr},${cc}`;
           if (visited.has(k)) continue;
           if (cr < 0 || cr >= rows || cc < 0 || cc >= cols) continue;
-          if (cells[cr]?.[cc]?.type !== 'veg-patch') continue;
+          if (cells[cr]?.[cc]?.type !== 'greenstalk') continue;
           visited.add(k);
           cluster.push({ row: cr, col: cc });
           queue.push({ row: cr - 1, col: cc }, { row: cr + 1, col: cc }, { row: cr, col: cc - 1 }, { row: cr, col: cc + 1 });
         }
-        if (cluster.length >= 2) {
-          for (const pos of cluster) positions.push({ ...pos, towerIndex: towerIdx });
-          towerIdx++;
-        }
+        for (const pos of cluster) positions.push({ ...pos, towerIndex: towerIdx });
+        towerIdx++;
       }
     }
     return positions;

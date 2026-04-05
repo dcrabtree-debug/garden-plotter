@@ -49,6 +49,105 @@ function weatherEmoji(code: number): string {
 
 const DAY_NAMES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
+// ── RHS-backed organic pest remedies ────────────────────────────────────────
+interface PestRemedy {
+  emoji: string;
+  tips: { icon: string; label: string; detail: string }[];
+}
+
+const PEST_REMEDIES: Record<string, PestRemedy> = {
+  slugs: {
+    emoji: '🐌',
+    tips: [
+      { icon: '🍺', label: 'Beer traps', detail: 'Sink jam jars level with soil, fill with cheap beer. Empty daily.' },
+      { icon: '🥚', label: 'Crushed eggshells', detail: 'Ring plants with crushed shells — slugs avoid the sharp edges.' },
+      { icon: '🌙', label: 'Evening patrol', detail: 'Go out after dark with a torch. Pick off slugs by hand into salty water.' },
+      { icon: '🌿', label: 'Companion planting', detail: 'Rosemary, thyme, and lavender repel slugs with aromatic oils.' },
+    ],
+  },
+  aphids: {
+    emoji: '🟢',
+    tips: [
+      { icon: '💦', label: 'Blast with water', detail: 'Strong jet from a hose knocks aphids off. Repeat every 2-3 days.' },
+      { icon: '🧴', label: 'Soapy water spray', detail: 'Mix 1 tsp washing-up liquid per litre of water. Spray undersides of leaves.' },
+      { icon: '🐞', label: 'Attract ladybirds', detail: 'Ladybird larvae eat 50+ aphids per day. Plant calendula and fennel nearby.' },
+      { icon: '🌸', label: 'Nasturtium trap crop', detail: 'Plant nasturtiums nearby — aphids prefer them over your food crops.' },
+    ],
+  },
+  'vine weevil': {
+    emoji: '🪲',
+    tips: [
+      { icon: '🔍', label: 'Check at night', detail: 'Adults feed after dark — shake plants over white paper to spot them.' },
+      { icon: '🧫', label: 'Nematode drench', detail: 'Apply Steinernema kraussei nematodes to compost in spring/autumn (soil temp 5°C+).' },
+      { icon: '🪤', label: 'Barrier method', detail: 'Stand pots in water trays — weevils cannot swim to reach plants.' },
+      { icon: '🔄', label: 'Repot annually', detail: 'Check roots when repotting — destroy any C-shaped white grubs.' },
+    ],
+  },
+  'carrot fly': {
+    emoji: '🪰',
+    tips: [
+      { icon: '🧅', label: 'Allium companion', detail: 'Interplant with onions, chives, or spring onions — scent confuses the fly.' },
+      { icon: '🛡️', label: 'Fleece barrier', detail: 'Cover with fine mesh (Enviromesh) from sowing — fly can\'t reach soil to lay eggs.' },
+      { icon: '📏', label: 'Height barrier', detail: 'Carrot fly flies below 60cm. A 60cm-tall barrier around the bed blocks them.' },
+      { icon: '🌿', label: 'Thin on still days', detail: 'The smell of bruised carrot foliage attracts them — thin on calm evenings.' },
+    ],
+  },
+  whitefly: {
+    emoji: '🦟',
+    tips: [
+      { icon: '💛', label: 'Yellow sticky traps', detail: 'Hang yellow sticky cards among plants — whitefly are attracted to the colour.' },
+      { icon: '🌿', label: 'Basil companion', detail: 'Plant basil next to tomatoes — its oils repel whitefly.' },
+      { icon: '💦', label: 'Soap spray', detail: 'Spray dilute washing-up liquid on undersides of leaves. Repeat weekly.' },
+      { icon: '🌬️', label: 'Ventilation', detail: 'In conservatory: open vents to reduce humidity. Whitefly thrive in still, warm air.' },
+    ],
+  },
+  'powdery mildew': {
+    emoji: '🤍',
+    tips: [
+      { icon: '💧', label: 'Water at base', detail: 'Water soil, not leaves. Wet foliage promotes fungal spread.' },
+      { icon: '✂️', label: 'Remove affected leaves', detail: 'Cut off badly affected leaves. Don\'t compost them — bin or burn.' },
+      { icon: '🥛', label: 'Milk spray', detail: 'Mix 1 part milk to 9 parts water. Spray weekly as preventative.' },
+      { icon: '🌬️', label: 'Improve airflow', detail: 'Space plants properly and prune to allow air circulation between stems.' },
+    ],
+  },
+  'grey mould': {
+    emoji: '🩶',
+    tips: [
+      { icon: '✂️', label: 'Remove dead tissue', detail: 'Cut away any dead or dying plant material immediately — mould feeds on decay.' },
+      { icon: '🌬️', label: 'Improve airflow', detail: 'Don\'t overcrowd. Good ventilation is the #1 prevention.' },
+      { icon: '🧅', label: 'Chive companion', detail: 'Chives near strawberries reduce grey mould — allium compounds inhibit the fungus.' },
+      { icon: '🌧️', label: 'Avoid overhead watering', detail: 'Water at the base to keep foliage dry. Mould needs wet surfaces to germinate.' },
+    ],
+  },
+  'blight': {
+    emoji: '🟤',
+    tips: [
+      { icon: '🛡️', label: 'Blight-resistant varieties', detail: 'Choose varieties like "Crimson Crush" or "Sarpo Mira" bred for blight resistance.' },
+      { icon: '🌧️', label: 'Watch for warm rain', detail: 'Blight spreads in warm, wet weather (Smith periods). Cover with fleece if forecast.' },
+      { icon: '✂️', label: 'Remove immediately', detail: 'At first sign (brown patches on leaves), remove all affected foliage. Don\'t compost.' },
+      { icon: '📏', label: 'Space well', detail: 'Good air circulation between plants slows spore spread.' },
+    ],
+  },
+  'caterpillars': {
+    emoji: '🐛',
+    tips: [
+      { icon: '🛡️', label: 'Butterfly netting', detail: 'Cover brassicas with fine mesh to prevent butterflies laying eggs.' },
+      { icon: '👀', label: 'Check undersides', detail: 'Inspect leaf undersides weekly — remove yellow egg clusters by hand.' },
+      { icon: '🐦', label: 'Encourage birds', detail: 'Hang a bird feeder nearby — blue tits eat caterpillars voraciously.' },
+      { icon: '🌿', label: 'Companion: sage & rosemary', detail: 'Strong aromatics confuse cabbage white butterflies\' scent navigation.' },
+    ],
+  },
+  general: {
+    emoji: '🐛',
+    tips: [
+      { icon: '👀', label: 'Regular checks', detail: 'Inspect plants twice weekly — catch problems early before they spread.' },
+      { icon: '🌸', label: 'Attract predators', detail: 'Plant calendula, fennel, and yarrow to attract ladybirds, hoverflies, and lacewings.' },
+      { icon: '🧹', label: 'Garden hygiene', detail: 'Remove dead leaves and debris — pests overwinter in decaying material.' },
+      { icon: '🔄', label: 'Crop rotation', detail: 'Don\'t grow the same family in the same spot two years running.' },
+    ],
+  },
+};
+
 interface WeatherDay {
   date: string;
   maxTemp: number;
@@ -359,16 +458,34 @@ export function TodayPage() {
               </div>
             )}
 
-            {/* Pest watch */}
+            {/* Pest watch with remedies */}
             {pestWatch.size > 0 && (
               <div className="px-4 py-3">
-                <h3 className="text-xs font-bold text-orange-700 dark:text-orange-400 mb-1.5">🐛 Pest Watch</h3>
-                <div className="flex flex-wrap gap-1.5">
-                  {[...pestWatch.entries()].slice(0, 6).map(([pest, crops]) => (
-                    <span key={pest} className="text-[10px] px-2 py-1 rounded-full bg-orange-50 dark:bg-orange-900/20 text-orange-700 dark:text-orange-300">
-                      {pest} — {crops.slice(0, 2).join(', ')}
-                    </span>
-                  ))}
+                <h3 className="text-xs font-bold text-orange-700 dark:text-orange-400 mb-2">🐛 Pest Watch &amp; Organic Remedies</h3>
+                <div className="space-y-2">
+                  {[...pestWatch.entries()].slice(0, 8).map(([pest, crops]) => {
+                    const remedy = PEST_REMEDIES[pest.toLowerCase()] ?? PEST_REMEDIES['general'];
+                    return (
+                      <div key={pest} className="bg-orange-50 dark:bg-orange-900/15 rounded-lg p-2.5 border border-orange-100 dark:border-orange-800/30">
+                        <div className="flex items-start justify-between gap-2">
+                          <div className="font-semibold text-[11px] text-orange-800 dark:text-orange-300 capitalize">
+                            {remedy.emoji} {pest}
+                          </div>
+                          <div className="text-[9px] text-orange-500 dark:text-orange-400/70 shrink-0">
+                            Affects: {crops.slice(0, 3).join(', ')}
+                          </div>
+                        </div>
+                        <div className="mt-1.5 space-y-0.5">
+                          {remedy.tips.map((tip, i) => (
+                            <div key={i} className="text-[10px] text-orange-700 dark:text-orange-300/80 flex items-start gap-1">
+                              <span className="shrink-0 mt-px">{tip.icon}</span>
+                              <span><strong>{tip.label}:</strong> {tip.detail}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             )}

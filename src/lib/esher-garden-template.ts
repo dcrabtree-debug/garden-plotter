@@ -6,25 +6,25 @@
  * Garden dimensions: ~10m wide × 12m deep
  * Grid: 0.5m cells = 20 columns × 24 rows
  *
- * Orientation (corrected per owner):
- *   Row 0 = house wall (NE, street side — faces NE)
- *   Row 23 = back of garden (SW)
- *   Col 0 = left (NW) — neighbour 19A side
- *   Col 19 = right (SE) — fence border side
+ * Orientation (from aerial satellite — top of image = true north):
+ *   Row 0 = house wall (SOUTH, street side — Esher Avenue)
+ *   Row 23 = back of garden (NORTH — hedge/trees)
+ *   Col 0 = left (WEST) — neighbour 19A side
+ *   Col 19 = right (EAST) — fence border side, neighbour 23A
  *
- * Photo-verified features (estate agent photos + ground-level):
- * - Conservatory (left/NW corner, rows 0-2, cols 0-5) — large glass room, French doors
+ * Photo-verified features (aerial + estate agent + ground-level):
+ * - Conservatory (SW corner, rows 0-2, cols 0-5) — west side of house
  * - Conservatory patio (rows 2-3, cols 4-8) — paving outside French doors
- * - Left boundary (cols 0-1) — established hedge/shrubs (not fencing)
- * - Right fence border (cols 18-19) — closeboard + Cordylines + Euphorbia
+ * - West boundary (cols 0-1) — established hedge/shrubs (19A side)
+ * - East fence border (cols 18-19) — closeboard + Cordylines + Euphorbia
  * - Main lawn (rows 3-18) — OFF LIMITS, rental
  * - Back patio (rows 19-21, cols 4-14) — GreenStalk positions
- * - Old shed site (rows 20-22, cols 16-19) — NE corner, shed removed, pavers remain
- * - Raised bed (rows 21-22, cols 7-12) — black metal edging, shade bed
- * - Shed (rows 21-23, cols 0-3) — wooden, back-LEFT corner
- * - Laurel hedge (rows 22-23) — 3-4m tall, full back boundary
- * - Back gate (row 22, cols 16-17) — white picket, back-right
- * - Large deciduous tree (rows 14-19, col 19) — overhangs from right
+ * - Old shed pavers (rows 20-22, cols 16-19) — EAST corner, old shed removed
+ * - Raised bed (rows 21-22, cols 8-13) — black metal edging, shade bed
+ * - Shed (rows 21-23, cols 3-6) — small wooden, NORTH corner (true north)
+ * - Laurel hedge (rows 22-23) — 3-4m tall, full NORTH boundary
+ * - Back gate + fruit (row 21-22, cols 14-15)
+ * - Large deciduous tree (rows 14-19, col 19) — overhangs from east
  * - Gooseberry/currant near back gate
  */
 
@@ -34,7 +34,7 @@ export const ESHER_CONFIG: GardenConfig = {
   widthM: 10,
   depthM: 12,
   cellSizeM: 0.5,
-  facing: 'NE',
+  facing: 'N',
   houseWallHeightM: 7,
   fenceHeightM: 1.8,
   latitude: 51.3867,
@@ -73,8 +73,8 @@ export function createEsherGarden(): { config: GardenConfig; cells: GardenCell[]
     overrides.push({ row: 1, col: c, type: 'patio' });
   }
 
-  // ── Conservatory (NW corner: rows 0-2, cols 0-5) ──
-  // Victorian-style glass, faces SW — filtered light, frost-free in winter
+  // ── Conservatory (SW corner: rows 0-2, cols 0-5) ──
+  // West side of house. Glass room, French doors to garden.
   for (let r = 0; r <= 2; r++) {
     for (let c = 0; c <= 5; c++) {
       overrides.push({ row: r, col: c, type: 'conservatory', label: 'Conservatory' });
@@ -88,14 +88,14 @@ export function createEsherGarden(): { config: GardenConfig; cells: GardenCell[]
   overrides.push({ row: 2, col: 3, type: 'conservatory', plantSlug: 'mint', label: 'Conservatory' });
   overrides.push({ row: 2, col: 5, type: 'conservatory', plantSlug: 'parsley', label: 'Conservatory' });
 
-  // ── Left boundary (col 0-1, rows 3-18) — established hedge/shrubs ──
-  // Estate agent photos: dense mixed hedge/shrubs, not closeboard fencing
+  // ── West boundary (col 0-1, rows 3-18) — established hedge/shrubs ──
+  // 19A side. Dense mixed hedge, not closeboard fencing.
   for (let r = 3; r <= 18; r++) {
     overrides.push({ row: r, col: 0, type: 'flower-bed', label: 'Boundary hedge' });
     overrides.push({ row: r, col: 1, type: 'flower-bed', label: 'Shrub border' });
   }
 
-  // ── Right fence border (cols 18-19, rows 3-20) — Cordylines + Euphorbia ──
+  // ── East fence border (cols 18-19, rows 3-20) — Cordylines + Euphorbia ──
   for (let r = 3; r <= 20; r++) {
     overrides.push({ row: r, col: 19, type: 'flower-bed' });
     overrides.push({ row: r, col: 18, type: 'flower-bed' });
@@ -142,16 +142,16 @@ export function createEsherGarden(): { config: GardenConfig; cells: GardenCell[]
     }
   }
 
-  // ── Shed (rows 21-23, cols 4-7) — north corner (center-back) ──
-  // Estate agent photos: shed visible center-back, in front of hedge
-  // User confirmed: "small shed in the north corner (true north)"
+  // ── Shed (rows 21-23, cols 3-6) — NORTH corner (true north) ──
+  // Aerial: small wooden shed at the top of garden, west-of-center
+  // User: "small shed in the north corner (true north)"
   for (let r = 21; r <= 23; r++) {
-    for (let c = 4; c <= 7; c++) {
+    for (let c = 3; c <= 6; c++) {
       overrides.push({ row: r, col: c, type: 'shed', label: 'Shed' });
     }
   }
 
-  // ── Laurel hedge (rows 22-23) — SW boundary ──
+  // ── Laurel hedge (rows 22-23) — NORTH boundary ──
   for (let c = 0; c <= 19; c++) {
     overrides.push({ row: 23, col: c, type: 'tree', label: 'Laurel hedge' });
   }
@@ -159,9 +159,9 @@ export function createEsherGarden(): { config: GardenConfig; cells: GardenCell[]
     overrides.push({ row: 22, col: c, type: 'tree', label: 'Hedge canopy' });
   }
 
-  // ── Old shed site — eastern corner (rows 20-22, cols 16-19) ──
+  // ── Old shed pavers — EAST corner (rows 20-22, cols 16-19) ──
   // Unknown-5: old shed REMOVED, pavers + open space remain.
-  // User confirmed: "some pavers and space in the eastern corner"
+  // User: "some pavers and space in the eastern corner"
   for (let r = 20; r <= 22; r++) {
     for (let c = 16; c <= 19; c++) {
       overrides.push({ row: r, col: c, type: 'patio', label: 'Old shed site (pavers)' });

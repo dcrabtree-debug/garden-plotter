@@ -140,7 +140,7 @@ function HoverReasoningPanel({
 }: HoverReasoningPanelProps) {
   const cell = hoveredCell ? cells[hoveredCell.row]?.[hoveredCell.col] : null;
   const plant = cell?.plantSlug ? plantMap.get(cell.plantSlug) : null;
-  const sunH = cell?.sunHours;
+  const sunH: number | null = cell?.sunHours ?? null;
   const rows = cells.length;
   const cols = cells[0]?.length ?? 0;
 

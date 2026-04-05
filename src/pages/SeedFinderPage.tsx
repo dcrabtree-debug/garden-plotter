@@ -411,7 +411,31 @@ export function SeedFinderPage() {
         }
       }
 
-      items.push({ slug, plant, gsQty, igQty, totalQty, source, seedProduct: sp, bestPrice, bestSeller, bestUrl });
+      // Recommend: seeds, plugs, or potted plant based on timing and plant type
+      let buyAs = '🌱 Seeds';
+      if (plant) {
+        const pw = plant.plantingWindow;
+        const m = currentMonth;
+        const isPerennial = plant.category === 'fruit' || ['strawberry-everbearing', 'gooseberry', 'redcurrant', 'raspberry', 'blueberry'].includes(plant.slug);
+        const isHerb = plant.category === 'herb';
+        const needsLongSeason = plant.daysToHarvest[0] > 90;
+        const tooLateForSeed = pw.sowIndoors && !isInWindow(m, pw.sowIndoors) && !isInWindow(m, pw.sowOutdoors ?? [0, 0]);
+        const canTransplant = pw.transplant && isInWindow(m, pw.transplant);
+
+        if (isPerennial) {
+          buyAs = '🪴 Potted plant';
+        } else if (tooLateForSeed && canTransplant) {
+          buyAs = '🌿 Plug plants';
+        } else if (tooLateForSeed && needsLongSeason) {
+          buyAs = '🌿 Plug plants';
+        } else if (isHerb && m >= 5) {
+          buyAs = '🪴 Potted herb';
+        } else if (plant.slug === 'dwarf-sweet-pea' && m >= 3) {
+          buyAs = '🌿 Plug plants';
+        }
+      }
+
+      items.push({ slug, plant, gsQty, igQty, totalQty, source, seedProduct: sp, bestPrice, bestSeller, bestUrl, buyAs });
     }
 
     // Sort: plants with pricing first, then by total quantity desc
@@ -425,7 +449,7 @@ export function SeedFinderPage() {
     const itemsWithPrices = items.filter((i) => i.bestPrice > 0).length;
 
     return { items, totalBudget, itemsWithPrices, totalItems: items.length };
-  }, [towers, garden.cells, plants, gsLinks, igLinks]);
+  }, [towers, garden.cells, plants, gsLinks, igLinks, currentMonth]);
 
   const plantsWithTiming = useMemo(() => {
     return plants
@@ -608,6 +632,7 @@ export function SeedFinderPage() {
                     <th className="text-center px-2 py-2 hidden sm:table-cell">GS</th>
                     <th className="text-center px-2 py-2 hidden sm:table-cell">Ground</th>
                     <th className="text-center px-2 py-2">Qty</th>
+                    <th className="text-left px-2 py-2 hidden sm:table-cell">Buy As</th>
                     <th className="text-left px-2 py-2">Source</th>
                     <th className="text-right px-3 py-2">Price</th>
                   </tr>
@@ -627,6 +652,9 @@ export function SeedFinderPage() {
                       </td>
                       <td className="text-center px-2 py-1.5 font-semibold text-stone-600 dark:text-stone-300">
                         {item.totalQty}
+                      </td>
+                      <td className="px-2 py-1.5 text-[10px] text-stone-500 dark:text-stone-400 hidden sm:table-cell">
+                        {item.buyAs}
                       </td>
                       <td className="px-2 py-1.5">
                         {item.bestSeller ? (

@@ -538,16 +538,7 @@ export function TodayPage() {
           <h2 className="text-lg font-bold mb-3">{phaseInfo.emoji} {phaseInfo.label} — What This Means</h2>
           {phase === 'PRE_MOVE' && (
             <div className="space-y-2 text-sm text-stone-300">
-              <p>You're <strong className="text-white">{daysToMove} days</strong> from moving into 21 Esher Avenue. Your GreenStalks are in the shipping container and won't arrive until mid-May — but that doesn't mean you can't start.</p>
-              <p className="font-semibold text-emerald-400">Priority actions right now:</p>
-              <ol className="list-decimal ml-5 space-y-1">
-                <li><strong className="text-white">Buy seed trays, small pots, and multipurpose compost</strong> — you can start seeds anywhere with a sunny window</li>
-                <li><strong className="text-white">Sow tomatoes and basil indoors NOW</strong> — they need 6-8 weeks to become strong transplants</li>
-                <li><strong className="text-white">Sow courgettes, peppers, cucumbers</strong> — all need indoor head start</li>
-                <li><strong className="text-white">Order strawberry plants online</strong> (bare-root or potted) for immediate planting when you arrive</li>
-                <li><strong className="text-white">Buy sweet pea plug plants</strong> — it's too late to start them from seed (should have been February)</li>
-              </ol>
-              <p className="text-stone-400 text-xs mt-2">Mid-May is NOT too late. Most Surrey gardeners don't plant tender crops until after the May bank holiday. You'll have strong transplants ready by then.</p>
+              <p>You're <strong className="text-white">{daysToMove} days</strong> from moving into 21 Esher Avenue. See the orange banner above for your priority actions. Mid-May is NOT too late — most Surrey gardeners don't plant tender crops until after the May bank holiday.</p>
             </div>
           )}
           {phase === 'NO_GEAR' && (

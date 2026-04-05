@@ -358,15 +358,24 @@ export function PlannerPage() {
                 return (
                   <div
                     key={layout.id}
-                    className="border border-stone-200 dark:border-stone-600 rounded-xl p-4 hover:border-emerald-300 dark:hover:border-emerald-700 hover:bg-emerald-50/30 dark:hover:bg-emerald-900/20 transition-colors"
+                    className={`border rounded-xl p-4 transition-colors ${
+                      layout.id === 'expert-choice'
+                        ? 'border-emerald-400 dark:border-emerald-600 bg-emerald-50/40 dark:bg-emerald-900/20 ring-1 ring-emerald-200 dark:ring-emerald-800'
+                        : 'border-stone-200 dark:border-stone-600 hover:border-emerald-300 dark:hover:border-emerald-700 hover:bg-emerald-50/30 dark:hover:bg-emerald-900/20'
+                    }`}
                   >
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
+                        {layout.id === 'expert-choice' && (
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 mb-1.5 rounded-full text-[10px] font-bold bg-emerald-600 text-white">
+                            ⭐ TOP PICK
+                          </span>
+                        )}
                         <h3 className="text-sm font-bold text-stone-800 dark:text-stone-100">
-                          {layout.name === 'Family Harvest' ? '👨‍👩‍👧‍👦 ' : layout.name === 'Companion Optimal' ? '🤝 ' : '📅 '}
+                          {layout.id === 'expert-choice' ? '⭐ ' : layout.name === 'Family Harvest' ? '👨‍👩‍👧‍👦 ' : layout.name === 'Companion Optimal' ? '🤝 ' : '📅 '}
                           {layout.name}
                         </h3>
-                        <p className="text-xs text-stone-500 mt-1">
+                        <p className="text-xs text-stone-500 mt-1 whitespace-pre-line">
                           {layout.description}
                         </p>
                         <div className="flex gap-3 mt-2 text-[10px] text-stone-400">

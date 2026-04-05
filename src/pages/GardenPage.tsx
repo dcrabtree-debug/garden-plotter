@@ -123,6 +123,167 @@ function ZoneGuide() {
   );
 }
 
+// ─── Hover Reasoning Panel ────────────────────────────────────────────────
+
+interface HoverReasoningPanelProps {
+  hoveredCell: { row: number; col: number } | null;
+  cells: GardenCell[][];
+  plantMap: Map<string, Plant>;
+  plants: Plant[];
+  companionMap: import('../types/companion').CompanionMap;
+  config: import('../types/planner').GardenConfig;
+  actualTowerSlugs: string[];
+}
+
+function HoverReasoningPanel({
+  hoveredCell, cells, plantMap, plants, companionMap, config, actualTowerSlugs,
+}: HoverReasoningPanelProps) {
+  const cell = hoveredCell ? cells[hoveredCell.row]?.[hoveredCell.col] : null;
+  const plant = cell?.plantSlug ? plantMap.get(cell.plantSlug) : null;
+  const sunH = cell?.sunHours;
+  const rows = cells.length;
+  const cols = cells[0]?.length ?? 0;
+
+  if (!hoveredCell || !cell) {
+    return (
+      <div className="mb-3 bg-stone-100 dark:bg-stone-700/50 rounded-lg p-3 text-center">
+        <div className="text-stone-400 dark:text-stone-500 text-xs">
+          🔍 Hover over a cell for details
+        </div>
+      </div>
+    );
+  }
+
+  // Get nearby planted slugs for companion analysis
+  const nearbySlugs: string[] = [];
+  for (let r = Math.max(0, hoveredCell.row - 2); r <= Math.min(rows - 1, hoveredCell.row + 2); r++) {
+    for (let c = Math.max(0, hoveredCell.col - 2); c <= Math.min(cols - 1, hoveredCell.col + 2); c++) {
+      if (r === hoveredCell.row && c === hoveredCell.col) continue;
+      const s = cells[r][c].plantSlug;
+      if (s) nearbySlugs.push(s);
+    }
+  }
+  const uniqueNearby = [...new Set(nearbySlugs)];
+
+  // If cell has a plant, show its reasoning
+  if (plant) {
+    const friends = getFriends(plant.slug, uniqueNearby, companionMap);
+    const foes = getConflicts(plant.slug, uniqueNearby, companionMap);
+    const towerFriends = getFriends(plant.slug, [...new Set(actualTowerSlugs)], companionMap);
+
+    const sunMatch = sunH !== null
+      ? (plant.sun === 'full-sun' && sunH >= 6) || (plant.sun === 'partial-shade' && sunH >= 3) || plant.sun === 'full-shade'
+      : null;
+
+    return (
+      <div className="mb-3 bg-white dark:bg-stone-700 rounded-lg border border-stone-200 dark:border-stone-600 p-3 space-y-2">
+        <div className="flex items-center gap-2">
+          <span className="text-lg">{plant.emoji}</span>
+          <div>
+            <div className="text-xs font-bold text-stone-800 dark:text-stone-100">{plant.commonName}</div>
+            <div className="text-[9px] text-stone-400">{cell.type} · row {hoveredCell.row + 1}, col {hoveredCell.col + 1}</div>
+          </div>
+        </div>
+
+        {/* Sun assessment */}
+        {sunH !== null && (
+          <div className={`text-[10px] px-2 py-1 rounded ${
+            sunMatch ? 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-300' : 'bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-300'
+          }`}>
+            ☀️ {sunH}h sun · needs {plant.sun.replace('-', ' ')} {sunMatch ? '✓' : '⚠️'}
+          </div>
+        )}
+
+        {/* Companion relationships */}
+        {friends.length > 0 && (
+          <div className="text-[10px] text-emerald-600 dark:text-emerald-400">
+            {friends.map((f, i) => (
+              <div key={i}>💚 {plantMap.get(f.plantA === plant.slug ? f.plantB : f.plantA)?.commonName}: {f.reason}</div>
+            ))}
+          </div>
+        )}
+        {foes.length > 0 && (
+          <div className="text-[10px] text-rose-600 dark:text-rose-400">
+            {foes.map((f, i) => (
+              <div key={i}>❌ {plantMap.get(f.plantA === plant.slug ? f.plantB : f.plantA)?.commonName}: {f.reason}</div>
+            ))}
+          </div>
+        )}
+
+        {/* Tower companion bonus */}
+        {towerFriends.length > 0 && (
+          <div className="text-[10px] text-indigo-600 dark:text-indigo-400">
+            🤝 GreenStalk synergy: {towerFriends.map((f) => f.reason).slice(0, 2).join('; ')}
+          </div>
+        )}
+
+        {/* Care tips */}
+        <div className="text-[10px] text-stone-500 dark:text-stone-400 space-y-0.5">
+          <div>💧 {plant.water} · ⏱ {plant.daysToHarvest[0]}-{plant.daysToHarvest[1]} days</div>
+          {plant.inGround?.pests?.length > 0 && <div>🐛 Watch: {plant.inGround.pests.join(', ')}</div>}
+        </div>
+      </div>
+    );
+  }
+
+  // Empty cell — suggest what could go here
+  const suggestions: { plant: Plant; score: number; reason: string }[] = [];
+  const isShaded = sunH !== null && sunH < 4;
+  const isSunny = sunH !== null && sunH >= 6;
+  const plantable = cell.type === 'veg-patch' || cell.type === 'raised-bed' || cell.type === 'flower-bed' || cell.type === 'conservatory';
+
+  if (plantable) {
+    for (const p of plants.slice(0, 50)) {
+      if (nearbySlugs.includes(p.slug)) continue;
+      let score = 0;
+      let reason = '';
+
+      // Sun matching
+      if (isSunny && p.sun === 'full-sun') { score += 3; reason = 'Full sun spot suits this crop'; }
+      else if (isShaded && (p.sun === 'partial-shade' || p.sun === 'full-shade')) { score += 3; reason = 'Shade-tolerant — good for this spot'; }
+      else if (sunH !== null && p.sun === 'partial-shade' && sunH >= 3) { score += 2; reason = 'Partial shade OK here'; }
+
+      // Companion bonus
+      const friends = getFriends(p.slug, uniqueNearby, companionMap);
+      if (friends.length > 0) { score += friends.length * 2; reason = friends[0].reason; }
+
+      // Tower synergy
+      const tFriends = getFriends(p.slug, [...new Set(actualTowerSlugs)], companionMap);
+      if (tFriends.length > 0) score += 1;
+
+      if (score > 0) suggestions.push({ plant: p, score, reason });
+    }
+    suggestions.sort((a, b) => b.score - a.score);
+  }
+
+  return (
+    <div className="mb-3 bg-white dark:bg-stone-700 rounded-lg border border-stone-200 dark:border-stone-600 p-3 space-y-2">
+      <div className="text-xs font-bold text-stone-700 dark:text-stone-200">
+        📍 {cell.type} · row {hoveredCell.row + 1}, col {hoveredCell.col + 1}
+      </div>
+      {sunH !== null && (
+        <div className="text-[10px] text-stone-500 dark:text-stone-400">
+          ☀️ {sunH}h sun · {isSunny ? 'Full sun' : isShaded ? 'Shaded' : 'Partial sun'}
+        </div>
+      )}
+      {plantable && suggestions.length > 0 ? (
+        <div>
+          <div className="text-[10px] font-semibold text-stone-600 dark:text-stone-300 mb-1">💡 Best picks for this spot:</div>
+          {suggestions.slice(0, 4).map((s) => (
+            <div key={s.plant.slug} className="text-[10px] text-stone-600 dark:text-stone-400 flex items-center gap-1 py-0.5">
+              <span>{s.plant.emoji}</span>
+              <span className="font-medium text-stone-700 dark:text-stone-300">{s.plant.commonName}</span>
+              <span className="text-stone-400">— {s.reason}</span>
+            </div>
+          ))}
+        </div>
+      ) : !plantable ? (
+        <div className="text-[10px] text-stone-400">Not plantable ({cell.type})</div>
+      ) : null}
+    </div>
+  );
+}
+
 // ─── Planted Plants Sidebar ───────────────────────────────────────────────
 
 interface PlantedPlantsSidebarProps {
@@ -311,15 +472,19 @@ export function GardenPage() {
   const rows = cells.length;
 
   // Recalculate sun hours when month or config changes
+  // Use individual config values as deps to avoid infinite loop from object reference change
+  const { cellSizeM, facing, houseWallHeightM, fenceHeightM, latitude, longitude } = config;
   useEffect(() => {
+    if (cols === 0 || rows === 0) return;
+    if (!latitude || !longitude) return;
     const grid = calculateSunHoursGrid(
-      cols, rows, config.cellSizeM,
-      config.facing, config.houseWallHeightM, config.fenceHeightM,
+      cols, rows, cellSizeM,
+      facing ?? 'SE', houseWallHeightM ?? 7, fenceHeightM ?? 1.8,
       selectedMonth, midMonthDay(selectedMonth),
-      config.latitude, config.longitude
+      latitude, longitude
     );
     setSunHours(grid);
-  }, [selectedMonth, config, cols, rows, setSunHours]);
+  }, [selectedMonth, cols, rows, cellSizeM, facing, houseWallHeightM, fenceHeightM, latitude, longitude, setSunHours]);
 
   // GreenStalk positions: detect cells with type 'greenstalk', grouped into towers
   // (moved above handleCellInteraction to avoid use-before-declaration)
@@ -1335,7 +1500,8 @@ export function GardenPage() {
                   ? 'bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-300'
                   : 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-300'
               }`}>
-                {sunH !== null ? `${sunH}h sun` : 'Sun unknown'} — needs {hPlant.sun.replace('-', ' ')}
+                {sunH !== null ? `${sunH}h sun at this spot` : `Needs ${hPlant.sun.replace('-', ' ')}`}
+                {sunH !== null && ` — needs ${hPlant.sun.replace('-', ' ')}`}
                 {sunWarning && ' ⚠️ Not enough sun here!'}
                 {sunOk && ' ✓ Good spot'}
               </div>
@@ -1493,12 +1659,22 @@ export function GardenPage() {
         )}
       </div>
 
-      {/* Right sidebar: Planted plants grouped by location & companions */}
+      {/* Right sidebar: Hover reasoning + Planted plants */}
       <div className={`w-64 border-l border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 flex-shrink-0 overflow-y-auto p-3 ${
         mobilePanel === 'plants'
           ? 'fixed inset-y-0 right-0 z-40 shadow-2xl'
           : 'hidden sm:block'
       }`}>
+        {/* Hover reasoning panel — changes as you hover different cells */}
+        <HoverReasoningPanel
+          hoveredCell={hoveredCell}
+          cells={cells}
+          plantMap={plantMap}
+          plants={plants}
+          companionMap={companionMap}
+          config={config}
+          actualTowerSlugs={actualTowerSlugs}
+        />
         <PlantedPlantsSidebar cells={cells} plants={plants} companionMap={companionMap} />
       </div>
 

@@ -256,7 +256,67 @@ function zoneLabel(row: number, col: number): string {
  */
 export function generateEsherLayouts(): EsherLayoutOption[] {
   return [
-    // ═══ 1. Maximum Food from Limited Space ════════════════════════════════════
+    // ═══ TOP PICK: RHS Expert's Choice for Esher Avenue ═══════════════════════
+    {
+      id: 'expert-choice',
+      name: "RHS Expert's Choice",
+      emoji: '⭐',
+      description:
+        'Our top recommendation for 21 Esher Avenue in-ground areas. Specific varietals selected from RHS trials for Surrey clay, partial shade near the laurel hedge, and a late-May start. Runner beans (Scarlet Emperor — RHS AGM) on the fence for vertical growing + nitrogen fixing. Sweet pea (Spencer Mix) kept for pollinators and cut flowers.\n\n' +
+        'Raised bed: shade-tolerant salad designed as a "cut-and-come-again salad bar" — Wild Rocket (perennial, peppery, £12/kg), Little Gem lettuce (bolt-resistant mini cos), Perpetual Spinach (BBC GW "most forgiving"), White Lisbon spring onion (slug deterrent via allium scent), French Breakfast radish (25 days, kids love the pull-and-eat treasure hunt). All chosen specifically for the dappled shade cast by the 3-4m laurel hedge.',
+      placements: [
+        { row: 8, col: 18, plantSlug: 'runner-bean' },
+        { row: 12, col: 18, plantSlug: 'runner-bean' },
+        { row: 16, col: 18, plantSlug: 'dwarf-sweet-pea' },
+      ],
+      reasoning: [
+        { plantSlug: 'runner-bean', plantName: 'Runner Bean (Scarlet Emperor)', row: 8, col: 18, zone: zoneLabel(8, 18), reasons: [
+          'Varietal: Scarlet Emperor — RHS AGM, the classic UK runner, reliably crops in cooler summers',
+          'Climbs fence panel — vertical growing maximises limited planting space',
+          'Nitrogen-fixing roots improve impoverished fence border soil over the season',
+          'Red flowers attract pollinators to the whole garden',
+        ]},
+        { plantSlug: 'runner-bean', plantName: 'Runner Bean (Scarlet Emperor)', row: 12, col: 18, zone: zoneLabel(12, 18), reasons: [
+          'Second plant staggers the harvest — pick for 10+ weeks July to October',
+          'Between Cordylines gives a sheltered microclimate that extends the season',
+          'Two plants produce 5-8kg of beans — saves £30-40 vs supermarket',
+        ]},
+        { plantSlug: 'dwarf-sweet-pea', plantName: 'Sweet Pea (Spencer Mix)', row: 16, col: 18, zone: zoneLabel(16, 18), reasons: [
+          'Varietal: Spencer Mix — the quintessential cottage garden variety, heavily scented',
+          'Pollinator magnet — attracts bees to the GreenStalks on the adjacent patio',
+          'Cut flower supply for the house — the more you cut, the more they flower',
+          'Near patio seating area — fragrance drifts to where you sit in the evening',
+        ]},
+      ],
+      raisedBedReplant: {
+        rationale: 'Transform the shade bed into a "daily salad bar" — every variety chosen for the dappled shade under the 3-4m laurel hedge. These crops actually perform BETTER in shade (lettuce and rocket bolt in full sun). All are cut-and-come-again so you harvest daily without replanting.',
+        placements: [
+          { row: 21, col: 7, plantSlug: 'rocket' }, { row: 21, col: 8, plantSlug: 'lettuce' },
+          { row: 21, col: 9, plantSlug: 'perpetual-spinach' }, { row: 21, col: 10, plantSlug: 'lettuce' },
+          { row: 21, col: 11, plantSlug: 'spring-onion' }, { row: 21, col: 12, plantSlug: 'radish' },
+          { row: 22, col: 7, plantSlug: 'lettuce' }, { row: 22, col: 8, plantSlug: 'rocket' },
+          { row: 22, col: 9, plantSlug: 'radish' }, { row: 22, col: 10, plantSlug: 'spring-onion' },
+          { row: 22, col: 11, plantSlug: 'perpetual-spinach' }, { row: 22, col: 12, plantSlug: 'rocket' },
+        ],
+        details: [
+          { plantSlug: 'rocket', plantName: 'Wild Rocket (Diplotaxis tenuifolia)', row: 21, col: 7, zone: zoneLabel(21, 7), reasons: ['Varietal: Wild Rocket — perennial, stronger flavour than salad rocket, cut-and-come-again for 2+ years', 'Thrives in partial shade — BOLTS in full sun', 'First harvest 28 days from sowing, then every 2-3 weeks', '£12/kg in Waitrose — highest-value salad crop per m²'] },
+          { plantSlug: 'lettuce', plantName: 'Lettuce (Little Gem)', row: 21, col: 8, zone: zoneLabel(21, 8), reasons: ['Varietal: Little Gem — RHS "reliable and compact", mini cos, sweet and crunchy', 'Bolt-resistant — critical in shade where plants stress more', '50 days to harvest, or pick outer leaves from 30 days', 'Perfect size for Max and Noelle to pick whole heads'] },
+          { plantSlug: 'perpetual-spinach', plantName: 'Perpetual Spinach (Leaf Beet)', row: 21, col: 9, zone: zoneLabel(21, 9), reasons: ['Varietal: Perpetual Spinach — NOT true spinach, it\'s a leaf beet (Beta vulgaris)', 'BBC Gardeners\' World "most forgiving green" — grows in any soil, any light', 'Won\'t bolt in summer like true spinach. Crops for 12-18 months from one sowing', 'Shade-tolerant, slug-resistant, and survives Surrey winters'] },
+          { plantSlug: 'lettuce', plantName: 'Lettuce (Salad Bowl)', row: 21, col: 10, zone: zoneLabel(21, 10), reasons: ['Varietal: Salad Bowl — RHS "excellent cut-and-come-again", oak-leaf type', 'Different leaf shape from Little Gem gives salad variety', 'Very slow to bolt — the most heat/shade-tolerant lettuce variety'] },
+          { plantSlug: 'spring-onion', plantName: 'Spring Onion (White Lisbon)', row: 21, col: 11, zone: zoneLabel(21, 11), reasons: ['Varietal: White Lisbon — the UK standard, RHS "reliable and fast"', 'Allium scent is a natural slug deterrent — critical near the damp hedge', 'Direct sow every 3 weeks for continuous supply May-October', 'Narrow profile interplants perfectly between lettuce'] },
+          { plantSlug: 'radish', plantName: 'Radish (French Breakfast)', row: 21, col: 12, zone: zoneLabel(21, 12), reasons: ['Varietal: French Breakfast — elongated red/white, milder than Cherry Belle', 'Fastest crop in the garden: 25 days seed to plate', 'Succession-sow every 2 weeks for continuous "treasure hunts" with Max', 'Roots break up compacted raised bed soil — natural cultivator'] },
+          { plantSlug: 'lettuce', plantName: 'Lettuce (Little Gem)', row: 22, col: 7, zone: zoneLabel(22, 7), reasons: ['Third lettuce for daily salad supply — 3 heads matures = one per week', 'Nearest hedge row — Little Gem tolerates the deepest shade'] },
+          { plantSlug: 'rocket', plantName: 'Wild Rocket', row: 22, col: 8, zone: zoneLabel(22, 8), reasons: ['Second rocket position for larger harvests', 'Wild Rocket is perennial — comes back next year without replanting'] },
+          { plantSlug: 'radish', plantName: 'Radish (Cherry Belle)', row: 22, col: 9, zone: zoneLabel(22, 9), reasons: ['Varietal: Cherry Belle — round, red, classic. Stagger sowing with French Breakfast above', 'Different shape gives kids variety in the treasure hunt'] },
+          { plantSlug: 'spring-onion', plantName: 'Spring Onion (White Lisbon)', row: 22, col: 10, zone: zoneLabel(22, 10), reasons: ['Second allium barrier — extends slug protection across the bed', 'Harvest in 8-10 weeks, or use thinnings even earlier'] },
+          { plantSlug: 'perpetual-spinach', plantName: 'Perpetual Spinach', row: 22, col: 11, zone: zoneLabel(22, 11), reasons: ['Second spinach for iron-rich greens — one for cooking, one for salads', 'Tolerates the shadiest position right next to the hedge'] },
+          { plantSlug: 'rocket', plantName: 'Wild Rocket', row: 22, col: 12, zone: zoneLabel(22, 12), reasons: ['Third rocket — edge position for easy picking from the path side', 'Three rocket plants supply enough peppery leaves for daily salads all summer'] },
+        ],
+      },
+      stats: { totalPlants: 15, uniqueVarieties: 6, companionPairs: 5, estimatedYieldKg: 10, estimatedValueGBP: 75 },
+    },
+
+    // ═══ 2. Maximum Food from Limited Space ════════════════════════════════════
     {
       id: 'max-food',
       name: 'Maximum Food from Limited Space',

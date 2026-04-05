@@ -12,17 +12,20 @@
  *   Col 0 = left (NW) — neighbour 19A side
  *   Col 19 = right (SE) — fence border side
  *
- * Photo-verified features:
- * - Conservatory (NW corner, rows 0-2, cols 0-5) — glass, faces SW
- * - Main lawn (rows 3-18) — OFF LIMITS, rental property
- * - Right fence border (cols 18-19) — Cordylines + Euphorbia in narrow bed
- * - Back patio (rows 19-21) — PAVED, GreenStalk positions only
- * - Raised bed (rows 21-22, cols 7-12) — black metal edging, near hedge,
- *     hostas + perennials (shade bed under laurel canopy)
- * - Shed (rows 21-23, cols 0-3) — wooden, glazed panels, N corner
- * - Laurel hedge (rows 22-23, cols 0-17) — 3-4m tall, SW boundary, shades PM
- * - Back gate (rows 21-22, cols 16-19) — white picket, right side
- * - Gooseberry/currant shrubs near back gate
+ * Photo-verified features (estate agent photos + ground-level):
+ * - Conservatory (left/NW corner, rows 0-2, cols 0-5) — large glass room, French doors
+ * - Conservatory patio (rows 2-3, cols 4-8) — paving outside French doors
+ * - Left boundary (cols 0-1) — established hedge/shrubs (not fencing)
+ * - Right fence border (cols 18-19) — closeboard + Cordylines + Euphorbia
+ * - Main lawn (rows 3-18) — OFF LIMITS, rental
+ * - Back patio (rows 19-21, cols 4-14) — GreenStalk positions
+ * - BBQ patio (rows 20-22, cols 15-17) — covered BBQ, back-right corner
+ * - Raised bed (rows 21-22, cols 7-12) — black metal edging, shade bed
+ * - Shed (rows 21-23, cols 0-3) — wooden, back-LEFT corner
+ * - Laurel hedge (rows 22-23) — 3-4m tall, full back boundary
+ * - Back gate (row 22, cols 16-17) — white picket, back-right
+ * - Large deciduous tree (rows 14-19, col 19) — overhangs from right
+ * - Gooseberry/currant near back gate
  */
 
 import type { GardenCell, GardenConfig, CellType } from '../types/planner';
@@ -85,9 +88,11 @@ export function createEsherGarden(): { config: GardenConfig; cells: GardenCell[]
   overrides.push({ row: 2, col: 3, type: 'conservatory', plantSlug: 'mint', label: 'Conservatory' });
   overrides.push({ row: 2, col: 5, type: 'conservatory', plantSlug: 'parsley', label: 'Conservatory' });
 
-  // ── Left fence border (col 0, rows 3-18) ──
+  // ── Left boundary (col 0-1, rows 3-18) — established hedge/shrubs ──
+  // Estate agent photos: dense mixed hedge/shrubs, not closeboard fencing
   for (let r = 3; r <= 18; r++) {
-    overrides.push({ row: r, col: 0, type: 'flower-bed' });
+    overrides.push({ row: r, col: 0, type: 'flower-bed', label: 'Boundary hedge' });
+    overrides.push({ row: r, col: 1, type: 'flower-bed', label: 'Shrub border' });
   }
 
   // ── Right fence border (cols 18-19, rows 3-20) — Cordylines + Euphorbia ──
@@ -102,9 +107,18 @@ export function createEsherGarden(): { config: GardenConfig; cells: GardenCell[]
     overrides.push({ row: r, col: 18, type: 'flower-bed', label: 'Euphorbia' });
   }
 
-  // ── Back patio (rows 19-21, cols 4-17) — PAVED, GreenStalks here ──
+  // ── Patio near conservatory doors (rows 2-3, cols 4-8) ──
+  // Estate agent photo 5: paving slabs outside French doors
+  for (let r = 2; r <= 3; r++) {
+    for (let c = 4; c <= 8; c++) {
+      overrides.push({ row: r, col: c, type: 'patio', label: 'Conservatory patio' });
+    }
+  }
+
+  // ── Back patio area (rows 19-21, cols 4-14) — GreenStalks here ──
+  // Smaller than previously mapped; right side is BBQ patio (separate)
   for (let r = 19; r <= 21; r++) {
-    for (let c = 4; c <= 17; c++) {
+    for (let c = 4; c <= 14; c++) {
       overrides.push({ row: r, col: c, type: 'patio', label: 'Back patio' });
     }
   }
@@ -128,10 +142,10 @@ export function createEsherGarden(): { config: GardenConfig; cells: GardenCell[]
     }
   }
 
-  // ── Shed (rows 21-23, cols 16-19) — back-right/N corner ──
-  // Photo 9: wooden shed, glazed panels. User confirmed: back-right looking from house.
+  // ── Shed (rows 21-23, cols 0-3) — back-LEFT corner ──
+  // Estate agent photos: shed clearly visible in back-left, tucked into hedge
   for (let r = 21; r <= 23; r++) {
-    for (let c = 16; c <= 19; c++) {
+    for (let c = 0; c <= 3; c++) {
       overrides.push({ row: r, col: c, type: 'shed', label: 'Shed' });
     }
   }
@@ -144,15 +158,24 @@ export function createEsherGarden(): { config: GardenConfig; cells: GardenCell[]
     overrides.push({ row: 22, col: c, type: 'tree', label: 'Hedge canopy' });
   }
 
-  // ── Back gate area (rows 21-22, cols 4-6) — left side ──
-  for (let r = 21; r <= 22; r++) {
-    for (let c = 4; c <= 6; c++) {
-      overrides.push({ row: r, col: c, type: 'path', label: 'Back gate' });
+  // ── Back gate + BBQ patio (rows 20-22, cols 15-17) — back-RIGHT ──
+  // Estate agent photo 2: covered BBQ on paved area, white gate visible
+  for (let r = 20; r <= 22; r++) {
+    for (let c = 15; c <= 17; c++) {
+      overrides.push({ row: r, col: c, type: 'patio', label: 'BBQ patio' });
     }
   }
+  overrides.push({ row: 22, col: 16, type: 'path', label: 'Back gate' });
+  overrides.push({ row: 22, col: 17, type: 'path', label: 'Back gate' });
   // Gooseberry/currant near back gate
-  overrides.push({ row: 21, col: 4, type: 'flower-bed', plantSlug: 'gooseberry', label: 'Gooseberry' });
-  overrides.push({ row: 21, col: 5, type: 'flower-bed', plantSlug: 'redcurrant', label: 'Redcurrant' });
+  overrides.push({ row: 21, col: 15, type: 'flower-bed', plantSlug: 'gooseberry', label: 'Gooseberry' });
+  overrides.push({ row: 21, col: 16, type: 'flower-bed', plantSlug: 'redcurrant', label: 'Redcurrant' });
+
+  // ── Large deciduous tree overhanging from right (SE) side ──
+  // Estate agent photos: massive tree canopy covers back-right quarter in afternoon
+  for (let r = 14; r <= 19; r++) {
+    overrides.push({ row: r, col: 19, type: 'tree', label: 'Overhanging tree' });
+  }
 
   // ── Sweet peas on right fence ──
   overrides.push({ row: 8, col: 18, type: 'flower-bed', plantSlug: 'dwarf-sweet-pea' });

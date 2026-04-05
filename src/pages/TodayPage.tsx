@@ -52,12 +52,14 @@ const DAY_NAMES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 // ── RHS-backed organic pest remedies ────────────────────────────────────────
 interface PestRemedy {
   emoji: string;
+  rhsUrl?: string; // RHS pest ID page for visual identification
   tips: { icon: string; label: string; detail: string }[];
 }
 
 const PEST_REMEDIES: Record<string, PestRemedy> = {
   slugs: {
     emoji: '🐌',
+    rhsUrl: 'https://www.rhs.org.uk/biodiversity/slugs',
     tips: [
       { icon: '🍺', label: 'Beer traps', detail: 'Sink jam jars level with soil, fill with cheap beer. Empty daily.' },
       { icon: '🥚', label: 'Crushed eggshells', detail: 'Ring plants with crushed shells — slugs avoid the sharp edges.' },
@@ -67,6 +69,7 @@ const PEST_REMEDIES: Record<string, PestRemedy> = {
   },
   aphids: {
     emoji: '🟢',
+    rhsUrl: 'https://www.rhs.org.uk/biodiversity/aphids',
     tips: [
       { icon: '💦', label: 'Blast with water', detail: 'Strong jet from a hose knocks aphids off. Repeat every 2-3 days.' },
       { icon: '🧴', label: 'Soapy water spray', detail: 'Mix 1 tsp washing-up liquid per litre of water. Spray undersides of leaves.' },
@@ -76,6 +79,7 @@ const PEST_REMEDIES: Record<string, PestRemedy> = {
   },
   'vine weevil': {
     emoji: '🪲',
+    rhsUrl: 'https://www.rhs.org.uk/biodiversity/vine-weevil',
     tips: [
       { icon: '🔍', label: 'Check at night', detail: 'Adults feed after dark — shake plants over white paper to spot them.' },
       { icon: '🧫', label: 'Nematode drench', detail: 'Apply Steinernema kraussei nematodes to compost in spring/autumn (soil temp 5°C+).' },
@@ -85,6 +89,7 @@ const PEST_REMEDIES: Record<string, PestRemedy> = {
   },
   'carrot fly': {
     emoji: '🪰',
+    rhsUrl: 'https://www.rhs.org.uk/biodiversity/carrot-fly',
     tips: [
       { icon: '🧅', label: 'Allium companion', detail: 'Interplant with onions, chives, or spring onions — scent confuses the fly.' },
       { icon: '🛡️', label: 'Fleece barrier', detail: 'Cover with fine mesh (Enviromesh) from sowing — fly can\'t reach soil to lay eggs.' },
@@ -94,6 +99,7 @@ const PEST_REMEDIES: Record<string, PestRemedy> = {
   },
   whitefly: {
     emoji: '🦟',
+    rhsUrl: 'https://www.rhs.org.uk/biodiversity/glasshouse-whitefly',
     tips: [
       { icon: '💛', label: 'Yellow sticky traps', detail: 'Hang yellow sticky cards among plants — whitefly are attracted to the colour.' },
       { icon: '🌿', label: 'Basil companion', detail: 'Plant basil next to tomatoes — its oils repel whitefly.' },
@@ -103,6 +109,7 @@ const PEST_REMEDIES: Record<string, PestRemedy> = {
   },
   'powdery mildew': {
     emoji: '🤍',
+    rhsUrl: 'https://www.rhs.org.uk/disease/powdery-mildews',
     tips: [
       { icon: '💧', label: 'Water at base', detail: 'Water soil, not leaves. Wet foliage promotes fungal spread.' },
       { icon: '✂️', label: 'Remove affected leaves', detail: 'Cut off badly affected leaves. Don\'t compost them — bin or burn.' },
@@ -112,6 +119,7 @@ const PEST_REMEDIES: Record<string, PestRemedy> = {
   },
   'grey mould': {
     emoji: '🩶',
+    rhsUrl: 'https://www.rhs.org.uk/disease/grey-moulds',
     tips: [
       { icon: '✂️', label: 'Remove dead tissue', detail: 'Cut away any dead or dying plant material immediately — mould feeds on decay.' },
       { icon: '🌬️', label: 'Improve airflow', detail: 'Don\'t overcrowd. Good ventilation is the #1 prevention.' },
@@ -121,6 +129,7 @@ const PEST_REMEDIES: Record<string, PestRemedy> = {
   },
   'blight': {
     emoji: '🟤',
+    rhsUrl: 'https://www.rhs.org.uk/disease/potato-and-tomato-blight',
     tips: [
       { icon: '🛡️', label: 'Blight-resistant varieties', detail: 'Choose varieties like "Crimson Crush" or "Sarpo Mira" bred for blight resistance.' },
       { icon: '🌧️', label: 'Watch for warm rain', detail: 'Blight spreads in warm, wet weather (Smith periods). Cover with fleece if forecast.' },
@@ -130,6 +139,7 @@ const PEST_REMEDIES: Record<string, PestRemedy> = {
   },
   'caterpillars': {
     emoji: '🐛',
+    rhsUrl: 'https://www.rhs.org.uk/biodiversity/caterpillars',
     tips: [
       { icon: '🛡️', label: 'Butterfly netting', detail: 'Cover brassicas with fine mesh to prevent butterflies laying eggs.' },
       { icon: '👀', label: 'Check undersides', detail: 'Inspect leaf undersides weekly — remove yellow egg clusters by hand.' },
@@ -156,6 +166,72 @@ interface WeatherDay {
   code: number;
 }
 
+// ── Priority Task Checklist ──────────────────────────────────────────────────
+// Phase-aware tasks ranked by priority. Setup + Late Start + Maintenance.
+// Persists completed state in localStorage.
+
+interface PriorityTask {
+  id: string;
+  priority: number; // 1 = highest
+  label: string;
+  detail: string;
+  phases: Phase[]; // which phases this task appears in
+  category: 'setup' | 'planting' | 'maintenance' | 'shopping';
+  oneTime: boolean; // true = check once and done forever; false = recurring
+}
+
+const PRIORITY_TASKS: PriorityTask[] = [
+  // ── SETUP (one-time) ──
+  { id: 'buy-compost', priority: 1, label: 'Buy peat-free compost + perlite', detail: 'Mix 3:1 ratio. Get at least 100L for two GreenStalks.', phases: ['PRE_MOVE', 'NO_GEAR'], category: 'shopping', oneTime: true },
+  { id: 'buy-seed-trays', priority: 2, label: 'Buy seed trays + small pots', detail: 'Start seeds indoors on any sunny windowsill.', phases: ['PRE_MOVE'], category: 'shopping', oneTime: true },
+  { id: 'sow-tomato-indoor', priority: 3, label: 'Sow tomato seeds indoors', detail: 'Tumbling Tom needs 6-8 weeks to transplant size. Start NOW.', phases: ['PRE_MOVE', 'NO_GEAR'], category: 'planting', oneTime: true },
+  { id: 'sow-basil-indoor', priority: 4, label: 'Sow basil seeds indoors', detail: 'Needs warmth to germinate. Windowsill or conservatory.', phases: ['PRE_MOVE', 'NO_GEAR'], category: 'planting', oneTime: true },
+  { id: 'sow-courgette-indoor', priority: 5, label: 'Sow courgette seeds indoors', detail: 'One seed per 9cm pot. Grows fast — sow 4 weeks before transplant.', phases: ['PRE_MOVE', 'NO_GEAR'], category: 'planting', oneTime: true },
+  { id: 'order-strawberries', priority: 6, label: 'Order strawberry plants online', detail: 'Buy as potted plants (not seed). Everbearing variety for all-summer harvest.', phases: ['PRE_MOVE', 'NO_GEAR'], category: 'shopping', oneTime: true },
+  { id: 'buy-sweet-pea-plugs', priority: 7, label: 'Buy sweet pea plug plants', detail: 'Too late to start from seed (should have been February). Buy as plugs.', phases: ['PRE_MOVE', 'NO_GEAR', 'EARLY_SEASON'], category: 'shopping', oneTime: true },
+  { id: 'assess-garden', priority: 8, label: 'Assess garden: photos + sun patterns', detail: 'Take photos from every angle. Note morning vs afternoon sun on the terrace.', phases: ['NO_GEAR'], category: 'setup', oneTime: true },
+  { id: 'position-greenstalks', priority: 9, label: 'Position GreenStalks on sunniest spot', detail: 'Use the Sun Heatmap on the Garden page. Aim for 6+ hours direct sun.', phases: ['EARLY_SEASON'], category: 'setup', oneTime: true },
+  { id: 'fill-greenstalks', priority: 10, label: 'Fill GreenStalks with compost mix', detail: '3:1 peat-free compost to perlite. Add slow-release fertiliser (NPK 14-14-14).', phases: ['EARLY_SEASON'], category: 'setup', oneTime: true },
+  { id: 'check-drainage', priority: 11, label: 'Check all GreenStalk drainage holes', detail: 'Poke a pencil through each pocket drain. Blocked drains = root rot.', phases: ['EARLY_SEASON'], category: 'setup', oneTime: true },
+  { id: 'test-watering', priority: 12, label: 'Fill top reservoir + test water flow', detail: 'Water should trickle through all 5 tiers evenly. Adjust perlite ratio if pooling.', phases: ['EARLY_SEASON'], category: 'setup', oneTime: true },
+  { id: 'setup-titan-cages', priority: 13, label: 'Set up Titan cages for climbers', detail: 'Allocate: 2x runner beans, 2x cucumbers, 2x cordon tomatoes (if in-ground).', phases: ['EARLY_SEASON'], category: 'setup', oneTime: true },
+  { id: 'transplant-seedlings', priority: 14, label: 'Transplant indoor seedlings to GreenStalks', detail: 'Harden off for 7 days first. Move outside during day, in at night.', phases: ['EARLY_SEASON'], category: 'planting', oneTime: true },
+  { id: 'direct-sow-salad', priority: 15, label: 'Direct sow: radish, lettuce, rocket, peas', detail: 'Safe late-start crops. Radish ready in 25 days, lettuce in 30.', phases: ['EARLY_SEASON', 'NO_GEAR'], category: 'planting', oneTime: true },
+  { id: 'sow-beans', priority: 16, label: 'Direct sow French beans + runner beans', detail: 'Beans from seed are fine in late May. Sow 5cm deep, 15cm apart.', phases: ['EARLY_SEASON'], category: 'planting', oneTime: true },
+  { id: 'buy-herb-plants', priority: 17, label: 'Buy potted herbs: mint, chives, thyme, rosemary', detail: 'Garden centre potted herbs establish faster than seed at this stage.', phases: ['NO_GEAR', 'EARLY_SEASON'], category: 'shopping', oneTime: true },
+
+  // ── ONGOING MAINTENANCE (recurring) ──
+  { id: 'water-daily', priority: 20, label: 'Water GreenStalks', detail: 'Daily in spring/autumn, twice daily June–August. Fill the top reservoir.', phases: ['EARLY_SEASON', 'PEAK_SEASON', 'LATE_SEASON'], category: 'maintenance', oneTime: false },
+  { id: 'pest-check', priority: 21, label: 'Check for pests (undersides of leaves)', detail: 'Look for aphids, whitefly, caterpillars. Check twice weekly minimum.', phases: ['EARLY_SEASON', 'PEAK_SEASON', 'LATE_SEASON'], category: 'maintenance', oneTime: false },
+  { id: 'feed-weekly', priority: 22, label: 'Liquid feed tomatoes + peppers', detail: 'Tomato feed (high potash) once flowering starts. Weekly through summer.', phases: ['PEAK_SEASON', 'LATE_SEASON'], category: 'maintenance', oneTime: false },
+  { id: 'harvest-daily', priority: 23, label: 'Harvest ripe crops daily', detail: 'Regular picking encourages more fruit. Don\'t let beans go stringy.', phases: ['PEAK_SEASON', 'LATE_SEASON'], category: 'maintenance', oneTime: false },
+  { id: 'succession-sow', priority: 24, label: 'Succession sow salads every 2 weeks', detail: 'Lettuce, rocket, radish — keep sowing for continuous harvest.', phases: ['EARLY_SEASON', 'PEAK_SEASON'], category: 'planting', oneTime: false },
+  { id: 'rotate-greenstalks', priority: 25, label: 'Rotate GreenStalks 90° every 2 weeks', detail: 'Ensures even sun exposure on all sides.', phases: ['EARLY_SEASON', 'PEAK_SEASON', 'LATE_SEASON'], category: 'maintenance', oneTime: false },
+];
+
+const CHECKLIST_STORAGE_KEY = 'garden-plotter-checklist';
+
+function loadChecklist(): Set<string> {
+  try {
+    const raw = localStorage.getItem(CHECKLIST_STORAGE_KEY);
+    if (!raw) return new Set();
+    return new Set(JSON.parse(raw));
+  } catch {
+    return new Set();
+  }
+}
+
+function saveChecklist(completed: Set<string>) {
+  localStorage.setItem(CHECKLIST_STORAGE_KEY, JSON.stringify([...completed]));
+}
+
+const CATEGORY_COLORS: Record<string, { bg: string; text: string; label: string }> = {
+  setup: { bg: 'bg-sky-100 dark:bg-sky-900/30', text: 'text-sky-700 dark:text-sky-300', label: '🔧 Setup' },
+  planting: { bg: 'bg-emerald-100 dark:bg-emerald-900/30', text: 'text-emerald-700 dark:text-emerald-300', label: '🌱 Planting' },
+  maintenance: { bg: 'bg-amber-100 dark:bg-amber-900/30', text: 'text-amber-700 dark:text-amber-300', label: '🔄 Ongoing' },
+  shopping: { bg: 'bg-violet-100 dark:bg-violet-900/30', text: 'text-violet-700 dark:text-violet-300', label: '🛒 Buy' },
+};
+
 // ── Component ────────────────────────────────────────────────────────────────
 
 export function TodayPage() {
@@ -167,6 +243,17 @@ export function TodayPage() {
 
   const [weather, setWeather] = useState<WeatherDay[] | null>(null);
   const [weatherError, setWeatherError] = useState(false);
+  const [completedTasks, setCompletedTasks] = useState<Set<string>>(() => loadChecklist());
+
+  const toggleTask = (taskId: string) => {
+    setCompletedTasks((prev) => {
+      const next = new Set(prev);
+      if (next.has(taskId)) next.delete(taskId);
+      else next.add(taskId);
+      saveChecklist(next);
+      return next;
+    });
+  };
 
   const today = new Date();
   const month = today.getMonth() + 1;
@@ -254,6 +341,17 @@ export function TodayPage() {
   const earliestHarvest = plantedPlants.length > 0
     ? Math.min(...plantedPlants.map((p) => p.daysToHarvest[0]))
     : null;
+
+  // Priority tasks for current phase, sorted by priority
+  const phaseTasks = useMemo(() => {
+    return PRIORITY_TASKS
+      .filter((t) => t.phases.includes(phase))
+      .sort((a, b) => a.priority - b.priority);
+  }, [phase]);
+
+  const completedCount = phaseTasks.filter((t) => completedTasks.has(t.id)).length;
+  const totalTasks = phaseTasks.length;
+  const progressPct = totalTasks > 0 ? Math.round((completedCount / totalTasks) * 100) : 0;
 
   return (
     <div className="h-full overflow-y-auto">
@@ -380,6 +478,85 @@ export function TodayPage() {
           </div>
         )}
 
+        {/* ── Priority Task Checklist ───────────────────────────────── */}
+        {phaseTasks.length > 0 && (
+          <div className="bg-white dark:bg-stone-800 rounded-2xl border border-stone-200 dark:border-stone-700 overflow-hidden">
+            <div className="px-4 py-3 border-b border-stone-100 dark:border-stone-700">
+              <div className="flex items-center justify-between">
+                <h2 className="text-sm font-bold text-stone-800 dark:text-stone-100">
+                  ✅ Your Priority Checklist
+                </h2>
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] text-stone-400">{completedCount}/{totalTasks}</span>
+                  <div className="w-20 h-1.5 bg-stone-200 dark:bg-stone-600 rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-emerald-500 rounded-full transition-all duration-300"
+                      style={{ width: `${progressPct}%` }}
+                    />
+                  </div>
+                </div>
+              </div>
+              <p className="text-[10px] text-stone-400 mt-0.5">
+                Ranked by priority for {phaseInfo.label.toLowerCase()}. Check off as you go — progress saves automatically.
+              </p>
+            </div>
+
+            <div className="divide-y divide-stone-50 dark:divide-stone-700/50">
+              {phaseTasks.map((task, i) => {
+                const done = completedTasks.has(task.id);
+                const cat = CATEGORY_COLORS[task.category];
+                return (
+                  <div
+                    key={task.id}
+                    className={`px-4 py-2.5 flex items-start gap-3 cursor-pointer transition-all hover:bg-stone-50 dark:hover:bg-stone-700/30 ${
+                      done ? 'opacity-50' : ''
+                    }`}
+                    onClick={() => toggleTask(task.id)}
+                  >
+                    {/* Checkbox */}
+                    <div className={`mt-0.5 w-5 h-5 rounded border-2 flex items-center justify-center shrink-0 transition-all ${
+                      done
+                        ? 'bg-emerald-500 border-emerald-500 text-white'
+                        : 'border-stone-300 dark:border-stone-500'
+                    }`}>
+                      {done && <span className="text-xs">✓</span>}
+                    </div>
+
+                    {/* Content */}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2">
+                        <span className={`text-xs font-semibold ${done ? 'line-through text-stone-400' : 'text-stone-800 dark:text-stone-100'}`}>
+                          {task.label}
+                        </span>
+                        <span className={`text-[9px] px-1.5 py-0.5 rounded-full ${cat.bg} ${cat.text}`}>
+                          {cat.label}
+                        </span>
+                        {!task.oneTime && (
+                          <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-stone-100 dark:bg-stone-600 text-stone-400">
+                            recurring
+                          </span>
+                        )}
+                      </div>
+                      <p className={`text-[10px] mt-0.5 ${done ? 'text-stone-300 dark:text-stone-600' : 'text-stone-500 dark:text-stone-400'}`}>
+                        {task.detail}
+                      </p>
+                    </div>
+
+                    {/* Priority badge */}
+                    <div className={`text-[9px] font-bold rounded-full w-5 h-5 flex items-center justify-center shrink-0 ${
+                      i < 3 ? 'bg-rose-100 dark:bg-rose-900/30 text-rose-600 dark:text-rose-400'
+                        : i < 8 ? 'bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400'
+                        : 'bg-stone-100 dark:bg-stone-600 text-stone-400'
+                    }`}>
+                      {i + 1}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
         {/* ── This Week's Tasks ─────────────────────────────────────── */}
         <div className="bg-white dark:bg-stone-800 rounded-2xl border border-stone-200 dark:border-stone-700 overflow-hidden">
           <div className="px-4 py-3 border-b border-stone-100 dark:border-stone-700">
@@ -468,8 +645,14 @@ export function TodayPage() {
                     return (
                       <div key={pest} className="bg-orange-50 dark:bg-orange-900/15 rounded-lg p-2.5 border border-orange-100 dark:border-orange-800/30">
                         <div className="flex items-start justify-between gap-2">
-                          <div className="font-semibold text-[11px] text-orange-800 dark:text-orange-300 capitalize">
+                          <div className="font-semibold text-[11px] text-orange-800 dark:text-orange-300 capitalize flex items-center gap-1.5">
                             {remedy.emoji} {pest}
+                            {remedy.rhsUrl && (
+                              <a href={remedy.rhsUrl} target="_blank" rel="noopener noreferrer"
+                                className="text-[9px] text-orange-500 hover:text-orange-700 dark:hover:text-orange-200 underline font-normal normal-case">
+                                ID photos →
+                              </a>
+                            )}
                           </div>
                           <div className="text-[9px] text-orange-500 dark:text-orange-400/70 shrink-0">
                             Affects: {crops.slice(0, 3).join(', ')}

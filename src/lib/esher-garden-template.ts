@@ -265,9 +265,17 @@ export function generateEsherLayouts(): EsherLayoutOption[] {
         'Our top recommendation for 21 Esher Avenue in-ground areas. Specific varietals selected from RHS trials for Surrey clay, partial shade near the laurel hedge, and a late-May start. Runner beans (Scarlet Emperor — RHS AGM) on the fence for vertical growing + nitrogen fixing. Sweet pea (Spencer Mix) kept for pollinators and cut flowers.\n\n' +
         'Raised bed: shade-tolerant salad designed as a "cut-and-come-again salad bar" — Wild Rocket (perennial, peppery, £12/kg), Little Gem lettuce (bolt-resistant mini cos), Perpetual Spinach (BBC GW "most forgiving"), White Lisbon spring onion (slug deterrent via allium scent), French Breakfast radish (25 days, kids love the pull-and-eat treasure hunt). All chosen specifically for the dappled shade cast by the 3-4m laurel hedge.',
       placements: [
+        // Fence border
         { row: 8, col: 18, plantSlug: 'runner-bean' },
         { row: 12, col: 18, plantSlug: 'runner-bean' },
         { row: 16, col: 18, plantSlug: 'dwarf-sweet-pea' },
+        // Conservatory — seed starting + tender herbs + overwintering
+        { row: 1, col: 1, plantSlug: 'basil-sweet' },
+        { row: 1, col: 3, plantSlug: 'pepper-chilli' },
+        { row: 1, col: 5, plantSlug: 'tomato-tumbling' },
+        { row: 2, col: 1, plantSlug: 'parsley' },
+        { row: 2, col: 3, plantSlug: 'coriander' },
+        { row: 2, col: 5, plantSlug: 'mint' },
       ],
       reasoning: [
         { plantSlug: 'runner-bean', plantName: 'Runner Bean (Scarlet Emperor)', row: 8, col: 18, zone: zoneLabel(8, 18), reasons: [
@@ -286,6 +294,36 @@ export function generateEsherLayouts(): EsherLayoutOption[] {
           'Pollinator magnet — attracts bees to the GreenStalks on the adjacent patio',
           'Cut flower supply for the house — the more you cut, the more they flower',
           'Near patio seating area — fragrance drifts to where you sit in the evening',
+        ]},
+        { plantSlug: 'basil-sweet', plantName: 'Sweet Basil (Genovese)', row: 1, col: 1, zone: 'Conservatory', reasons: [
+          'Conservatory gives the warmth basil demands — won\'t tolerate UK outdoor nights until June',
+          'Start indoors April, move to GreenStalk tier 1 when nights stay above 10°C',
+          'Companion to tomatoes on the same windowsill — both need warmth and light',
+        ]},
+        { plantSlug: 'pepper-chilli', plantName: 'Chilli Pepper', row: 1, col: 3, zone: 'Conservatory', reasons: [
+          'Conservatory is the ONLY viable location — chillies need 20°C+ and long season',
+          'Start Feb-Mar indoors, fruit from August. Overwinter in conservatory for year 2',
+          'Kids love watching the colour change from green → red',
+        ]},
+        { plantSlug: 'tomato-tumbling', plantName: 'Tomato (seedlings)', row: 1, col: 5, zone: 'Conservatory', reasons: [
+          'Start seedlings here, transplant to GreenStalk tier 2 when 15cm tall',
+          'Conservatory gives the warmth for germination (18-25°C) that a windowsill can\'t guarantee',
+          'Harden off for 7 days before moving outside',
+        ]},
+        { plantSlug: 'parsley', plantName: 'Flat-leaf Parsley', row: 2, col: 1, zone: 'Conservatory', reasons: [
+          'Slow to germinate (2-3 weeks) — conservatory warmth speeds it up',
+          'Move to GreenStalk tier 1 or raised bed once established',
+          'Cut-and-come-again herb, high-value (£18/kg vs supermarket)',
+        ]},
+        { plantSlug: 'coriander', plantName: 'Coriander (Calypso)', row: 2, col: 3, zone: 'Conservatory', reasons: [
+          'Varietal: Calypso — bolt-resistant, bred for leaf production not seed',
+          'Conservatory shade prevents the bolting that kills coriander outdoors',
+          'Succession sow every 3 weeks for continuous supply',
+        ]},
+        { plantSlug: 'mint', plantName: 'Mint (in pot)', row: 2, col: 5, zone: 'Conservatory', reasons: [
+          'MUST stay in a pot — mint is invasive and will take over any bed',
+          'Conservatory keeps it accessible for kitchen use year-round',
+          'Renter-safe: contained, no risk to property',
         ]},
       ],
       raisedBedReplant: {
@@ -313,7 +351,7 @@ export function generateEsherLayouts(): EsherLayoutOption[] {
           { plantSlug: 'rocket', plantName: 'Wild Rocket', row: 22, col: 12, zone: zoneLabel(22, 12), reasons: ['Third rocket — edge position for easy picking from the path side', 'Three rocket plants supply enough peppery leaves for daily salads all summer'] },
         ],
       },
-      stats: { totalPlants: 15, uniqueVarieties: 6, companionPairs: 5, estimatedYieldKg: 10, estimatedValueGBP: 75 },
+      stats: { totalPlants: 21, uniqueVarieties: 12, companionPairs: 8, estimatedYieldKg: 12, estimatedValueGBP: 95 },
     },
 
     // ═══ 2. Maximum Food from Limited Space ════════════════════════════════════

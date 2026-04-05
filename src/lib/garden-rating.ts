@@ -175,12 +175,15 @@ function scoreValue(plant: Plant): number {
 
 // ─── Main scoring ───────────────────────────────────────────────────────────
 
+// Kid-friendly garden is the #1 priority (David's kids Max + Noelle).
+// Fragrance is David's personal preference, secondary.
+// Companion + resilience support production of the kid garden.
 const WEIGHTS = {
-  kidFriendly: 0.20,
-  fragrance: 0.15,
-  companion: 0.25,
-  resilience: 0.20,
+  kidFriendly: 0.35,
   value: 0.20,
+  companion: 0.15,
+  resilience: 0.15,
+  fragrance: 0.15,
 };
 
 export function scorePlant(

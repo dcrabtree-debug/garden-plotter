@@ -19,7 +19,7 @@
  * - Right fence border (cols 18-19) — closeboard + Cordylines + Euphorbia
  * - Main lawn (rows 3-18) — OFF LIMITS, rental
  * - Back patio (rows 19-21, cols 4-14) — GreenStalk positions
- * - BBQ patio (rows 20-22, cols 15-17) — covered BBQ, back-right corner
+ * - Old shed site (rows 20-22, cols 16-19) — NE corner, shed removed, pavers remain
  * - Raised bed (rows 21-22, cols 7-12) — black metal edging, shade bed
  * - Shed (rows 21-23, cols 0-3) — wooden, back-LEFT corner
  * - Laurel hedge (rows 22-23) — 3-4m tall, full back boundary
@@ -158,18 +158,20 @@ export function createEsherGarden(): { config: GardenConfig; cells: GardenCell[]
     overrides.push({ row: 22, col: c, type: 'tree', label: 'Hedge canopy' });
   }
 
-  // ── Back gate + BBQ patio (rows 20-22, cols 15-17) — back-RIGHT ──
-  // Estate agent photo 2: covered BBQ on paved area, white gate visible
+  // ── Old shed site — NE corner (rows 20-22, cols 16-19) ──
+  // Unknown-5 (most recent photo): old shed REMOVED, just pavers left.
+  // This paved area is a potential spot for GreenStalks or container planting.
   for (let r = 20; r <= 22; r++) {
-    for (let c = 15; c <= 17; c++) {
-      overrides.push({ row: r, col: c, type: 'patio', label: 'BBQ patio' });
+    for (let c = 16; c <= 19; c++) {
+      overrides.push({ row: r, col: c, type: 'patio', label: 'Old shed site (pavers)' });
     }
   }
-  overrides.push({ row: 22, col: 16, type: 'path', label: 'Back gate' });
-  overrides.push({ row: 22, col: 17, type: 'path', label: 'Back gate' });
-  // Gooseberry/currant near back gate
-  overrides.push({ row: 21, col: 15, type: 'flower-bed', plantSlug: 'gooseberry', label: 'Gooseberry' });
-  overrides.push({ row: 21, col: 16, type: 'flower-bed', plantSlug: 'redcurrant', label: 'Redcurrant' });
+
+  // ── Back gate + fruit bushes (rows 21-22, cols 14-15) ──
+  overrides.push({ row: 22, col: 14, type: 'path', label: 'Back gate' });
+  overrides.push({ row: 22, col: 15, type: 'path', label: 'Back gate' });
+  overrides.push({ row: 21, col: 14, type: 'flower-bed', plantSlug: 'gooseberry', label: 'Gooseberry' });
+  overrides.push({ row: 21, col: 15, type: 'flower-bed', plantSlug: 'redcurrant', label: 'Redcurrant' });
 
   // ── Large deciduous tree overhanging from right (SE) side ──
   // Estate agent photos: massive tree canopy covers back-right quarter in afternoon

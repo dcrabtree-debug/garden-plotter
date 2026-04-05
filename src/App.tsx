@@ -10,12 +10,14 @@ import { SettingsPage } from './pages/SettingsPage';
 import { SetupGuidePage } from './pages/SetupGuidePage';
 import { ShadowPage } from './pages/ShadowPage';
 import { YieldPage } from './pages/YieldPage';
+import { TodayPage } from './pages/TodayPage';
 import { useDarkMode } from './hooks/use-dark-mode';
 import { usePlannerStore } from './state/planner-store';
 
-type Page = 'planner' | 'garden' | 'harvest' | 'seeds' | 'care' | 'yield' | 'shadow' | 'setup' | 'calendar' | 'knowledge' | 'settings';
+type Page = 'today' | 'planner' | 'garden' | 'harvest' | 'seeds' | 'care' | 'yield' | 'shadow' | 'setup' | 'calendar' | 'knowledge' | 'settings';
 
 const navItems: { id: Page; label: string; icon: string }[] = [
+  { id: 'today', label: 'Today', icon: '\u2600\ufe0f' },
   { id: 'planner', label: 'GreenStalk', icon: '\ud83c\udf31' },
   { id: 'garden', label: 'Garden', icon: '\ud83c\udfe1' },
   { id: 'harvest', label: 'Harvest', icon: '\ud83c\udf53' },
@@ -30,7 +32,7 @@ const navItems: { id: Page; label: string; icon: string }[] = [
 ];
 
 function App() {
-  const [page, setPage] = useState<Page>('planner');
+  const [page, setPage] = useState<Page>('today');
   const { isDark, toggle: toggleDark } = useDarkMode();
   const location = usePlannerStore((s) => s.settings.location);
 
@@ -80,6 +82,7 @@ function App() {
       {/* Page content */}
       <main className="flex-1 overflow-hidden">
         <div key={page} className="h-full animate-fadeIn">
+          {page === 'today' && <TodayPage />}
           {page === 'planner' && <PlannerPage />}
           {page === 'garden' && <GardenPage />}
           {page === 'harvest' && <HarvestPage />}

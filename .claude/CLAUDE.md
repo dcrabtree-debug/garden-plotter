@@ -1,5 +1,8 @@
 # Garden Plotter — Claude Code Project Context
 
+## Session Protocol
+- **Always pull before working:** At the start of every session, run `git fetch origin` and merge any new commits from `origin/main` and `origin/claude/iphone-friendly-garden-plotter-IYx8f` (David's mobile Claude Code branch). Resolve conflicts if any. This ensures desktop and mobile sessions stay in sync.
+
 ## The Garden: 21 Esher Avenue, Surrey, UK
 
 ### Property Overview

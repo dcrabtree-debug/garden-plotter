@@ -116,15 +116,15 @@ export function YieldPage() {
         {/* Category winners */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           {[
-            { label: 'Best Herb', items: topHerbs, color: 'emerald' },
-            { label: 'Best Veg', items: topVeg, color: 'amber' },
-            { label: 'Best Fruit', items: topFruit, color: 'rose' },
-          ].map(({ label, items, color }) => {
+            { label: 'Best Herb', items: topHerbs, cls: 'bg-emerald-50 dark:bg-emerald-900/10 border-emerald-200 dark:border-emerald-800' },
+            { label: 'Best Veg', items: topVeg, cls: 'bg-amber-50 dark:bg-amber-900/10 border-amber-200 dark:border-amber-800' },
+            { label: 'Best Fruit', items: topFruit, cls: 'bg-rose-50 dark:bg-rose-900/10 border-rose-200 dark:border-rose-800' },
+          ].map(({ label, items, cls }) => {
             const winner = items[0];
             if (!winner) return null;
             const val = context === 'greenstalk' ? winner.pocketValueGBP : winner.cellValueGBP;
             return (
-              <div key={label} className={`rounded-xl p-3 border bg-${color}-50 dark:bg-${color}-900/10 border-${color}-200 dark:border-${color}-800`}>
+              <div key={label} className={`rounded-xl p-3 border ${cls}`}>
                 <div className="text-[9px] font-bold uppercase tracking-wide text-stone-400">{label}</div>
                 <div className="flex items-center gap-1.5 mt-1">
                   <span className="text-xl">{winner.plant.emoji}</span>

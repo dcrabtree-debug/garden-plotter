@@ -1,8 +1,6 @@
 import { useState, useMemo } from 'react';
 import {
   analyzeEsherAvenue,
-  analyzeZone,
-  type ShadowObstacle,
   type ZoneSunAnalysis,
 } from '../lib/shadow-engine';
 import { useRegion } from '../data/use-region';

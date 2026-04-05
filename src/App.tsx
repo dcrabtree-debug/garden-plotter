@@ -54,6 +54,7 @@ function App() {
             onClick={toggleDark}
             className="p-2 rounded-full text-sm hover:bg-stone-100 dark:hover:bg-stone-700 transition-colors"
             title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+            aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
           >
             {isDark ? '\u2600\ufe0f' : '\ud83c\udf19'}
           </button>

@@ -35,6 +35,16 @@ const PHASE_LABELS: Record<Phase, { label: string; emoji: string; color: string 
   DORMANT: { label: 'Planning Season', emoji: '❄️', color: 'blue' },
 };
 
+// Static Tailwind classes — dynamic interpolation doesn't work with Tailwind
+const PHASE_BADGE_COLORS: Record<Phase, string> = {
+  PRE_MOVE: 'bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300',
+  NO_GEAR: 'bg-sky-100 text-sky-800 dark:bg-sky-900/30 dark:text-sky-300',
+  EARLY_SEASON: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-300',
+  PEAK_SEASON: 'bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-300',
+  LATE_SEASON: 'bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300',
+  DORMANT: 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300',
+};
+
 function daysBetween(a: Date, b: Date): number {
   return Math.ceil((b.getTime() - a.getTime()) / (1000 * 60 * 60 * 24));
 }
@@ -380,7 +390,7 @@ export function TodayPage() {
                 {today.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
               </p>
             </div>
-            <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold bg-${phaseInfo.color}-100 text-${phaseInfo.color}-800 dark:bg-${phaseInfo.color}-900/30 dark:text-${phaseInfo.color}-300`}>
+            <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold ${PHASE_BADGE_COLORS[phase]}`}>
               {phaseInfo.emoji} {phaseInfo.label}
             </div>
           </div>

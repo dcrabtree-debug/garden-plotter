@@ -59,10 +59,10 @@ function PlantRow({
         <span
           className={`text-[10px] px-1.5 py-0.5 rounded-full font-medium ${
             plant.greenstalkSuitability === 'ideal'
-              ? 'bg-emerald-100 text-emerald-700'
+              ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300'
               : plant.greenstalkSuitability === 'good'
-                ? 'bg-blue-100 text-blue-700'
-                : 'bg-amber-100 text-amber-700'
+                ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300'
+                : 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300'
           }`}
         >
           {plant.greenstalkSuitability}
@@ -71,12 +71,12 @@ function PlantRow({
       <td className="px-4 py-3">
         <div className="flex gap-1">
           {canSowNow && (
-            <span className="text-[9px] px-1.5 py-0.5 bg-emerald-100 text-emerald-700 rounded-full">
+            <span className="text-[9px] px-1.5 py-0.5 bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300 rounded-full">
               Sow now
             </span>
           )}
           {canHarvestNow && (
-            <span className="text-[9px] px-1.5 py-0.5 bg-rose-100 text-rose-700 rounded-full">
+            <span className="text-[9px] px-1.5 py-0.5 bg-rose-100 text-rose-700 dark:bg-rose-900/30 dark:text-rose-300 rounded-full">
               Harvest
             </span>
           )}
@@ -162,13 +162,13 @@ export function KnowledgeBasePage() {
                   <span className="text-[10px] px-1.5 py-0.5 bg-stone-100 dark:bg-stone-700 text-stone-500 dark:text-stone-400 rounded capitalize">{plant.sun.replace('-', ' ')}</span>
                   <span className={`text-[10px] px-1.5 py-0.5 rounded font-medium ${
                     plant.greenstalkSuitability === 'ideal'
-                      ? 'bg-emerald-100 text-emerald-700'
+                      ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300'
                       : plant.greenstalkSuitability === 'good'
-                        ? 'bg-blue-100 text-blue-700'
-                        : 'bg-amber-100 text-amber-700'
+                        ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300'
+                        : 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300'
                   }`}>{plant.greenstalkSuitability}</span>
-                  {canSowNow && <span className="text-[10px] px-1.5 py-0.5 bg-emerald-100 text-emerald-700 rounded">Sow now</span>}
-                  {canHarvestNow && <span className="text-[10px] px-1.5 py-0.5 bg-rose-100 text-rose-700 rounded">Harvest</span>}
+                  {canSowNow && <span className="text-[10px] px-1.5 py-0.5 bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300 rounded">Sow now</span>}
+                  {canHarvestNow && <span className="text-[10px] px-1.5 py-0.5 bg-rose-100 text-rose-700 dark:bg-rose-900/30 dark:text-rose-300 rounded">Harvest</span>}
                 </div>
               </div>
             </button>

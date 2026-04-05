@@ -2,8 +2,10 @@ import { useState, useEffect, useMemo } from 'react';
 import { usePlannerStore } from '../state/planner-store';
 import { useGardenStore } from '../state/garden-store';
 import { usePlantDb } from '../data/use-plant-db';
+import { useCompanionDb } from '../data/use-companion-db';
 import { useRegion } from '../data/use-region';
 import { isInWindow, getMonthName } from '../lib/calendar-utils';
+import { gradeGarden, type GardenGrade, type PlantScore } from '../lib/garden-rating';
 import type { Plant } from '../types/plant';
 
 // ── Key dates ────────────────────────────────────────────────────────────────
@@ -237,6 +239,7 @@ const CATEGORY_COLORS: Record<string, { bg: string; text: string; label: string 
 export function TodayPage() {
   const region = useRegion();
   const { plants, plantMap } = usePlantDb(region);
+  const { companionMap } = useCompanionDb();
   const towers = usePlannerStore((s) => s.towers);
   const settings = usePlannerStore((s) => s.settings);
   const gardenCells = useGardenStore((s) => s.garden.cells);
@@ -296,6 +299,14 @@ export function TodayPage() {
 
   const allPlantedSlugs = useMemo(() => new Set([...greenstalkSlugs, ...gardenSlugs]), [greenstalkSlugs, gardenSlugs]);
   const plantedPlants = useMemo(() => [...allPlantedSlugs].map((s) => plantMap.get(s)).filter(Boolean) as Plant[], [allPlantedSlugs, plantMap]);
+
+  // ── Garden Grade (holistic rating across both systems) ────────────────
+  const grade: GardenGrade = useMemo(() => {
+    return gradeGarden(
+      [...greenstalkSlugs], [...gardenSlugs],
+      plants, plantMap, companionMap
+    );
+  }, [greenstalkSlugs, gardenSlugs, plants, plantMap, companionMap]);
 
   // ── Derived task lists ────────────────────────────────────────────────
   const sowIndoorsNow = useMemo(() => plants.filter((p) => isInWindow(month, p.plantingWindow.sowIndoors)), [plants, month]);
@@ -475,6 +486,131 @@ export function TodayPage() {
                 </ul>
               </div>
             )}
+          </div>
+        )}
+
+        {/* ── Garden Grade (holistic rating) ──────────────────────────── */}
+        {grade.totalPlants > 0 && (
+          <div className="bg-white dark:bg-stone-800 rounded-2xl border border-stone-200 dark:border-stone-700 overflow-hidden">
+            <div className="px-4 py-3 border-b border-stone-100 dark:border-stone-700 flex items-center justify-between">
+              <h2 className="text-sm font-bold text-stone-800 dark:text-stone-100">📊 Garden Grade</h2>
+              <span className="text-[10px] text-stone-400">{grade.uniqueSpecies} species · {grade.totalPlants} plants</span>
+            </div>
+
+            <div className="px-4 py-4">
+              {/* Grade + Score */}
+              <div className="flex items-center gap-4 mb-4">
+                <div className={`text-4xl font-black w-16 h-16 rounded-2xl flex items-center justify-center ${
+                  grade.score >= 75 ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600' :
+                  grade.score >= 55 ? 'bg-amber-100 dark:bg-amber-900/30 text-amber-600' :
+                  'bg-rose-100 dark:bg-rose-900/30 text-rose-600'
+                }`}>
+                  {grade.letter}
+                </div>
+                <div className="flex-1">
+                  <div className="flex items-center gap-2 mb-1">
+                    <div className="flex-1 h-2.5 bg-stone-200 dark:bg-stone-600 rounded-full overflow-hidden">
+                      <div
+                        className={`h-full rounded-full transition-all duration-500 ${
+                          grade.score >= 75 ? 'bg-emerald-500' : grade.score >= 55 ? 'bg-amber-500' : 'bg-rose-500'
+                        }`}
+                        style={{ width: `${grade.score}%` }}
+                      />
+                    </div>
+                    <span className="text-xs font-bold text-stone-600 dark:text-stone-300">{grade.score}/100</span>
+                  </div>
+                  <div className="flex gap-3 text-[10px] text-stone-400">
+                    <span>+{grade.crossSystemBonus} cross-system synergy</span>
+                    <span>+{grade.diversityBonus} diversity</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* 5-axis breakdown */}
+              <div className="grid grid-cols-5 gap-1.5 mb-4">
+                {([
+                  { key: 'kidFriendly', label: '🧒 Kids', value: grade.axisAverages.kidFriendly },
+                  { key: 'fragrance', label: '🌸 Scent', value: grade.axisAverages.fragrance },
+                  { key: 'companion', label: '🤝 Companion', value: grade.axisAverages.companion },
+                  { key: 'resilience', label: '💪 Hardy', value: grade.axisAverages.resilience },
+                  { key: 'value', label: '💰 Value', value: grade.axisAverages.value },
+                ] as const).map((axis) => (
+                  <div key={axis.key} className="text-center">
+                    <div className="text-[10px] text-stone-400 mb-1">{axis.label}</div>
+                    <div className={`text-sm font-bold ${
+                      axis.value >= 7 ? 'text-emerald-600 dark:text-emerald-400' :
+                      axis.value >= 4 ? 'text-amber-600 dark:text-amber-400' :
+                      'text-rose-600 dark:text-rose-400'
+                    }`}>
+                      {axis.value.toFixed(1)}
+                    </div>
+                    <div className="w-full h-1 bg-stone-200 dark:bg-stone-600 rounded-full mt-0.5">
+                      <div
+                        className={`h-full rounded-full ${
+                          axis.value >= 7 ? 'bg-emerald-500' : axis.value >= 4 ? 'bg-amber-500' : 'bg-rose-500'
+                        }`}
+                        style={{ width: `${axis.value * 10}%` }}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Strengths and weaknesses */}
+              <div className="flex gap-2 mb-3 text-[10px]">
+                <span className="px-2 py-1 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-300 rounded-lg">
+                  Strongest: {grade.topStrength.axis} ({grade.topStrength.score.toFixed(1)})
+                </span>
+                <span className="px-2 py-1 bg-rose-50 dark:bg-rose-900/20 text-rose-700 dark:text-rose-300 rounded-lg">
+                  Weakest: {grade.topWeakness.axis} ({grade.topWeakness.score.toFixed(1)})
+                </span>
+              </div>
+
+              {/* Top plant scores */}
+              <div className="mb-3">
+                <div className="text-[10px] font-semibold text-stone-500 dark:text-stone-400 uppercase tracking-wider mb-1.5">
+                  Plant Rankings (all systems combined)
+                </div>
+                <div className="space-y-1">
+                  {grade.plantScores.slice(0, 8).map((ps, i) => (
+                    <div key={ps.slug} className="flex items-center gap-2 text-[10px]">
+                      <span className={`w-4 h-4 rounded-full flex items-center justify-center text-[9px] font-bold ${
+                        i === 0 ? 'bg-amber-400 text-white' : i === 1 ? 'bg-stone-300 text-white' : i === 2 ? 'bg-amber-700 text-white' : 'bg-stone-100 dark:bg-stone-600 text-stone-400'
+                      }`}>{i + 1}</span>
+                      <span>{ps.emoji}</span>
+                      <span className="font-medium text-stone-700 dark:text-stone-300 flex-1 truncate">{ps.commonName}</span>
+                      <span className="text-[9px] text-stone-400">
+                        {ps.location === 'both' ? '🌱+🏡' : ps.location === 'greenstalk' ? '🌱' : '🏡'}
+                      </span>
+                      <span className={`font-bold ${
+                        ps.overall >= 7 ? 'text-emerald-600 dark:text-emerald-400' : ps.overall >= 5 ? 'text-amber-600 dark:text-amber-400' : 'text-rose-600 dark:text-rose-400'
+                      }`}>{ps.overall.toFixed(1)}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Upgrade suggestions */}
+              {grade.upgrades.length > 0 && (
+                <div>
+                  <div className="text-[10px] font-semibold text-stone-500 dark:text-stone-400 uppercase tracking-wider mb-1.5">
+                    💡 Upgrade Suggestions
+                  </div>
+                  <div className="space-y-1.5">
+                    {grade.upgrades.map((u) => (
+                      <div key={`${u.currentSlug}-${u.suggestedSlug}`} className="bg-indigo-50 dark:bg-indigo-900/20 rounded-lg px-2.5 py-1.5 text-[10px]">
+                        <span className="text-indigo-700 dark:text-indigo-300">
+                          Swap <strong>{u.currentName}</strong> → {u.suggestedEmoji} <strong>{u.suggestedName}</strong>
+                        </span>
+                        <span className="text-indigo-500 dark:text-indigo-400 ml-1">
+                          (+{u.scoreDelta} overall: {u.reason})
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         )}
 

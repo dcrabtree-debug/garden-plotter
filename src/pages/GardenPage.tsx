@@ -10,6 +10,7 @@ import { usePlannerStore } from '../state/planner-store';
 import { generateLayouts as generateGSLayouts, extractTowerSlugs } from '../lib/auto-populate';
 import { findBestPairing } from '../lib/cross-system-scoring';
 import { checkPair, getFriends, getConflicts } from '../lib/companion-engine';
+import { scorePlant } from '../lib/garden-rating';
 import type { CellType, GardenFacing, GardenCell } from '../types/planner';
 import type { Plant } from '../types/plant';
 import {
@@ -216,6 +217,22 @@ function HoverReasoningPanel({
             🤝 GreenStalk synergy: {towerFriends.map((f) => f.reason).slice(0, 2).join('; ')}
           </div>
         )}
+
+        {/* Plant score (5-axis) */}
+        {(() => {
+          const allSlugs = [...new Set([...nearbySlugs, plant.slug, ...actualTowerSlugs])];
+          const ps = scorePlant(plant, allSlugs, companionMap, 'inground');
+          return (
+            <div className="flex gap-1 text-[9px]">
+              <span className={`px-1 rounded ${ps.kidFriendly >= 7 ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400' : 'bg-stone-100 dark:bg-stone-600 text-stone-400'}`}>🧒{ps.kidFriendly}</span>
+              <span className={`px-1 rounded ${ps.fragrance >= 7 ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400' : 'bg-stone-100 dark:bg-stone-600 text-stone-400'}`}>🌸{ps.fragrance}</span>
+              <span className={`px-1 rounded ${ps.companion >= 7 ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400' : 'bg-stone-100 dark:bg-stone-600 text-stone-400'}`}>🤝{ps.companion}</span>
+              <span className={`px-1 rounded ${ps.resilience >= 7 ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400' : 'bg-stone-100 dark:bg-stone-600 text-stone-400'}`}>💪{ps.resilience}</span>
+              <span className={`px-1 rounded ${ps.value >= 7 ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400' : 'bg-stone-100 dark:bg-stone-600 text-stone-400'}`}>💰{ps.value}</span>
+              <span className="font-bold text-stone-600 dark:text-stone-300 ml-1">{ps.overall.toFixed(1)}</span>
+            </div>
+          );
+        })()}
 
         {/* Care tips */}
         <div className="text-[10px] text-stone-500 dark:text-stone-400 space-y-0.5">

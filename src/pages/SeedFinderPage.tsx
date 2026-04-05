@@ -379,6 +379,7 @@ export function SeedFinderPage() {
       bestPrice: number;
       bestSeller: string;
       bestUrl: string;
+      buyAs: string;
     }[] = [];
 
     for (const slug of allSlugs) {

@@ -142,10 +142,11 @@ export function createEsherGarden(): { config: GardenConfig; cells: GardenCell[]
     }
   }
 
-  // ── Shed (rows 21-23, cols 0-3) — back-LEFT corner ──
-  // Estate agent photos: shed clearly visible in back-left, tucked into hedge
+  // ── Shed (rows 21-23, cols 4-7) — north corner (center-back) ──
+  // Estate agent photos: shed visible center-back, in front of hedge
+  // User confirmed: "small shed in the north corner (true north)"
   for (let r = 21; r <= 23; r++) {
-    for (let c = 0; c <= 3; c++) {
+    for (let c = 4; c <= 7; c++) {
       overrides.push({ row: r, col: c, type: 'shed', label: 'Shed' });
     }
   }
@@ -158,9 +159,9 @@ export function createEsherGarden(): { config: GardenConfig; cells: GardenCell[]
     overrides.push({ row: 22, col: c, type: 'tree', label: 'Hedge canopy' });
   }
 
-  // ── Old shed site — NE corner (rows 20-22, cols 16-19) ──
-  // Unknown-5 (most recent photo): old shed REMOVED, just pavers left.
-  // This paved area is a potential spot for GreenStalks or container planting.
+  // ── Old shed site — eastern corner (rows 20-22, cols 16-19) ──
+  // Unknown-5: old shed REMOVED, pavers + open space remain.
+  // User confirmed: "some pavers and space in the eastern corner"
   for (let r = 20; r <= 22; r++) {
     for (let c = 16; c <= 19; c++) {
       overrides.push({ row: r, col: c, type: 'patio', label: 'Old shed site (pavers)' });

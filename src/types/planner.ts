@@ -1,6 +1,7 @@
 export interface Pocket {
   id: string;
   plantSlug: string | null;
+  companionSlugs: string[];
   plantedDate: string | null;
 }
 

@@ -105,7 +105,8 @@ export function KnowledgeBasePage() {
   const currentMonth = new Date().getMonth() + 1;
 
   return (
-    <div className="p-3 sm:p-6 max-w-6xl mx-auto">
+    <div className="h-full overflow-y-auto p-3 sm:p-6">
+    <div className="max-w-6xl mx-auto">
       <h1 className="text-xl font-semibold text-stone-800 dark:text-stone-100 mb-1">
         Plant Knowledge Base
       </h1>
@@ -230,6 +231,7 @@ export function KnowledgeBasePage() {
           onClose={() => setSelectedPlant(null)}
         />
       )}
+    </div>
     </div>
   );
 }

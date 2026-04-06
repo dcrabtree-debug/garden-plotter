@@ -531,7 +531,7 @@ export function SeedFinderPage() {
 
   return (
     <div className="h-full overflow-y-auto">
-      <div className="max-w-4xl mx-auto px-4 py-6">
+      <div className="max-w-7xl mx-auto px-4 py-6">
         {/* Header */}
         <div className="mb-4">
           <h1 className="text-3xl font-bold tracking-tight text-stone-800 dark:text-stone-100">Shopping</h1>
@@ -640,9 +640,13 @@ export function SeedFinderPage() {
           </div>
         </div>
 
+        {/* Desktop 2-column layout: sidebar (list + supplies) + plant cards */}
+        <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] lg:gap-6">
+        <div className="lg:space-y-5">
+
         {/* Shopping list summary */}
         {filter === 'shopping-list' && shoppingList.items.length > 0 && (
-          <div className="bg-gradient-to-br from-violet-50 to-indigo-50 dark:from-violet-900/20 dark:to-indigo-900/20 rounded-2xl border border-violet-200 dark:border-violet-800/40 p-4 sm:p-5 mb-5">
+          <div className="bg-gradient-to-br from-violet-50 to-indigo-50 dark:from-violet-900/20 dark:to-indigo-900/20 rounded-2xl border border-violet-200 dark:border-violet-800/40 p-4 sm:p-5 mb-5 lg:mb-0">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
               <div>
                 <h2 className="text-lg font-bold text-stone-800 dark:text-stone-100 flex items-center gap-2">
@@ -750,7 +754,7 @@ export function SeedFinderPage() {
         )}
 
         {/* ── Supplies & Equipment ─────────────────────────────────── */}
-        <div className="bg-white dark:bg-stone-800 rounded-2xl border border-stone-200 dark:border-stone-700 overflow-hidden mb-5">
+        <div className="bg-white dark:bg-stone-800 rounded-2xl border border-stone-200 dark:border-stone-700 overflow-hidden mb-5 lg:mb-0">
           <div className="px-4 py-3 border-b border-stone-100 dark:border-stone-700">
             <h2 className="text-sm font-bold text-stone-800 dark:text-stone-100">
               🧰 Supplies & Equipment
@@ -784,8 +788,11 @@ export function SeedFinderPage() {
           </div>
         </div>
 
+        </div>{/* end sidebar column */}
+
         {/* Plant cards grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+        <div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {filtered.map(({ plant, timing, reason, seedProduct }) => (
             <SeedCard
               key={plant.slug}
@@ -805,6 +812,8 @@ export function SeedFinderPage() {
             <div>No seeds to buy for {getMonthName(selectedMonth)} with this filter.</div>
           </div>
         )}
+        </div>{/* end plant cards column */}
+        </div>{/* end 2-column grid */}
       </div>
     </div>
   );

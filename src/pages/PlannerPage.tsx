@@ -27,6 +27,7 @@ export function PlannerPage() {
   const towers = usePlannerStore((s) => s.towers);
   const locked = usePlannerStore((s) => s.locked);
   const assignPlant = usePlannerStore((s) => s.assignPlant);
+  const assignDuo = usePlannerStore((s) => s.assignDuo);
   const removePlant = usePlannerStore((s) => s.removePlant);
   const addTower = usePlannerStore((s) => s.addTower);
   const removeTowerAction = usePlannerStore((s) => s.removeTower);
@@ -251,7 +252,8 @@ export function PlannerPage() {
           />
         </div>
 
-        {/* Main: Tower views */}
+        {/* Main: Tower views + RHS panel */}
+        <div className="flex-1 flex overflow-hidden">
         <div className="flex-1 overflow-auto p-3 sm:p-6">
           <div className="mb-4">
             <div className="flex items-center justify-between">
@@ -345,6 +347,30 @@ export function PlannerPage() {
             <GardenGradePanel variant="inline" swapFilter="greenstalk" />
           </div>
         </div>
+
+        {/* RHS Smart Picker — inline panel on desktop */}
+        {smartPicker && (
+          <div className="hidden lg:flex w-80 border-l border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-800 flex-shrink-0 flex-col">
+            <SmartPlantPicker
+              inline
+              plants={plants}
+              plantMap={plantMap}
+              companionMap={companionMap}
+              neighbourSlugs={smartPicker.neighbourSlugs}
+              tierNumber={smartPicker.tierNumber}
+              onSelect={(slug) => {
+                assignPlant(smartPicker.towerId, smartPicker.tierNumber, smartPicker.pocketIndex, slug);
+                setSmartPicker(null);
+              }}
+              onSelectDuo={(primary, companion) => {
+                assignDuo(smartPicker.towerId, smartPicker.tierNumber, smartPicker.pocketIndex, primary, companion);
+                setSmartPicker(null);
+              }}
+              onClose={() => setSmartPicker(null)}
+            />
+          </div>
+        )}
+        </div>
       </div>
 
       {/* Drag overlay */}
@@ -368,19 +394,26 @@ export function PlannerPage() {
         />
       )}
 
-      {/* Smart plant picker */}
+      {/* Smart plant picker — mobile modal (hidden on lg: where inline panel is used) */}
       {smartPicker && (
-        <SmartPlantPicker
-          plants={plants}
-          companionMap={companionMap}
-          neighbourSlugs={smartPicker.neighbourSlugs}
-          tierNumber={smartPicker.tierNumber}
-          onSelect={(slug) => {
-            assignPlant(smartPicker.towerId, smartPicker.tierNumber, smartPicker.pocketIndex, slug);
-            setSmartPicker(null);
-          }}
-          onClose={() => setSmartPicker(null)}
-        />
+        <div className="lg:hidden">
+          <SmartPlantPicker
+            plants={plants}
+            plantMap={plantMap}
+            companionMap={companionMap}
+            neighbourSlugs={smartPicker.neighbourSlugs}
+            tierNumber={smartPicker.tierNumber}
+            onSelect={(slug) => {
+              assignPlant(smartPicker.towerId, smartPicker.tierNumber, smartPicker.pocketIndex, slug);
+              setSmartPicker(null);
+            }}
+            onSelectDuo={(primary, companion) => {
+              assignDuo(smartPicker.towerId, smartPicker.tierNumber, smartPicker.pocketIndex, primary, companion);
+              setSmartPicker(null);
+            }}
+            onClose={() => setSmartPicker(null)}
+          />
+        </div>
       )}
 
       {/* Auto-populate modal */}

@@ -1449,6 +1449,7 @@ export function GardenPage() {
       {gardenSmartPicker && (
         <SmartPlantPicker
           plants={plants}
+          plantMap={plantMap}
           companionMap={companionMap}
           neighbourSlugs={gardenSmartPicker.neighbourSlugs}
           sunHours={gardenSmartPicker.sunHours}

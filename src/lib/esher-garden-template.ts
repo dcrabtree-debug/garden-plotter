@@ -274,8 +274,10 @@ export function generateEsherLayouts(): EsherLayoutOption[] {
       name: "RHS Expert's Choice",
       emoji: '⭐',
       description:
-        'Our top recommendation for 21 Esher Avenue in-ground areas. Specific varietals selected from RHS trials for Surrey clay, partial shade near the laurel hedge, and a late-May start. Runner beans (Scarlet Emperor — RHS AGM) on the fence for vertical growing + nitrogen fixing. Sweet pea (Spencer Mix) kept for pollinators and cut flowers.\n\n' +
-        'Raised bed: shade-tolerant salad designed as a "cut-and-come-again salad bar" — Wild Rocket (perennial, peppery, £12/kg), Little Gem lettuce (bolt-resistant mini cos), Perpetual Spinach (BBC GW "most forgiving"), White Lisbon spring onion (slug deterrent via allium scent), French Breakfast radish (25 days, kids love the pull-and-eat treasure hunt). All chosen specifically for the dappled shade cast by the 3-4m laurel hedge.',
+        'Our top recommendation for 21 Esher Avenue IN-GROUND areas. Full-size varietals for open ground — NOT the dwarf/container varieties used on GreenStalks.\n\n' +
+        'Fence border: Scarlet Emperor runner bean (RHS AGM, full-size climber to 2.5m — NOT suitable for GreenStalk) trained up the 6ft fence panels. Spencer Mix sweet pea for pollinators and cut flowers.\n\n' +
+        'Raised bed "daily salad bar": Wild Rocket (perennial ground cover, not the annual salad type), Little Gem + Salad Bowl lettuce (full heads, not baby leaf), Perpetual Spinach (a leaf beet that grows 60cm tall — too big for pockets), White Lisbon spring onion, French Breakfast radish. All chosen specifically for the dappled shade cast by the 3-4m laurel hedge.\n\n' +
+        'Conservatory: Dwarf lemon (Meyer), dwarf olive, hardy fern, shade-tolerant herbs — plants that need frost protection through Surrey winters.',
       placements: [
         // Fence border
         { row: 8, col: 18, plantSlug: 'runner-bean' },

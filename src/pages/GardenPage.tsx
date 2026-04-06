@@ -2,16 +2,15 @@ import { useState, useRef, useCallback, useEffect, useMemo, type WheelEvent as R
 import { useGardenStore, getSpacingWarnings, getRotationWarnings, getCurrentSeasonKey, getSeasonLabel } from '../state/garden-store';
 import { usePlantDb } from '../data/use-plant-db';
 import { PlantDetail } from '../components/plant-palette/PlantDetail';
+import { SmartPlantPicker } from '../components/SmartPlantPicker';
 import { useCompanionDb } from '../data/use-companion-db';
 import { useRegion } from '../data/use-region';
 import { generateGardenLayouts, type GardenLayoutOption, type PlacementReason } from '../lib/garden-auto-populate';
-import { createEsherGarden, generateEsherLayouts, generatePairedLayout, type EsherLayoutOption } from '../lib/esher-garden-template';
+import { createEsherGarden, generateEsherLayouts, type EsherLayoutOption } from '../lib/esher-garden-template';
 import { usePlannerStore } from '../state/planner-store';
 import { generateLayouts as generateGSLayouts, extractTowerSlugs } from '../lib/auto-populate';
 import { findBestPairing } from '../lib/cross-system-scoring';
 import { checkPair, getFriends, getConflicts } from '../lib/companion-engine';
-import { scorePlant } from '../lib/garden-rating';
-import { GardenGradePanel } from '../components/common/GardenGradePanel';
 import type { CellType, GardenFacing, GardenCell } from '../types/planner';
 import type { Plant } from '../types/plant';
 import {
@@ -125,183 +124,6 @@ function ZoneGuide() {
   );
 }
 
-// ─── Hover Reasoning Panel ────────────────────────────────────────────────
-
-interface HoverReasoningPanelProps {
-  hoveredCell: { row: number; col: number } | null;
-  cells: GardenCell[][];
-  plantMap: Map<string, Plant>;
-  plants: Plant[];
-  companionMap: import('../types/companion').CompanionMap;
-  config: import('../types/planner').GardenConfig;
-  actualTowerSlugs: string[];
-}
-
-function HoverReasoningPanel({
-  hoveredCell, cells, plantMap, plants, companionMap, config, actualTowerSlugs,
-}: HoverReasoningPanelProps) {
-  const cell = hoveredCell ? cells[hoveredCell.row]?.[hoveredCell.col] : null;
-  const plant = cell?.plantSlug ? plantMap.get(cell.plantSlug) : null;
-  const sunH: number | null = cell?.sunHours ?? null;
-  const rows = cells.length;
-  const cols = cells[0]?.length ?? 0;
-
-  if (!hoveredCell || !cell) {
-    return (
-      <div className="mb-3 bg-stone-100 dark:bg-stone-700/50 rounded-lg p-3 text-center">
-        <div className="text-stone-400 dark:text-stone-500 text-xs">
-          🔍 Hover over a cell for details
-        </div>
-      </div>
-    );
-  }
-
-  // Get nearby planted slugs for companion analysis
-  const nearbySlugs: string[] = [];
-  for (let r = Math.max(0, hoveredCell.row - 2); r <= Math.min(rows - 1, hoveredCell.row + 2); r++) {
-    for (let c = Math.max(0, hoveredCell.col - 2); c <= Math.min(cols - 1, hoveredCell.col + 2); c++) {
-      if (r === hoveredCell.row && c === hoveredCell.col) continue;
-      const s = cells[r][c].plantSlug;
-      if (s) nearbySlugs.push(s);
-    }
-  }
-  const uniqueNearby = [...new Set(nearbySlugs)];
-
-  // If cell has a plant, show its reasoning
-  if (plant) {
-    const friends = getFriends(plant.slug, uniqueNearby, companionMap);
-    const foes = getConflicts(plant.slug, uniqueNearby, companionMap);
-    const towerFriends = getFriends(plant.slug, [...new Set(actualTowerSlugs)], companionMap);
-
-    const sunMatch = sunH !== null
-      ? (plant.sun === 'full-sun' && sunH >= 6) || (plant.sun === 'partial-shade' && sunH >= 3) || plant.sun === 'full-shade'
-      : null;
-
-    return (
-      <div className="mb-3 bg-white dark:bg-stone-700 rounded-lg border border-stone-200 dark:border-stone-600 p-3 space-y-2">
-        <div className="flex items-center gap-2">
-          <span className="text-lg">{plant.emoji}</span>
-          <div>
-            <div className="text-xs font-bold text-stone-800 dark:text-stone-100">{plant.commonName}</div>
-            <div className="text-[9px] text-stone-400">{cell.type} · row {hoveredCell.row + 1}, col {hoveredCell.col + 1}</div>
-          </div>
-        </div>
-
-        {/* Sun assessment */}
-        {sunH !== null && (
-          <div className={`text-[10px] px-2 py-1 rounded ${
-            sunMatch ? 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-300' : 'bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-300'
-          }`}>
-            ☀️ {sunH}h sun · needs {plant.sun.replace('-', ' ')} {sunMatch ? '✓' : '⚠️'}
-          </div>
-        )}
-
-        {/* Companion relationships */}
-        {friends.length > 0 && (
-          <div className="text-[10px] text-emerald-600 dark:text-emerald-400">
-            {friends.map((f, i) => (
-              <div key={i}>💚 {plantMap.get(f.plantA === plant.slug ? f.plantB : f.plantA)?.commonName}: {f.reason}</div>
-            ))}
-          </div>
-        )}
-        {foes.length > 0 && (
-          <div className="text-[10px] text-rose-600 dark:text-rose-400">
-            {foes.map((f, i) => (
-              <div key={i}>❌ {plantMap.get(f.plantA === plant.slug ? f.plantB : f.plantA)?.commonName}: {f.reason}</div>
-            ))}
-          </div>
-        )}
-
-        {/* Tower companion bonus */}
-        {towerFriends.length > 0 && (
-          <div className="text-[10px] text-indigo-600 dark:text-indigo-400">
-            🤝 GreenStalk synergy: {towerFriends.map((f) => f.reason).slice(0, 2).join('; ')}
-          </div>
-        )}
-
-        {/* Plant score (5-axis) */}
-        {(() => {
-          const allSlugs = [...new Set([...nearbySlugs, plant.slug, ...actualTowerSlugs])];
-          const ps = scorePlant(plant, allSlugs, companionMap, 'inground');
-          return (
-            <div className="flex gap-1 text-[9px]">
-              <span className={`px-1 rounded ${ps.kidFriendly >= 7 ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400' : 'bg-stone-100 dark:bg-stone-600 text-stone-400'}`}>🧒{ps.kidFriendly}</span>
-              <span className={`px-1 rounded ${ps.fragrance >= 7 ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400' : 'bg-stone-100 dark:bg-stone-600 text-stone-400'}`}>🌸{ps.fragrance}</span>
-              <span className={`px-1 rounded ${ps.companion >= 7 ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400' : 'bg-stone-100 dark:bg-stone-600 text-stone-400'}`}>🤝{ps.companion}</span>
-              <span className={`px-1 rounded ${ps.resilience >= 7 ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400' : 'bg-stone-100 dark:bg-stone-600 text-stone-400'}`}>💪{ps.resilience}</span>
-              <span className={`px-1 rounded ${ps.value >= 7 ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400' : 'bg-stone-100 dark:bg-stone-600 text-stone-400'}`}>💰{ps.value}</span>
-              <span className="font-bold text-stone-600 dark:text-stone-300 ml-1">{ps.overall.toFixed(1)}</span>
-            </div>
-          );
-        })()}
-
-        {/* Care tips */}
-        <div className="text-[10px] text-stone-500 dark:text-stone-400 space-y-0.5">
-          <div>💧 {plant.water} · ⏱ {plant.daysToHarvest[0]}-{plant.daysToHarvest[1]} days</div>
-          {plant.inGround?.pests?.length > 0 && <div>🐛 Watch: {plant.inGround.pests.join(', ')}</div>}
-        </div>
-      </div>
-    );
-  }
-
-  // Empty cell — suggest what could go here
-  const suggestions: { plant: Plant; score: number; reason: string }[] = [];
-  const isShaded = sunH !== null && sunH < 4;
-  const isSunny = sunH !== null && sunH >= 6;
-  const plantable = cell.type === 'veg-patch' || cell.type === 'raised-bed' || cell.type === 'flower-bed' || cell.type === 'conservatory';
-
-  if (plantable) {
-    for (const p of plants.slice(0, 50)) {
-      if (nearbySlugs.includes(p.slug)) continue;
-      let score = 0;
-      let reason = '';
-
-      // Sun matching
-      if (isSunny && p.sun === 'full-sun') { score += 3; reason = 'Full sun spot suits this crop'; }
-      else if (isShaded && (p.sun === 'partial-shade' || p.sun === 'full-shade')) { score += 3; reason = 'Shade-tolerant — good for this spot'; }
-      else if (sunH !== null && p.sun === 'partial-shade' && sunH >= 3) { score += 2; reason = 'Partial shade OK here'; }
-
-      // Companion bonus
-      const friends = getFriends(p.slug, uniqueNearby, companionMap);
-      if (friends.length > 0) { score += friends.length * 2; reason = friends[0].reason; }
-
-      // Tower synergy
-      const tFriends = getFriends(p.slug, [...new Set(actualTowerSlugs)], companionMap);
-      if (tFriends.length > 0) score += 1;
-
-      if (score > 0) suggestions.push({ plant: p, score, reason });
-    }
-    suggestions.sort((a, b) => b.score - a.score);
-  }
-
-  return (
-    <div className="mb-3 bg-white dark:bg-stone-700 rounded-lg border border-stone-200 dark:border-stone-600 p-3 space-y-2">
-      <div className="text-xs font-bold text-stone-700 dark:text-stone-200">
-        📍 {cell.type} · row {hoveredCell.row + 1}, col {hoveredCell.col + 1}
-      </div>
-      {sunH !== null && (
-        <div className="text-[10px] text-stone-500 dark:text-stone-400">
-          ☀️ {sunH}h sun · {isSunny ? 'Full sun' : isShaded ? 'Shaded' : 'Partial sun'}
-        </div>
-      )}
-      {plantable && suggestions.length > 0 ? (
-        <div>
-          <div className="text-[10px] font-semibold text-stone-600 dark:text-stone-300 mb-1">💡 Best picks for this spot:</div>
-          {suggestions.slice(0, 4).map((s) => (
-            <div key={s.plant.slug} className="text-[10px] text-stone-600 dark:text-stone-400 flex items-center gap-1 py-0.5">
-              <span>{s.plant.emoji}</span>
-              <span className="font-medium text-stone-700 dark:text-stone-300">{s.plant.commonName}</span>
-              <span className="text-stone-400">— {s.reason}</span>
-            </div>
-          ))}
-        </div>
-      ) : !plantable ? (
-        <div className="text-[10px] text-stone-400">Not plantable ({cell.type})</div>
-      ) : null}
-    </div>
-  );
-}
-
 // ─── Planted Plants Sidebar ───────────────────────────────────────────────
 
 interface PlantedPlantsSidebarProps {
@@ -390,7 +212,7 @@ function PlantedPlantsSidebar({ cells, plants, companionMap }: PlantedPlantsSide
         }
 
         return (
-          <div key={location} className="bg-white dark:bg-stone-700 rounded-lg border border-stone-200 dark:border-stone-600 p-2">
+          <div key={location} className="bg-white dark:bg-stone-750 rounded-lg border border-stone-200 dark:border-stone-600 p-2">
             <h3 className="text-[10px] font-semibold text-stone-500 dark:text-stone-400 uppercase tracking-wider mb-1.5">
               {location}
             </h3>
@@ -440,17 +262,12 @@ export function GardenPage() {
     garden, activeTool, selectedMonth, selectedHour,
     showSunOverlay, showShadowOverlay, showCompanionOverlay,
     showSpacingWarnings, showRotationWarnings, rotationHistory,
-    locked: plantsLocked, toggleLock: togglePlantsLock,
-    layoutLocked, toggleLayoutLock,
     setTool, paintCell, updateConfig, renameGarden,
     setSunHours, setSelectedMonth, setSelectedHour,
     toggleSunOverlay, toggleShadowOverlay, toggleCompanionOverlay,
     toggleSpacingWarnings, toggleRotationWarnings, saveSeasonSnapshot,
-    loadTemplate, resetGarden, clearPaint, clearAllPlants, saveLayout,
+    loadTemplate, resetGarden, clearPaint,
   } = useGardenStore();
-
-  const plannerTowers = usePlannerStore((s) => s.towers);
-  const plannerLocked = usePlannerStore((s) => s.locked);
 
   const region = useRegion();
   const { plants, plantMap } = usePlantDb(region);
@@ -466,7 +283,6 @@ export function GardenPage() {
   const [raisedBedMode, setRaisedBedMode] = useState<Record<string, 'keep' | 'replant'>>({});
   const [mobilePanel, setMobilePanel] = useState<'tools' | 'plants' | null>(null);
   const [showSaveSeasonConfirm, setShowSaveSeasonConfirm] = useState(false);
-  const [movingGreenStalk, setMovingGreenStalk] = useState<number | null>(null); // tower index being moved
   const [gardenLayouts, setGardenLayouts] = useState<GardenLayoutOption[]>([]);
   const [gardenPlan, setGardenPlan] = useState<PlacementReason[] | null>(null);
   const [showPlan, setShowPlan] = useState(false);
@@ -474,51 +290,55 @@ export function GardenPage() {
   const [showGreenStalks, setShowGreenStalks] = useState(true);
   const [showBloom, setShowBloom] = useState(false);
   const [hoveredCell, setHoveredCell] = useState<{ row: number; col: number } | null>(null);
-  const [draggingPlant, setDraggingPlant] = useState<{ slug: string; fromRow: number; fromCol: number } | null>(null);
-  const [dragOverCell, setDragOverCell] = useState<{ row: number; col: number } | null>(null);
-  const [plantSearch, setPlantSearch] = useState('');
-  const [hoveredPickerPlant, setHoveredPickerPlant] = useState<Plant | null>(null);
-  const [plantFilters, setPlantFilters] = useState({
-    sun: null as 'full-sun' | 'partial-shade' | 'full-shade' | null,
-    companion: false,
-    kid: false,
-    season: false,
-  });
-  const [sidebarWidth, setSidebarWidth] = useState(256); // 256px = w-64 default
-  const sidebarResizing = useRef(false);
+  const [gardenSmartPicker, setGardenSmartPicker] = useState<{
+    row: number; col: number; sunHours: number | null; cellType: string; neighbourSlugs: string[];
+  } | null>(null);
   const gridRef = useRef<HTMLDivElement>(null);
 
   const { config, cells } = garden;
-
-  // Check if GreenStalk towers have plants for the "Pair" button
-  const actualTowerSlugs = useMemo(() => {
-    return plannerTowers
-      .flatMap((t) => t.tiers)
-      .flatMap((ti) => ti.pockets)
-      .map((p) => p.plantSlug)
-      .filter((s): s is string => s !== null);
-  }, [plannerTowers]);
-  const hasTowerPlants = actualTowerSlugs.length > 0;
   const cols = cells[0]?.length ?? 0;
   const rows = cells.length;
 
   // Recalculate sun hours when month or config changes
-  // Use individual config values as deps to avoid infinite loop from object reference change
-  const { cellSizeM, facing, houseWallHeightM, fenceHeightM, latitude, longitude } = config;
   useEffect(() => {
-    if (cols === 0 || rows === 0) return;
-    if (!latitude || !longitude) return;
     const grid = calculateSunHoursGrid(
-      cols, rows, cellSizeM,
-      facing ?? 'SE', houseWallHeightM ?? 7, fenceHeightM ?? 1.8,
+      cols, rows, config.cellSizeM,
+      config.facing, config.houseWallHeightM, config.fenceHeightM,
       selectedMonth, midMonthDay(selectedMonth),
-      latitude, longitude
+      config.latitude, config.longitude
     );
     setSunHours(grid);
-  }, [selectedMonth, cols, rows, cellSizeM, facing, houseWallHeightM, fenceHeightM, latitude, longitude, setSunHours]);
+  }, [selectedMonth, config, cols, rows, setSunHours]);
+
+  const handleCellInteraction = useCallback(
+    (row: number, col: number) => {
+      if (plantToPlace) {
+        const cell = cells[row]?.[col];
+        if (cell && (cell.type === 'veg-patch' || cell.type === 'raised-bed' || cell.type === 'flower-bed' || cell.type === 'conservatory')) {
+          useGardenStore.getState().plantInCell(row, col, plantToPlace.slug);
+        }
+      } else {
+        paintCell(row, col);
+      }
+    },
+    [plantToPlace, cells, paintCell]
+  );
+
+  const baseCellSize = useMemo(() => {
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
+    const maxWidth = isMobile ? Math.min(window.innerWidth - 32, 400) : 800;
+    return Math.min(Math.floor(maxWidth / cols), isMobile ? 18 : 28);
+  }, [cols]);
+  const cellSize = Math.round(baseCellSize * zoom);
+
+  const handleWheel = useCallback((e: ReactWheelEvent) => {
+    if (e.ctrlKey || e.metaKey) {
+      e.preventDefault();
+      setZoom((z) => Math.min(3, Math.max(0.5, z - e.deltaY * 0.002)));
+    }
+  }, []);
 
   // GreenStalk positions: detect cells with type 'greenstalk', grouped into towers
-  // (moved above handleCellInteraction to avoid use-before-declaration)
   const greenStalkCells = useMemo(() => {
     const positions: { row: number; col: number; towerIndex: number }[] = [];
     const visited = new Set<string>();
@@ -528,6 +348,7 @@ export function GardenPage() {
         const key = `${r},${c}`;
         if (visited.has(key)) continue;
         if (cells[r]?.[c]?.type !== 'greenstalk') continue;
+        // Flood-fill to find the connected cluster
         const cluster: { row: number; col: number }[] = [];
         const queue = [{ row: r, col: c }];
         while (queue.length > 0) {
@@ -546,68 +367,6 @@ export function GardenPage() {
     }
     return positions;
   }, [cells, rows, cols]);
-
-  const handleCellInteraction = useCallback(
-    (row: number, col: number) => {
-      // Moving a GreenStalk cluster
-      if (movingGreenStalk !== null) {
-        const cell = cells[row]?.[col];
-        if (cell && (cell.type === 'patio' || cell.type === 'lawn' || cell.type === 'veg-patch')) {
-          const store = useGardenStore.getState();
-          // Get the cluster being moved
-          const cluster = greenStalkCells.filter((g) => g.towerIndex === movingGreenStalk);
-          if (cluster.length > 0) {
-            // Clear old positions
-            for (const g of cluster) store.paintCellAs(g.row, g.col, 'patio');
-            // Place at new position (2x2 block)
-            for (let dr = 0; dr < 2; dr++) {
-              for (let dc = 0; dc < 2; dc++) {
-                const nr = row + dr;
-                const nc = col + dc;
-                if (nr < rows && nc < cols) {
-                  store.paintCellAs(nr, nc, 'greenstalk' as CellType);
-                }
-              }
-            }
-          }
-          setMovingGreenStalk(null);
-        }
-        return;
-      }
-      // Check if clicking on a GreenStalk cell to start moving
-      const clickedCell = cells[row]?.[col];
-      if (clickedCell?.type === 'greenstalk' && !plantToPlace && activeTool === 'greenstalk') {
-        const gsCell = greenStalkCells.find((g) => g.row === row && g.col === col);
-        if (gsCell) {
-          setMovingGreenStalk(gsCell.towerIndex);
-          return;
-        }
-      }
-      if (plantToPlace) {
-        const cell = cells[row]?.[col];
-        if (cell && (cell.type === 'veg-patch' || cell.type === 'raised-bed' || cell.type === 'flower-bed' || cell.type === 'conservatory')) {
-          useGardenStore.getState().plantInCell(row, col, plantToPlace.slug);
-        }
-      } else {
-        paintCell(row, col);
-      }
-    },
-    [plantToPlace, cells, paintCell, movingGreenStalk, greenStalkCells, activeTool, rows, cols]
-  );
-
-  const baseCellSize = useMemo(() => {
-    const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
-    const maxWidth = isMobile ? Math.min(window.innerWidth - 32, 400) : 800;
-    return Math.min(Math.floor(maxWidth / cols), isMobile ? 18 : 28);
-  }, [cols]);
-  const cellSize = Math.round(baseCellSize * zoom);
-
-  const handleWheel = useCallback((e: ReactWheelEvent) => {
-    if (e.ctrlKey || e.metaKey) {
-      e.preventDefault();
-      setZoom((z) => Math.min(3, Math.max(0.5, z - e.deltaY * 0.002)));
-    }
-  }, []);
 
   // Bloom visualization data
   const bloomGrid = useMemo(() => {
@@ -757,104 +516,6 @@ export function GardenPage() {
     [plants]
   );
 
-  // ── Smart plant picker: scored + filtered list ────────────────────────
-  const KID_FAVOURITES = useMemo(() => new Set([
-    'strawberry-everbearing', 'tomato-tumbling', 'radish', 'pea',
-    'sunflower', 'nasturtium', 'dwarf-french-bean', 'lettuce',
-    'runner-bean', 'raspberry', 'blueberry', 'gooseberry',
-  ]), []);
-
-  const currentMonth = useMemo(() => new Date().getMonth() + 1, []);
-
-  const filteredPlants = useMemo(() => {
-    type Tag = { label: string; color: string };
-    type ScoredPlant = { plant: Plant; score: number; tags: Tag[] };
-
-    // Context from hovered cell (if any)
-    const hCell = hoveredCell ? cells[hoveredCell.row]?.[hoveredCell.col] : null;
-    const cellSun = hCell?.sunHours ?? null;
-
-    // Get nearby planted slugs for companion scoring
-    const nearbySlugs: string[] = [];
-    if (hoveredCell) {
-      for (let r = Math.max(0, hoveredCell.row - 2); r <= Math.min(rows - 1, hoveredCell.row + 2); r++) {
-        for (let c = Math.max(0, hoveredCell.col - 2); c <= Math.min(cols - 1, hoveredCell.col + 2); c++) {
-          const s = cells[r]?.[c]?.plantSlug;
-          if (s) nearbySlugs.push(s);
-        }
-      }
-    }
-    const uniqueNearby = [...new Set(nearbySlugs)];
-
-    const isInSeason = (p: Plant) => {
-      const m = currentMonth;
-      const check = (w: [number, number] | null) => {
-        if (!w) return false;
-        return w[0] <= w[1] ? m >= w[0] && m <= w[1] : m >= w[0] || m <= w[1];
-      };
-      return check(p.plantingWindow.sowIndoors) || check(p.plantingWindow.sowOutdoors) || check(p.plantingWindow.transplant);
-    };
-
-    // All planted slugs in the garden (for companion filter without hover)
-    const allPlantedSlugs: string[] = [];
-    for (const row of cells) for (const c of row) if (c.plantSlug) allPlantedSlugs.push(c.plantSlug);
-    const uniqueAllPlanted = [...new Set(allPlantedSlugs)];
-
-    const result: ScoredPlant[] = [];
-
-    for (const p of inGroundPlants) {
-      // Search filter
-      if (plantSearch) {
-        const q = plantSearch.toLowerCase();
-        if (!p.commonName.toLowerCase().includes(q) && !p.botanicalName.toLowerCase().includes(q)) continue;
-      }
-
-      let score = 0;
-      const tags: Tag[] = [];
-
-      // Sun category tag (always shown)
-      const sunLabel = p.sun === 'full-sun' ? '☀️ Full sun' : p.sun === 'partial-shade' ? '🌤 Part shade' : '🌑 Shade';
-      tags.push({ label: sunLabel, color: p.sun === 'full-sun' ? 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400' : p.sun === 'partial-shade' ? 'bg-sky-100 dark:bg-sky-900/30 text-sky-700 dark:text-sky-400' : 'bg-stone-200 dark:bg-stone-600 text-stone-600 dark:text-stone-300' });
-
-      // Context-aware sun scoring (if hovering a cell with sun data)
-      if (cellSun !== null) {
-        const sunNeed = p.sun === 'full-sun' ? 6 : p.sun === 'partial-shade' ? 3 : 0;
-        if (cellSun >= sunNeed) { score += 3; }
-        else { score -= 5; tags.push({ label: `⚠️ ${cellSun}h here`, color: 'bg-red-100 dark:bg-red-900/30 text-red-600' }); }
-      }
-
-      // Companion scoring — use nearby if hovering, otherwise all planted
-      const companionCheck = uniqueNearby.length > 0 ? uniqueNearby : uniqueAllPlanted;
-      if (companionCheck.length > 0) {
-        const friends = getFriends(p.slug, companionCheck, companionMap);
-        const foes = getConflicts(p.slug, companionCheck, companionMap);
-        score += friends.length * 3;
-        score -= foes.length * 5;
-        if (friends.length > 0) tags.push({ label: `🤝 ${friends.length} friend${friends.length > 1 ? 's' : ''}`, color: 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400' });
-        if (foes.length > 0) tags.push({ label: `❌ ${foes.length} foe${foes.length > 1 ? 's' : ''}`, color: 'bg-red-100 dark:bg-red-900/30 text-red-600' });
-      }
-
-      // Kid-friendly scoring
-      const isKid = KID_FAVOURITES.has(p.slug) || p.category === 'fruit' || (p.daysToHarvest[0] <= 40);
-      if (isKid) { score += 2; tags.push({ label: '🧒 Kids', color: 'bg-sky-100 dark:bg-sky-900/30 text-sky-700 dark:text-sky-400' }); }
-
-      // In-season scoring
-      const seasonal = isInSeason(p);
-      if (seasonal) { score += 1; tags.push({ label: '🌱 Now', color: 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400' }); }
-
-      // Apply filter chips
-      if (plantFilters.sun !== null && p.sun !== plantFilters.sun) continue;
-      if (plantFilters.companion && !(companionCheck.length > 0 && getFriends(p.slug, companionCheck, companionMap).length > 0)) continue;
-      if (plantFilters.kid && !isKid) continue;
-      if (plantFilters.season && !seasonal) continue;
-
-      result.push({ plant: p, score, tags });
-    }
-
-    // Sort: highest score first, then alphabetical
-    return result.sort((a, b) => b.score - a.score || a.plant.commonName.localeCompare(b.plant.commonName));
-  }, [inGroundPlants, plantSearch, plantFilters, hoveredCell, cells, rows, cols, companionMap, KID_FAVOURITES, currentMonth]);
-
   return (
     <div className="flex h-full overflow-hidden relative">
       {/* Mobile sidebar toggles */}
@@ -917,170 +578,41 @@ export function GardenPage() {
           </div>
         </div>
 
-        {/* Smart plant picker — context-aware filters */}
+        {/* Plant placement */}
         <div>
           <h3 className="text-[10px] font-semibold text-stone-500 uppercase tracking-wide mb-1.5">Place Plants</h3>
-          {plantToPlace ? (
-            <div className="flex items-center gap-1.5 mb-1.5">
-              <span className="text-xs bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 px-2 py-1 rounded-lg flex-1 truncate">
-                {plantToPlace.emoji} {plantToPlace.commonName}
-              </span>
-              <button onClick={() => setPlantToPlace(null)} className="text-[10px] text-stone-400 hover:text-red-500">✕</button>
-            </div>
-          ) : null}
-          <input
-            placeholder="Search plants..."
-            value={plantSearch}
-            onChange={(e) => setPlantSearch(e.target.value)}
-            className="w-full text-[11px] px-2 py-1.5 rounded-lg border border-stone-200 dark:border-stone-600 bg-white dark:bg-stone-700 dark:text-stone-200 mb-1.5"
-          />
-          {/* Filter chips */}
-          <div className="flex flex-wrap gap-1 mb-1.5">
-            {/* Sun level filters — select one or none */}
-            {([
-              { val: 'full-sun' as const, label: '☀️ Full Sun' },
-              { val: 'partial-shade' as const, label: '🌤 Part Shade' },
-              { val: 'full-shade' as const, label: '🌑 Shade' },
-            ]).map(({ val, label }) => (
-              <button
-                key={val}
-                onClick={() => setPlantFilters((f) => ({ ...f, sun: f.sun === val ? null : val }))}
-                className={`text-[9px] px-1.5 py-0.5 rounded-full border transition-colors ${
-                  plantFilters.sun === val
-                    ? 'bg-amber-500 text-white border-amber-500'
-                    : 'bg-stone-50 dark:bg-stone-600 border-stone-200 dark:border-stone-500 text-stone-500 dark:text-stone-400'
-                }`}
-              >
-                {label}
-              </button>
-            ))}
-            {/* Boolean filters */}
-            {([
-              { key: 'companion' as const, label: '🤝 Friends', tip: 'Companions of your planted plants' },
-              { key: 'kid' as const, label: '🧒 Kids', tip: 'Fast-harvest, fun plants for Max & Noelle' },
-              { key: 'season' as const, label: '🌱 In Season', tip: 'Sowable or transplantable now' },
-            ]).map(({ key, label, tip }) => (
-              <button
-                key={key}
-                onClick={() => setPlantFilters((f) => ({ ...f, [key]: !f[key] }))}
-                className={`text-[9px] px-1.5 py-0.5 rounded-full border transition-colors ${
-                  plantFilters[key]
-                    ? 'bg-emerald-600 text-white border-emerald-600'
-                    : 'bg-stone-50 dark:bg-stone-600 border-stone-200 dark:border-stone-500 text-stone-500 dark:text-stone-400'
-                }`}
-                title={tip}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
-          {/* Scored plant list + hover detail popover */}
-          <div className="relative">
-            <div className="max-h-52 overflow-y-auto space-y-0.5 bg-white dark:bg-stone-700 rounded-lg border border-stone-200 dark:border-stone-600 p-1"
-              onMouseLeave={() => setHoveredPickerPlant(null)}
+          <button
+            onClick={() => setShowPlantPanel(!showPlantPanel)}
+            className="text-xs w-full px-2 py-1.5 bg-emerald-50 dark:bg-emerald-900/30 border border-emerald-200 dark:border-emerald-800 text-emerald-700 dark:text-emerald-400 rounded-lg hover:bg-emerald-100 dark:hover:bg-emerald-900/50 transition-colors"
+          >
+            {plantToPlace
+              ? `Placing: ${plantToPlace.emoji} ${plantToPlace.commonName}`
+              : 'Select a plant to place...'}
+          </button>
+          {plantToPlace && (
+            <button
+              onClick={() => setPlantToPlace(null)}
+              className="text-[10px] text-stone-400 hover:text-stone-600 mt-1"
             >
-              {filteredPlants.length === 0 ? (
-                <div className="text-[10px] text-stone-400 text-center py-3">No plants match filters</div>
-              ) : (
-                filteredPlants.slice(0, 30).map((fp) => (
-                  <button
-                    key={fp.plant.slug}
-                    onClick={() => setPlantToPlace(fp.plant)}
-                    onMouseEnter={() => setHoveredPickerPlant(fp.plant)}
-                    className={`w-full text-left text-[10px] px-1.5 py-1 rounded flex items-center gap-1 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 ${
-                      plantToPlace?.slug === fp.plant.slug ? 'bg-emerald-100 dark:bg-emerald-900/30' : ''
-                    }`}
-                  >
-                    <span className="text-sm shrink-0">{fp.plant.emoji}</span>
-                    <div className="flex-1 min-w-0">
-                      <div className="font-medium text-stone-700 dark:text-stone-200 truncate">{fp.plant.commonName}</div>
-                      {fp.tags.length > 0 && (
-                        <div className="flex gap-0.5 mt-0.5 flex-wrap">
-                          {fp.tags.map((t, i) => (
-                            <span key={i} className={`text-[7px] px-1 py-0 rounded ${t.color}`}>{t.label}</span>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                    {fp.score > 0 && (
-                      <span className="text-[8px] font-bold text-emerald-600 dark:text-emerald-400 shrink-0">{fp.score.toFixed(0)}</span>
-                    )}
-                  </button>
-                ))
-              )}
+              Cancel placement
+            </button>
+          )}
+          {showPlantPanel && (
+            <div className="mt-2 max-h-48 overflow-y-auto space-y-1 bg-white dark:bg-stone-700 rounded-lg border border-stone-200 dark:border-stone-600 p-1.5">
+              {inGroundPlants.map((p) => (
+                <button
+                  key={p.slug}
+                  onClick={() => { setPlantToPlace(p); setShowPlantPanel(false); }}
+                  className={`w-full text-left text-[11px] px-2 py-1 rounded flex items-center gap-1.5 hover:bg-emerald-50 ${
+                    plantToPlace?.slug === p.slug ? 'bg-emerald-100' : ''
+                  }`}
+                >
+                  <span>{p.emoji}</span>
+                  <span className="truncate">{p.commonName}</span>
+                </button>
+              ))}
             </div>
-
-            {/* Hover detail popover — shows to the right of the sidebar */}
-            {hoveredPickerPlant && (
-              <div className="absolute left-full top-0 ml-2 z-50 w-56 bg-white dark:bg-stone-800 rounded-xl shadow-2xl border border-stone-200 dark:border-stone-700 p-3 pointer-events-none">
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="text-xl">{hoveredPickerPlant.emoji}</span>
-                  <div>
-                    <div className="text-xs font-bold text-stone-800 dark:text-stone-100">{hoveredPickerPlant.commonName}</div>
-                    <div className="text-[9px] text-stone-400 italic">{hoveredPickerPlant.botanicalName}</div>
-                  </div>
-                </div>
-
-                {/* Key stats grid */}
-                <div className="grid grid-cols-2 gap-x-3 gap-y-1 text-[9px] mb-2">
-                  <div><span className="text-stone-400">Sun:</span> <span className="font-medium text-stone-700 dark:text-stone-200">{hoveredPickerPlant.sun.replace('-', ' ')}</span></div>
-                  <div><span className="text-stone-400">Water:</span> <span className="font-medium text-stone-700 dark:text-stone-200">{hoveredPickerPlant.water}</span></div>
-                  <div><span className="text-stone-400">Harvest:</span> <span className="font-medium text-stone-700 dark:text-stone-200">{hoveredPickerPlant.daysToHarvest[0]}-{hoveredPickerPlant.daysToHarvest[1]}d</span></div>
-                  <div><span className="text-stone-400">Spacing:</span> <span className="font-medium text-stone-700 dark:text-stone-200">{hoveredPickerPlant.spacingCm}cm</span></div>
-                  <div><span className="text-stone-400">Habit:</span> <span className="font-medium text-stone-700 dark:text-stone-200">{hoveredPickerPlant.growthHabit}</span></div>
-                  <div><span className="text-stone-400">Hardy:</span> <span className="font-medium text-stone-700 dark:text-stone-200">{hoveredPickerPlant.hardiness}</span></div>
-                </div>
-
-                {/* Companion info */}
-                {(() => {
-                  const allSlugs = [...new Set(cells.flat().map(c => c.plantSlug).filter(Boolean) as string[])];
-                  const friends = allSlugs.length > 0 ? getFriends(hoveredPickerPlant.slug, allSlugs, companionMap) : [];
-                  const foes = allSlugs.length > 0 ? getConflicts(hoveredPickerPlant.slug, allSlugs, companionMap) : [];
-                  return (
-                    <>
-                      {friends.length > 0 && (
-                        <div className="text-[9px] text-emerald-600 dark:text-emerald-400 mb-1">
-                          💚 Friends: {friends.slice(0, 3).map(f => plantMap.get(f.plantA === hoveredPickerPlant.slug ? f.plantB : f.plantA)?.commonName ?? '?').join(', ')}
-                        </div>
-                      )}
-                      {foes.length > 0 && (
-                        <div className="text-[9px] text-red-500 dark:text-red-400 mb-1">
-                          ❌ Foes: {foes.slice(0, 3).map(f => plantMap.get(f.plantA === hoveredPickerPlant.slug ? f.plantB : f.plantA)?.commonName ?? '?').join(', ')}
-                        </div>
-                      )}
-                    </>
-                  );
-                })()}
-
-                {/* Pests */}
-                {hoveredPickerPlant.inGround?.pests?.length > 0 && (
-                  <div className="text-[9px] text-amber-600 dark:text-amber-400 mb-1">
-                    🐛 Watch: {hoveredPickerPlant.inGround.pests.slice(0, 3).join(', ')}
-                  </div>
-                )}
-
-                {/* Planting windows */}
-                <div className="text-[8px] text-stone-400 space-y-0.5">
-                  {hoveredPickerPlant.plantingWindow.sowOutdoors && (
-                    <div>Sow outdoors: months {hoveredPickerPlant.plantingWindow.sowOutdoors[0]}-{hoveredPickerPlant.plantingWindow.sowOutdoors[1]}</div>
-                  )}
-                  {hoveredPickerPlant.plantingWindow.transplant && (
-                    <div>Transplant: months {hoveredPickerPlant.plantingWindow.transplant[0]}-{hoveredPickerPlant.plantingWindow.transplant[1]}</div>
-                  )}
-                  {hoveredPickerPlant.plantingWindow.harvest && (
-                    <div>Harvest: months {hoveredPickerPlant.plantingWindow.harvest[0]}-{hoveredPickerPlant.plantingWindow.harvest[1]}</div>
-                  )}
-                </div>
-
-                {/* Kid friendly badge */}
-                {(KID_FAVOURITES.has(hoveredPickerPlant.slug) || hoveredPickerPlant.category === 'fruit') && (
-                  <div className="mt-1.5 text-[9px] px-2 py-0.5 bg-sky-50 dark:bg-sky-900/20 text-sky-700 dark:text-sky-400 rounded-full inline-block font-semibold">
-                    🧒 Kid Favourite
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
+          )}
         </div>
 
         {/* Garden config */}
@@ -1329,31 +861,14 @@ export function GardenPage() {
         {/* Actions */}
         <div className="space-y-1.5">
           <button
-            onClick={() => { saveLayout(); toggleLayoutLock(); }}
-            disabled={layoutLocked}
-            className={`text-[10px] w-full px-2 py-1.5 rounded-lg font-semibold ${
-              layoutLocked
-                ? 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 border border-amber-300'
-                : 'bg-emerald-600 text-white hover:bg-emerald-700'
-            }`}
-          >
-            {layoutLocked ? '🔒 Layout Saved & Locked' : '💾 Save & Lock Layout'}
-          </button>
-          <button
             onClick={clearPaint}
-            disabled={layoutLocked}
-            className={`text-[10px] w-full px-2 py-1.5 border rounded-lg ${
-              layoutLocked ? 'text-stone-300 border-stone-100 cursor-not-allowed' : 'text-stone-500 border-stone-200 hover:bg-stone-100'
-            }`}
+            className="text-[10px] w-full px-2 py-1.5 text-stone-500 border border-stone-200 rounded-lg hover:bg-stone-100"
           >
             Clear all paint
           </button>
           <button
             onClick={() => { if (confirm('Reset entire garden?')) resetGarden(); }}
-            disabled={layoutLocked}
-            className={`text-[10px] w-full px-2 py-1.5 border rounded-lg ${
-              layoutLocked ? 'text-stone-300 border-stone-100 cursor-not-allowed' : 'text-red-500 border-red-200 hover:bg-red-50'
-            }`}
+            className="text-[10px] w-full px-2 py-1.5 text-red-500 border border-red-200 rounded-lg hover:bg-red-50"
           >
             Reset garden
           </button>
@@ -1364,60 +879,8 @@ export function GardenPage() {
       <div className="flex-1 overflow-auto p-3 sm:p-6">
         <div className="mb-3">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
-            <div className="flex items-center gap-2">
-              <h1 className="text-lg sm:text-xl font-semibold text-stone-800 dark:text-stone-100">In-Ground Garden Plotter</h1>
-              {/* Split lock: Layout + Plants */}
-              <button
-                onClick={toggleLayoutLock}
-                className={`px-2 py-1 text-xs rounded-lg border transition-all ${
-                  layoutLocked
-                    ? 'bg-amber-100 dark:bg-amber-900/30 border-amber-300 dark:border-amber-700 text-amber-700 dark:text-amber-400'
-                    : 'bg-stone-50 dark:bg-stone-700 border-stone-200 dark:border-stone-600 text-stone-400 hover:text-stone-600'
-                }`}
-                title={layoutLocked ? 'Layout locked — cell types protected. Click to unlock.' : 'Lock layout to protect cell types while placing plants'}
-              >
-                {layoutLocked ? '🔒 Layout' : '🗺️ Layout'}
-              </button>
-              <button
-                onClick={togglePlantsLock}
-                className={`px-2 py-1 text-xs rounded-lg border transition-all ${
-                  plantsLocked
-                    ? 'bg-emerald-100 dark:bg-emerald-900/30 border-emerald-300 dark:border-emerald-700 text-emerald-700 dark:text-emerald-400'
-                    : 'bg-stone-50 dark:bg-stone-700 border-stone-200 dark:border-stone-600 text-stone-400 hover:text-stone-600'
-                }`}
-                title={plantsLocked ? 'Plants locked — click to unlock' : 'Lock plants to prevent changes'}
-              >
-                {plantsLocked ? '🔒 Plants' : '🌱 Plants'}
-              </button>
-            </div>
+            <h1 className="text-lg sm:text-xl font-semibold text-stone-800 dark:text-stone-100">In-Ground Garden Plotter</h1>
             <div className="flex flex-wrap items-center gap-2">
-              {hasTowerPlants && (
-                <button
-                  onClick={() => {
-                    // Layout-aware: only load Esher template if grid is blank
-                    const hasLayout = cells.some((r) => r.some((c) => c.type !== 'lawn'));
-                    if (!hasLayout && !layoutLocked) {
-                      const { config: esherConfig, cells: esherCells } = createEsherGarden();
-                      loadTemplate(esherConfig, esherCells);
-                    }
-                    // Generate paired layout from CURRENT cells (not overwritten)
-                    const currentCells = useGardenStore.getState().garden.cells;
-                    const paired = generatePairedLayout(actualTowerSlugs, plants, companionMap);
-                    const staticLayouts = generateEsherLayouts();
-                    setEsherLayouts([paired, ...staticLayouts]);
-                    setRaisedBedMode({ 'paired-with-towers': 'replant' });
-                    setShowEsherLayouts(true);
-                  }}
-                  disabled={plantsLocked}
-                  className={`px-3 py-1.5 text-xs rounded-lg transition-colors flex items-center gap-1.5 font-semibold ${
-                    plantsLocked
-                      ? 'bg-stone-200 dark:bg-stone-600 text-stone-400 cursor-not-allowed'
-                      : 'bg-indigo-600 text-white hover:bg-indigo-700'
-                  }`}
-                >
-                  <span>🤝</span> Pair with My GreenStalks
-                </button>
-              )}
               <button
                 onClick={() => setShowSaveSeasonConfirm(true)}
                 className="px-3 py-1.5 text-xs bg-violet-600 text-white rounded-lg hover:bg-violet-700 transition-colors flex items-center gap-1.5"
@@ -1426,14 +889,10 @@ export function GardenPage() {
               </button>
               <button
                 onClick={() => {
-                  // Layout-aware: only load Esher template if grid is blank
-                  const hasLayout = cells.some((r) => r.some((c) => c.type !== 'lawn'));
-                  if (!hasLayout && !layoutLocked) {
-                    const { config: esherConfig, cells: esherCells } = createEsherGarden();
-                    loadTemplate(esherConfig, esherCells);
-                  }
-                  // Generate layouts from CURRENT cells
+                  const { config: esherConfig, cells: esherCells } = createEsherGarden();
+                  loadTemplate(esherConfig, esherCells);
                   const layouts = generateEsherLayouts();
+                  // Compute cross-system pairings with GreenStalk
                   const gsLayouts = generateGSLayouts(plants, companionMap, 2);
                   const gsForPairing = gsLayouts.map((g) => ({ id: g.id, name: g.name, slugs: extractTowerSlugs(g) }));
                   const enriched = layouts.map((layout) => ({
@@ -1449,10 +908,7 @@ export function GardenPage() {
                   setEsherLayouts(enriched);
                   setShowEsherLayouts(true);
                 }}
-                disabled={plantsLocked}
-                className={`px-3 py-1.5 text-xs rounded-lg transition-colors flex items-center gap-1.5 ${
-                  plantsLocked ? 'bg-stone-200 dark:bg-stone-600 text-stone-400 cursor-not-allowed' : 'bg-amber-600 text-white hover:bg-amber-700'
-                }`}
+                className="px-3 py-1.5 text-xs bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition-colors flex items-center gap-1.5"
               >
                 <span>🏡</span> Load My Garden
               </button>
@@ -1462,77 +918,34 @@ export function GardenPage() {
                   setGardenLayouts(layouts);
                   setShowAutoPopulate(true);
                 }}
-                disabled={plantsLocked}
-                className={`px-3 py-1.5 text-xs rounded-lg transition-colors flex items-center gap-1.5 ${
-                  plantsLocked ? 'bg-stone-200 dark:bg-stone-600 text-stone-400 cursor-not-allowed' : 'bg-emerald-600 text-white hover:bg-emerald-700'
-                }`}
+                className="px-3 py-1.5 text-xs bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors flex items-center gap-1.5"
               >
-                <span>✨</span> Auto-Populate
-              </button>
-              <button
-                onClick={() => {
-                  if (confirm('Remove all plants from the map? Layout stays intact.')) {
-                    clearAllPlants();
-                  }
-                }}
-                disabled={plantsLocked}
-                className={`px-3 py-1.5 text-xs rounded-lg transition-colors flex items-center gap-1.5 ${
-                  plantsLocked ? 'bg-stone-200 dark:bg-stone-600 text-stone-400 cursor-not-allowed' : 'text-stone-500 border border-stone-300 dark:border-stone-600 hover:bg-stone-100 dark:hover:bg-stone-700'
-                }`}
-              >
-                <span>🧹</span> Clear Plants
-              </button>
+              <span>✨</span> Auto-Populate
+            </button>
             </div>
           </div>
           <p className="text-sm text-stone-400">
-            {draggingPlant
-              ? `🫳 Dragging ${plantMap.get(draggingPlant.slug)?.emoji ?? ''} ${plantMap.get(draggingPlant.slug)?.commonName ?? draggingPlant.slug} — drop on another cell to move or swap`
-              : plantToPlace
+            {plantToPlace
               ? `Click on veg patches or flower beds to place ${plantToPlace.emoji} ${plantToPlace.commonName}`
-              : `Paint your garden layout, then place plants. Drag planted cells to rearrange.`}
+              : `Paint your garden layout, then place plants. ${config.widthM}m x ${config.depthM}m`}
           </p>
         </div>
 
-        {/* Direction indicator + compass */}
-        <div className="mb-2 flex items-center gap-3 text-xs text-stone-400">
-          <span className="font-medium">House wall (south)</span>
+        {/* Direction indicator */}
+        <div className="mb-2 flex items-center gap-2 text-xs text-stone-400">
+          <span className="font-medium">House wall</span>
           <span className="flex-1 border-t border-dashed border-stone-300" />
           <span>Facing {config.facing}</span>
-          <span className="inline-flex items-center justify-center w-8 h-8 rounded-full border border-stone-300 dark:border-stone-600 text-[9px] font-bold relative bg-white dark:bg-stone-700" title="Grid orientation: house (south) at top, back garden (north) at bottom">
-            <span className="absolute top-0.5 text-stone-400">S</span>
-            <span className="absolute bottom-0.5 text-red-500">N</span>
-            <span className="absolute left-0.5 text-stone-400">W</span>
-            <span className="absolute right-0.5 text-stone-400">E</span>
-          </span>
         </div>
 
-        {/* Column labels (0-19) */}
-        <div className="flex" style={{ marginLeft: cellSize * 1.5, marginBottom: 2 }}>
-          {Array.from({ length: cols }, (_, i) => (
-            <div key={i} className="text-[7px] text-stone-400 text-center" style={{ width: cellSize }}>
-              {i}
-            </div>
-          ))}
-        </div>
-
-        {/* Grid with row labels */}
-        <div className="inline-flex">
-          {/* Row labels */}
-          <div className="flex flex-col" style={{ width: cellSize * 1.5 }}>
-            {cells.map((_, ri) => (
-              <div key={ri} className="text-[7px] text-stone-400 flex items-center justify-end pr-1" style={{ height: cellSize }}>
-                {ri}
-              </div>
-            ))}
-          </div>
-
-          <div
-            ref={gridRef}
-            className="inline-block border border-stone-300 rounded-lg overflow-hidden select-none relative"
-            style={{ lineHeight: 0 }}
-            onMouseLeave={() => { setIsPainting(false); setHoveredCell(null); if (draggingPlant) { setDraggingPlant(null); setDragOverCell(null); } }}
-            onWheel={handleWheel}
-          >
+        {/* Grid */}
+        <div
+          ref={gridRef}
+          className="inline-block border border-stone-300 rounded-lg overflow-hidden select-none relative"
+          style={{ lineHeight: 0 }}
+          onMouseLeave={() => { setIsPainting(false); setHoveredCell(null); }}
+          onWheel={handleWheel}
+        >
           {cells.map((row, ri) => (
             <div key={ri} className="flex" style={{ height: cellSize }}>
               {row.map((cell, ci) => {
@@ -1571,13 +984,10 @@ export function GardenPage() {
                       ...(rotationWarning && spacingWarning ? { boxShadow: 'inset 0 0 0 2px #f97316, inset 0 0 0 4px #8b5cf6' } : {}),
                     }}
                     className={`
-                      border-r border-b border-stone-200/30
+                      border-r border-b border-stone-200/30 cursor-crosshair
                       flex items-center justify-center
                       hover:brightness-110 transition-colors duration-75
-                      ${draggingPlant ? 'cursor-grabbing' : hasPlant && !plantToPlace ? 'cursor-grab' : 'cursor-crosshair'}
                       ${plantToPlace && (cell.type === 'veg-patch' || cell.type === 'raised-bed' || cell.type === 'flower-bed' || cell.type === 'conservatory') ? 'hover:ring-1 ring-inset ring-emerald-400' : ''}
-                      ${draggingPlant && dragOverCell?.row === ri && dragOverCell?.col === ci && !(draggingPlant.fromRow === ri && draggingPlant.fromCol === ci) ? 'ring-2 ring-inset ring-indigo-400 brightness-125' : ''}
-                      ${draggingPlant && draggingPlant.fromRow === ri && draggingPlant.fromCol === ci ? 'opacity-40' : ''}
                     `}
                     title={(() => {
                       const base = plant
@@ -1592,50 +1002,36 @@ export function GardenPage() {
                       const extra = tags.length > 0 ? ` | ${tags.join(', ')}` : '';
                       return base + extra;
                     })()}
-                    onMouseDown={(e) => {
-                      // If cell has a plant and we're not in paint/place mode → start drag
-                      if (hasPlant && !plantToPlace && !plantsLocked && activeTool === 'veg-patch' && cell.plantSlug) {
-                        e.preventDefault();
-                        setDraggingPlant({ slug: cell.plantSlug, fromRow: ri, fromCol: ci });
-                        setDragOverCell({ row: ri, col: ci });
-                        return;
-                      }
+                    onMouseDown={() => {
                       setIsPainting(true);
                       handleCellInteraction(ri, ci);
                     }}
                     onMouseEnter={() => {
-                      if (draggingPlant) {
-                        setDragOverCell({ row: ri, col: ci });
-                        setHoveredCell({ row: ri, col: ci });
-                        return;
-                      }
                       if (isPainting && !plantToPlace) handleCellInteraction(ri, ci);
                       if (hasPlant) setHoveredCell({ row: ri, col: ci });
                     }}
-                    onMouseUp={() => {
-                      if (draggingPlant) {
-                        const isPlantable = cell.type === 'veg-patch' || cell.type === 'raised-bed' || cell.type === 'flower-bed' || cell.type === 'conservatory';
-                        const isSameCell = draggingPlant.fromRow === ri && draggingPlant.fromCol === ci;
-                        if (isPlantable && !isSameCell) {
-                          const store = useGardenStore.getState();
-                          const targetSlug = cell.plantSlug;
-                          // Place dragged plant in target
-                          store.plantInCell(ri, ci, draggingPlant.slug);
-                          // If target had a plant, swap it to source
-                          if (targetSlug) {
-                            store.plantInCell(draggingPlant.fromRow, draggingPlant.fromCol, targetSlug);
-                          } else {
-                            store.removePlantFromCell(draggingPlant.fromRow, draggingPlant.fromCol);
+                    onMouseUp={() => setIsPainting(false)}
+                    onClick={() => {
+                      if (hasPlant && plant) {
+                        setSelectedPlant(plant);
+                      } else if (!plantToPlace && !hasPlant &&
+                        (cell.type === 'veg-patch' || cell.type === 'raised-bed' || cell.type === 'flower-bed' || cell.type === 'conservatory')) {
+                        // Empty plantable cell — open smart picker
+                        const ns: string[] = [];
+                        for (let dr = -2; dr <= 2; dr++) {
+                          for (let dc = -2; dc <= 2; dc++) {
+                            if (dr === 0 && dc === 0) continue;
+                            const s = cells[ri + dr]?.[ci + dc]?.plantSlug;
+                            if (s) ns.push(s);
                           }
                         }
-                        setDraggingPlant(null);
-                        setDragOverCell(null);
-                        return;
+                        setGardenSmartPicker({
+                          row: ri, col: ci,
+                          sunHours: cell.sunHours,
+                          cellType: cell.type,
+                          neighbourSlugs: [...new Set(ns)],
+                        });
                       }
-                      setIsPainting(false);
-                    }}
-                    onClick={() => {
-                      if (hasPlant && plant && !draggingPlant) setSelectedPlant(plant);
                     }}
                   >
                     {/* Semi-transparent sun hours overlay */}
@@ -1807,14 +1203,6 @@ export function GardenPage() {
             });
           })()}
         </div>
-        </div>{/* /inline-flex (row labels + grid) */}
-
-        {/* Orientation labels */}
-        <div className="flex justify-between text-[8px] text-stone-400 mt-1" style={{ marginLeft: cellSize * 1.5, width: cols * cellSize }}>
-          <span>W (19A)</span>
-          <span>← {(cols * config.cellSizeM).toFixed(0)}m →</span>
-          <span>E (23A)</span>
-        </div>
 
         {/* Rich tooltip on hover */}
         {hoveredCell && (() => {
@@ -1881,8 +1269,7 @@ export function GardenPage() {
                   ? 'bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-300'
                   : 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-300'
               }`}>
-                {sunH !== null ? `${sunH}h sun at this spot` : `Needs ${hPlant.sun.replace('-', ' ')}`}
-                {sunH !== null && ` — needs ${hPlant.sun.replace('-', ' ')}`}
+                {sunH !== null ? `${sunH}h sun` : 'Sun unknown'} — needs {hPlant.sun.replace('-', ' ')}
                 {sunWarning && ' ⚠️ Not enough sun here!'}
                 {sunOk && ' ✓ Good spot'}
               </div>
@@ -2040,54 +1427,12 @@ export function GardenPage() {
         )}
       </div>
 
-      {/* Right sidebar: Hover reasoning + Planted plants (resizable) */}
-      <div
-        className={`relative border-l border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 flex-shrink-0 overflow-y-auto p-3 ${
-          mobilePanel === 'plants'
-            ? 'fixed inset-y-0 right-0 z-40 shadow-2xl w-64'
-            : 'hidden sm:block'
-        }`}
-        style={mobilePanel !== 'plants' ? { width: sidebarWidth } : undefined}
-      >
-        {/* Drag handle to resize */}
-        <div
-          className="absolute left-0 top-0 bottom-0 w-1.5 cursor-col-resize hover:bg-indigo-400/40 active:bg-indigo-500/60 transition-colors z-10"
-          onMouseDown={(e) => {
-            e.preventDefault();
-            sidebarResizing.current = true;
-            const startX = e.clientX;
-            const startW = sidebarWidth;
-            const onMove = (ev: MouseEvent) => {
-              if (!sidebarResizing.current) return;
-              const delta = startX - ev.clientX; // dragging left = bigger
-              setSidebarWidth(Math.max(200, Math.min(600, startW + delta)));
-            };
-            const onUp = () => {
-              sidebarResizing.current = false;
-              document.removeEventListener('mousemove', onMove);
-              document.removeEventListener('mouseup', onUp);
-            };
-            document.addEventListener('mousemove', onMove);
-            document.addEventListener('mouseup', onUp);
-          }}
-          title="Drag to resize"
-        />
-        {/* Hover reasoning panel — changes as you hover different cells */}
-        <HoverReasoningPanel
-          hoveredCell={hoveredCell}
-          cells={cells}
-          plantMap={plantMap}
-          plants={plants}
-          companionMap={companionMap}
-          config={config}
-          actualTowerSlugs={actualTowerSlugs}
-        />
-
-        {/* Real-time Garden Grade — compact sidebar variant */}
-        <div className="mb-3">
-          <GardenGradePanel variant="sidebar" swapFilter="inground" />
-        </div>
-
+      {/* Right sidebar: Planted plants grouped by location & companions */}
+      <div className={`w-64 border-l border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 flex-shrink-0 overflow-y-auto p-3 ${
+        mobilePanel === 'plants'
+          ? 'fixed inset-y-0 right-0 z-40 shadow-2xl'
+          : 'hidden sm:block'
+      }`}>
         <PlantedPlantsSidebar cells={cells} plants={plants} companionMap={companionMap} />
       </div>
 
@@ -2097,6 +1442,22 @@ export function GardenPage() {
           plant={selectedPlant}
           companionMap={companionMap}
           onClose={() => setSelectedPlant(null)}
+        />
+      )}
+
+      {/* Smart plant picker for empty garden cells */}
+      {gardenSmartPicker && (
+        <SmartPlantPicker
+          plants={plants}
+          companionMap={companionMap}
+          neighbourSlugs={gardenSmartPicker.neighbourSlugs}
+          sunHours={gardenSmartPicker.sunHours}
+          cellType={gardenSmartPicker.cellType}
+          onSelect={(slug) => {
+            useGardenStore.getState().plantInCell(gardenSmartPicker.row, gardenSmartPicker.col, slug);
+            setGardenSmartPicker(null);
+          }}
+          onClose={() => setGardenSmartPicker(null)}
         />
       )}
 

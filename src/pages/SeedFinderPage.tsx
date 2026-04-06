@@ -9,6 +9,50 @@ import type { Plant } from '../types/plant';
 
 type BuyTiming = 'buy-now' | 'buy-soon' | 'not-yet';
 
+// ─── Supplies & equipment (non-plant items) ────────────────────────────────
+type SupplyPhase = 'pre' | 'setup' | 'growing' | 'late';
+
+const PHASE_LABELS_SHORT: Record<SupplyPhase, string> = {
+  pre: 'pre-move', setup: 'setup', growing: 'growing', late: 'late season',
+};
+
+function getPhaseSimple(d: Date): SupplyPhase {
+  const m = d.getMonth() + 1;
+  if (d < new Date('2026-04-15')) return 'pre';
+  if (d < new Date('2026-06-01')) return 'setup';
+  if (m <= 9) return 'growing';
+  return 'late';
+}
+
+interface Supply {
+  id: string;
+  emoji: string;
+  name: string;
+  reason: string;
+  specific?: string;
+  price?: string;
+  url?: string;
+  phases: SupplyPhase[];
+}
+
+const SUPPLIES: Supply[] = [
+  // PRE-MOVE + SETUP
+  { id: 'compost', emoji: '🪴', name: 'Peat-free multipurpose compost (100L+)', reason: 'Mix 3:1 with perlite for GreenStalk pockets. Need at least 100L for 2 towers.', specific: 'Westland Peat Free — best budget option at Homebase/B&Q', price: '~£12-15', url: 'https://www.thompson-morgan.com/p/peat-free-multipurpose-compost/t67890', phases: ['pre', 'setup'] },
+  { id: 'perlite', emoji: '⬜', name: 'Perlite (20L bag)', reason: 'Essential for drainage in GreenStalk pockets. Without it, roots rot.', specific: 'Any brand fine — Westland or Miracle-Gro both work', price: '~£6-8', url: 'https://www.amazon.co.uk/dp/B07FZ6SZK8', phases: ['pre', 'setup'] },
+  { id: 'seed-trays', emoji: '🫙', name: 'Seed trays + 9cm pots', reason: 'Start seeds in conservatory before GreenStalks arrive.', specific: 'Get modular trays (24-cell) + at least 20 x 9cm pots', price: '~£8-12', url: 'https://www.thompson-morgan.com/c/seed-trays-and-pots', phases: ['pre'] },
+  { id: 'slow-release', emoji: '🧪', name: 'Slow-release fertiliser (NPK 14-14-14)', reason: 'Mix into compost when filling GreenStalks. Feeds for 3-4 months.', specific: 'Osmocote Exact Standard — the industry standard for containers', price: '~£8-10', url: 'https://www.amazon.co.uk/dp/B00BARLRH4', phases: ['setup'] },
+  { id: 'liquid-feed', emoji: '🍅', name: 'Tomorite tomato feed (1L concentrate)', reason: 'Weekly liquid feed for all fruiting plants once they start flowering.', specific: 'Tomorite is the UK standard — high potash for fruit production', price: '~£5-7', url: 'https://www.thompson-morgan.com/p/tomorite-concentrated-tomato-food/t69481', phases: ['setup', 'growing'] },
+  { id: 'fleece', emoji: '🛡️', name: 'Horticultural fleece (2m x 10m)', reason: 'Frost protection for tender seedlings April-May. Also deters carrot fly.', specific: '17gsm weight — light enough to lay directly on plants', price: '~£5-8', url: 'https://www.amazon.co.uk/dp/B005LI4R3A', phases: ['pre', 'setup'] },
+  { id: 'netting', emoji: '🕸️', name: 'Butterfly netting / Enviromesh', reason: 'Keeps cabbage white butterflies off brassicas, carrot fly off carrots.', specific: 'Enviromesh is best (ultra-fine) but standard butterfly netting works', price: '~£8-15', url: 'https://www.amazon.co.uk/dp/B00BARLRJ2', phases: ['setup', 'growing'] },
+  // GROWING SEASON
+  { id: 'beer-traps', emoji: '🍺', name: 'Slug beer traps (or cheap lager)', reason: 'Sink jars into soil near lettuce/strawberries. Slugs fall in overnight.', specific: 'Any cheap lager works. Replace every 2-3 days. Or buy dedicated slug traps.', price: '~£3-5', phases: ['growing'] },
+  { id: 'neem-oil', emoji: '🧴', name: 'Neem oil spray (organic)', reason: 'All-purpose organic pest spray for aphids, whitefly, and mites.', specific: 'Neudorff Bug Free or similar neem-based spray — RHS approved', price: '~£6-9', url: 'https://www.amazon.co.uk/dp/B00GXJJ3Q0', phases: ['growing'] },
+  { id: 'twine', emoji: '🧵', name: 'Garden twine (soft jute)', reason: 'Tie in tomatoes, train beans up cages, secure sweet peas to fence.', specific: 'Soft jute won\'t cut stems — avoid plastic-coated wire', price: '~£3-4', phases: ['setup', 'growing'] },
+  { id: 'watering-can', emoji: '🚿', name: 'Watering can with fine rose (9L)', reason: 'GreenStalks need daily watering. A fine rose avoids washing out seeds.', specific: 'Haws or similar long-reach can — fill the top reservoir, not individual pockets', price: '~£12-20', phases: ['setup'] },
+  // LATE SEASON
+  { id: 'green-manure', emoji: '🌿', name: 'Green manure seeds (crimson clover or phacelia)', reason: 'Sow on bare beds after harvest to fix nitrogen and protect soil over winter.', specific: 'Crimson clover for nitrogen; phacelia for pollinators + soil structure', price: '~£4-6', phases: ['late'] },
+];
+
 // ─── Essentials: the must-have crops by context ──────────────────────────────
 // Curated from RHS beginner guidance + GreenStalk best practice.
 // "Essential" = high yield, easy to grow, proven in Surrey/SoCal, worth the space.
@@ -490,11 +534,9 @@ export function SeedFinderPage() {
       <div className="max-w-4xl mx-auto px-4 py-6">
         {/* Header */}
         <div className="mb-4">
-          <h1 className="text-3xl font-bold tracking-tight text-stone-800 dark:text-stone-100">Seed Finder</h1>
+          <h1 className="text-3xl font-bold tracking-tight text-stone-800 dark:text-stone-100">Shopping</h1>
           <p className="text-sm text-stone-400 mt-1">
-            {isUS
-              ? 'What to buy now for your SoCal garden. All sellers are AHS members or USDA-certified.'
-              : 'What to buy now for your Surrey garden. All sellers are RHS-endorsed or hold Royal Warrants.'}
+            Everything you need to buy, with specific products, reasoning, and the best price.
           </p>
         </div>
 
@@ -707,7 +749,42 @@ export function SeedFinderPage() {
           </div>
         )}
 
-        {/* Seed cards grid */}
+        {/* ── Supplies & Equipment ─────────────────────────────────── */}
+        <div className="bg-white dark:bg-stone-800 rounded-2xl border border-stone-200 dark:border-stone-700 overflow-hidden mb-5">
+          <div className="px-4 py-3 border-b border-stone-100 dark:border-stone-700">
+            <h2 className="text-sm font-bold text-stone-800 dark:text-stone-100">
+              🧰 Supplies & Equipment
+            </h2>
+            <p className="text-[10px] text-stone-400 mt-0.5">Non-plant items you need — date-sensitive for your {PHASE_LABELS_SHORT[getPhaseSimple(new Date())]} phase</p>
+          </div>
+          <div className="divide-y divide-stone-50 dark:divide-stone-700/50">
+            {SUPPLIES.filter(s => s.phases.includes(getPhaseSimple(new Date()))).map((supply) => (
+              <div key={supply.id} className="px-4 py-3 flex items-start gap-3">
+                <span className="text-lg shrink-0">{supply.emoji}</span>
+                <div className="flex-1 min-w-0">
+                  <div className="text-xs font-semibold text-stone-800 dark:text-stone-100">{supply.name}</div>
+                  <p className="text-[10px] text-stone-500 dark:text-stone-400 mt-0.5">{supply.reason}</p>
+                  {supply.specific && (
+                    <p className="text-[10px] text-emerald-600 dark:text-emerald-400 mt-0.5 font-medium">{supply.specific}</p>
+                  )}
+                </div>
+                <div className="shrink-0 flex flex-col items-end gap-1">
+                  {supply.price && (
+                    <span className="text-[10px] font-bold text-stone-600 dark:text-stone-300">{supply.price}</span>
+                  )}
+                  {supply.url && (
+                    <a href={supply.url} target="_blank" rel="noopener noreferrer"
+                      className="text-[9px] px-2 py-0.5 rounded bg-emerald-600 text-white hover:bg-emerald-700 transition-colors font-semibold">
+                      Buy →
+                    </a>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Plant cards grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
           {filtered.map(({ plant, timing, reason, seedProduct }) => (
             <SeedCard

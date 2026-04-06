@@ -21,7 +21,7 @@ const navItems: { id: Page; label: string; icon: string }[] = [
   { id: 'planner', label: 'GreenStalk', icon: '\ud83c\udf31' },
   { id: 'garden', label: 'Garden', icon: '\ud83c\udfe1' },
   { id: 'harvest', label: 'Harvest', icon: '\ud83c\udf53' },
-  { id: 'seeds', label: 'Seeds', icon: '\ud83d\udecd\ufe0f' },
+  { id: 'seeds', label: 'Shopping', icon: '\ud83d\uded2' },
   { id: 'care', label: 'Care', icon: '\ud83e\ude7a' },
   { id: 'yield', label: 'Yield', icon: '\ud83d\udcca' },
   { id: 'shadow', label: 'Sun', icon: '\u2600\ufe0f' },

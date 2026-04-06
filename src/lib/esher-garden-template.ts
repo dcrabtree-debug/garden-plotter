@@ -19,9 +19,9 @@
  * - East fence border (cols 18-19) — closeboard + Cordylines + Euphorbia
  * - Main lawn (rows 3-18) — OFF LIMITS, rental
  * - Back patio (rows 19-21, cols 4-14) — GreenStalk positions
- * - Old shed pavers (rows 20-22, cols 16-19) — EAST corner, old shed removed
+ * - Old shed pavers (rows 20-22, cols 3-6) — WEST side, old shed removed
  * - Raised bed (rows 21-22, cols 8-13) — black metal edging, shade bed
- * - Shed (rows 21-23, cols 3-6) — small wooden, NORTH corner (true north)
+ * - Shed (rows 21-23, cols 16-19) — small wooden, EAST side back of garden
  * - Laurel hedge (rows 22-23) — 3-4m tall, full NORTH boundary
  * - Back gate + fruit (row 21-22, cols 14-15)
  * - Large deciduous tree (rows 14-19, col 19) — overhangs from east
@@ -34,7 +34,7 @@ export const ESHER_CONFIG: GardenConfig = {
   widthM: 10,
   depthM: 12,
   cellSizeM: 0.5,
-  facing: 'N',
+  facing: 'NE',
   houseWallHeightM: 7,
   fenceHeightM: 1.8,
   latitude: 51.3867,
@@ -142,11 +142,10 @@ export function createEsherGarden(): { config: GardenConfig; cells: GardenCell[]
     }
   }
 
-  // ── Shed (rows 21-23, cols 3-6) — NORTH corner (true north) ──
-  // Aerial: small wooden shed at the top of garden, west-of-center
-  // User: "small shed in the north corner (true north)"
+  // ── Shed (rows 21-23, cols 16-19) — EAST side, back of garden ──
+  // User correction: shed is on the RIGHT (east) side, not the left.
   for (let r = 21; r <= 23; r++) {
-    for (let c = 3; c <= 6; c++) {
+    for (let c = 16; c <= 19; c++) {
       overrides.push({ row: r, col: c, type: 'shed', label: 'Shed' });
     }
   }
@@ -159,11 +158,10 @@ export function createEsherGarden(): { config: GardenConfig; cells: GardenCell[]
     overrides.push({ row: 22, col: c, type: 'tree', label: 'Hedge canopy' });
   }
 
-  // ── Old shed pavers — EAST corner (rows 20-22, cols 16-19) ──
-  // Unknown-5: old shed REMOVED, pavers + open space remain.
-  // User: "some pavers and space in the eastern corner"
+  // ── Old shed pavers — WEST side (rows 20-22, cols 3-6) ──
+  // Old shed removed. Pavers + open space remain on the west side.
   for (let r = 20; r <= 22; r++) {
-    for (let c = 16; c <= 19; c++) {
+    for (let c = 3; c <= 6; c++) {
       overrides.push({ row: r, col: c, type: 'patio', label: 'Old shed site (pavers)' });
     }
   }

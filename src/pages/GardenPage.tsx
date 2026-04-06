@@ -11,6 +11,7 @@ import { generateLayouts as generateGSLayouts, extractTowerSlugs } from '../lib/
 import { findBestPairing } from '../lib/cross-system-scoring';
 import { checkPair, getFriends, getConflicts } from '../lib/companion-engine';
 import { scorePlant } from '../lib/garden-rating';
+import { GardenGradePanel } from '../components/common/GardenGradePanel';
 import type { CellType, GardenFacing, GardenCell } from '../types/planner';
 import type { Plant } from '../types/plant';
 import {
@@ -1198,21 +1199,46 @@ export function GardenPage() {
           </p>
         </div>
 
-        {/* Direction indicator */}
-        <div className="mb-2 flex items-center gap-2 text-xs text-stone-400">
-          <span className="font-medium">House wall</span>
+        {/* Direction indicator + compass */}
+        <div className="mb-2 flex items-center gap-3 text-xs text-stone-400">
+          <span className="font-medium">House wall (south)</span>
           <span className="flex-1 border-t border-dashed border-stone-300" />
           <span>Facing {config.facing}</span>
+          <span className="inline-flex items-center justify-center w-8 h-8 rounded-full border border-stone-300 dark:border-stone-600 text-[9px] font-bold relative bg-white dark:bg-stone-700">
+            <span className="absolute top-0.5 text-red-500">N</span>
+            <span className="absolute bottom-0.5 text-stone-400">S</span>
+            <span className="absolute left-0.5 text-stone-400">W</span>
+            <span className="absolute right-0.5 text-stone-400">E</span>
+          </span>
         </div>
 
-        {/* Grid */}
-        <div
-          ref={gridRef}
-          className="inline-block border border-stone-300 rounded-lg overflow-hidden select-none relative"
-          style={{ lineHeight: 0 }}
-          onMouseLeave={() => { setIsPainting(false); setHoveredCell(null); }}
-          onWheel={handleWheel}
-        >
+        {/* Column labels (0-19) */}
+        <div className="flex" style={{ marginLeft: cellSize * 1.5, marginBottom: 2 }}>
+          {Array.from({ length: cols }, (_, i) => (
+            <div key={i} className="text-[7px] text-stone-400 text-center" style={{ width: cellSize }}>
+              {i}
+            </div>
+          ))}
+        </div>
+
+        {/* Grid with row labels */}
+        <div className="inline-flex">
+          {/* Row labels */}
+          <div className="flex flex-col" style={{ width: cellSize * 1.5 }}>
+            {cells.map((_, ri) => (
+              <div key={ri} className="text-[7px] text-stone-400 flex items-center justify-end pr-1" style={{ height: cellSize }}>
+                {ri}
+              </div>
+            ))}
+          </div>
+
+          <div
+            ref={gridRef}
+            className="inline-block border border-stone-300 rounded-lg overflow-hidden select-none relative"
+            style={{ lineHeight: 0 }}
+            onMouseLeave={() => { setIsPainting(false); setHoveredCell(null); }}
+            onWheel={handleWheel}
+          >
           {cells.map((row, ri) => (
             <div key={ri} className="flex" style={{ height: cellSize }}>
               {row.map((cell, ci) => {
@@ -1450,6 +1476,14 @@ export function GardenPage() {
               );
             });
           })()}
+        </div>
+        </div>{/* /inline-flex (row labels + grid) */}
+
+        {/* Orientation labels */}
+        <div className="flex justify-between text-[8px] text-stone-400 mt-1" style={{ marginLeft: cellSize * 1.5, width: cols * cellSize }}>
+          <span>W (19A)</span>
+          <span>← {(cols * config.cellSizeM).toFixed(0)}m →</span>
+          <span>E (23A)</span>
         </div>
 
         {/* Rich tooltip on hover */}
@@ -1692,6 +1726,12 @@ export function GardenPage() {
           config={config}
           actualTowerSlugs={actualTowerSlugs}
         />
+
+        {/* Real-time Garden Grade — compact sidebar variant */}
+        <div className="mb-3">
+          <GardenGradePanel variant="sidebar" />
+        </div>
+
         <PlantedPlantsSidebar cells={cells} plants={plants} companionMap={companionMap} />
       </div>
 

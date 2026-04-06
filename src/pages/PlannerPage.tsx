@@ -19,6 +19,7 @@ import { useRegion } from '../data/use-region';
 import { generateLayouts, extractTowerSlugs, type LayoutOption } from '../lib/auto-populate';
 import { generateEsherLayouts } from '../lib/esher-garden-template';
 import { findBestPairing } from '../lib/cross-system-scoring';
+import { GardenGradePanel } from '../components/common/GardenGradePanel';
 import type { Plant } from '../types/plant';
 
 export function PlannerPage() {
@@ -319,6 +320,11 @@ export function PlannerPage() {
               <span className="text-3xl">+</span>
               <span className="text-sm font-medium">Add GreenStalk</span>
             </button>
+          </div>
+
+          {/* Real-time Garden Grade — updates as you swap plants */}
+          <div className="mt-6">
+            <GardenGradePanel variant="inline" />
           </div>
         </div>
       </div>

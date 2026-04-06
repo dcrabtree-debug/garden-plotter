@@ -1,8 +1,9 @@
 import type { Plant } from '../types/plant';
 import type { CompanionMap, CompanionEdge } from '../types/companion';
 import type { GardenCell, GardenConfig, CellType } from '../types/planner';
+import { scorePlant, getSlugRisk } from './garden-rating';
 
-export type GardenLayoutStrategy = 'sun-optimized' | 'kitchen-garden' | 'maximum-yield';
+export type GardenLayoutStrategy = 'sun-optimized' | 'kitchen-garden' | 'maximum-yield' | 'highest-grade';
 
 export interface PlacementReason {
   plantSlug: string;
@@ -537,6 +538,96 @@ function maximumYieldLayout(
   };
 }
 
+/**
+ * Highest Garden Grade — greedy in-ground layout that maximizes the overall
+ * garden grade score. Slug-prone plants are PENALIZED in-ground (keep those
+ * in GreenStalks where elevation provides natural slug defence).
+ */
+function highestGradeLayout(
+  plants: Plant[],
+  cells: GardenCell[][],
+  config: GardenConfig,
+  companionMap: CompanionMap
+): GardenLayoutOption {
+  const plantableCells = getPlantableCells(cells).sort((a, b) => b.sunHours - a.sunHours);
+  const ctx: PlacementContext = {
+    placements: [], reasoning: [], usedCells: new Set(),
+    companionPairs: 0, conflictsAvoided: 0,
+  };
+
+  const allSlugs: string[] = [];
+  const placed = new Set<string>();
+
+  for (const cell of plantableCells) {
+    const cellKey = `${cell.row}-${cell.col}`;
+    if (ctx.usedCells.has(cellKey)) continue;
+
+    // Filter candidates by sun requirement
+    const sunOk = (p: Plant) => {
+      const need = p.sun === 'full-sun' ? 6 : p.sun === 'partial-shade' ? 3 : 0;
+      return cell.sunHours >= need;
+    };
+
+    let bestScore = -Infinity;
+    let bestPlant: Plant | null = null;
+    let bestReasons: string[] = [];
+
+    for (const candidate of plants) {
+      if (!sunOk(candidate)) continue;
+      if (candidate.greenstalkSuitability === 'unsuitable' && cell.type !== 'raised-bed' && cell.type !== 'veg-patch') continue;
+
+      // Score the plant
+      const ps = scorePlant(candidate, allSlugs, companionMap, 'inground');
+
+      // Diversity bonus
+      const diversityBonus = placed.has(candidate.slug) ? 0 : 1;
+
+      // Slug penalty for in-ground (slug-prone plants should stay in GreenStalks)
+      const slugRisk = getSlugRisk(candidate.slug);
+      const slugPenalty = slugRisk === 'high' ? -2 : slugRisk === 'medium' ? -0.5 : 0;
+
+      const totalScore = ps.overall + diversityBonus + slugPenalty;
+
+      if (totalScore > bestScore) {
+        bestScore = totalScore;
+        bestPlant = candidate;
+        bestReasons = [
+          `Score: ${ps.overall.toFixed(1)}`,
+          slugRisk === 'high' ? 'Slug risk: HIGH (penalized — better in GreenStalk)' :
+          slugRisk === 'low' ? 'Slug resistant — great for in-ground' : '',
+          `Sun: ${cell.sunHours}h (needs ${candidate.sun})`,
+        ].filter(Boolean);
+      }
+    }
+
+    if (bestPlant) {
+      ctx.placements.push({ row: cell.row, col: cell.col, plantSlug: bestPlant.slug });
+      ctx.reasoning.push({
+        plantSlug: bestPlant.slug,
+        plantName: bestPlant.commonName,
+        row: cell.row, col: cell.col,
+        reasons: bestReasons,
+      });
+      ctx.usedCells.add(cellKey);
+      allSlugs.push(bestPlant.slug);
+      placed.add(bestPlant.slug);
+    }
+  }
+
+  return {
+    id: 'highest-grade',
+    name: 'Highest Garden Grade',
+    strategy: 'highest-grade',
+    description:
+      'Algorithmically optimized for the highest overall Garden Grade score. ' +
+      'Slug-prone plants are penalized in-ground and steered to GreenStalks instead. ' +
+      'Responds to your current priority weight sliders.',
+    placements: ctx.placements,
+    reasoning: ctx.reasoning,
+    stats: computeStats(ctx, cells),
+  };
+}
+
 export function generateGardenLayouts(
   plants: Plant[],
   cells: GardenCell[][],
@@ -545,6 +636,7 @@ export function generateGardenLayouts(
 ): GardenLayoutOption[] {
   const cm = companionMap ?? new Map();
   return [
+    highestGradeLayout(plants, cells, config, cm),
     sunOptimizedLayout(plants, cells, config, cm),
     kitchenGardenLayout(plants, cells, config, cm),
     maximumYieldLayout(plants, cells, config, cm),

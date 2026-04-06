@@ -37,6 +37,31 @@ const KID_FAVOURITES = new Set([
   'runner-bean', 'raspberry', 'blueberry', 'gooseberry',
 ]);
 
+// ─── Slug vulnerability (Surrey clay + damp evenings = high slug pressure) ──
+// Plants rated 'high' should stay in GreenStalks (elevated = natural defence).
+// Plants rated 'low' are fine in-ground or in a 2-3 inch raised bed.
+export const SLUG_VULNERABILITY: Record<string, 'high' | 'medium' | 'low'> = {
+  // HIGH — keep in GreenStalks, not in-ground
+  'lettuce': 'high', 'strawberry-everbearing': 'high', 'basil-sweet': 'high',
+  'dwarf-french-bean': 'high', 'pea': 'high', 'courgette': 'high',
+  'hosta': 'high', 'marigold': 'high', 'dahlia': 'high',
+  // MEDIUM — vulnerable as seedlings, OK once established
+  'runner-bean': 'medium', 'pepper-sweet': 'medium', 'pepper-chilli': 'medium',
+  'kale': 'medium', 'spinach': 'medium', 'perpetual-spinach': 'medium',
+  'sunflower': 'medium', 'cucumber': 'medium', 'nasturtium': 'medium',
+  // LOW — slug-resistant (aromatic oils, alliums, root veg)
+  'rosemary': 'low', 'thyme': 'low', 'sage': 'low', 'oregano': 'low',
+  'mint': 'low', 'lemon-balm': 'low', 'chamomile': 'low', 'chives': 'low',
+  'spring-onion': 'low', 'beetroot': 'low', 'carrot': 'low', 'radish': 'low',
+  'potato-early': 'low', 'tomato-tumbling': 'low', 'lavender': 'low',
+  'borage': 'low', 'gooseberry': 'low', 'redcurrant': 'low',
+  'raspberry': 'low', 'blueberry': 'low', 'rocket': 'low',
+};
+
+export function getSlugRisk(slug: string): 'high' | 'medium' | 'low' {
+  return SLUG_VULNERABILITY[slug] ?? 'medium';
+}
+
 // ─── Yield price map (subset for scoring — full map in yield-engine.ts) ─────
 const VALUE_MAP: Record<string, number> = {
   // £ per kg at UK supermarkets (April 2026)
@@ -175,10 +200,16 @@ function scoreValue(plant: Plant): number {
 
 // ─── Main scoring ───────────────────────────────────────────────────────────
 
-// Kid-friendly garden is the #1 priority (David's kids Max + Noelle).
-// Fragrance is David's personal preference, secondary.
-// Companion + resilience support production of the kid garden.
-const WEIGHTS = {
+export interface GradeWeights {
+  kidFriendly: number;
+  value: number;
+  companion: number;
+  resilience: number;
+  fragrance: number;
+}
+
+// Default weights — Kid-friendly #1, Fragrance secondary.
+export const DEFAULT_WEIGHTS: GradeWeights = {
   kidFriendly: 0.35,
   value: 0.20,
   companion: 0.15,
@@ -186,12 +217,34 @@ const WEIGHTS = {
   fragrance: 0.15,
 };
 
+// Mutable current weights — updated by the weight slider UI
+let _currentWeights: GradeWeights = { ...DEFAULT_WEIGHTS };
+
+export function setGradeWeights(w: GradeWeights) {
+  // Normalize to sum = 1
+  const sum = w.kidFriendly + w.value + w.companion + w.resilience + w.fragrance;
+  if (sum > 0) {
+    _currentWeights = {
+      kidFriendly: w.kidFriendly / sum,
+      value: w.value / sum,
+      companion: w.companion / sum,
+      resilience: w.resilience / sum,
+      fragrance: w.fragrance / sum,
+    };
+  }
+}
+
+export function getGradeWeights(): GradeWeights {
+  return _currentWeights;
+}
+
 export function scorePlant(
   plant: Plant,
   allPlantedSlugs: string[],
   companionMap: CompanionMap,
   location: 'greenstalk' | 'inground' | 'both'
 ): PlantScore {
+  const WEIGHTS = _currentWeights;
   const kid = scoreKidFriendly(plant);
   const frag = scoreFragrance(plant);
   const comp = scoreCompanion(plant, allPlantedSlugs, companionMap);

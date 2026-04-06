@@ -18,10 +18,10 @@
  * - West boundary (cols 0-1) — established hedge/shrubs (19A side)
  * - East fence border (cols 18-19) — closeboard + Cordylines + Euphorbia
  * - Main lawn (rows 3-18) — OFF LIMITS, rental
- * - Back patio (rows 19-21, cols 4-14) — GreenStalk positions
- * - Old shed pavers (rows 20-22, cols 3-6) — WEST side, old shed removed
- * - Raised bed (rows 21-22, cols 8-13) — black metal edging, shade bed
- * - Shed (rows 21-23, cols 16-19) — small wooden, EAST side back of garden
+ * - Shed (rows 21-23, cols 3-5) — small wooden, NORTHWEST corner (photo-confirmed)
+ * - Ornamental bed (rows 20-21, cols 6-8) — Aucuba, Acer, shrubs
+ * - Raised bed (rows 20-21, cols 9-13) — black metal edging, shade plants (hostas, ferns)
+ * - Old shed pavers (rows 20-22, cols 16-19) — EAST side, old shed removed, GreenStalks here
  * - Laurel hedge (rows 22-23) — 3-4m tall, full NORTH boundary
  * - Back gate + fruit (row 21-22, cols 14-15)
  * - Large deciduous tree (rows 14-19, col 19) — overhangs from east
@@ -115,63 +115,69 @@ export function createEsherGarden(): { config: GardenConfig; cells: GardenCell[]
     }
   }
 
-  // ── Back patio area (rows 19-21, cols 4-14) — GreenStalks here ──
-  // Smaller than previously mapped; right side is BBQ patio (separate)
-  for (let r = 19; r <= 21; r++) {
-    for (let c = 4; c <= 14; c++) {
-      overrides.push({ row: r, col: c, type: 'patio', label: 'Back patio' });
+  // ── Back area: NO large patio here — lawn extends to the back zone ──
+  // Photos confirm: the lawn goes most of the way to the hedge.
+  // Only hard surfaces in back are: old shed pavers (east) and shed pad (west).
+
+  // ── Shed (rows 21-23, cols 3-5) — NORTHWEST corner ──
+  // Photo-confirmed: wooden shed with felt roof, 4 windows, against the west hedge.
+  // Visible in File_001 (back-left), Unknown-7 (close-up with hedge), Unknown-9 (close-up).
+  for (let r = 21; r <= 23; r++) {
+    for (let c = 3; c <= 5; c++) {
+      overrides.push({ row: r, col: c, type: 'shed', label: 'Shed' });
+    }
+  }
+  // Small concrete pad in front of shed
+  overrides.push({ row: 20, col: 3, type: 'patio', label: 'Shed pad' });
+  overrides.push({ row: 20, col: 4, type: 'patio', label: 'Shed pad' });
+  overrides.push({ row: 20, col: 5, type: 'patio', label: 'Shed pad' });
+
+  // ── Ornamental planting bed in front of hedge (rows 20-21, cols 6-8) ──
+  // Photo Unknown-7: Aucuba (yellow-green), Acer (red), shrubs between shed and raised bed
+  for (let r = 20; r <= 21; r++) {
+    for (let c = 6; c <= 8; c++) {
+      overrides.push({ row: r, col: c, type: 'flower-bed', label: 'Ornamental bed' });
     }
   }
 
-  // ── GreenStalk positions on patio ──
-  // GS1: left side of patio
-  for (let r = 19; r <= 20; r++) {
-    for (let c = 5; c <= 6; c++) {
-      overrides.push({ row: r, col: c, type: 'greenstalk', label: 'GreenStalk 1' });
-    }
-  }
-  // GS2: right side of patio
-  for (let r = 19; r <= 20; r++) {
-    for (let c = 13; c <= 14; c++) {
-      overrides.push({ row: r, col: c, type: 'greenstalk', label: 'GreenStalk 2' });
-    }
-  }
-  // GS3: High Yield Grazer — center patio, wider footprint for larger plants
-  for (let r = 19; r <= 20; r++) {
-    for (let c = 9; c <= 10; c++) {
-      overrides.push({ row: r, col: c, type: 'greenstalk', label: 'High Yield Grazer' });
-    }
-  }
-
-  // ── Raised bed (rows 21-22, cols 7-12) — shade bed near hedge ──
-  for (let r = 21; r <= 22; r++) {
-    for (let c = 7; c <= 12; c++) {
+  // ── Raised bed (rows 20-21, cols 9-13) — shade bed near hedge ──
+  // Photo Unknown-8: black metal edging, hostas, ferns, shade plants.
+  // Central-back area, in front of the laurel hedge. Gets dappled shade.
+  for (let r = 20; r <= 21; r++) {
+    for (let c = 9; c <= 13; c++) {
       overrides.push({ row: r, col: c, type: 'raised-bed' });
     }
   }
 
-  // ── Shed (rows 21-23, cols 16-19) — EAST side, back of garden ──
-  // User correction: shed is on the RIGHT (east) side, not the left.
-  for (let r = 21; r <= 23; r++) {
+  // ── Old shed pavers — EAST side (rows 20-22, cols 16-19) ──
+  // Photo Unknown-10: concrete pad where old shed was removed.
+  // THIS is where the 2 GreenStalks go — ready-made hard surface.
+  for (let r = 20; r <= 22; r++) {
     for (let c = 16; c <= 19; c++) {
-      overrides.push({ row: r, col: c, type: 'shed', label: 'Shed' });
+      overrides.push({ row: r, col: c, type: 'patio', label: 'Old shed pavers' });
     }
   }
 
-  // ── Laurel hedge (rows 22-23) — NORTH boundary ──
+  // ── GreenStalk positions on old shed pavers (east side) ──
+  // 2 GreenStalks only. Each is 2x2 cells (1m x 1m footprint).
+  for (let r = 20; r <= 21; r++) {
+    for (let c = 16; c <= 17; c++) {
+      overrides.push({ row: r, col: c, type: 'greenstalk', label: 'GreenStalk 1' });
+    }
+  }
+  for (let r = 20; r <= 21; r++) {
+    for (let c = 18; c <= 19; c++) {
+      overrides.push({ row: r, col: c, type: 'greenstalk', label: 'GreenStalk 2' });
+    }
+  }
+
+  // ── Laurel/ivy hedge (rows 22-23) — NORTH boundary ──
+  // Photo Unknown-7: very tall (3-4m), dense evergreen. Full width.
   for (let c = 0; c <= 19; c++) {
     overrides.push({ row: 23, col: c, type: 'tree', label: 'Laurel hedge' });
   }
-  for (let c = 4; c <= 17; c++) {
+  for (let c = 6; c <= 15; c++) {
     overrides.push({ row: 22, col: c, type: 'tree', label: 'Hedge canopy' });
-  }
-
-  // ── Old shed pavers — WEST side (rows 20-22, cols 3-6) ──
-  // Old shed removed. Pavers + open space remain on the west side.
-  for (let r = 20; r <= 22; r++) {
-    for (let c = 3; c <= 6; c++) {
-      overrides.push({ row: r, col: c, type: 'patio', label: 'Old shed site (pavers)' });
-    }
   }
 
   // ── Back gate + fruit bushes (rows 21-22, cols 14-15) ──

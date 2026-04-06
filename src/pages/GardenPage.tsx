@@ -476,6 +476,8 @@ export function GardenPage() {
   const [hoveredCell, setHoveredCell] = useState<{ row: number; col: number } | null>(null);
   const [draggingPlant, setDraggingPlant] = useState<{ slug: string; fromRow: number; fromCol: number } | null>(null);
   const [dragOverCell, setDragOverCell] = useState<{ row: number; col: number } | null>(null);
+  const [plantSearch, setPlantSearch] = useState('');
+  const [plantFilters, setPlantFilters] = useState({ sun: false, companion: false, kid: false, season: false });
   const [sidebarWidth, setSidebarWidth] = useState(256); // 256px = w-64 default
   const sidebarResizing = useRef(false);
   const gridRef = useRef<HTMLDivElement>(null);
@@ -749,6 +751,93 @@ export function GardenPage() {
     [plants]
   );
 
+  // ── Smart plant picker: scored + filtered list ────────────────────────
+  const KID_FAVOURITES = useMemo(() => new Set([
+    'strawberry-everbearing', 'tomato-tumbling', 'radish', 'pea',
+    'sunflower', 'nasturtium', 'dwarf-french-bean', 'lettuce',
+    'runner-bean', 'raspberry', 'blueberry', 'gooseberry',
+  ]), []);
+
+  const currentMonth = useMemo(() => new Date().getMonth() + 1, []);
+
+  const filteredPlants = useMemo(() => {
+    type Tag = { label: string; color: string };
+    type ScoredPlant = { plant: Plant; score: number; tags: Tag[] };
+
+    // Context from hovered cell (if any)
+    const hCell = hoveredCell ? cells[hoveredCell.row]?.[hoveredCell.col] : null;
+    const cellSun = hCell?.sunHours ?? null;
+
+    // Get nearby planted slugs for companion scoring
+    const nearbySlugs: string[] = [];
+    if (hoveredCell) {
+      for (let r = Math.max(0, hoveredCell.row - 2); r <= Math.min(rows - 1, hoveredCell.row + 2); r++) {
+        for (let c = Math.max(0, hoveredCell.col - 2); c <= Math.min(cols - 1, hoveredCell.col + 2); c++) {
+          const s = cells[r]?.[c]?.plantSlug;
+          if (s) nearbySlugs.push(s);
+        }
+      }
+    }
+    const uniqueNearby = [...new Set(nearbySlugs)];
+
+    const isInSeason = (p: Plant) => {
+      const m = currentMonth;
+      const check = (w: [number, number] | null) => {
+        if (!w) return false;
+        return w[0] <= w[1] ? m >= w[0] && m <= w[1] : m >= w[0] || m <= w[1];
+      };
+      return check(p.plantingWindow.sowIndoors) || check(p.plantingWindow.sowOutdoors) || check(p.plantingWindow.transplant);
+    };
+
+    const result: ScoredPlant[] = [];
+
+    for (const p of inGroundPlants) {
+      // Search filter
+      if (plantSearch) {
+        const q = plantSearch.toLowerCase();
+        if (!p.commonName.toLowerCase().includes(q) && !p.botanicalName.toLowerCase().includes(q)) continue;
+      }
+
+      let score = 0;
+      const tags: Tag[] = [];
+
+      // Sun match scoring
+      const sunNeed = p.sun === 'full-sun' ? 6 : p.sun === 'partial-shade' ? 3 : 0;
+      const sunMatch = cellSun !== null ? cellSun >= sunNeed : null;
+      if (sunMatch === true) { score += 3; tags.push({ label: `☀️ ${cellSun}h`, color: 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400' }); }
+      if (sunMatch === false) { score -= 5; tags.push({ label: `⚠️ Low sun`, color: 'bg-red-100 dark:bg-red-900/30 text-red-600' }); }
+
+      // Companion scoring
+      if (uniqueNearby.length > 0) {
+        const friends = getFriends(p.slug, uniqueNearby, companionMap);
+        const foes = getConflicts(p.slug, uniqueNearby, companionMap);
+        score += friends.length * 3;
+        score -= foes.length * 5;
+        if (friends.length > 0) tags.push({ label: `🤝 ${friends.length} friend${friends.length > 1 ? 's' : ''}`, color: 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400' });
+        if (foes.length > 0) tags.push({ label: `❌ ${foes.length} foe${foes.length > 1 ? 's' : ''}`, color: 'bg-red-100 dark:bg-red-900/30 text-red-600' });
+      }
+
+      // Kid-friendly scoring
+      const isKid = KID_FAVOURITES.has(p.slug) || p.category === 'fruit' || (p.daysToHarvest[0] <= 40);
+      if (isKid) { score += 2; tags.push({ label: '🧒 Kids', color: 'bg-sky-100 dark:bg-sky-900/30 text-sky-700 dark:text-sky-400' }); }
+
+      // In-season scoring
+      const seasonal = isInSeason(p);
+      if (seasonal) { score += 1; tags.push({ label: '🌱 Now', color: 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400' }); }
+
+      // Apply filter chips
+      if (plantFilters.sun && sunMatch !== true) continue;
+      if (plantFilters.companion && !(uniqueNearby.length > 0 && getFriends(p.slug, uniqueNearby, companionMap).length > 0)) continue;
+      if (plantFilters.kid && !isKid) continue;
+      if (plantFilters.season && !seasonal) continue;
+
+      result.push({ plant: p, score, tags });
+    }
+
+    // Sort: highest score first, then alphabetical
+    return result.sort((a, b) => b.score - a.score || a.plant.commonName.localeCompare(b.plant.commonName));
+  }, [inGroundPlants, plantSearch, plantFilters, hoveredCell, cells, rows, cols, companionMap, KID_FAVOURITES, currentMonth]);
+
   return (
     <div className="flex h-full overflow-hidden relative">
       {/* Mobile sidebar toggles */}
@@ -811,41 +900,76 @@ export function GardenPage() {
           </div>
         </div>
 
-        {/* Plant placement */}
+        {/* Smart plant picker — context-aware filters */}
         <div>
           <h3 className="text-[10px] font-semibold text-stone-500 uppercase tracking-wide mb-1.5">Place Plants</h3>
-          <button
-            onClick={() => setShowPlantPanel(!showPlantPanel)}
-            className="text-xs w-full px-2 py-1.5 bg-emerald-50 dark:bg-emerald-900/30 border border-emerald-200 dark:border-emerald-800 text-emerald-700 dark:text-emerald-400 rounded-lg hover:bg-emerald-100 dark:hover:bg-emerald-900/50 transition-colors"
-          >
-            {plantToPlace
-              ? `Placing: ${plantToPlace.emoji} ${plantToPlace.commonName}`
-              : 'Select a plant to place...'}
-          </button>
-          {plantToPlace && (
-            <button
-              onClick={() => setPlantToPlace(null)}
-              className="text-[10px] text-stone-400 hover:text-stone-600 mt-1"
-            >
-              Cancel placement
-            </button>
-          )}
-          {showPlantPanel && (
-            <div className="mt-2 max-h-48 overflow-y-auto space-y-1 bg-white dark:bg-stone-700 rounded-lg border border-stone-200 dark:border-stone-600 p-1.5">
-              {inGroundPlants.map((p) => (
+          {plantToPlace ? (
+            <div className="flex items-center gap-1.5 mb-1.5">
+              <span className="text-xs bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 px-2 py-1 rounded-lg flex-1 truncate">
+                {plantToPlace.emoji} {plantToPlace.commonName}
+              </span>
+              <button onClick={() => setPlantToPlace(null)} className="text-[10px] text-stone-400 hover:text-red-500">✕</button>
+            </div>
+          ) : null}
+          <input
+            placeholder="Search plants..."
+            value={plantSearch}
+            onChange={(e) => setPlantSearch(e.target.value)}
+            className="w-full text-[11px] px-2 py-1.5 rounded-lg border border-stone-200 dark:border-stone-600 bg-white dark:bg-stone-700 dark:text-stone-200 mb-1.5"
+          />
+          {/* Filter chips */}
+          <div className="flex flex-wrap gap-1 mb-1.5">
+            {([
+              { key: 'sun', label: '☀️ Sun Match', tip: 'Plants suited to hovered cell sun level' },
+              { key: 'companion', label: '🤝 Friends', tip: 'Companions of nearby planted plants' },
+              { key: 'kid', label: '🧒 Kids', tip: 'Fast-harvest, fun-to-pick plants for Max & Noelle' },
+              { key: 'season', label: '🌱 In Season', tip: 'Can be sown or transplanted now' },
+            ] as const).map(({ key, label, tip }) => (
+              <button
+                key={key}
+                onClick={() => setPlantFilters((f) => ({ ...f, [key]: !f[key] }))}
+                className={`text-[9px] px-1.5 py-0.5 rounded-full border transition-colors ${
+                  plantFilters[key]
+                    ? 'bg-emerald-600 text-white border-emerald-600'
+                    : 'bg-stone-50 dark:bg-stone-600 border-stone-200 dark:border-stone-500 text-stone-500 dark:text-stone-400'
+                }`}
+                title={tip}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+          {/* Scored plant list */}
+          <div className="max-h-52 overflow-y-auto space-y-0.5 bg-white dark:bg-stone-700 rounded-lg border border-stone-200 dark:border-stone-600 p-1">
+            {filteredPlants.length === 0 ? (
+              <div className="text-[10px] text-stone-400 text-center py-3">No plants match filters</div>
+            ) : (
+              filteredPlants.slice(0, 30).map((fp) => (
                 <button
-                  key={p.slug}
-                  onClick={() => { setPlantToPlace(p); setShowPlantPanel(false); }}
-                  className={`w-full text-left text-[11px] px-2 py-1 rounded flex items-center gap-1.5 hover:bg-emerald-50 ${
-                    plantToPlace?.slug === p.slug ? 'bg-emerald-100' : ''
+                  key={fp.plant.slug}
+                  onClick={() => setPlantToPlace(fp.plant)}
+                  className={`w-full text-left text-[10px] px-1.5 py-1 rounded flex items-center gap-1 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 ${
+                    plantToPlace?.slug === fp.plant.slug ? 'bg-emerald-100 dark:bg-emerald-900/30' : ''
                   }`}
                 >
-                  <span>{p.emoji}</span>
-                  <span className="truncate">{p.commonName}</span>
+                  <span className="text-sm shrink-0">{fp.plant.emoji}</span>
+                  <div className="flex-1 min-w-0">
+                    <div className="font-medium text-stone-700 dark:text-stone-200 truncate">{fp.plant.commonName}</div>
+                    {fp.tags.length > 0 && (
+                      <div className="flex gap-0.5 mt-0.5 flex-wrap">
+                        {fp.tags.map((t, i) => (
+                          <span key={i} className={`text-[7px] px-1 py-0 rounded ${t.color}`}>{t.label}</span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                  {fp.score > 0 && (
+                    <span className="text-[8px] font-bold text-emerald-600 dark:text-emerald-400 shrink-0">{fp.score.toFixed(0)}</span>
+                  )}
                 </button>
-              ))}
-            </div>
-          )}
+              ))
+            )}
+          </div>
         </div>
 
         {/* Garden config */}

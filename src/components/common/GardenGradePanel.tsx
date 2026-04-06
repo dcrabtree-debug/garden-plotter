@@ -68,8 +68,19 @@ const AXIS_CONFIG = [
 
 /**
  * Real-time Garden Grade panel with weight presets and adjustable sliders.
+ *
+ * `swapFilter` limits which swap suggestions appear:
+ *   - 'greenstalk' → only GreenStalk swaps (for PlannerPage)
+ *   - 'inground'   → only in-ground swaps (for GardenPage)
+ *   - 'all'        → show everything (for TodayPage)
  */
-export function GardenGradePanel({ variant = 'inline' }: { variant?: 'sidebar' | 'inline' }) {
+export function GardenGradePanel({
+  variant = 'inline',
+  swapFilter = 'all',
+}: {
+  variant?: 'sidebar' | 'inline';
+  swapFilter?: 'greenstalk' | 'inground' | 'all';
+}) {
   const towers = usePlannerStore((s) => s.towers);
   const gardenCells = useGardenStore((s) => s.garden.cells);
   const region = useRegion();
@@ -414,13 +425,17 @@ export function GardenGradePanel({ variant = 'inline' }: { variant?: 'sidebar' |
         </div>
 
         {/* Upgrade suggestions with one-click swap */}
-        {grade.upgrades.length > 0 && (
+        {(() => {
+          const filteredUpgrades = swapFilter === 'all'
+            ? grade.upgrades
+            : grade.upgrades.filter((u) => u.location === swapFilter);
+          return filteredUpgrades.length > 0 && (
           <div>
             <div className={`font-semibold text-stone-500 dark:text-stone-400 uppercase tracking-wider ${isSidebar ? 'text-[8px] mb-1' : 'text-[10px] mb-1.5'}`}>
               💡 Swap to Improve
             </div>
             <div className="space-y-1">
-              {grade.upgrades.map((u) => (
+              {filteredUpgrades.map((u) => (
                 <div
                   key={`${u.currentSlug}-${u.suggestedSlug}`}
                   className={`bg-indigo-50 dark:bg-indigo-900/20 rounded-lg flex items-center justify-between gap-1.5 ${isSidebar ? 'px-2 py-1 text-[9px]' : 'px-2.5 py-1.5 text-[10px]'}`}
@@ -443,7 +458,8 @@ export function GardenGradePanel({ variant = 'inline' }: { variant?: 'sidebar' |
               ))}
             </div>
           </div>
-        )}
+        );
+        })()}
       </div>
     </div>
   );

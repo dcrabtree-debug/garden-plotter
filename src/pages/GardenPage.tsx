@@ -473,6 +473,8 @@ export function GardenPage() {
   const [showGreenStalks, setShowGreenStalks] = useState(true);
   const [showBloom, setShowBloom] = useState(false);
   const [hoveredCell, setHoveredCell] = useState<{ row: number; col: number } | null>(null);
+  const [sidebarWidth, setSidebarWidth] = useState(256); // 256px = w-64 default
+  const sidebarResizing = useRef(false);
   const gridRef = useRef<HTMLDivElement>(null);
 
   const { config, cells } = garden;
@@ -1204,9 +1206,9 @@ export function GardenPage() {
           <span className="font-medium">House wall (south)</span>
           <span className="flex-1 border-t border-dashed border-stone-300" />
           <span>Facing {config.facing}</span>
-          <span className="inline-flex items-center justify-center w-8 h-8 rounded-full border border-stone-300 dark:border-stone-600 text-[9px] font-bold relative bg-white dark:bg-stone-700">
-            <span className="absolute top-0.5 text-red-500">N</span>
-            <span className="absolute bottom-0.5 text-stone-400">S</span>
+          <span className="inline-flex items-center justify-center w-8 h-8 rounded-full border border-stone-300 dark:border-stone-600 text-[9px] font-bold relative bg-white dark:bg-stone-700" title="Grid orientation: house (south) at top, back garden (north) at bottom">
+            <span className="absolute top-0.5 text-stone-400">S</span>
+            <span className="absolute bottom-0.5 text-red-500">N</span>
             <span className="absolute left-0.5 text-stone-400">W</span>
             <span className="absolute right-0.5 text-stone-400">E</span>
           </span>
@@ -1710,12 +1712,38 @@ export function GardenPage() {
         )}
       </div>
 
-      {/* Right sidebar: Hover reasoning + Planted plants */}
-      <div className={`w-64 border-l border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 flex-shrink-0 overflow-y-auto p-3 ${
-        mobilePanel === 'plants'
-          ? 'fixed inset-y-0 right-0 z-40 shadow-2xl'
-          : 'hidden sm:block'
-      }`}>
+      {/* Right sidebar: Hover reasoning + Planted plants (resizable) */}
+      <div
+        className={`relative border-l border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 flex-shrink-0 overflow-y-auto p-3 ${
+          mobilePanel === 'plants'
+            ? 'fixed inset-y-0 right-0 z-40 shadow-2xl w-64'
+            : 'hidden sm:block'
+        }`}
+        style={mobilePanel !== 'plants' ? { width: sidebarWidth } : undefined}
+      >
+        {/* Drag handle to resize */}
+        <div
+          className="absolute left-0 top-0 bottom-0 w-1.5 cursor-col-resize hover:bg-indigo-400/40 active:bg-indigo-500/60 transition-colors z-10"
+          onMouseDown={(e) => {
+            e.preventDefault();
+            sidebarResizing.current = true;
+            const startX = e.clientX;
+            const startW = sidebarWidth;
+            const onMove = (ev: MouseEvent) => {
+              if (!sidebarResizing.current) return;
+              const delta = startX - ev.clientX; // dragging left = bigger
+              setSidebarWidth(Math.max(200, Math.min(600, startW + delta)));
+            };
+            const onUp = () => {
+              sidebarResizing.current = false;
+              document.removeEventListener('mousemove', onMove);
+              document.removeEventListener('mouseup', onUp);
+            };
+            document.addEventListener('mousemove', onMove);
+            document.addEventListener('mouseup', onUp);
+          }}
+          title="Drag to resize"
+        />
         {/* Hover reasoning panel — changes as you hover different cells */}
         <HoverReasoningPanel
           hoveredCell={hoveredCell}
@@ -1729,7 +1757,7 @@ export function GardenPage() {
 
         {/* Real-time Garden Grade — compact sidebar variant */}
         <div className="mb-3">
-          <GardenGradePanel variant="sidebar" />
+          <GardenGradePanel variant="sidebar" swapFilter="inground" />
         </div>
 
         <PlantedPlantsSidebar cells={cells} plants={plants} companionMap={companionMap} />

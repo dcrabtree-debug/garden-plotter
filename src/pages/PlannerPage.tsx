@@ -324,7 +324,7 @@ export function PlannerPage() {
 
           {/* Real-time Garden Grade — updates as you swap plants */}
           <div className="mt-6">
-            <GardenGradePanel variant="inline" />
+            <GardenGradePanel variant="inline" swapFilter="greenstalk" />
           </div>
         </div>
       </div>

@@ -124,14 +124,22 @@ export function createEsherGarden(): { config: GardenConfig; cells: GardenCell[]
   }
 
   // ── GreenStalk positions on patio ──
+  // GS1: left side of patio
   for (let r = 19; r <= 20; r++) {
     for (let c = 5; c <= 6; c++) {
       overrides.push({ row: r, col: c, type: 'greenstalk', label: 'GreenStalk 1' });
     }
   }
+  // GS2: right side of patio
   for (let r = 19; r <= 20; r++) {
-    for (let c = 14; c <= 15; c++) {
+    for (let c = 13; c <= 14; c++) {
       overrides.push({ row: r, col: c, type: 'greenstalk', label: 'GreenStalk 2' });
+    }
+  }
+  // GS3: High Yield Grazer — center patio, wider footprint for larger plants
+  for (let r = 19; r <= 20; r++) {
+    for (let c = 9; c <= 10; c++) {
+      overrides.push({ row: r, col: c, type: 'greenstalk', label: 'High Yield Grazer' });
     }
   }
 

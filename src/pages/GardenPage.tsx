@@ -474,6 +474,8 @@ export function GardenPage() {
   const [showGreenStalks, setShowGreenStalks] = useState(true);
   const [showBloom, setShowBloom] = useState(false);
   const [hoveredCell, setHoveredCell] = useState<{ row: number; col: number } | null>(null);
+  const [draggingPlant, setDraggingPlant] = useState<{ slug: string; fromRow: number; fromCol: number } | null>(null);
+  const [dragOverCell, setDragOverCell] = useState<{ row: number; col: number } | null>(null);
   const [sidebarWidth, setSidebarWidth] = useState(256); // 256px = w-64 default
   const sidebarResizing = useRef(false);
   const gridRef = useRef<HTMLDivElement>(null);
@@ -1248,9 +1250,11 @@ export function GardenPage() {
             </div>
           </div>
           <p className="text-sm text-stone-400">
-            {plantToPlace
+            {draggingPlant
+              ? `🫳 Dragging ${plantMap.get(draggingPlant.slug)?.emoji ?? ''} ${plantMap.get(draggingPlant.slug)?.commonName ?? draggingPlant.slug} — drop on another cell to move or swap`
+              : plantToPlace
               ? `Click on veg patches or flower beds to place ${plantToPlace.emoji} ${plantToPlace.commonName}`
-              : `Paint your garden layout, then place plants. ${config.widthM}m x ${config.depthM}m`}
+              : `Paint your garden layout, then place plants. Drag planted cells to rearrange.`}
           </p>
         </div>
 
@@ -1291,7 +1295,7 @@ export function GardenPage() {
             ref={gridRef}
             className="inline-block border border-stone-300 rounded-lg overflow-hidden select-none relative"
             style={{ lineHeight: 0 }}
-            onMouseLeave={() => { setIsPainting(false); setHoveredCell(null); }}
+            onMouseLeave={() => { setIsPainting(false); setHoveredCell(null); if (draggingPlant) { setDraggingPlant(null); setDragOverCell(null); } }}
             onWheel={handleWheel}
           >
           {cells.map((row, ri) => (
@@ -1332,10 +1336,13 @@ export function GardenPage() {
                       ...(rotationWarning && spacingWarning ? { boxShadow: 'inset 0 0 0 2px #f97316, inset 0 0 0 4px #8b5cf6' } : {}),
                     }}
                     className={`
-                      border-r border-b border-stone-200/30 cursor-crosshair
+                      border-r border-b border-stone-200/30
                       flex items-center justify-center
                       hover:brightness-110 transition-colors duration-75
+                      ${draggingPlant ? 'cursor-grabbing' : hasPlant && !plantToPlace ? 'cursor-grab' : 'cursor-crosshair'}
                       ${plantToPlace && (cell.type === 'veg-patch' || cell.type === 'raised-bed' || cell.type === 'flower-bed' || cell.type === 'conservatory') ? 'hover:ring-1 ring-inset ring-emerald-400' : ''}
+                      ${draggingPlant && dragOverCell?.row === ri && dragOverCell?.col === ci && !(draggingPlant.fromRow === ri && draggingPlant.fromCol === ci) ? 'ring-2 ring-inset ring-indigo-400 brightness-125' : ''}
+                      ${draggingPlant && draggingPlant.fromRow === ri && draggingPlant.fromCol === ci ? 'opacity-40' : ''}
                     `}
                     title={(() => {
                       const base = plant
@@ -1350,17 +1357,50 @@ export function GardenPage() {
                       const extra = tags.length > 0 ? ` | ${tags.join(', ')}` : '';
                       return base + extra;
                     })()}
-                    onMouseDown={() => {
+                    onMouseDown={(e) => {
+                      // If cell has a plant and we're not in paint/place mode → start drag
+                      if (hasPlant && !plantToPlace && !plantsLocked && activeTool === 'veg-patch' && cell.plantSlug) {
+                        e.preventDefault();
+                        setDraggingPlant({ slug: cell.plantSlug, fromRow: ri, fromCol: ci });
+                        setDragOverCell({ row: ri, col: ci });
+                        return;
+                      }
                       setIsPainting(true);
                       handleCellInteraction(ri, ci);
                     }}
                     onMouseEnter={() => {
+                      if (draggingPlant) {
+                        setDragOverCell({ row: ri, col: ci });
+                        setHoveredCell({ row: ri, col: ci });
+                        return;
+                      }
                       if (isPainting && !plantToPlace) handleCellInteraction(ri, ci);
                       if (hasPlant) setHoveredCell({ row: ri, col: ci });
                     }}
-                    onMouseUp={() => setIsPainting(false)}
+                    onMouseUp={() => {
+                      if (draggingPlant) {
+                        const isPlantable = cell.type === 'veg-patch' || cell.type === 'raised-bed' || cell.type === 'flower-bed' || cell.type === 'conservatory';
+                        const isSameCell = draggingPlant.fromRow === ri && draggingPlant.fromCol === ci;
+                        if (isPlantable && !isSameCell) {
+                          const store = useGardenStore.getState();
+                          const targetSlug = cell.plantSlug;
+                          // Place dragged plant in target
+                          store.plantInCell(ri, ci, draggingPlant.slug);
+                          // If target had a plant, swap it to source
+                          if (targetSlug) {
+                            store.plantInCell(draggingPlant.fromRow, draggingPlant.fromCol, targetSlug);
+                          } else {
+                            store.removePlantFromCell(draggingPlant.fromRow, draggingPlant.fromCol);
+                          }
+                        }
+                        setDraggingPlant(null);
+                        setDragOverCell(null);
+                        return;
+                      }
+                      setIsPainting(false);
+                    }}
                     onClick={() => {
-                      if (hasPlant && plant) setSelectedPlant(plant);
+                      if (hasPlant && plant && !draggingPlant) setSelectedPlant(plant);
                     }}
                   >
                     {/* Semi-transparent sun hours overlay */}

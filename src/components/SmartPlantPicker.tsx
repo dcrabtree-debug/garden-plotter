@@ -23,6 +23,10 @@ interface SmartPickerProps {
   cellType?: string;
   // Layout mode
   inline?: boolean;
+  // Swap mode — when set, shows current plant info + swap suggestions
+  currentPlantSlug?: string | null;
+  // Called when user removes the current plant (clear pocket/cell)
+  onRemove?: () => void;
 }
 
 interface ScoredPlant {
@@ -218,23 +222,45 @@ export function SmartPlantPicker({
   sunHours,
   cellType,
   inline = false,
+  currentPlantSlug,
+  onRemove,
 }: SmartPickerProps) {
   const [filter, setFilter] = useState<'all' | 'vegetable' | 'herb' | 'fruit' | 'flower'>('all');
   const [tab, setTab] = useState<'single' | 'duo'>('single');
+  const [showFullDetail, setShowFullDetail] = useState(false);
   const isGreenStalk = tierNumber !== undefined;
   const currentMonth = getCurrentMonth();
+  const currentPlant = currentPlantSlug ? plantMap.get(currentPlantSlug) ?? null : null;
+
+  // Companion data for current plant (swap mode)
+  const currentPlantCompanions = useMemo(() => {
+    if (!currentPlant) return { friends: [] as { slug: string; reason: string }[], foes: [] as { slug: string; reason: string }[] };
+    const edges = companionMap.get(currentPlant.slug);
+    const friends: { slug: string; reason: string }[] = [];
+    const foes: { slug: string; reason: string }[] = [];
+    if (edges) {
+      for (const edge of edges.values()) {
+        const other = edge.plantA === currentPlant.slug ? edge.plantB : edge.plantA;
+        if (edge.relationship === 'friend') friends.push({ slug: other, reason: edge.reason });
+        else if (edge.relationship === 'foe') foes.push({ slug: other, reason: edge.reason });
+      }
+    }
+    return { friends, foes };
+  }, [currentPlant, companionMap]);
 
   const scored = useMemo(() => {
     const eligible = plants.filter(p => {
       if (isGreenStalk && p.greenstalkSuitability === 'unsuitable') return false;
       if (filter !== 'all' && p.category !== filter) return false;
+      // In swap mode, exclude the current plant from suggestions
+      if (currentPlantSlug && p.slug === currentPlantSlug) return false;
       return true;
     });
 
     return eligible
       .map(p => scorePlant(p, neighbourSlugs, companionMap, plantMap, tierNumber, sunHours, currentMonth, isGreenStalk))
       .sort((a, b) => b.score - a.score);
-  }, [plants, plantMap, neighbourSlugs, companionMap, tierNumber, sunHours, currentMonth, isGreenStalk, filter]);
+  }, [plants, plantMap, neighbourSlugs, companionMap, tierNumber, sunHours, currentMonth, isGreenStalk, filter, currentPlantSlug]);
 
   const duoPlants = useMemo(
     () => scored.filter((sp) => sp.duos.length > 0),
@@ -257,12 +283,159 @@ export function SmartPlantPicker({
         <div className="flex items-center justify-between mb-2">
           <div>
             <h2 className="text-base font-bold text-stone-800 dark:text-stone-100">
-              What should I plant here?
+              {currentPlant ? currentPlant.commonName : 'What should I plant here?'}
             </h2>
             <p className="text-xs text-stone-400 mt-0.5">{contextLabel}</p>
           </div>
           <button onClick={onClose} className="text-stone-400 hover:text-stone-600 text-xl p-1">x</button>
         </div>
+
+        {/* ── Current plant info (swap mode) ── */}
+        {currentPlant && (
+          <div className="mb-3">
+            {/* Plant identity + quick stats */}
+            <div className="flex items-start gap-3 mb-2">
+              <span className="text-3xl">{currentPlant.emoji}</span>
+              <div className="flex-1 min-w-0">
+                <p className="text-[11px] text-stone-400 italic">{currentPlant.botanicalName}</p>
+                <div className="flex gap-2 mt-1 text-[10px]">
+                  <span className="px-1.5 py-0.5 rounded bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-300">{currentPlant.sun.replace('-', ' ')}</span>
+                  <span className="px-1.5 py-0.5 rounded bg-sky-50 dark:bg-sky-900/20 text-sky-700 dark:text-sky-300">{currentPlant.water} water</span>
+                  <span className="px-1.5 py-0.5 rounded bg-rose-50 dark:bg-rose-900/20 text-rose-700 dark:text-rose-300">{currentPlant.daysToHarvest[0]}-{currentPlant.daysToHarvest[1]}d</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Expandable detail */}
+            <button
+              onClick={() => setShowFullDetail(!showFullDetail)}
+              className="text-[10px] text-emerald-600 dark:text-emerald-400 hover:underline mb-1"
+            >
+              {showFullDetail ? 'Hide details ▴' : 'Show planting calendar, companions, growing info ▾'}
+            </button>
+
+            {showFullDetail && (
+              <div className="mt-2 space-y-2.5 text-xs border-t border-stone-100 dark:border-stone-700 pt-2.5">
+                {/* Planting calendar */}
+                <div>
+                  <span className="text-[10px] font-semibold text-stone-500">Planting Calendar</span>
+                  <div className="mt-1 space-y-0.5">
+                    {(['sowIndoors', 'sowOutdoors', 'transplant', 'harvest'] as const).map(key => {
+                      const w = currentPlant.plantingWindow[key];
+                      if (!w) return null;
+                      const labels: Record<string, { label: string; color: string }> = {
+                        sowIndoors: { label: 'Sow indoors', color: 'bg-sky-200 text-sky-800' },
+                        sowOutdoors: { label: 'Sow outdoors', color: 'bg-emerald-200 text-emerald-800' },
+                        transplant: { label: 'Transplant', color: 'bg-amber-200 text-amber-800' },
+                        harvest: { label: 'Harvest', color: 'bg-rose-200 text-rose-800' },
+                      };
+                      const cfg = labels[key];
+                      return (
+                        <div key={key} className="flex items-center gap-2">
+                          <span className="w-[4.5rem] text-[9px] text-stone-400 shrink-0">{cfg.label}</span>
+                          <div className="flex gap-px flex-1">
+                            {Array.from({ length: 12 }, (_, i) => {
+                              const m = i + 1;
+                              const active = isInWindow(m, w);
+                              return (
+                                <div key={m} className={`flex-1 h-3 rounded-sm text-[7px] flex items-center justify-center ${active ? cfg.color : 'bg-stone-100 dark:bg-stone-700'}`}>
+                                  {['J','F','M','A','M','J','J','A','S','O','N','D'][i]}
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* GreenStalk info */}
+                {isGreenStalk && (
+                  <div>
+                    <span className="text-[10px] font-semibold text-stone-500">GreenStalk</span>
+                    <p className="text-[10px] text-stone-500 mt-0.5">{currentPlant.greenstalkNotes}</p>
+                    <div className="flex gap-1 mt-1">
+                      {currentPlant.idealTiers.map(t => (
+                        <span key={t} className="text-[9px] px-1.5 py-0.5 bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300 rounded-full">Tier {t}</span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* In-ground data */}
+                {!isGreenStalk && currentPlant.inGround && (
+                  <div>
+                    <span className="text-[10px] font-semibold text-stone-500">In-Ground</span>
+                    <div className="grid grid-cols-2 gap-x-3 gap-y-0.5 mt-1 text-[10px] text-stone-500">
+                      <div>Spacing: {currentPlant.inGround.plantSpacingCm}cm</div>
+                      <div>Depth: {currentPlant.inGround.sowDepthCm}cm</div>
+                      <div>Yield: {currentPlant.inGround.expectedYieldPerM2}</div>
+                      <div>Rotation: {currentPlant.inGround.rotation}</div>
+                    </div>
+                    {currentPlant.inGround.feeding && (
+                      <p className="text-[10px] text-stone-400 mt-0.5">Feeding: {currentPlant.inGround.feeding}</p>
+                    )}
+                  </div>
+                )}
+
+                {/* Companions */}
+                {(currentPlantCompanions.friends.length > 0 || currentPlantCompanions.foes.length > 0) && (
+                  <div>
+                    <span className="text-[10px] font-semibold text-stone-500">Companions</span>
+                    {currentPlantCompanions.friends.length > 0 && (
+                      <div className="mt-0.5">
+                        {currentPlantCompanions.friends.slice(0, 5).map(f => (
+                          <div key={f.slug} className="text-[10px] text-emerald-600 dark:text-emerald-400">
+                            ✓ {f.slug.replace(/-/g, ' ')} — {f.reason}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    {currentPlantCompanions.foes.length > 0 && (
+                      <div className="mt-0.5">
+                        {currentPlantCompanions.foes.slice(0, 3).map(f => (
+                          <div key={f.slug} className="text-[10px] text-red-500 dark:text-red-400">
+                            ⚠ {f.slug.replace(/-/g, ' ')} — {f.reason}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* Varieties */}
+                {currentPlant.varieties.length > 0 && (
+                  <div>
+                    <span className="text-[10px] font-semibold text-stone-500">Varieties</span>
+                    {currentPlant.varieties.slice(0, 3).map(v => (
+                      <div key={v.name} className="text-[10px] text-stone-500 mt-0.5">
+                        <span className="font-medium">{v.name}</span> — {v.notes}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Remove plant button */}
+            {onRemove && (
+              <button
+                onClick={onRemove}
+                className="mt-2 w-full text-[10px] py-1.5 rounded-lg border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
+              >
+                Remove {currentPlant.commonName} from this spot
+              </button>
+            )}
+
+            {/* Swap suggestions divider */}
+            <div className="flex items-center gap-2 mt-3">
+              <div className="flex-1 h-px bg-stone-200 dark:bg-stone-600" />
+              <span className="text-[10px] font-bold text-stone-400 uppercase tracking-wide">Swap suggestions</span>
+              <div className="flex-1 h-px bg-stone-200 dark:bg-stone-600" />
+            </div>
+          </div>
+        )}
 
         {/* Single / Duo toggle */}
         {onSelectDuo && duoPlants.length > 0 && (
@@ -335,7 +508,7 @@ export function SmartPlantPicker({
             {topPicks.length > 0 && (
               <div className="p-3">
                 <h3 className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wide mb-2">
-                  Top picks for this spot
+                  {currentPlant ? 'Best swaps for this spot' : 'Top picks for this spot'}
                 </h3>
                 <div className="space-y-2">
                   {topPicks.map((sp, i) => (

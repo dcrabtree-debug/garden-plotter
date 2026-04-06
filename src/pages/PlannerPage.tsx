@@ -42,7 +42,7 @@ export function PlannerPage() {
   const [showMobilePalette, setShowMobilePalette] = useState(false);
   const [layouts, setLayouts] = useState<LayoutOption[]>([]);
   const [smartPicker, setSmartPicker] = useState<{
-    towerId: string; tierNumber: number; pocketIndex: number; neighbourSlugs: string[];
+    towerId: string; tierNumber: number; pocketIndex: number; neighbourSlugs: string[]; currentSlug: string | null;
   } | null>(null);
 
   const mouseSensor = useSensor(MouseSensor, {
@@ -141,26 +141,25 @@ export function PlannerPage() {
       tierNumber: number,
       pocketIndex: number
     ) => {
-      if (plant) {
-        // Pocket has a plant — show detail
-        setSelectedPlant(plant);
-      } else if (plantToPlace) {
-        // Pocket is empty and we have a plant selected from palette
-        assignPlant(towerId, tierNumber, pocketIndex, plantToPlace.slug);
-      } else {
-        // Pocket is empty — open smart plant picker
+      if (plant || !plantToPlace) {
+        // Pocket has a plant (swap mode) or is empty (pick mode) — open smart picker
         const tower = towers.find((t) => t.id === towerId);
         const neighbourSlugs: string[] = [];
         if (tower) {
           for (const tier of tower.tiers) {
             if (Math.abs(tier.tierNumber - tierNumber) <= 1) {
               for (const pocket of tier.pockets) {
-                if (pocket.plantSlug) neighbourSlugs.push(pocket.plantSlug);
+                if (pocket.plantSlug && pocket.plantSlug !== plant?.slug) neighbourSlugs.push(pocket.plantSlug);
               }
             }
           }
         }
-        setSmartPicker({ towerId, tierNumber, pocketIndex, neighbourSlugs });
+        setSmartPicker({ towerId, tierNumber, pocketIndex, neighbourSlugs, currentSlug: plant?.slug ?? null });
+        return;
+      }
+      if (plantToPlace) {
+        // Pocket is empty and we have a plant selected from palette
+        assignPlant(towerId, tierNumber, pocketIndex, plantToPlace.slug);
       }
     },
     [plantToPlace, assignPlant, towers]
@@ -358,12 +357,19 @@ export function PlannerPage() {
               companionMap={companionMap}
               neighbourSlugs={smartPicker.neighbourSlugs}
               tierNumber={smartPicker.tierNumber}
+              currentPlantSlug={smartPicker.currentSlug}
               onSelect={(slug) => {
+                if (smartPicker.currentSlug) removePlant(smartPicker.towerId, smartPicker.tierNumber, smartPicker.pocketIndex);
                 assignPlant(smartPicker.towerId, smartPicker.tierNumber, smartPicker.pocketIndex, slug);
                 setSmartPicker(null);
               }}
               onSelectDuo={(primary, companion) => {
+                if (smartPicker.currentSlug) removePlant(smartPicker.towerId, smartPicker.tierNumber, smartPicker.pocketIndex);
                 assignDuo(smartPicker.towerId, smartPicker.tierNumber, smartPicker.pocketIndex, primary, companion);
+                setSmartPicker(null);
+              }}
+              onRemove={() => {
+                removePlant(smartPicker.towerId, smartPicker.tierNumber, smartPicker.pocketIndex);
                 setSmartPicker(null);
               }}
               onClose={() => setSmartPicker(null)}
@@ -385,15 +391,6 @@ export function PlannerPage() {
         )}
       </DragOverlay>
 
-      {/* Plant detail modal */}
-      {selectedPlant && (
-        <PlantDetail
-          plant={selectedPlant}
-          companionMap={companionMap}
-          onClose={() => setSelectedPlant(null)}
-        />
-      )}
-
       {/* Smart plant picker — mobile modal (hidden on lg: where inline panel is used) */}
       {smartPicker && (
         <div className="lg:hidden">
@@ -403,12 +400,19 @@ export function PlannerPage() {
             companionMap={companionMap}
             neighbourSlugs={smartPicker.neighbourSlugs}
             tierNumber={smartPicker.tierNumber}
+            currentPlantSlug={smartPicker.currentSlug}
             onSelect={(slug) => {
+              if (smartPicker.currentSlug) removePlant(smartPicker.towerId, smartPicker.tierNumber, smartPicker.pocketIndex);
               assignPlant(smartPicker.towerId, smartPicker.tierNumber, smartPicker.pocketIndex, slug);
               setSmartPicker(null);
             }}
             onSelectDuo={(primary, companion) => {
+              if (smartPicker.currentSlug) removePlant(smartPicker.towerId, smartPicker.tierNumber, smartPicker.pocketIndex);
               assignDuo(smartPicker.towerId, smartPicker.tierNumber, smartPicker.pocketIndex, primary, companion);
+              setSmartPicker(null);
+            }}
+            onRemove={() => {
+              removePlant(smartPicker.towerId, smartPicker.tierNumber, smartPicker.pocketIndex);
               setSmartPicker(null);
             }}
             onClose={() => setSmartPicker(null)}

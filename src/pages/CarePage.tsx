@@ -413,7 +413,7 @@ export function CarePage() {
             </h2>
             <p className="text-xs text-stone-500 dark:text-stone-400 mt-0.5 mb-1">
               {selectedMonth === 4
-                ? 'Moving in April 15 — no gear until mid-May. Start seeds in conservatory with temporary trays from the garden centre.'
+                ? 'Moving in April 17 — no gear until mid-May. Start seeds in conservatory with temporary trays from the garden centre.'
                 : selectedMonth === 5
                   ? 'GreenStalks arrive mid-May! Set up immediately. Buy transplants for tomatoes, peppers, strawberries — too late to start from seed.'
                   : 'Last window for direct sowing fast crops. Buy any remaining plants as transplants.'}

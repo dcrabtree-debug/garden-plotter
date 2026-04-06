@@ -18,7 +18,7 @@ const PHASE_LABELS_SHORT: Record<SupplyPhase, string> = {
 
 function getPhaseSimple(d: Date): SupplyPhase {
   const m = d.getMonth() + 1;
-  if (d < new Date('2026-04-15')) return 'pre';
+  if (d < new Date('2026-04-17')) return 'pre';
   if (d < new Date('2026-06-01')) return 'setup';
   if (m <= 9) return 'growing';
   return 'late';

@@ -12,6 +12,7 @@ import {
 import { TowerView } from '../components/greenstalk/TowerView';
 import { PlantPalette } from '../components/plant-palette/PlantPalette';
 import { PlantDetail } from '../components/plant-palette/PlantDetail';
+import { SmartPlantPicker } from '../components/SmartPlantPicker';
 import { usePlannerStore } from '../state/planner-store';
 import { usePlantDb } from '../data/use-plant-db';
 import { useCompanionDb } from '../data/use-companion-db';
@@ -37,6 +38,9 @@ export function PlannerPage() {
   const [showAutoPopulate, setShowAutoPopulate] = useState(false);
   const [showMobilePalette, setShowMobilePalette] = useState(false);
   const [layouts, setLayouts] = useState<LayoutOption[]>([]);
+  const [smartPicker, setSmartPicker] = useState<{
+    towerId: string; tierNumber: number; pocketIndex: number; neighbourSlugs: string[];
+  } | null>(null);
 
   const mouseSensor = useSensor(MouseSensor, {
     activationConstraint: { distance: 5 },
@@ -138,11 +142,25 @@ export function PlannerPage() {
         // Pocket has a plant — show detail
         setSelectedPlant(plant);
       } else if (plantToPlace) {
-        // Pocket is empty and we have a plant selected for placement
+        // Pocket is empty and we have a plant selected from palette
         assignPlant(towerId, tierNumber, pocketIndex, plantToPlace.slug);
+      } else {
+        // Pocket is empty — open smart plant picker
+        const tower = towers.find((t) => t.id === towerId);
+        const neighbourSlugs: string[] = [];
+        if (tower) {
+          for (const tier of tower.tiers) {
+            if (Math.abs(tier.tierNumber - tierNumber) <= 1) {
+              for (const pocket of tier.pockets) {
+                if (pocket.plantSlug) neighbourSlugs.push(pocket.plantSlug);
+              }
+            }
+          }
+        }
+        setSmartPicker({ towerId, tierNumber, pocketIndex, neighbourSlugs });
       }
     },
-    [plantToPlace, assignPlant]
+    [plantToPlace, assignPlant, towers]
   );
 
   const handleAutoPopulate = useCallback(() => {
@@ -322,6 +340,21 @@ export function PlannerPage() {
           plant={selectedPlant}
           companionMap={companionMap}
           onClose={() => setSelectedPlant(null)}
+        />
+      )}
+
+      {/* Smart plant picker */}
+      {smartPicker && (
+        <SmartPlantPicker
+          plants={plants}
+          companionMap={companionMap}
+          neighbourSlugs={smartPicker.neighbourSlugs}
+          tierNumber={smartPicker.tierNumber}
+          onSelect={(slug) => {
+            assignPlant(smartPicker.towerId, smartPicker.tierNumber, smartPicker.pocketIndex, slug);
+            setSmartPicker(null);
+          }}
+          onClose={() => setSmartPicker(null)}
         />
       )}
 

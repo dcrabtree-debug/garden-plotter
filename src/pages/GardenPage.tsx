@@ -2,6 +2,7 @@ import { useState, useRef, useCallback, useEffect, useMemo, type WheelEvent as R
 import { useGardenStore, getSpacingWarnings, getRotationWarnings, getCurrentSeasonKey, getSeasonLabel } from '../state/garden-store';
 import { usePlantDb } from '../data/use-plant-db';
 import { PlantDetail } from '../components/plant-palette/PlantDetail';
+import { SmartPlantPicker } from '../components/SmartPlantPicker';
 import { useCompanionDb } from '../data/use-companion-db';
 import { useRegion } from '../data/use-region';
 import { generateGardenLayouts, type GardenLayoutOption, type PlacementReason } from '../lib/garden-auto-populate';
@@ -289,6 +290,9 @@ export function GardenPage() {
   const [showGreenStalks, setShowGreenStalks] = useState(true);
   const [showBloom, setShowBloom] = useState(false);
   const [hoveredCell, setHoveredCell] = useState<{ row: number; col: number } | null>(null);
+  const [gardenSmartPicker, setGardenSmartPicker] = useState<{
+    row: number; col: number; sunHours: number | null; cellType: string; neighbourSlugs: string[];
+  } | null>(null);
   const gridRef = useRef<HTMLDivElement>(null);
 
   const { config, cells } = garden;
@@ -1008,7 +1012,26 @@ export function GardenPage() {
                     }}
                     onMouseUp={() => setIsPainting(false)}
                     onClick={() => {
-                      if (hasPlant && plant) setSelectedPlant(plant);
+                      if (hasPlant && plant) {
+                        setSelectedPlant(plant);
+                      } else if (!plantToPlace && !hasPlant &&
+                        (cell.type === 'veg-patch' || cell.type === 'raised-bed' || cell.type === 'flower-bed' || cell.type === 'conservatory')) {
+                        // Empty plantable cell — open smart picker
+                        const ns: string[] = [];
+                        for (let dr = -2; dr <= 2; dr++) {
+                          for (let dc = -2; dc <= 2; dc++) {
+                            if (dr === 0 && dc === 0) continue;
+                            const s = cells[ri + dr]?.[ci + dc]?.plantSlug;
+                            if (s) ns.push(s);
+                          }
+                        }
+                        setGardenSmartPicker({
+                          row: ri, col: ci,
+                          sunHours: cell.sunHours,
+                          cellType: cell.type,
+                          neighbourSlugs: [...new Set(ns)],
+                        });
+                      }
                     }}
                   >
                     {/* Semi-transparent sun hours overlay */}
@@ -1419,6 +1442,22 @@ export function GardenPage() {
           plant={selectedPlant}
           companionMap={companionMap}
           onClose={() => setSelectedPlant(null)}
+        />
+      )}
+
+      {/* Smart plant picker for empty garden cells */}
+      {gardenSmartPicker && (
+        <SmartPlantPicker
+          plants={plants}
+          companionMap={companionMap}
+          neighbourSlugs={gardenSmartPicker.neighbourSlugs}
+          sunHours={gardenSmartPicker.sunHours}
+          cellType={gardenSmartPicker.cellType}
+          onSelect={(slug) => {
+            useGardenStore.getState().plantInCell(gardenSmartPicker.row, gardenSmartPicker.col, slug);
+            setGardenSmartPicker(null);
+          }}
+          onClose={() => setGardenSmartPicker(null)}
         />
       )}
 

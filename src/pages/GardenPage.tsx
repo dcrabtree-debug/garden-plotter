@@ -477,7 +477,12 @@ export function GardenPage() {
   const [draggingPlant, setDraggingPlant] = useState<{ slug: string; fromRow: number; fromCol: number } | null>(null);
   const [dragOverCell, setDragOverCell] = useState<{ row: number; col: number } | null>(null);
   const [plantSearch, setPlantSearch] = useState('');
-  const [plantFilters, setPlantFilters] = useState({ sun: false, companion: false, kid: false, season: false });
+  const [plantFilters, setPlantFilters] = useState({
+    sun: null as 'full-sun' | 'partial-shade' | 'full-shade' | null,
+    companion: false,
+    kid: false,
+    season: false,
+  });
   const [sidebarWidth, setSidebarWidth] = useState(256); // 256px = w-64 default
   const sidebarResizing = useRef(false);
   const gridRef = useRef<HTMLDivElement>(null);
@@ -789,6 +794,11 @@ export function GardenPage() {
       return check(p.plantingWindow.sowIndoors) || check(p.plantingWindow.sowOutdoors) || check(p.plantingWindow.transplant);
     };
 
+    // All planted slugs in the garden (for companion filter without hover)
+    const allPlantedSlugs: string[] = [];
+    for (const row of cells) for (const c of row) if (c.plantSlug) allPlantedSlugs.push(c.plantSlug);
+    const uniqueAllPlanted = [...new Set(allPlantedSlugs)];
+
     const result: ScoredPlant[] = [];
 
     for (const p of inGroundPlants) {
@@ -801,16 +811,22 @@ export function GardenPage() {
       let score = 0;
       const tags: Tag[] = [];
 
-      // Sun match scoring
-      const sunNeed = p.sun === 'full-sun' ? 6 : p.sun === 'partial-shade' ? 3 : 0;
-      const sunMatch = cellSun !== null ? cellSun >= sunNeed : null;
-      if (sunMatch === true) { score += 3; tags.push({ label: `☀️ ${cellSun}h`, color: 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400' }); }
-      if (sunMatch === false) { score -= 5; tags.push({ label: `⚠️ Low sun`, color: 'bg-red-100 dark:bg-red-900/30 text-red-600' }); }
+      // Sun category tag (always shown)
+      const sunLabel = p.sun === 'full-sun' ? '☀️ Full sun' : p.sun === 'partial-shade' ? '🌤 Part shade' : '🌑 Shade';
+      tags.push({ label: sunLabel, color: p.sun === 'full-sun' ? 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400' : p.sun === 'partial-shade' ? 'bg-sky-100 dark:bg-sky-900/30 text-sky-700 dark:text-sky-400' : 'bg-stone-200 dark:bg-stone-600 text-stone-600 dark:text-stone-300' });
 
-      // Companion scoring
-      if (uniqueNearby.length > 0) {
-        const friends = getFriends(p.slug, uniqueNearby, companionMap);
-        const foes = getConflicts(p.slug, uniqueNearby, companionMap);
+      // Context-aware sun scoring (if hovering a cell with sun data)
+      if (cellSun !== null) {
+        const sunNeed = p.sun === 'full-sun' ? 6 : p.sun === 'partial-shade' ? 3 : 0;
+        if (cellSun >= sunNeed) { score += 3; }
+        else { score -= 5; tags.push({ label: `⚠️ ${cellSun}h here`, color: 'bg-red-100 dark:bg-red-900/30 text-red-600' }); }
+      }
+
+      // Companion scoring — use nearby if hovering, otherwise all planted
+      const companionCheck = uniqueNearby.length > 0 ? uniqueNearby : uniqueAllPlanted;
+      if (companionCheck.length > 0) {
+        const friends = getFriends(p.slug, companionCheck, companionMap);
+        const foes = getConflicts(p.slug, companionCheck, companionMap);
         score += friends.length * 3;
         score -= foes.length * 5;
         if (friends.length > 0) tags.push({ label: `🤝 ${friends.length} friend${friends.length > 1 ? 's' : ''}`, color: 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400' });
@@ -826,8 +842,8 @@ export function GardenPage() {
       if (seasonal) { score += 1; tags.push({ label: '🌱 Now', color: 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400' }); }
 
       // Apply filter chips
-      if (plantFilters.sun && sunMatch !== true) continue;
-      if (plantFilters.companion && !(uniqueNearby.length > 0 && getFriends(p.slug, uniqueNearby, companionMap).length > 0)) continue;
+      if (plantFilters.sun !== null && p.sun !== plantFilters.sun) continue;
+      if (plantFilters.companion && !(companionCheck.length > 0 && getFriends(p.slug, companionCheck, companionMap).length > 0)) continue;
       if (plantFilters.kid && !isKid) continue;
       if (plantFilters.season && !seasonal) continue;
 
@@ -919,12 +935,30 @@ export function GardenPage() {
           />
           {/* Filter chips */}
           <div className="flex flex-wrap gap-1 mb-1.5">
+            {/* Sun level filters — select one or none */}
             {([
-              { key: 'sun', label: '☀️ Sun Match', tip: 'Plants suited to hovered cell sun level' },
-              { key: 'companion', label: '🤝 Friends', tip: 'Companions of nearby planted plants' },
-              { key: 'kid', label: '🧒 Kids', tip: 'Fast-harvest, fun-to-pick plants for Max & Noelle' },
-              { key: 'season', label: '🌱 In Season', tip: 'Can be sown or transplanted now' },
-            ] as const).map(({ key, label, tip }) => (
+              { val: 'full-sun' as const, label: '☀️ Full Sun' },
+              { val: 'partial-shade' as const, label: '🌤 Part Shade' },
+              { val: 'full-shade' as const, label: '🌑 Shade' },
+            ]).map(({ val, label }) => (
+              <button
+                key={val}
+                onClick={() => setPlantFilters((f) => ({ ...f, sun: f.sun === val ? null : val }))}
+                className={`text-[9px] px-1.5 py-0.5 rounded-full border transition-colors ${
+                  plantFilters.sun === val
+                    ? 'bg-amber-500 text-white border-amber-500'
+                    : 'bg-stone-50 dark:bg-stone-600 border-stone-200 dark:border-stone-500 text-stone-500 dark:text-stone-400'
+                }`}
+              >
+                {label}
+              </button>
+            ))}
+            {/* Boolean filters */}
+            {([
+              { key: 'companion' as const, label: '🤝 Friends', tip: 'Companions of your planted plants' },
+              { key: 'kid' as const, label: '🧒 Kids', tip: 'Fast-harvest, fun plants for Max & Noelle' },
+              { key: 'season' as const, label: '🌱 In Season', tip: 'Sowable or transplantable now' },
+            ]).map(({ key, label, tip }) => (
               <button
                 key={key}
                 onClick={() => setPlantFilters((f) => ({ ...f, [key]: !f[key] }))}

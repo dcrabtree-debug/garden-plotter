@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { PlannerPage } from './pages/PlannerPage';
 import { GardenPage } from './pages/GardenPage';
 import { HarvestPage } from './pages/HarvestPage';
@@ -71,8 +71,19 @@ function App() {
   const [planSub, setPlanSub] = useState<PlanSub>('greenstalk');
   const [growSub, setGrowSub] = useState<GrowSub>('care');
   const [learnSub, setLearnSub] = useState<LearnSub>('plants');
+  const [coachInitialView, setCoachInitialView] = useState<string | undefined>();
   const { isDark, toggle: toggleDark } = useDarkMode();
   const location = usePlannerStore((s) => s.settings.location);
+
+  // Cross-tab navigation handler (used by Dashboard snapshot widget)
+  const handleNavigate = useCallback((tab: string, view?: string) => {
+    if (tab === 'coach' && view) {
+      setCoachInitialView(view);
+    } else {
+      setCoachInitialView(undefined);
+    }
+    setTopTab(tab as TopTab);
+  }, []);
 
   return (
     <div className="h-screen flex flex-col bg-stone-100 dark:bg-stone-900 transition-colors">
@@ -124,8 +135,8 @@ function App() {
       {/* Page content */}
       <main className="flex-1 overflow-hidden">
         <div key={`${topTab}-${planSub}-${growSub}-${learnSub}`} className="h-full animate-fadeIn">
-          {topTab === 'dashboard' && <DashboardPage />}
-          {topTab === 'coach' && <PhotoCoachPage />}
+          {topTab === 'dashboard' && <DashboardPage onNavigate={handleNavigate} />}
+          {topTab === 'coach' && <PhotoCoachPage initialView={coachInitialView as any} key={coachInitialView ?? 'gallery'} />}
           {topTab === 'plan' && planSub === 'greenstalk' && <PlannerPage />}
           {topTab === 'plan' && planSub === 'garden' && <GardenPage />}
           {topTab === 'grow' && growSub === 'care' && <CarePage />}

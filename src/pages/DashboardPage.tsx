@@ -19,6 +19,7 @@ import {
   type WindAlert,
 } from '../lib/weather-service';
 import { getHarvestEstimates, type HarvestEstimate } from '../lib/harvest-countdown';
+import { SnapshotDashboardWidget } from '../components/SnapshotFlow';
 import type { Plant } from '../types/plant';
 
 // ── Key dates ────────────────────────────────────────────────────────────────
@@ -179,7 +180,7 @@ type Section = 'overdue' | 'today' | 'care' | 'setup' | 'upcoming' | 'harvest';
 
 // ── Component ───────────────────────────────────────────────────────────────
 
-export function DashboardPage() {
+export function DashboardPage({ onNavigate }: { onNavigate?: (tab: string, view?: string) => void }) {
   const settings = usePlannerStore((s) => s.settings);
   const towers = usePlannerStore((s) => s.towers);
   const garden = useGardenStore((s) => s.garden);
@@ -528,6 +529,12 @@ export function DashboardPage() {
             </div>
           </div>
         )}
+
+        {/* ── GARDEN SNAPSHOT ───────────────────────────────────────────── */}
+        <SnapshotDashboardWidget
+          onStartSnapshot={() => onNavigate?.('coach', 'snapshot')}
+          onViewTimeline={() => onNavigate?.('coach', 'timeline')}
+        />
 
         {/* ── OVERDUE ─────────────────────────────────────────────────────── */}
         {overdueTasks.length > 0 && (

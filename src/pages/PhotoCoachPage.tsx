@@ -8,17 +8,18 @@ import {
 } from '../state/photo-store';
 import { usePlantDb } from '../data/use-plant-db';
 import { useRegion } from '../data/use-region';
+import { SnapshotCaptureFlow, SnapshotTimeline } from '../components/SnapshotFlow';
 
 // ── Component ───────────────────────────────────────────────────────────────
 
-type View = 'gallery' | 'assess' | 'detail';
+type View = 'gallery' | 'assess' | 'detail' | 'snapshot' | 'timeline';
 
-export function PhotoCoachPage() {
+export function PhotoCoachPage({ initialView }: { initialView?: View }) {
   const { photos, addPhoto, removePhoto, updateAssessment, getFullImage } = usePhotoStore();
   const region = useRegion();
   const { plants } = usePlantDb(region);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [view, setView] = useState<View>('gallery');
+  const [view, setView] = useState<View>(initialView ?? 'gallery');
   const [selectedPhotoId, setSelectedPhotoId] = useState<string | null>(null);
   const [dragOver, setDragOver] = useState(false);
   const [uploading, setUploading] = useState(false);
@@ -113,18 +114,59 @@ export function PhotoCoachPage() {
 
   // ── Gallery View ──────────────────────────────────────────────────────────
 
+  // ── Snapshot / Timeline views ──────────────────────────────────────────────
+
+  if (view === 'snapshot') {
+    return (
+      <div className="h-full overflow-y-auto">
+        <div className="max-w-md mx-auto px-3 sm:px-6 py-4 sm:py-6">
+          <SnapshotCaptureFlow
+            onComplete={() => setView('timeline')}
+            onCancel={() => setView('gallery')}
+          />
+        </div>
+      </div>
+    );
+  }
+
+  if (view === 'timeline') {
+    return (
+      <div className="h-full overflow-y-auto">
+        <div className="max-w-lg mx-auto px-3 sm:px-6 py-4 sm:py-6">
+          <SnapshotTimeline onClose={() => setView('gallery')} />
+        </div>
+      </div>
+    );
+  }
+
   if (view === 'gallery') {
     return (
       <div className="h-full overflow-y-auto">
         <div className="max-w-4xl mx-auto px-3 sm:px-6 py-4 sm:py-6 space-y-4">
           {/* Header */}
-          <div>
-            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-stone-800 dark:text-stone-100">
-              📸 Garden Coach
-            </h1>
-            <p className="text-sm text-stone-400 mt-0.5">
-              Upload garden photos for health assessment and care recommendations
-            </p>
+          <div className="flex items-start justify-between">
+            <div>
+              <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-stone-800 dark:text-stone-100">
+                📸 Garden Coach
+              </h1>
+              <p className="text-sm text-stone-400 mt-0.5">
+                Upload garden photos for health assessment and care recommendations
+              </p>
+            </div>
+            <div className="flex gap-2 shrink-0">
+              <button
+                onClick={() => setView('snapshot')}
+                className="px-3 py-2 bg-emerald-600 text-white text-xs font-semibold rounded-lg hover:bg-emerald-700 transition-colors"
+              >
+                📷 Weekly Snapshot
+              </button>
+              <button
+                onClick={() => setView('timeline')}
+                className="px-3 py-2 border border-stone-200 dark:border-stone-600 text-stone-500 text-xs rounded-lg hover:bg-stone-50 dark:hover:bg-stone-700 transition-colors"
+              >
+                Timeline
+              </button>
+            </div>
           </div>
 
           {/* Upload zone */}

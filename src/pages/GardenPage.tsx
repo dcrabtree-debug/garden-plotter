@@ -477,6 +477,7 @@ export function GardenPage() {
   const [draggingPlant, setDraggingPlant] = useState<{ slug: string; fromRow: number; fromCol: number } | null>(null);
   const [dragOverCell, setDragOverCell] = useState<{ row: number; col: number } | null>(null);
   const [plantSearch, setPlantSearch] = useState('');
+  const [hoveredPickerPlant, setHoveredPickerPlant] = useState<Plant | null>(null);
   const [plantFilters, setPlantFilters] = useState({
     sun: null as 'full-sun' | 'partial-shade' | 'full-shade' | null,
     companion: false,
@@ -973,35 +974,111 @@ export function GardenPage() {
               </button>
             ))}
           </div>
-          {/* Scored plant list */}
-          <div className="max-h-52 overflow-y-auto space-y-0.5 bg-white dark:bg-stone-700 rounded-lg border border-stone-200 dark:border-stone-600 p-1">
-            {filteredPlants.length === 0 ? (
-              <div className="text-[10px] text-stone-400 text-center py-3">No plants match filters</div>
-            ) : (
-              filteredPlants.slice(0, 30).map((fp) => (
-                <button
-                  key={fp.plant.slug}
-                  onClick={() => setPlantToPlace(fp.plant)}
-                  className={`w-full text-left text-[10px] px-1.5 py-1 rounded flex items-center gap-1 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 ${
-                    plantToPlace?.slug === fp.plant.slug ? 'bg-emerald-100 dark:bg-emerald-900/30' : ''
-                  }`}
-                >
-                  <span className="text-sm shrink-0">{fp.plant.emoji}</span>
-                  <div className="flex-1 min-w-0">
-                    <div className="font-medium text-stone-700 dark:text-stone-200 truncate">{fp.plant.commonName}</div>
-                    {fp.tags.length > 0 && (
-                      <div className="flex gap-0.5 mt-0.5 flex-wrap">
-                        {fp.tags.map((t, i) => (
-                          <span key={i} className={`text-[7px] px-1 py-0 rounded ${t.color}`}>{t.label}</span>
-                        ))}
-                      </div>
+          {/* Scored plant list + hover detail popover */}
+          <div className="relative">
+            <div className="max-h-52 overflow-y-auto space-y-0.5 bg-white dark:bg-stone-700 rounded-lg border border-stone-200 dark:border-stone-600 p-1"
+              onMouseLeave={() => setHoveredPickerPlant(null)}
+            >
+              {filteredPlants.length === 0 ? (
+                <div className="text-[10px] text-stone-400 text-center py-3">No plants match filters</div>
+              ) : (
+                filteredPlants.slice(0, 30).map((fp) => (
+                  <button
+                    key={fp.plant.slug}
+                    onClick={() => setPlantToPlace(fp.plant)}
+                    onMouseEnter={() => setHoveredPickerPlant(fp.plant)}
+                    className={`w-full text-left text-[10px] px-1.5 py-1 rounded flex items-center gap-1 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 ${
+                      plantToPlace?.slug === fp.plant.slug ? 'bg-emerald-100 dark:bg-emerald-900/30' : ''
+                    }`}
+                  >
+                    <span className="text-sm shrink-0">{fp.plant.emoji}</span>
+                    <div className="flex-1 min-w-0">
+                      <div className="font-medium text-stone-700 dark:text-stone-200 truncate">{fp.plant.commonName}</div>
+                      {fp.tags.length > 0 && (
+                        <div className="flex gap-0.5 mt-0.5 flex-wrap">
+                          {fp.tags.map((t, i) => (
+                            <span key={i} className={`text-[7px] px-1 py-0 rounded ${t.color}`}>{t.label}</span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                    {fp.score > 0 && (
+                      <span className="text-[8px] font-bold text-emerald-600 dark:text-emerald-400 shrink-0">{fp.score.toFixed(0)}</span>
                     )}
+                  </button>
+                ))
+              )}
+            </div>
+
+            {/* Hover detail popover — shows to the right of the sidebar */}
+            {hoveredPickerPlant && (
+              <div className="absolute left-full top-0 ml-2 z-50 w-56 bg-white dark:bg-stone-800 rounded-xl shadow-2xl border border-stone-200 dark:border-stone-700 p-3 pointer-events-none">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-xl">{hoveredPickerPlant.emoji}</span>
+                  <div>
+                    <div className="text-xs font-bold text-stone-800 dark:text-stone-100">{hoveredPickerPlant.commonName}</div>
+                    <div className="text-[9px] text-stone-400 italic">{hoveredPickerPlant.botanicalName}</div>
                   </div>
-                  {fp.score > 0 && (
-                    <span className="text-[8px] font-bold text-emerald-600 dark:text-emerald-400 shrink-0">{fp.score.toFixed(0)}</span>
+                </div>
+
+                {/* Key stats grid */}
+                <div className="grid grid-cols-2 gap-x-3 gap-y-1 text-[9px] mb-2">
+                  <div><span className="text-stone-400">Sun:</span> <span className="font-medium text-stone-700 dark:text-stone-200">{hoveredPickerPlant.sun.replace('-', ' ')}</span></div>
+                  <div><span className="text-stone-400">Water:</span> <span className="font-medium text-stone-700 dark:text-stone-200">{hoveredPickerPlant.water}</span></div>
+                  <div><span className="text-stone-400">Harvest:</span> <span className="font-medium text-stone-700 dark:text-stone-200">{hoveredPickerPlant.daysToHarvest[0]}-{hoveredPickerPlant.daysToHarvest[1]}d</span></div>
+                  <div><span className="text-stone-400">Spacing:</span> <span className="font-medium text-stone-700 dark:text-stone-200">{hoveredPickerPlant.spacingCm}cm</span></div>
+                  <div><span className="text-stone-400">Habit:</span> <span className="font-medium text-stone-700 dark:text-stone-200">{hoveredPickerPlant.growthHabit}</span></div>
+                  <div><span className="text-stone-400">Hardy:</span> <span className="font-medium text-stone-700 dark:text-stone-200">{hoveredPickerPlant.hardiness}</span></div>
+                </div>
+
+                {/* Companion info */}
+                {(() => {
+                  const allSlugs = [...new Set(cells.flat().map(c => c.plantSlug).filter(Boolean) as string[])];
+                  const friends = allSlugs.length > 0 ? getFriends(hoveredPickerPlant.slug, allSlugs, companionMap) : [];
+                  const foes = allSlugs.length > 0 ? getConflicts(hoveredPickerPlant.slug, allSlugs, companionMap) : [];
+                  return (
+                    <>
+                      {friends.length > 0 && (
+                        <div className="text-[9px] text-emerald-600 dark:text-emerald-400 mb-1">
+                          💚 Friends: {friends.slice(0, 3).map(f => plantMap.get(f.plantA === hoveredPickerPlant.slug ? f.plantB : f.plantA)?.commonName ?? '?').join(', ')}
+                        </div>
+                      )}
+                      {foes.length > 0 && (
+                        <div className="text-[9px] text-red-500 dark:text-red-400 mb-1">
+                          ❌ Foes: {foes.slice(0, 3).map(f => plantMap.get(f.plantA === hoveredPickerPlant.slug ? f.plantB : f.plantA)?.commonName ?? '?').join(', ')}
+                        </div>
+                      )}
+                    </>
+                  );
+                })()}
+
+                {/* Pests */}
+                {hoveredPickerPlant.inGround?.pests?.length > 0 && (
+                  <div className="text-[9px] text-amber-600 dark:text-amber-400 mb-1">
+                    🐛 Watch: {hoveredPickerPlant.inGround.pests.slice(0, 3).join(', ')}
+                  </div>
+                )}
+
+                {/* Planting windows */}
+                <div className="text-[8px] text-stone-400 space-y-0.5">
+                  {hoveredPickerPlant.plantingWindow.sowOutdoors && (
+                    <div>Sow outdoors: months {hoveredPickerPlant.plantingWindow.sowOutdoors[0]}-{hoveredPickerPlant.plantingWindow.sowOutdoors[1]}</div>
                   )}
-                </button>
-              ))
+                  {hoveredPickerPlant.plantingWindow.transplant && (
+                    <div>Transplant: months {hoveredPickerPlant.plantingWindow.transplant[0]}-{hoveredPickerPlant.plantingWindow.transplant[1]}</div>
+                  )}
+                  {hoveredPickerPlant.plantingWindow.harvest && (
+                    <div>Harvest: months {hoveredPickerPlant.plantingWindow.harvest[0]}-{hoveredPickerPlant.plantingWindow.harvest[1]}</div>
+                  )}
+                </div>
+
+                {/* Kid friendly badge */}
+                {(KID_FAVOURITES.has(hoveredPickerPlant.slug) || hoveredPickerPlant.category === 'fruit') && (
+                  <div className="mt-1.5 text-[9px] px-2 py-0.5 bg-sky-50 dark:bg-sky-900/20 text-sky-700 dark:text-sky-400 rounded-full inline-block font-semibold">
+                    🧒 Kid Favourite
+                  </div>
+                )}
+              </div>
             )}
           </div>
         </div>

@@ -440,12 +440,13 @@ export function GardenPage() {
     garden, activeTool, selectedMonth, selectedHour,
     showSunOverlay, showShadowOverlay, showCompanionOverlay,
     showSpacingWarnings, showRotationWarnings, rotationHistory,
-    locked: gardenLocked, toggleLock: toggleGardenLock,
+    locked: plantsLocked, toggleLock: togglePlantsLock,
+    layoutLocked, toggleLayoutLock,
     setTool, paintCell, updateConfig, renameGarden,
     setSunHours, setSelectedMonth, setSelectedHour,
     toggleSunOverlay, toggleShadowOverlay, toggleCompanionOverlay,
     toggleSpacingWarnings, toggleRotationWarnings, saveSeasonSnapshot,
-    loadTemplate, resetGarden, clearPaint,
+    loadTemplate, resetGarden, clearPaint, clearAllPlants, saveLayout,
   } = useGardenStore();
 
   const plannerTowers = usePlannerStore((s) => s.towers);
@@ -1091,14 +1092,31 @@ export function GardenPage() {
         {/* Actions */}
         <div className="space-y-1.5">
           <button
+            onClick={() => { saveLayout(); toggleLayoutLock(); }}
+            disabled={layoutLocked}
+            className={`text-[10px] w-full px-2 py-1.5 rounded-lg font-semibold ${
+              layoutLocked
+                ? 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 border border-amber-300'
+                : 'bg-emerald-600 text-white hover:bg-emerald-700'
+            }`}
+          >
+            {layoutLocked ? '🔒 Layout Saved & Locked' : '💾 Save & Lock Layout'}
+          </button>
+          <button
             onClick={clearPaint}
-            className="text-[10px] w-full px-2 py-1.5 text-stone-500 border border-stone-200 rounded-lg hover:bg-stone-100"
+            disabled={layoutLocked}
+            className={`text-[10px] w-full px-2 py-1.5 border rounded-lg ${
+              layoutLocked ? 'text-stone-300 border-stone-100 cursor-not-allowed' : 'text-stone-500 border-stone-200 hover:bg-stone-100'
+            }`}
           >
             Clear all paint
           </button>
           <button
             onClick={() => { if (confirm('Reset entire garden?')) resetGarden(); }}
-            className="text-[10px] w-full px-2 py-1.5 text-red-500 border border-red-200 rounded-lg hover:bg-red-50"
+            disabled={layoutLocked}
+            className={`text-[10px] w-full px-2 py-1.5 border rounded-lg ${
+              layoutLocked ? 'text-stone-300 border-stone-100 cursor-not-allowed' : 'text-red-500 border-red-200 hover:bg-red-50'
+            }`}
           >
             Reset garden
           </button>
@@ -1111,33 +1129,51 @@ export function GardenPage() {
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
             <div className="flex items-center gap-2">
               <h1 className="text-lg sm:text-xl font-semibold text-stone-800 dark:text-stone-100">In-Ground Garden Plotter</h1>
+              {/* Split lock: Layout + Plants */}
               <button
-                onClick={toggleGardenLock}
+                onClick={toggleLayoutLock}
                 className={`px-2 py-1 text-xs rounded-lg border transition-all ${
-                  gardenLocked
+                  layoutLocked
+                    ? 'bg-amber-100 dark:bg-amber-900/30 border-amber-300 dark:border-amber-700 text-amber-700 dark:text-amber-400'
+                    : 'bg-stone-50 dark:bg-stone-700 border-stone-200 dark:border-stone-600 text-stone-400 hover:text-stone-600'
+                }`}
+                title={layoutLocked ? 'Layout locked — cell types protected. Click to unlock.' : 'Lock layout to protect cell types while placing plants'}
+              >
+                {layoutLocked ? '🔒 Layout' : '🗺️ Layout'}
+              </button>
+              <button
+                onClick={togglePlantsLock}
+                className={`px-2 py-1 text-xs rounded-lg border transition-all ${
+                  plantsLocked
                     ? 'bg-emerald-100 dark:bg-emerald-900/30 border-emerald-300 dark:border-emerald-700 text-emerald-700 dark:text-emerald-400'
                     : 'bg-stone-50 dark:bg-stone-700 border-stone-200 dark:border-stone-600 text-stone-400 hover:text-stone-600'
                 }`}
-                title={gardenLocked ? 'Unlock to edit' : 'Lock to prevent changes'}
+                title={plantsLocked ? 'Plants locked — click to unlock' : 'Lock plants to prevent changes'}
               >
-                {gardenLocked ? '🔒 Locked' : '🔓'}
+                {plantsLocked ? '🔒 Plants' : '🌱 Plants'}
               </button>
             </div>
             <div className="flex flex-wrap items-center gap-2">
               {hasTowerPlants && (
                 <button
                   onClick={() => {
-                    const { config: esherConfig, cells: esherCells } = createEsherGarden();
-                    loadTemplate(esherConfig, esherCells);
+                    // Layout-aware: only load Esher template if grid is blank
+                    const hasLayout = cells.some((r) => r.some((c) => c.type !== 'lawn'));
+                    if (!hasLayout && !layoutLocked) {
+                      const { config: esherConfig, cells: esherCells } = createEsherGarden();
+                      loadTemplate(esherConfig, esherCells);
+                    }
+                    // Generate paired layout from CURRENT cells (not overwritten)
+                    const currentCells = useGardenStore.getState().garden.cells;
                     const paired = generatePairedLayout(actualTowerSlugs, plants, companionMap);
                     const staticLayouts = generateEsherLayouts();
                     setEsherLayouts([paired, ...staticLayouts]);
                     setRaisedBedMode({ 'paired-with-towers': 'replant' });
                     setShowEsherLayouts(true);
                   }}
-                  disabled={gardenLocked}
+                  disabled={plantsLocked}
                   className={`px-3 py-1.5 text-xs rounded-lg transition-colors flex items-center gap-1.5 font-semibold ${
-                    gardenLocked
+                    plantsLocked
                       ? 'bg-stone-200 dark:bg-stone-600 text-stone-400 cursor-not-allowed'
                       : 'bg-indigo-600 text-white hover:bg-indigo-700'
                   }`}
@@ -1153,10 +1189,14 @@ export function GardenPage() {
               </button>
               <button
                 onClick={() => {
-                  const { config: esherConfig, cells: esherCells } = createEsherGarden();
-                  loadTemplate(esherConfig, esherCells);
+                  // Layout-aware: only load Esher template if grid is blank
+                  const hasLayout = cells.some((r) => r.some((c) => c.type !== 'lawn'));
+                  if (!hasLayout && !layoutLocked) {
+                    const { config: esherConfig, cells: esherCells } = createEsherGarden();
+                    loadTemplate(esherConfig, esherCells);
+                  }
+                  // Generate layouts from CURRENT cells
                   const layouts = generateEsherLayouts();
-                  // Compute cross-system pairings with GreenStalk
                   const gsLayouts = generateGSLayouts(plants, companionMap, 2);
                   const gsForPairing = gsLayouts.map((g) => ({ id: g.id, name: g.name, slugs: extractTowerSlugs(g) }));
                   const enriched = layouts.map((layout) => ({
@@ -1172,9 +1212,9 @@ export function GardenPage() {
                   setEsherLayouts(enriched);
                   setShowEsherLayouts(true);
                 }}
-                disabled={gardenLocked}
+                disabled={plantsLocked}
                 className={`px-3 py-1.5 text-xs rounded-lg transition-colors flex items-center gap-1.5 ${
-                  gardenLocked ? 'bg-stone-200 dark:bg-stone-600 text-stone-400 cursor-not-allowed' : 'bg-amber-600 text-white hover:bg-amber-700'
+                  plantsLocked ? 'bg-stone-200 dark:bg-stone-600 text-stone-400 cursor-not-allowed' : 'bg-amber-600 text-white hover:bg-amber-700'
                 }`}
               >
                 <span>🏡</span> Load My Garden
@@ -1185,13 +1225,26 @@ export function GardenPage() {
                   setGardenLayouts(layouts);
                   setShowAutoPopulate(true);
                 }}
-                disabled={gardenLocked}
+                disabled={plantsLocked}
                 className={`px-3 py-1.5 text-xs rounded-lg transition-colors flex items-center gap-1.5 ${
-                  gardenLocked ? 'bg-stone-200 dark:bg-stone-600 text-stone-400 cursor-not-allowed' : 'bg-emerald-600 text-white hover:bg-emerald-700'
+                  plantsLocked ? 'bg-stone-200 dark:bg-stone-600 text-stone-400 cursor-not-allowed' : 'bg-emerald-600 text-white hover:bg-emerald-700'
                 }`}
               >
-              <span>✨</span> Auto-Populate
-            </button>
+                <span>✨</span> Auto-Populate
+              </button>
+              <button
+                onClick={() => {
+                  if (confirm('Remove all plants from the map? Layout stays intact.')) {
+                    clearAllPlants();
+                  }
+                }}
+                disabled={plantsLocked}
+                className={`px-3 py-1.5 text-xs rounded-lg transition-colors flex items-center gap-1.5 ${
+                  plantsLocked ? 'bg-stone-200 dark:bg-stone-600 text-stone-400 cursor-not-allowed' : 'text-stone-500 border border-stone-300 dark:border-stone-600 hover:bg-stone-100 dark:hover:bg-stone-700'
+                }`}
+              >
+                <span>🧹</span> Clear Plants
+              </button>
             </div>
           </div>
           <p className="text-sm text-stone-400">

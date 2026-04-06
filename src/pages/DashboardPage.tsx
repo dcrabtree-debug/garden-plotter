@@ -8,6 +8,17 @@ import {
   isInWindow,
   getCurrentMonth,
 } from '../lib/calendar-utils';
+import {
+  fetchWeather,
+  getFrostAlert,
+  getRainAlert,
+  getWindAlert,
+  type WeatherForecast,
+  type FrostAlert,
+  type RainAlert,
+  type WindAlert,
+} from '../lib/weather-service';
+import { getHarvestEstimates, type HarvestEstimate } from '../lib/harvest-countdown';
 import type { Plant } from '../types/plant';
 
 // ── Key dates ────────────────────────────────────────────────────────────────
@@ -163,12 +174,8 @@ const CATEGORY_COLORS: Record<string, { bg: string; text: string; label: string 
   shopping: { bg: 'bg-violet-100 dark:bg-violet-900/30', text: 'text-violet-700 dark:text-violet-300', label: '🛒 Buy' },
 };
 
-// ── Weather ─────────────────────────────────────────────────────────────────
-
-interface WeatherDay { date: string; minTemp: number; }
-
 // ── Section collapse state ──────────────────────────────────────────────────
-type Section = 'overdue' | 'today' | 'care' | 'setup' | 'upcoming';
+type Section = 'overdue' | 'today' | 'care' | 'setup' | 'upcoming' | 'harvest';
 
 // ── Component ───────────────────────────────────────────────────────────────
 
@@ -179,7 +186,7 @@ export function DashboardPage() {
   const region = useRegion();
   const { plants, plantMap } = usePlantDb(region);
   const [completedTasks, setCompletedTasks] = useState<Set<string>>(() => loadChecklist());
-  const [weather, setWeather] = useState<WeatherDay[] | null>(null);
+  const [forecast, setForecast] = useState<WeatherForecast | null>(null);
   const [collapsed, setCollapsed] = useState<Set<Section>>(new Set());
 
   const toggleSection = (s: Section) => {
@@ -206,24 +213,16 @@ export function DashboardPage() {
   const currentMonth = getCurrentMonth();
   const daysToFrost = daysBetween(today, FIRST_FROST);
 
-  // Minimal weather fetch
+  // Weather service (cached, expanded fields)
   useEffect(() => {
     const lat = settings.latitude || 51.3867;
     const lng = settings.longitude || -0.4175;
-    fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&daily=temperature_2m_min&timezone=Europe/London&forecast_days=3`)
-      .then((r) => r.json())
-      .then((data) => {
-        if (data.daily) {
-          setWeather(data.daily.time.map((t: string, i: number) => ({
-            date: t,
-            minTemp: data.daily.temperature_2m_min[i],
-          })));
-        }
-      })
-      .catch(() => {});
+    fetchWeather(lat, lng, 5).then(setForecast).catch(() => {});
   }, [settings.latitude, settings.longitude]);
 
-  const frostRisk = weather?.some((d) => d.minTemp < 3) ?? false;
+  const frostAlert: FrostAlert | null = forecast ? getFrostAlert(forecast) : null;
+  const rainAlert: RainAlert | null = forecast ? getRainAlert(forecast) : null;
+  const windAlert: WindAlert | null = forecast ? getWindAlert(forecast) : null;
 
   // ── Task classification ───────────────────────────────────────────────────
 
@@ -320,6 +319,13 @@ export function DashboardPage() {
   }, [plants, currentMonth]);
 
   const frost = getFrostGuidance(currentMonth);
+
+  // ── Harvest countdown ────────────────────────────────────────────────────
+
+  const harvestEstimates = useMemo(
+    () => getHarvestEstimates(towers, plantMap),
+    [towers, plantMap],
+  );
 
   // ── Progress ──────────────────────────────────────────────────────────────
 
@@ -460,14 +466,28 @@ export function DashboardPage() {
           </div>
         )}
 
-        {/* Alerts row */}
+        {/* Alerts row — weather-driven + seasonal */}
         <div className="flex flex-col gap-2">
-          {frostRisk && (
-            <div className="text-xs px-3 py-2 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 rounded-lg font-medium">
-              ❄️ Frost risk in the next 3 days — cover tender seedlings tonight.
+          {frostAlert && frostAlert.level !== 'none' && (
+            <div className={`text-xs px-3 py-2 rounded-lg font-medium ${
+              frostAlert.level === 'hard'
+                ? 'bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 border border-red-200 dark:border-red-800'
+                : 'bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-300'
+            }`}>
+              {frostAlert.level === 'hard' ? '🥶' : '❄️'} {frostAlert.message}
             </div>
           )}
-          {frost && frost.level !== 'safe' && (
+          {rainAlert?.message && (
+            <div className="text-xs px-3 py-2 bg-sky-50 dark:bg-sky-900/20 text-sky-700 dark:text-sky-300 rounded-lg font-medium">
+              {rainAlert.totalMm > 30 ? '🌧️' : '☀️'} {rainAlert.message}
+            </div>
+          )}
+          {windAlert?.message && (
+            <div className="text-xs px-3 py-2 bg-purple-50 dark:bg-purple-900/20 text-purple-700 dark:text-purple-300 rounded-lg font-medium">
+              💨 {windAlert.message}
+            </div>
+          )}
+          {frost && frost.level !== 'safe' && !frostAlert?.frostDays.length && (
             <div className={`text-xs px-3 py-2 rounded-lg font-medium ${
               frost.level === 'frost' ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300' : 'bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-300'
             }`}>
@@ -480,6 +500,34 @@ export function DashboardPage() {
             </div>
           )}
         </div>
+
+        {/* ── 5-DAY WEATHER STRIP ──────────────────────────────────────── */}
+        {forecast && (
+          <div className="bg-white dark:bg-stone-800 rounded-2xl border border-stone-200 dark:border-stone-700 overflow-hidden px-4 py-3">
+            <h2 className="text-[11px] font-bold text-stone-600 dark:text-stone-300 mb-2">🌤️ 5-Day Forecast</h2>
+            <div className="grid grid-cols-5 gap-1.5 text-center">
+              {forecast.days.map((d) => {
+                const dayName = new Date(d.date).toLocaleDateString('en-GB', { weekday: 'short' });
+                const isFrosty = d.minTemp < 3;
+                const isWet = d.precipMm > 5;
+                return (
+                  <div key={d.date} className={`rounded-lg py-1.5 px-1 ${isFrosty ? 'bg-blue-50 dark:bg-blue-900/20' : 'bg-stone-50 dark:bg-stone-700/30'}`}>
+                    <div className="text-[10px] font-medium text-stone-500 dark:text-stone-400">{dayName}</div>
+                    <div className="text-sm font-bold text-stone-800 dark:text-stone-100">
+                      {isFrosty ? '❄️' : isWet ? '🌧️' : d.maxTemp > 25 ? '☀️' : '⛅'}
+                    </div>
+                    <div className={`text-[10px] font-semibold ${isFrosty ? 'text-blue-600 dark:text-blue-400' : 'text-stone-600 dark:text-stone-300'}`}>
+                      {d.minTemp.toFixed(0)}° / {d.maxTemp.toFixed(0)}°
+                    </div>
+                    {d.precipMm > 0.5 && (
+                      <div className="text-[9px] text-sky-500">{d.precipMm.toFixed(0)}mm</div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
 
         {/* ── OVERDUE ─────────────────────────────────────────────────────── */}
         {overdueTasks.length > 0 && (
@@ -501,6 +549,58 @@ export function DashboardPage() {
               <div className="divide-y divide-stone-50 dark:divide-stone-700/50">
                 {todayTasks.map((t) => renderTask(t))}
                 {recurringTasks.map((t) => renderTask(t))}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* ── HARVEST COUNTDOWN ─────────────────────────────────────────── */}
+        {harvestEstimates.length > 0 && (
+          <div className="bg-white dark:bg-stone-800 rounded-2xl border border-stone-200 dark:border-stone-700 overflow-hidden">
+            <SectionHeader section="harvest" title="🌾 Harvest Countdown" count={harvestEstimates.length} />
+            {!collapsed.has('harvest') && (
+              <div className="px-4 py-3 space-y-2">
+                {harvestEstimates.map((est) => {
+                  const statusStyles: Record<string, string> = {
+                    overdue: 'border-red-300 dark:border-red-700 bg-red-50/50 dark:bg-red-900/10',
+                    ready: 'border-emerald-300 dark:border-emerald-700 bg-emerald-50/50 dark:bg-emerald-900/10',
+                    soon: 'border-amber-200 dark:border-amber-800 bg-amber-50/30 dark:bg-amber-900/10',
+                    growing: 'border-stone-100 dark:border-stone-700 bg-stone-50/30 dark:bg-stone-800/30',
+                  };
+                  const labelStyles: Record<string, string> = {
+                    overdue: 'text-red-600 dark:text-red-400',
+                    ready: 'text-emerald-600 dark:text-emerald-400',
+                    soon: 'text-amber-600 dark:text-amber-400',
+                    growing: 'text-stone-500 dark:text-stone-400',
+                  };
+                  const barStyles: Record<string, string> = {
+                    overdue: 'bg-red-500',
+                    ready: 'bg-emerald-500',
+                    soon: 'bg-amber-500',
+                    growing: 'bg-sky-500',
+                  };
+                  return (
+                    <div key={`${est.plantSlug}-${est.location}`} className={`rounded-xl border px-3 py-2 ${statusStyles[est.status]}`}>
+                      <div className="flex items-center justify-between gap-2">
+                        <div className="flex items-center gap-2 min-w-0">
+                          <span className="text-base shrink-0">{est.emoji}</span>
+                          <div className="min-w-0">
+                            <span className="text-xs font-semibold text-stone-800 dark:text-stone-100 truncate block">{est.plantName}</span>
+                            <span className="text-[10px] text-stone-400 truncate block">{est.location}</span>
+                          </div>
+                        </div>
+                        <div className="text-right shrink-0">
+                          <span className={`text-xs font-bold ${labelStyles[est.status]}`}>{est.label}</span>
+                          <div className="text-[10px] text-stone-400">Planted {new Date(est.plantedDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}</div>
+                        </div>
+                      </div>
+                      {/* Progress bar */}
+                      <div className="mt-1.5 w-full h-1.5 bg-stone-200 dark:bg-stone-600 rounded-full overflow-hidden">
+                        <div className={`h-full rounded-full transition-all duration-700 ${barStyles[est.status]}`} style={{ width: `${Math.round(est.progress * 100)}%` }} />
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             )}
           </div>

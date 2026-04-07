@@ -906,22 +906,16 @@ export function GardenPage() {
                     ),
                   }));
                   setEsherLayouts(enriched);
+                  // Also generate generic auto-populate strategies for the loaded garden
+                  const { cells: freshCells, config: freshConfig } = { cells: esherCells, config: esherConfig };
+                  const genericLayouts = generateGardenLayouts(plants, freshCells, freshConfig, companionMap);
+                  setGardenLayouts(genericLayouts);
                   setShowEsherLayouts(true);
                 }}
                 className="px-3 py-1.5 text-xs bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition-colors flex items-center gap-1.5"
               >
-                <span>🏡</span> Load My Garden
+                <span>🏡</span> Set Up Garden
               </button>
-              <button
-                onClick={() => {
-                  const layouts = generateGardenLayouts(plants, cells, config, companionMap);
-                  setGardenLayouts(layouts);
-                  setShowAutoPopulate(true);
-                }}
-                className="px-3 py-1.5 text-xs bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors flex items-center gap-1.5"
-              >
-              <span>✨</span> Auto-Populate
-            </button>
             </div>
           </div>
           <p className="text-sm text-stone-400">
@@ -1460,92 +1454,7 @@ export function GardenPage() {
       )}
 
       {/* Auto-populate modal */}
-      {showAutoPopulate && (
-        <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-stone-800 rounded-2xl shadow-2xl max-w-[calc(100vw-2rem)] sm:max-w-2xl w-full max-h-[80vh] overflow-y-auto">
-            <div className="p-4 sm:p-6 border-b border-stone-100 dark:border-stone-700">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h2 className="text-lg font-bold text-stone-800 dark:text-stone-100">
-                    Auto-Populate Garden
-                  </h2>
-                  <p className="text-sm text-stone-400 mt-0.5">
-                    Uses your sun data, wall height, facing direction, and painted zones.
-                    Only fills cells you've painted as veg patches, raised beds, or flower beds.
-                  </p>
-                </div>
-                <button
-                  onClick={() => setShowAutoPopulate(false)}
-                  className="text-stone-400 hover:text-stone-600 text-xl"
-                >
-                  ×
-                </button>
-              </div>
-            </div>
-
-            <div className="p-6 space-y-4">
-              {gardenLayouts.map((layout) => (
-                <div
-                  key={layout.id}
-                  className="border border-stone-200 dark:border-stone-600 rounded-xl p-4 hover:border-emerald-300 hover:bg-emerald-50/30 dark:hover:bg-emerald-900/10 transition-colors"
-                >
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <h3 className="text-sm font-bold text-stone-800 dark:text-stone-200">
-                        {layout.name === 'Sun-Optimized' ? '☀️ ' : layout.name === 'Kitchen Garden' ? '🍳 ' : '📈 '}
-                        {layout.name}
-                      </h3>
-                      <p className="text-xs text-stone-500 dark:text-stone-400 mt-1">
-                        {layout.description}
-                      </p>
-                      <div className="flex gap-3 mt-2 text-[10px] text-stone-400 flex-wrap">
-                        <span>{layout.stats.totalPlanted} cells planted</span>
-                        <span>{layout.stats.uniquePlants} unique plants</span>
-                        <span>Avg {layout.stats.avgSunHours}h sun</span>
-                        {layout.stats.companionPairs > 0 && (
-                          <span className="text-emerald-600 dark:text-emerald-400">{layout.stats.companionPairs} companion pairings</span>
-                        )}
-                        {layout.stats.conflictsAvoided > 0 && (
-                          <span className="text-amber-600 dark:text-amber-400">{layout.stats.conflictsAvoided} conflicts avoided</span>
-                        )}
-                      </div>
-                    </div>
-
-                    <button
-                      onClick={() => {
-                        // Clear existing plants
-                        const store = useGardenStore.getState();
-                        const currentCells = store.garden.cells;
-                        for (let r = 0; r < currentCells.length; r++) {
-                          for (let c = 0; c < currentCells[r].length; c++) {
-                            if (currentCells[r][c].plantSlug) {
-                              store.removePlantFromCell(r, c);
-                            }
-                          }
-                        }
-                        // Apply new placements
-                        for (const p of layout.placements) {
-                          store.plantInCell(p.row, p.col, p.plantSlug);
-                        }
-                        setGardenPlan(layout.reasoning);
-                        setShowPlan(true);
-                        setShowAutoPopulate(false);
-                      }}
-                      className="ml-4 px-4 py-2 bg-emerald-600 text-white text-xs font-semibold rounded-lg hover:bg-emerald-700 transition-colors shrink-0"
-                    >
-                      Apply
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="p-4 border-t border-stone-100 dark:border-stone-700 text-[10px] text-stone-400 text-center">
-              Paint veg patches, raised beds, and flower beds first. Auto-populate only fills painted zones.
-            </div>
-          </div>
-        </div>
-      )}
+      {/* Auto-populate modal removed — merged into Set Up Garden flow above */}
 
       {/* Esher Avenue layout picker */}
       {showEsherLayouts && (
@@ -1679,6 +1588,60 @@ export function GardenPage() {
                 );
               })}
             </div>
+
+            {/* ── Generic auto-populate strategies ── */}
+            {gardenLayouts.length > 0 && (
+              <div className="px-6 pb-4">
+                <div className="flex items-center gap-2 mb-3 mt-2">
+                  <div className="flex-1 h-px bg-stone-200 dark:bg-stone-600" />
+                  <span className="text-[10px] font-bold text-stone-400 uppercase tracking-wide">Or try a generic strategy</span>
+                  <div className="flex-1 h-px bg-stone-200 dark:bg-stone-600" />
+                </div>
+                <div className="space-y-3">
+                  {gardenLayouts.map((layout) => (
+                    <div key={layout.id} className="border border-stone-200 dark:border-stone-600 rounded-xl p-4 hover:border-emerald-300 hover:bg-emerald-50/30 dark:hover:bg-emerald-900/10 transition-colors">
+                      <div className="flex items-start justify-between">
+                        <div className="flex-1">
+                          <h3 className="text-sm font-bold text-stone-800 dark:text-stone-200">
+                            {layout.name === 'Sun-Optimized' ? '☀️ ' : layout.name === 'Kitchen Garden' ? '🍳 ' : '📈 '}
+                            {layout.name}
+                          </h3>
+                          <p className="text-xs text-stone-500 dark:text-stone-400 mt-1">{layout.description}</p>
+                          <div className="flex gap-3 mt-2 text-[10px] text-stone-400 flex-wrap">
+                            <span>{layout.stats.totalPlanted} cells planted</span>
+                            <span>{layout.stats.uniquePlants} unique plants</span>
+                            <span>Avg {layout.stats.avgSunHours}h sun</span>
+                            {layout.stats.companionPairs > 0 && (
+                              <span className="text-emerald-600 dark:text-emerald-400">{layout.stats.companionPairs} companion pairs</span>
+                            )}
+                          </div>
+                        </div>
+                        <button
+                          onClick={() => {
+                            const store = useGardenStore.getState();
+                            const currentCells = store.garden.cells;
+                            for (let r = 0; r < currentCells.length; r++) {
+                              for (let c = 0; c < currentCells[r].length; c++) {
+                                if (currentCells[r][c].plantSlug) store.removePlantFromCell(r, c);
+                              }
+                            }
+                            for (const p of layout.placements) {
+                              store.plantInCell(p.row, p.col, p.plantSlug);
+                            }
+                            setGardenPlan(layout.reasoning);
+                            setShowPlan(true);
+                            setShowEsherLayouts(false);
+                          }}
+                          className="ml-4 px-4 py-2 bg-emerald-600 text-white text-xs font-semibold rounded-lg hover:bg-emerald-700 transition-colors shrink-0"
+                        >
+                          Apply
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
             <div className="p-4 border-t border-stone-100 dark:border-stone-700 flex justify-between items-center">
               <span className="text-[10px] text-stone-400">

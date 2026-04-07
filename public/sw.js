@@ -1,4 +1,4 @@
-const CACHE_NAME = 'garden-plotter-v5';
+const CACHE_NAME = 'garden-plotter-v6';
 const ASSETS_TO_CACHE = [
   '/garden-plotter/',
   '/garden-plotter/index.html',
@@ -28,14 +28,19 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
-  // Network-first for HTML, cache-first for assets
-  if (event.request.mode === 'navigate') {
-    event.respondWith(
-      fetch(event.request).catch(() => caches.match('/garden-plotter/index.html'))
-    );
-  } else {
-    event.respondWith(
-      caches.match(event.request).then((cached) => cached || fetch(event.request))
-    );
-  }
+  // Network-first for EVERYTHING — fall back to cache only when offline
+  event.respondWith(
+    fetch(event.request)
+      .then((response) => {
+        // Cache successful responses for offline use
+        if (response.ok && event.request.method === 'GET') {
+          const clone = response.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
+        }
+        return response;
+      })
+      .catch(() => caches.match(event.request).then((cached) =>
+        cached || (event.request.mode === 'navigate' ? caches.match('/garden-plotter/index.html') : undefined)
+      ))
+  );
 });

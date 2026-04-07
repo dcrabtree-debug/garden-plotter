@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import { usePlannerStore } from '../state/planner-store';
+import { useGardenStore } from '../state/garden-store';
 import { usePlantDb } from '../data/use-plant-db';
 import { useRegion } from '../data/use-region';
 import { useDarkMode } from '../hooks/use-dark-mode';
@@ -103,8 +104,8 @@ function MicroclimateZonesSection() {
 }
 
 export function SettingsPage() {
-  const exportState = usePlannerStore((s) => s.exportState);
-  const importState = usePlannerStore((s) => s.importState);
+  const exportPlannerState = usePlannerStore((s) => s.exportState);
+  const importPlannerState = usePlannerStore((s) => s.importState);
   const resetAll = usePlannerStore((s) => s.resetAll);
   const settings = usePlannerStore((s) => s.settings);
   const { isDark, toggle: toggleDark } = useDarkMode();
@@ -114,8 +115,14 @@ export function SettingsPage() {
   );
 
   const handleExport = () => {
-    const data = exportState();
-    const blob = new Blob([JSON.stringify(data, null, 2)], {
+    const plannerData = exportPlannerState();
+    const gardenData = useGardenStore.getState().garden;
+    const fullExport = {
+      ...plannerData,
+      garden: gardenData,
+      exportedAt: new Date().toISOString(),
+    };
+    const blob = new Blob([JSON.stringify(fullExport, null, 2)], {
       type: 'application/json',
     });
     const url = URL.createObjectURL(blob);
@@ -134,8 +141,12 @@ export function SettingsPage() {
       try {
         const data = JSON.parse(reader.result as string);
         if (data.version && data.towers) {
-          importState(data);
-          alert('Garden plan imported successfully!');
+          importPlannerState(data);
+          // Also restore garden map if included in export
+          if (data.garden?.cells && data.garden?.config) {
+            useGardenStore.getState().loadTemplate(data.garden.config, data.garden.cells);
+          }
+          alert('Garden plan imported successfully!' + (data.garden ? ' (includes in-ground garden map)' : ' (GreenStalks only)'));
         } else {
           alert('Invalid garden plan file.');
         }

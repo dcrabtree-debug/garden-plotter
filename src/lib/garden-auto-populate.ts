@@ -50,11 +50,12 @@ function getPlantableCells(cells: GardenCell[][]): PlantableCell[] {
   return result;
 }
 
-// Plants suitable for a conservatory (filtered light, frost-free)
+// Plants suitable for a LOW-LIGHT conservatory (NW-facing, ~2-3h effective light)
+// NO sun-lovers: no tomatoes, basil, citrus, peppers — they need 6h+ direct sun
+// Only shade-tolerant herbs and foliage that thrive in filtered light
 const CONSERVATORY_SLUGS = [
-  'dwarf-lemon', 'dwarf-olive', 'fern-hardy', 'bay-laurel',
-  'basil-sweet', 'mint', 'parsley', 'coriander', 'chives',
-  'lemon-balm', 'lemon-verbena',
+  'fern-hardy', 'mint', 'lemon-balm', 'parsley', 'coriander', 'chives',
+  'bay-laurel',  // tolerates shade, architectural evergreen
 ];
 
 function plantNeedsSun(plant: Plant): number {

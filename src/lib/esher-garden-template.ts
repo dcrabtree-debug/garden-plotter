@@ -80,13 +80,15 @@ export function createEsherGarden(): { config: GardenConfig; cells: GardenCell[]
       overrides.push({ row: r, col: c, type: 'conservatory', label: 'Conservatory' });
     }
   }
-  // Pre-populate conservatory with suitable plants
-  overrides.push({ row: 1, col: 1, type: 'conservatory', plantSlug: 'dwarf-lemon', label: 'Conservatory' });
-  overrides.push({ row: 1, col: 3, type: 'conservatory', plantSlug: 'dwarf-olive', label: 'Conservatory' });
-  overrides.push({ row: 1, col: 5, type: 'conservatory', plantSlug: 'fern-hardy', label: 'Conservatory' });
-  overrides.push({ row: 2, col: 1, type: 'conservatory', plantSlug: 'basil-sweet', label: 'Conservatory' });
-  overrides.push({ row: 2, col: 3, type: 'conservatory', plantSlug: 'mint', label: 'Conservatory' });
-  overrides.push({ row: 2, col: 5, type: 'conservatory', plantSlug: 'parsley', label: 'Conservatory' });
+  // Pre-populate conservatory — LOW LIGHT zone (~2-3h effective growing light)
+  // NW-facing Victorian glass = filtered light, most UV blocked by glass
+  // Only shade-tolerant plants that don't need direct sun
+  overrides.push({ row: 1, col: 1, type: 'conservatory', plantSlug: 'fern-hardy', label: 'Conservatory' });
+  overrides.push({ row: 1, col: 3, type: 'conservatory', plantSlug: 'mint', label: 'Conservatory' });
+  overrides.push({ row: 1, col: 5, type: 'conservatory', plantSlug: 'lemon-balm', label: 'Conservatory' });
+  overrides.push({ row: 2, col: 1, type: 'conservatory', plantSlug: 'parsley', label: 'Conservatory' });
+  overrides.push({ row: 2, col: 3, type: 'conservatory', plantSlug: 'coriander', label: 'Conservatory' });
+  overrides.push({ row: 2, col: 5, type: 'conservatory', plantSlug: 'chives', label: 'Conservatory' });
 
   // ── West boundary (col 0-1, rows 3-18) — established hedge/shrubs ──
   // 19A side. Dense mixed hedge, not closeboard fencing.
@@ -277,19 +279,20 @@ export function generateEsherLayouts(): EsherLayoutOption[] {
         'Our top recommendation for 21 Esher Avenue IN-GROUND areas. Full-size varietals for open ground — NOT the dwarf/container varieties used on GreenStalks.\n\n' +
         'Fence border: Scarlet Emperor runner bean (RHS AGM, full-size climber to 2.5m — NOT suitable for GreenStalk) trained up the 6ft fence panels. Spencer Mix sweet pea for pollinators and cut flowers.\n\n' +
         'Raised bed "daily salad bar": Wild Rocket (perennial ground cover, not the annual salad type), Little Gem + Salad Bowl lettuce (full heads, not baby leaf), Perpetual Spinach (a leaf beet that grows 60cm tall — too big for pockets), White Lisbon spring onion, French Breakfast radish. All chosen specifically for the dappled shade cast by the 3-4m laurel hedge.\n\n' +
-        'Conservatory: Dwarf lemon (Meyer), dwarf olive, hardy fern, shade-tolerant herbs — plants that need frost protection through Surrey winters.',
+        'Conservatory (LOW LIGHT — ~2-3h effective): NW-facing Victorian glass filters out most UV. NO sun-loving crops here (no tomatoes, basil, or citrus long-term). Used as a seed-starting station Apr-May, then shade-tolerant herbs year-round: fern, mint, lemon balm, parsley, coriander (actually prefers shade — bolts in sun), chives.\n\n' +
+        'Raised bed (SLUG RISK): Only 10cm/4" off ground — slugs walk right in from the damp hedge. Every other plant is an allium (spring onion, chives) whose scent deters slugs. Add copper tape around the bed edges and beer traps at corners.',
       placements: [
         // Fence border
         { row: 8, col: 18, plantSlug: 'runner-bean' },
         { row: 12, col: 18, plantSlug: 'runner-bean' },
         { row: 16, col: 18, plantSlug: 'dwarf-sweet-pea' },
-        // Conservatory — seed starting + tender herbs + overwintering
-        { row: 1, col: 1, plantSlug: 'basil-sweet' },
-        { row: 1, col: 3, plantSlug: 'pepper-chilli' },
-        { row: 1, col: 5, plantSlug: 'tomato-tumbling' },
+        // Conservatory — LOW LIGHT, shade-tolerant herbs only
+        { row: 1, col: 1, plantSlug: 'fern-hardy' },
+        { row: 1, col: 3, plantSlug: 'mint' },
+        { row: 1, col: 5, plantSlug: 'lemon-balm' },
         { row: 2, col: 1, plantSlug: 'parsley' },
         { row: 2, col: 3, plantSlug: 'coriander' },
-        { row: 2, col: 5, plantSlug: 'mint' },
+        { row: 2, col: 5, plantSlug: 'chives' },
       ],
       reasoning: [
         { plantSlug: 'runner-bean', plantName: 'Runner Bean (Scarlet Emperor)', row: 8, col: 18, zone: zoneLabel(8, 18), reasons: [
@@ -309,39 +312,42 @@ export function generateEsherLayouts(): EsherLayoutOption[] {
           'Cut flower supply for the house — the more you cut, the more they flower',
           'Near patio seating area — fragrance drifts to where you sit in the evening',
         ]},
-        { plantSlug: 'basil-sweet', plantName: 'Sweet Basil (Genovese)', row: 1, col: 1, zone: 'Conservatory', reasons: [
-          'Conservatory gives the warmth basil demands — won\'t tolerate UK outdoor nights until June',
-          'Start indoors April, move to GreenStalk tier 1 when nights stay above 10°C',
-          'Companion to tomatoes on the same windowsill — both need warmth and light',
+        // Conservatory — LOW LIGHT zone, NW-facing, ~2-3h effective growing light
+        // Glass filters UV. Only shade-tolerant herbs that DON'T need direct sun.
+        // Used as seed starting station Apr-May, then permanent shade herbs.
+        { plantSlug: 'fern-hardy', plantName: 'Hardy Fern', row: 1, col: 1, zone: 'Conservatory (low light)', reasons: [
+          'Zero sun requirement — thrives in the darkest corner',
+          'Architectural foliage adds greenery where nothing else grows',
+          'Native UK plant, fully hardy, maintenance-free',
         ]},
-        { plantSlug: 'pepper-chilli', plantName: 'Chilli Pepper', row: 1, col: 3, zone: 'Conservatory', reasons: [
-          'Conservatory is the ONLY viable location — chillies need 20°C+ and long season',
-          'Start Feb-Mar indoors, fruit from August. Overwinter in conservatory for year 2',
-          'Kids love watching the colour change from green → red',
-        ]},
-        { plantSlug: 'tomato-tumbling', plantName: 'Tomato (seedlings)', row: 1, col: 5, zone: 'Conservatory', reasons: [
-          'Start seedlings here, transplant to GreenStalk tier 2 when 15cm tall',
-          'Conservatory gives the warmth for germination (18-25°C) that a windowsill can\'t guarantee',
-          'Harden off for 7 days before moving outside',
-        ]},
-        { plantSlug: 'parsley', plantName: 'Flat-leaf Parsley', row: 2, col: 1, zone: 'Conservatory', reasons: [
-          'Slow to germinate (2-3 weeks) — conservatory warmth speeds it up',
-          'Move to GreenStalk tier 1 or raised bed once established',
-          'Cut-and-come-again herb, high-value (£18/kg vs supermarket)',
-        ]},
-        { plantSlug: 'coriander', plantName: 'Coriander (Calypso)', row: 2, col: 3, zone: 'Conservatory', reasons: [
-          'Varietal: Calypso — bolt-resistant, bred for leaf production not seed',
-          'Conservatory shade prevents the bolting that kills coriander outdoors',
-          'Succession sow every 3 weeks for continuous supply',
-        ]},
-        { plantSlug: 'mint', plantName: 'Mint (in pot)', row: 2, col: 5, zone: 'Conservatory', reasons: [
+        { plantSlug: 'mint', plantName: 'Mint (in pot)', row: 1, col: 3, zone: 'Conservatory (low light)', reasons: [
           'MUST stay in a pot — mint is invasive and will take over any bed',
-          'Conservatory keeps it accessible for kitchen use year-round',
-          'Renter-safe: contained, no risk to property',
+          'One of the most shade-tolerant herbs — actively prefers filtered light',
+          'Accessible for kitchen year-round, renter-safe: contained',
+        ]},
+        { plantSlug: 'lemon-balm', plantName: 'Lemon Balm', row: 1, col: 5, zone: 'Conservatory (low light)', reasons: [
+          'RHS: "thrives in partial to full shade" — one of few herbs that prefers it',
+          'Citrus-lemon scent for tea, cooking, and fragrance',
+          'Grow in pot to contain spreading — same family as mint',
+        ]},
+        { plantSlug: 'parsley', plantName: 'Flat-leaf Parsley', row: 2, col: 1, zone: 'Conservatory (low light)', reasons: [
+          'Tolerates shade well — grows in woodland edges in the wild',
+          'Slow to germinate (2-3 weeks) but conservatory warmth helps',
+          'Cut-and-come-again, high-value (£18/kg vs supermarket)',
+        ]},
+        { plantSlug: 'coriander', plantName: 'Coriander (Calypso)', row: 2, col: 3, zone: 'Conservatory (low light)', reasons: [
+          'Varietal: Calypso — bolt-resistant, bred for leaf not seed',
+          'Shade is actually IDEAL — coriander bolts immediately in full sun',
+          'The conservatory is the best spot in the whole garden for coriander',
+        ]},
+        { plantSlug: 'chives', plantName: 'Chives', row: 2, col: 5, zone: 'Conservatory (low light)', reasons: [
+          'Tolerates partial shade, evergreen through winter in conservatory',
+          'Allium scent deters pests from other conservatory herbs',
+          'Edible purple flowers in spring — ornamental and culinary',
         ]},
       ],
       raisedBedReplant: {
-        rationale: 'Transform the shade bed into a "daily salad bar" — every variety chosen for the dappled shade under the 3-4m laurel hedge. These crops actually perform BETTER in shade (lettuce and rocket bolt in full sun). All are cut-and-come-again so you harvest daily without replanting.',
+        rationale: 'Transform the shade bed into a "daily salad bar". SLUG STRATEGY: Bed is only 10cm/4" high — slugs from the damp hedge are the #1 threat. Every other position is an allium (spring onion) whose scent deters slugs. Add copper tape (£5 from garden centre) around the metal edging. Set beer traps at each corner. All crops shade-tolerant — the 3-4m laurel hedge gives only 3-4h direct sun, but lettuce and rocket actually PREFER this (they bolt in full sun).',
         placements: [
           { row: 21, col: 7, plantSlug: 'rocket' }, { row: 21, col: 8, plantSlug: 'lettuce' },
           { row: 21, col: 9, plantSlug: 'perpetual-spinach' }, { row: 21, col: 10, plantSlug: 'lettuce' },
@@ -351,9 +357,9 @@ export function generateEsherLayouts(): EsherLayoutOption[] {
           { row: 22, col: 11, plantSlug: 'perpetual-spinach' }, { row: 22, col: 12, plantSlug: 'rocket' },
         ],
         details: [
-          { plantSlug: 'rocket', plantName: 'Wild Rocket (Diplotaxis tenuifolia)', row: 21, col: 7, zone: zoneLabel(21, 7), reasons: ['Varietal: Wild Rocket — perennial, stronger flavour than salad rocket, cut-and-come-again for 2+ years', 'Thrives in partial shade — BOLTS in full sun', 'First harvest 28 days from sowing, then every 2-3 weeks', '£12/kg in Waitrose — highest-value salad crop per m²'] },
-          { plantSlug: 'lettuce', plantName: 'Lettuce (Little Gem)', row: 21, col: 8, zone: zoneLabel(21, 8), reasons: ['Varietal: Little Gem — RHS "reliable and compact", mini cos, sweet and crunchy', 'Bolt-resistant — critical in shade where plants stress more', '50 days to harvest, or pick outer leaves from 30 days', 'Perfect size for Max and Noelle to pick whole heads'] },
-          { plantSlug: 'perpetual-spinach', plantName: 'Perpetual Spinach (Leaf Beet)', row: 21, col: 9, zone: zoneLabel(21, 9), reasons: ['Varietal: Perpetual Spinach — NOT true spinach, it\'s a leaf beet (Beta vulgaris)', 'BBC Gardeners\' World "most forgiving green" — grows in any soil, any light', 'Won\'t bolt in summer like true spinach. Crops for 12-18 months from one sowing', 'Shade-tolerant, slug-resistant, and survives Surrey winters'] },
+          { plantSlug: 'rocket', plantName: 'Wild Rocket (Diplotaxis tenuifolia)', row: 21, col: 7, zone: zoneLabel(21, 7), reasons: ['Varietal: Wild Rocket — perennial, stronger flavour than salad rocket, cut-and-come-again for 2+ years', 'Thrives in partial shade (3-4h sun here) — BOLTS in full sun', 'First harvest 28 days from sowing, then every 2-3 weeks', '⚠️ SLUG TARGET: peppery leaves attract slugs — relies on neighbouring alliums + copper tape'] },
+          { plantSlug: 'lettuce', plantName: 'Lettuce (Little Gem)', row: 21, col: 8, zone: zoneLabel(21, 8), reasons: ['Varietal: Little Gem — RHS "reliable and compact", mini cos, sweet and crunchy', 'Bolt-resistant — partial shade here (3-4h) actually helps prevent bolting', '⚠️ SLUG TARGET: lettuce is slug favourite — flanked by spring onion allium barrier', 'Perfect size for Max and Noelle to pick whole heads'] },
+          { plantSlug: 'perpetual-spinach', plantName: 'Perpetual Spinach (Leaf Beet)', row: 21, col: 9, zone: zoneLabel(21, 9), reasons: ['Varietal: Perpetual Spinach — NOT true spinach, it\'s a leaf beet (Beta vulgaris)', 'BBC Gardeners\' World "most forgiving green" — grows in any soil, any light', 'Won\'t bolt in summer like true spinach. Crops for 12-18 months from one sowing', 'SLUG-RESISTANT: tough waxy leaves that slugs avoid — one of the safest crops for this bed'] },
           { plantSlug: 'lettuce', plantName: 'Lettuce (Salad Bowl)', row: 21, col: 10, zone: zoneLabel(21, 10), reasons: ['Varietal: Salad Bowl — RHS "excellent cut-and-come-again", oak-leaf type', 'Different leaf shape from Little Gem gives salad variety', 'Very slow to bolt — the most heat/shade-tolerant lettuce variety'] },
           { plantSlug: 'spring-onion', plantName: 'Spring Onion (White Lisbon)', row: 21, col: 11, zone: zoneLabel(21, 11), reasons: ['Varietal: White Lisbon — the UK standard, RHS "reliable and fast"', 'Allium scent is a natural slug deterrent — critical near the damp hedge', 'Direct sow every 3 weeks for continuous supply May-October', 'Narrow profile interplants perfectly between lettuce'] },
           { plantSlug: 'radish', plantName: 'Radish (French Breakfast)', row: 21, col: 12, zone: zoneLabel(21, 12), reasons: ['Varietal: French Breakfast — elongated red/white, milder than Cherry Belle', 'Fastest crop in the garden: 25 days seed to plate', 'Succession-sow every 2 weeks for continuous "treasure hunts" with Max', 'Roots break up compacted raised bed soil — natural cultivator'] },

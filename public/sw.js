@@ -1,4 +1,4 @@
-const CACHE_NAME = 'garden-plotter-v3';
+const CACHE_NAME = 'garden-plotter-v4';
 const ASSETS_TO_CACHE = [
   '/garden-plotter/',
   '/garden-plotter/index.html',

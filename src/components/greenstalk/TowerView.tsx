@@ -47,11 +47,11 @@ export function TowerView({
   );
 
   return (
-    <div className="bg-white dark:bg-stone-800/80 rounded-2xl shadow-lg border border-stone-200 dark:border-stone-700/50 p-6">
+    <div className="bg-white dark:bg-stone-800/80 rounded-2xl shadow-lg border border-stone-200 dark:border-stone-700/50 p-3 sm:p-6">
       <div className="flex items-center justify-between mb-4">
         <div>
           <input
-            className="text-lg font-semibold text-stone-800 dark:text-stone-100 bg-transparent border-none outline-none focus:underline decoration-stone-300 underline-offset-4"
+            className="text-sm sm:text-lg font-semibold text-stone-800 dark:text-stone-100 bg-transparent border-none outline-none focus:underline decoration-stone-300 underline-offset-4 w-full"
             value={tower.name}
             onChange={(e) => renameTower(tower.id, e.target.value)}
           />

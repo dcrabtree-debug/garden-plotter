@@ -38,16 +38,16 @@ export function TierRow({
   })();
 
   return (
-    <div className={`flex items-center gap-3 rounded-lg px-2 py-1 ${tierGradient}`}>
-      <div className="w-16 text-right">
-        <div className="text-xs font-semibold uppercase tracking-widest text-stone-500">
+    <div className={`flex items-center gap-1.5 sm:gap-3 rounded-lg px-1 sm:px-2 py-1 ${tierGradient}`}>
+      <div className="w-10 sm:w-16 text-right shrink-0">
+        <div className="text-[10px] sm:text-xs font-semibold uppercase tracking-widest text-stone-500">
           {getTierLabel(tier.tierNumber)}
         </div>
-        <div className="text-[10px] text-stone-400" title={getTierAdvice(tier.tierNumber)}>
+        <div className="text-[9px] sm:text-[10px] text-stone-400 hidden sm:block" title={getTierAdvice(tier.tierNumber)}>
           Tier {tier.tierNumber}
         </div>
       </div>
-      <div className="flex gap-1.5">
+      <div className="flex flex-wrap gap-1 sm:gap-1.5">
         {tier.pockets.map((pocket, i) => {
           const plant = pocket.plantSlug
             ? plantMap.get(pocket.plantSlug) ?? null

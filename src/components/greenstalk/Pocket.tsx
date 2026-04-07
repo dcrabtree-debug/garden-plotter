@@ -75,7 +75,7 @@ export function Pocket({
       onClick={onClick}
       {...(plant ? { ...attributes, ...listeners } : {})}
       className={`
-        group relative w-16 h-16 rounded-xl border-2 flex flex-col items-center justify-center
+        group relative w-12 h-12 sm:w-16 sm:h-16 rounded-lg sm:rounded-xl border-2 flex flex-col items-center justify-center
         cursor-pointer transition-all duration-150 select-none
         ${plant ? statusColors[companionStatus] : 'border-dashed border-stone-600/50'}
         ${plant ? statusBg[companionStatus] : 'bg-white dark:bg-stone-700'}
@@ -89,8 +89,8 @@ export function Pocket({
     >
       {plant ? (
         <>
-          <span className="text-xl leading-none">{plant.emoji}</span>
-          <span className="text-[9px] leading-tight text-stone-600 dark:text-stone-300 text-center mt-0.5 px-0.5 truncate w-full">
+          <span className="text-base sm:text-xl leading-none">{plant.emoji}</span>
+          <span className="text-[7px] sm:text-[9px] leading-tight text-stone-600 dark:text-stone-300 text-center mt-0.5 px-0.5 truncate w-full">
             {plant.commonName.split(' ')[0]}
           </span>
           {/* Water need indicator */}
@@ -113,7 +113,7 @@ export function Pocket({
           </button>
         </>
       ) : (
-        <span className="text-stone-300 dark:text-stone-500 text-lg">+</span>
+        <span className="text-stone-300 dark:text-stone-500 text-sm sm:text-lg">+</span>
       )}
     </div>
   );

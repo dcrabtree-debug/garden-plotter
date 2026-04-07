@@ -692,6 +692,13 @@ export function DashboardPage({ onNavigate }: { onNavigate?: (tab: string, view?
                     </div>
                   </div>
                 )}
+              {/* Full guide link */}
+                <button
+                  onClick={() => onNavigate?.('care')}
+                  className="mt-2 w-full text-[11px] py-2 rounded-lg border border-emerald-200 dark:border-emerald-800 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-colors font-medium"
+                >
+                  View Full Monthly Guide → Feeding, succession sowing, hardening off
+                </button>
               </div>
             )}
           </div>

@@ -67,22 +67,33 @@ export function createEsherGarden(): { config: GardenConfig; cells: GardenCell[]
 
   const overrides: CellOverride[] = [];
 
-  // ── House wall (rows 0-1) ──
+  // ══════════════════════════════════════════════════════════════════════════
+  // Layout rebuilt from David's manually-painted grid (April 7, 2026)
+  // ══════════════════════════════════════════════════════════════════════════
+
+  // ── House wall / patio (rows 0-1) ──
   for (let c = 0; c < cols; c++) {
     overrides.push({ row: 0, col: c, type: 'patio' });
+  }
+  // Row 1: patio behind house except conservatory
+  for (let c = 6; c < cols; c++) {
     overrides.push({ row: 1, col: c, type: 'patio' });
   }
 
-  // ── Conservatory (SW corner: rows 0-2, cols 0-5) ──
-  // West side of house. Glass room, French doors to garden.
+  // ── Conservatory (west side, rows 0-2, cols 1-5) ──
   for (let r = 0; r <= 2; r++) {
-    for (let c = 0; c <= 5; c++) {
+    for (let c = 1; c <= 5; c++) {
       overrides.push({ row: r, col: c, type: 'conservatory', label: 'Conservatory' });
     }
   }
+  // Col 0 rows 0-2 = patio/wall beside conservatory
+  overrides.push({ row: 0, col: 0, type: 'patio' });
+  overrides.push({ row: 1, col: 0, type: 'patio' });
+  overrides.push({ row: 2, col: 0, type: 'patio' });
+
   // Pre-populate conservatory — LOW LIGHT zone (~2-3h effective growing light)
-  // NW-facing Victorian glass = filtered light, most UV blocked by glass
-  // Only shade-tolerant plants that don't need direct sun
+  // NW-facing Victorian glass = filtered light, most UV blocked
+  // Only shade-tolerant plants: fern, mint, lemon-balm, parsley, coriander, chives
   overrides.push({ row: 1, col: 1, type: 'conservatory', plantSlug: 'fern-hardy', label: 'Conservatory' });
   overrides.push({ row: 1, col: 3, type: 'conservatory', plantSlug: 'mint', label: 'Conservatory' });
   overrides.push({ row: 1, col: 5, type: 'conservatory', plantSlug: 'lemon-balm', label: 'Conservatory' });
@@ -90,114 +101,119 @@ export function createEsherGarden(): { config: GardenConfig; cells: GardenCell[]
   overrides.push({ row: 2, col: 3, type: 'conservatory', plantSlug: 'coriander', label: 'Conservatory' });
   overrides.push({ row: 2, col: 5, type: 'conservatory', plantSlug: 'chives', label: 'Conservatory' });
 
-  // ── West boundary (col 0-1, rows 3-18) — established hedge/shrubs ──
-  // 19A side. Dense mixed hedge, not closeboard fencing.
-  for (let r = 3; r <= 18; r++) {
-    overrides.push({ row: r, col: 0, type: 'flower-bed', label: 'Boundary hedge' });
-    overrides.push({ row: r, col: 1, type: 'flower-bed', label: 'Shrub border' });
-  }
-
-  // ── East fence border (cols 18-19, rows 3-20) — Cordylines + Euphorbia ──
-  for (let r = 3; r <= 20; r++) {
-    overrides.push({ row: r, col: 19, type: 'flower-bed' });
-    overrides.push({ row: r, col: 18, type: 'flower-bed' });
-  }
-  for (let r = 4; r <= 18; r += 3) {
-    overrides.push({ row: r, col: 19, type: 'tree', label: 'Cordyline' });
-  }
-  for (let r = 6; r <= 18; r += 3) {
-    overrides.push({ row: r, col: 18, type: 'flower-bed', label: 'Euphorbia' });
-  }
-
-  // ── Patio near conservatory doors (rows 2-3, cols 4-8) ──
-  // Estate agent photo 5: paving slabs outside French doors
+  // ── Patio near conservatory doors (rows 2-3, cols 6-8) ──
   for (let r = 2; r <= 3; r++) {
-    for (let c = 4; c <= 8; c++) {
+    for (let c = 6; c <= 8; c++) {
       overrides.push({ row: r, col: c, type: 'patio', label: 'Conservatory patio' });
     }
   }
+  // Row 2-3 patio extends across back of house
+  for (let c = 9; c <= 17; c++) {
+    overrides.push({ row: 2, col: c, type: 'patio' });
+  }
 
-  // ── Back area: NO large patio here — lawn extends to the back zone ──
-  // Photos confirm: the lawn goes most of the way to the hedge.
-  // Only hard surfaces in back are: old shed pavers (east) and shed pad (west).
+  // ── West boundary (col 0, rows 3-22) — single-width flower bed ──
+  for (let r = 3; r <= 22; r++) {
+    overrides.push({ row: r, col: 0, type: 'flower-bed', label: 'West border' });
+  }
 
-  // ── Shed (rows 21-23, cols 3-5) — NORTHWEST corner ──
-  // Photo-confirmed: wooden shed with felt roof, 4 windows, against the west hedge.
-  // Visible in File_001 (back-left), Unknown-7 (close-up with hedge), Unknown-9 (close-up).
-  for (let r = 21; r <= 23; r++) {
-    for (let c = 3; c <= 5; c++) {
+  // ── East fence border (col 18 = flower-bed, col 19 = trees/veg) ──
+  for (let r = 2; r <= 19; r++) {
+    overrides.push({ row: r, col: 18, type: 'flower-bed', label: 'Fence border' });
+    overrides.push({ row: r, col: 19, type: 'tree', label: 'Boundary trees' });
+  }
+  // Cordylines on east fence
+  for (let r = 4; r <= 16; r += 3) {
+    overrides.push({ row: r, col: 19, type: 'tree', label: 'Cordyline' });
+  }
+
+  // ── Bottom-right area (rows 20-22, cols 17-19) — flower beds + veg ──
+  for (let r = 20; r <= 22; r++) {
+    overrides.push({ row: r, col: 18, type: 'flower-bed' });
+    overrides.push({ row: r, col: 19, type: 'flower-bed' });
+  }
+  overrides.push({ row: 20, col: 17, type: 'flower-bed' });
+
+  // ── Raised bed area (rows 19-20, cols 5-8) ──
+  for (let r = 19; r <= 20; r++) {
+    for (let c = 5; c <= 8; c++) {
+      overrides.push({ row: r, col: c, type: 'raised-bed', label: 'Raised bed' });
+    }
+  }
+  // Additional raised/veg area at rows 21-22
+  for (let c = 5; c <= 8; c++) {
+    overrides.push({ row: 21, col: c, type: 'veg-patch', label: 'Back veg patch' });
+  }
+
+  // ── Flower beds in back-center (rows 19-20, cols 9-13) ──
+  for (let r = 19; r <= 20; r++) {
+    for (let c = 9; c <= 13; c++) {
+      overrides.push({ row: r, col: c, type: 'flower-bed', label: 'Back flower bed' });
+    }
+  }
+
+  // ── Shed (rows 19-21, cols 15-16) ──
+  for (let r = 19; r <= 21; r++) {
+    for (let c = 15; c <= 16; c++) {
       overrides.push({ row: r, col: c, type: 'shed', label: 'Shed' });
     }
   }
-  // Small concrete pad in front of shed
-  overrides.push({ row: 20, col: 3, type: 'patio', label: 'Shed pad' });
-  overrides.push({ row: 20, col: 4, type: 'patio', label: 'Shed pad' });
-  overrides.push({ row: 20, col: 5, type: 'patio', label: 'Shed pad' });
+  // Patio/path in front of shed
+  overrides.push({ row: 19, col: 14, type: 'patio', label: 'Shed path' });
+  overrides.push({ row: 20, col: 14, type: 'patio', label: 'Shed path' });
 
-  // ── Ornamental planting bed in front of hedge (rows 20-21, cols 6-8) ──
-  // Photo Unknown-7: Aucuba (yellow-green), Acer (red), shrubs between shed and raised bed
-  for (let r = 20; r <= 21; r++) {
-    for (let c = 6; c <= 8; c++) {
-      overrides.push({ row: r, col: c, type: 'flower-bed', label: 'Ornamental bed' });
-    }
-  }
-
-  // ── Raised bed (rows 20-21, cols 9-13) — shade bed near hedge ──
-  // Photo Unknown-8: black metal edging, hostas, ferns, shade plants.
-  // Central-back area, in front of the laurel hedge. Gets dappled shade.
-  for (let r = 20; r <= 21; r++) {
-    for (let c = 9; c <= 13; c++) {
-      overrides.push({ row: r, col: c, type: 'raised-bed' });
-    }
-  }
-
-  // ── Old shed pavers — EAST side (rows 20-22, cols 16-19) ──
-  // Photo Unknown-10: concrete pad where old shed was removed.
-  // THIS is where the 2 GreenStalks go — ready-made hard surface.
-  for (let r = 20; r <= 22; r++) {
-    for (let c = 16; c <= 19; c++) {
-      overrides.push({ row: r, col: c, type: 'patio', label: 'Old shed pavers' });
-    }
-  }
-
-  // ── GreenStalk positions on old shed pavers (east side) ──
-  // 2 GreenStalks only. Each is 2x2 cells (1m x 1m footprint).
-  for (let r = 20; r <= 21; r++) {
-    for (let c = 16; c <= 17; c++) {
+  // ── GreenStalk positions (rows 21-22, cols 9-12) ──
+  // 2 GreenStalks, each 2×2 cells (1m × 1m footprint)
+  for (let r = 21; r <= 22; r++) {
+    for (let c = 9; c <= 10; c++) {
       overrides.push({ row: r, col: c, type: 'greenstalk', label: 'GreenStalk 1' });
     }
   }
-  for (let r = 20; r <= 21; r++) {
-    for (let c = 18; c <= 19; c++) {
+  for (let r = 21; r <= 22; r++) {
+    for (let c = 11; c <= 12; c++) {
       overrides.push({ row: r, col: c, type: 'greenstalk', label: 'GreenStalk 2' });
     }
   }
 
-  // ── Laurel/ivy hedge (rows 22-23) — NORTH boundary ──
-  // Photo Unknown-7: very tall (3-4m), dense evergreen. Full width.
-  for (let c = 0; c <= 19; c++) {
-    overrides.push({ row: 23, col: c, type: 'tree', label: 'Laurel hedge' });
+  // ── Bottom row (row 23) — hedge/boundary ──
+  for (let c = 0; c <= 4; c++) {
+    overrides.push({ row: 23, col: c, type: 'flower-bed', label: 'Back border' });
   }
-  for (let c = 6; c <= 15; c++) {
-    overrides.push({ row: 22, col: c, type: 'tree', label: 'Hedge canopy' });
+  for (let c = 5; c <= 8; c++) {
+    overrides.push({ row: 23, col: c, type: 'veg-patch', label: 'Back veg' });
   }
-
-  // ── Back gate + fruit bushes (rows 21-22, cols 14-15) ──
-  overrides.push({ row: 22, col: 14, type: 'path', label: 'Back gate' });
-  overrides.push({ row: 22, col: 15, type: 'path', label: 'Back gate' });
-  overrides.push({ row: 21, col: 14, type: 'flower-bed', plantSlug: 'gooseberry', label: 'Gooseberry' });
-  overrides.push({ row: 21, col: 15, type: 'flower-bed', plantSlug: 'redcurrant', label: 'Redcurrant' });
-
-  // ── Large deciduous tree overhanging from right (SE) side ──
-  // Estate agent photos: massive tree canopy covers back-right quarter in afternoon
-  for (let r = 14; r <= 19; r++) {
-    overrides.push({ row: r, col: 19, type: 'tree', label: 'Overhanging tree' });
+  for (let c = 9; c <= 13; c++) {
+    overrides.push({ row: 23, col: c, type: 'tree', label: 'Hedge' });
+  }
+  overrides.push({ row: 23, col: 14, type: 'path', label: 'Back gate' });
+  for (let c = 15; c <= 19; c++) {
+    overrides.push({ row: 23, col: c, type: 'tree', label: 'Hedge' });
   }
 
-  // ── Sweet peas on right fence ──
-  overrides.push({ row: 8, col: 18, type: 'flower-bed', plantSlug: 'dwarf-sweet-pea' });
-  overrides.push({ row: 12, col: 18, type: 'flower-bed', plantSlug: 'dwarf-sweet-pea' });
-  overrides.push({ row: 16, col: 18, type: 'flower-bed', plantSlug: 'dwarf-sweet-pea' });
+  // ── Row 22 — mixed back area ──
+  for (let c = 0; c <= 4; c++) {
+    overrides.push({ row: 22, col: c, type: 'flower-bed', label: 'Back border' });
+  }
+  for (let c = 5; c <= 8; c++) {
+    overrides.push({ row: 22, col: c, type: 'veg-patch', label: 'Back veg' });
+  }
+  overrides.push({ row: 22, col: 13, type: 'flower-bed' });
+  overrides.push({ row: 22, col: 14, type: 'patio', label: 'Path' });
+  overrides.push({ row: 22, col: 15, type: 'flower-bed' });
+  overrides.push({ row: 22, col: 16, type: 'flower-bed' });
+  overrides.push({ row: 22, col: 17, type: 'flower-bed' });
+
+  // ── Row 21 — back area continued ──
+  for (let c = 0; c <= 4; c++) {
+    overrides.push({ row: 21, col: c, type: 'flower-bed', label: 'Back border' });
+  }
+  overrides.push({ row: 21, col: 13, type: 'flower-bed' });
+  overrides.push({ row: 21, col: 14, type: 'patio', label: 'Path' });
+  overrides.push({ row: 21, col: 17, type: 'flower-bed' });
+
+  // ── Existing plants — fruit bushes near back gate ──
+  overrides.push({ row: 20, col: 17, type: 'flower-bed', plantSlug: 'gooseberry', label: 'Gooseberry' });
+  overrides.push({ row: 20, col: 18, type: 'flower-bed', plantSlug: 'redcurrant', label: 'Redcurrant' });
 
   // Apply overrides (last-write-wins)
   for (const o of overrides) {
@@ -266,7 +282,8 @@ function zoneLabel(row: number, col: number): string {
 /**
  * Generate layout options targeting ACTUAL plantable in-ground areas.
  * Fence border: 3 slots between Cordylines (col 18, rows 8/12/16).
- * Raised bed replant: 12 cells (rows 21-22, cols 7-12) — shade-tolerant crops.
+ * Raised bed: 8 cells (rows 19-20, cols 5-8).
+ * Back veg patches: rows 21-22, cols 5-8.
  */
 export function generateEsherLayouts(): EsherLayoutOption[] {
   return [
@@ -349,16 +366,14 @@ export function generateEsherLayouts(): EsherLayoutOption[] {
       raisedBedReplant: {
         rationale: 'Transform the shade bed into a "daily salad bar". SLUG STRATEGY: Bed is only 10cm/4" high — slugs from the damp hedge are the #1 threat. Every other position is an allium (spring onion) whose scent deters slugs. Add copper tape (£5 from garden centre) around the metal edging. Set beer traps at each corner. All crops shade-tolerant — the 3-4m laurel hedge gives only 3-4h direct sun, but lettuce and rocket actually PREFER this (they bolt in full sun).',
         placements: [
-          { row: 21, col: 7, plantSlug: 'rocket' }, { row: 21, col: 8, plantSlug: 'lettuce' },
-          { row: 21, col: 9, plantSlug: 'perpetual-spinach' }, { row: 21, col: 10, plantSlug: 'lettuce' },
-          { row: 21, col: 11, plantSlug: 'spring-onion' }, { row: 21, col: 12, plantSlug: 'radish' },
-          { row: 22, col: 7, plantSlug: 'lettuce' }, { row: 22, col: 8, plantSlug: 'rocket' },
-          { row: 22, col: 9, plantSlug: 'radish' }, { row: 22, col: 10, plantSlug: 'spring-onion' },
-          { row: 22, col: 11, plantSlug: 'perpetual-spinach' }, { row: 22, col: 12, plantSlug: 'rocket' },
+          { row: 19, col: 5, plantSlug: 'rocket' }, { row: 19, col: 6, plantSlug: 'lettuce' },
+          { row: 19, col: 7, plantSlug: 'spring-onion' }, { row: 19, col: 8, plantSlug: 'radish' },
+          { row: 20, col: 5, plantSlug: 'lettuce' }, { row: 20, col: 6, plantSlug: 'perpetual-spinach' },
+          { row: 20, col: 7, plantSlug: 'spring-onion' }, { row: 20, col: 8, plantSlug: 'rocket' },
         ],
         details: [
-          { plantSlug: 'rocket', plantName: 'Wild Rocket (Diplotaxis tenuifolia)', row: 21, col: 7, zone: zoneLabel(21, 7), reasons: ['Varietal: Wild Rocket — perennial, stronger flavour than salad rocket, cut-and-come-again for 2+ years', 'Thrives in partial shade (3-4h sun here) — BOLTS in full sun', 'First harvest 28 days from sowing, then every 2-3 weeks', '⚠️ SLUG TARGET: peppery leaves attract slugs — relies on neighbouring alliums + copper tape'] },
-          { plantSlug: 'lettuce', plantName: 'Lettuce (Little Gem)', row: 21, col: 8, zone: zoneLabel(21, 8), reasons: ['Varietal: Little Gem — RHS "reliable and compact", mini cos, sweet and crunchy', 'Bolt-resistant — partial shade here (3-4h) actually helps prevent bolting', '⚠️ SLUG TARGET: lettuce is slug favourite — flanked by spring onion allium barrier', 'Perfect size for Max and Noelle to pick whole heads'] },
+          { plantSlug: 'rocket', plantName: 'Wild Rocket (Diplotaxis tenuifolia)', row: 19, col: 5, zone: zoneLabel(19, 5), reasons: ['Varietal: Wild Rocket — perennial, stronger flavour than salad rocket, cut-and-come-again for 2+ years', 'Thrives in partial shade (3-4h sun here) — BOLTS in full sun', 'First harvest 28 days from sowing, then every 2-3 weeks', '⚠️ SLUG TARGET: peppery leaves attract slugs — relies on neighbouring alliums + copper tape'] },
+          { plantSlug: 'lettuce', plantName: 'Lettuce (Little Gem)', row: 19, col: 6, zone: zoneLabel(19, 6), reasons: ['Varietal: Little Gem — RHS "reliable and compact", mini cos, sweet and crunchy', 'Bolt-resistant — partial shade here (3-4h) actually helps prevent bolting', '⚠️ SLUG TARGET: lettuce is slug favourite — flanked by spring onion allium barrier', 'Perfect size for Max and Noelle to pick whole heads'] },
           { plantSlug: 'perpetual-spinach', plantName: 'Perpetual Spinach (Leaf Beet)', row: 21, col: 9, zone: zoneLabel(21, 9), reasons: ['Varietal: Perpetual Spinach — NOT true spinach, it\'s a leaf beet (Beta vulgaris)', 'BBC Gardeners\' World "most forgiving green" — grows in any soil, any light', 'Won\'t bolt in summer like true spinach. Crops for 12-18 months from one sowing', 'SLUG-RESISTANT: tough waxy leaves that slugs avoid — one of the safest crops for this bed'] },
           { plantSlug: 'lettuce', plantName: 'Lettuce (Salad Bowl)', row: 21, col: 10, zone: zoneLabel(21, 10), reasons: ['Varietal: Salad Bowl — RHS "excellent cut-and-come-again", oak-leaf type', 'Different leaf shape from Little Gem gives salad variety', 'Very slow to bolt — the most heat/shade-tolerant lettuce variety'] },
           { plantSlug: 'spring-onion', plantName: 'Spring Onion (White Lisbon)', row: 21, col: 11, zone: zoneLabel(21, 11), reasons: ['Varietal: White Lisbon — the UK standard, RHS "reliable and fast"', 'Allium scent is a natural slug deterrent — critical near the damp hedge', 'Direct sow every 3 weeks for continuous supply May-October', 'Narrow profile interplants perfectly between lettuce'] },

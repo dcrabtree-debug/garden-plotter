@@ -246,7 +246,9 @@ export function DashboardPage({ onNavigate }: { onNavigate?: (tab: string, view?
         const daysUntil = daysBetween(today, new Date(task.deadlineDate));
         if (daysUntil < 0 && !done) {
           overdue.push(task);
-        } else if (daysUntil <= 3) {
+        } else if (daysUntil <= 3 || phase === 'PRE_MOVE' || phase === 'NO_GEAR') {
+          // In pre-move/no-gear phases, show ALL tasks in "Do Now" since
+          // they're the only actionable items and shouldn't be buried
           todayGroup.push(task);
         } else {
           upcoming.push(task);
@@ -510,6 +512,43 @@ export function DashboardPage({ onNavigate }: { onNavigate?: (tab: string, view?
           )}
         </div>
 
+        {/* ── OVERDUE ─────────────────────────────────────────────────────── */}
+        {overdueTasks.length > 0 && (
+          <div className="bg-white dark:bg-stone-800 rounded-2xl border-2 border-red-300 dark:border-red-700 overflow-hidden">
+            <SectionHeader section="overdue" title={`🚨 Overdue — Needs Attention`} count={overdueTasks.length} color="text-red-700 dark:text-red-300" />
+            {!collapsed.has('overdue') && (
+              <div className="divide-y divide-stone-50 dark:divide-stone-700/50">
+                {overdueTasks.map((t) => renderTask(t, true))}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* ── YOUR TO-DO LIST ───────────────────────────────────────────── */}
+        {(todayTasks.length > 0 || recurringTasks.length > 0) && (
+          <div className="bg-white dark:bg-stone-800 rounded-2xl border border-stone-200 dark:border-stone-700 overflow-hidden">
+            <SectionHeader section="today" title="📋 Your To-Do List" count={todayTasks.length + recurringTasks.length} />
+            {!collapsed.has('today') && (
+              <div className="divide-y divide-stone-50 dark:divide-stone-700/50">
+                {todayTasks.map((t) => renderTask(t))}
+                {recurringTasks.map((t) => renderTask(t))}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* ── COMING UP ───────────────────────────────────────────────────── */}
+        {upcomingTasks.length > 0 && (
+          <div className="bg-white dark:bg-stone-800 rounded-2xl border border-stone-200 dark:border-stone-700 overflow-hidden">
+            <SectionHeader section="upcoming" title="📅 Coming Up" count={upcomingTasks.length} />
+            {!collapsed.has('upcoming') && (
+              <div className="divide-y divide-stone-50 dark:divide-stone-700/50">
+                {upcomingTasks.map((t) => renderTask(t))}
+              </div>
+            )}
+          </div>
+        )}
+
         {/* ── 5-DAY WEATHER STRIP ──────────────────────────────────────── */}
         {forecast && (
           <div className="bg-white dark:bg-stone-800 rounded-2xl border border-stone-200 dark:border-stone-700 overflow-hidden px-4 py-3">
@@ -543,31 +582,6 @@ export function DashboardPage({ onNavigate }: { onNavigate?: (tab: string, view?
           onStartSnapshot={() => onNavigate?.('coach', 'snapshot')}
           onViewTimeline={() => onNavigate?.('coach', 'timeline')}
         />
-
-        {/* ── OVERDUE ─────────────────────────────────────────────────────── */}
-        {overdueTasks.length > 0 && (
-          <div className="bg-white dark:bg-stone-800 rounded-2xl border-2 border-red-300 dark:border-red-700 overflow-hidden">
-            <SectionHeader section="overdue" title={`🚨 Overdue — Needs Attention`} count={overdueTasks.length} color="text-red-700 dark:text-red-300" />
-            {!collapsed.has('overdue') && (
-              <div className="divide-y divide-stone-50 dark:divide-stone-700/50">
-                {overdueTasks.map((t) => renderTask(t, true))}
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* ── DO NOW (next 3 days) ───────────────────────────────────────── */}
-        {(todayTasks.length > 0 || recurringTasks.length > 0) && (
-          <div className="bg-white dark:bg-stone-800 rounded-2xl border border-stone-200 dark:border-stone-700 overflow-hidden">
-            <SectionHeader section="today" title="📋 Do Now" count={todayTasks.length + recurringTasks.length} />
-            {!collapsed.has('today') && (
-              <div className="divide-y divide-stone-50 dark:divide-stone-700/50">
-                {todayTasks.map((t) => renderTask(t))}
-                {recurringTasks.map((t) => renderTask(t))}
-              </div>
-            )}
-          </div>
-        )}
 
         {/* ── HARVEST COUNTDOWN ─────────────────────────────────────────── */}
         {harvestEstimates.length > 0 && (
@@ -616,18 +630,6 @@ export function DashboardPage({ onNavigate }: { onNavigate?: (tab: string, view?
                     </div>
                   );
                 })}
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* ── UPCOMING ───────────────────────────────────────────────────── */}
-        {upcomingTasks.length > 0 && (
-          <div className="bg-white dark:bg-stone-800 rounded-2xl border border-stone-200 dark:border-stone-700 overflow-hidden">
-            <SectionHeader section="upcoming" title="📅 Coming Up" count={upcomingTasks.length} />
-            {!collapsed.has('upcoming') && (
-              <div className="divide-y divide-stone-50 dark:divide-stone-700/50">
-                {upcomingTasks.map((t) => renderTask(t))}
               </div>
             )}
           </div>

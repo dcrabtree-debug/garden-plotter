@@ -258,16 +258,11 @@ export function DashboardPage({ onNavigate }: { onNavigate?: (tab: string, view?
       }
     }
 
-    // Sort: incomplete tasks first, then completed at bottom
-    const sortWithDone = (a: PriorityTask, b: PriorityTask) => {
-      const aDone = completedTasks.has(a.id) ? 1 : 0;
-      const bDone = completedTasks.has(b.id) ? 1 : 0;
-      if (aDone !== bDone) return aDone - bDone;
-      return 0;
-    };
+    // Keep completed tasks in their original position — re-sorting causes them
+    // to jump on mobile, making it look like they vanished.
     overdue.sort((a, b) => (a.deadlineDate ?? '').localeCompare(b.deadlineDate ?? ''));
-    todayGroup.sort((a, b) => sortWithDone(a, b) || a.priority - b.priority);
-    upcoming.sort((a, b) => sortWithDone(a, b) || (a.deadlineDate ?? '').localeCompare(b.deadlineDate ?? ''));
+    todayGroup.sort((a, b) => a.priority - b.priority);
+    upcoming.sort((a, b) => (a.deadlineDate ?? '').localeCompare(b.deadlineDate ?? ''));
 
     return { overdueTasks: overdue, todayTasks: todayGroup, upcomingTasks: upcoming, recurringTasks: recurring };
   }, [phase, completedTasks, today]);

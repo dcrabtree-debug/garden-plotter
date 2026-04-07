@@ -27,7 +27,6 @@ export function PlannerPage() {
   const towers = usePlannerStore((s) => s.towers);
   const locked = usePlannerStore((s) => s.locked);
   const assignPlant = usePlannerStore((s) => s.assignPlant);
-
   const removePlant = usePlannerStore((s) => s.removePlant);
   const addTower = usePlannerStore((s) => s.addTower);
   const removeTowerAction = usePlannerStore((s) => s.removeTower);

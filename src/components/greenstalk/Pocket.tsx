@@ -71,7 +71,7 @@ export function Pocket({
     setDragRef(el);
   };
 
-  const hasDuo = plant && companionPlants.length > 0;
+  // GreenStalk pockets hold ONE plant — no duo sharing (pocket too small)
 
   return (
     <div
@@ -79,7 +79,7 @@ export function Pocket({
       onClick={onClick}
       {...(plant ? { ...attributes, ...listeners } : {})}
       className={`
-        group relative ${hasDuo ? 'w-14 h-12 sm:w-[4.5rem] sm:h-16' : 'w-12 h-12 sm:w-16 sm:h-16'} rounded-lg sm:rounded-xl border-2 flex flex-col items-center justify-center
+        group relative w-12 h-12 sm:w-16 sm:h-16 rounded-lg sm:rounded-xl border-2 flex flex-col items-center justify-center
         cursor-pointer transition-all duration-150 select-none
         ${plant ? statusColors[companionStatus] : 'border-dashed border-stone-600/50'}
         ${plant ? statusBg[companionStatus] : 'bg-white dark:bg-stone-700'}
@@ -93,20 +93,9 @@ export function Pocket({
     >
       {plant ? (
         <>
-          {hasDuo ? (
-            /* Duo layout: primary + companion side by side */
-            <div className="flex items-center gap-0.5">
-              <span className="text-base sm:text-lg leading-none">{plant.emoji}</span>
-              <span className="text-[9px] sm:text-[11px] leading-none opacity-80">+</span>
-              <span className="text-xs sm:text-sm leading-none">{companionPlants[0].emoji}</span>
-            </div>
-          ) : (
-            <span className="text-base sm:text-xl leading-none">{plant.emoji}</span>
-          )}
+          <span className="text-base sm:text-xl leading-none">{plant.emoji}</span>
           <span className="text-[7px] sm:text-[9px] leading-tight text-stone-600 dark:text-stone-300 text-center mt-0.5 px-0.5 truncate w-full">
-            {hasDuo
-              ? `${plant.commonName.split(' ')[0]}+${companionPlants[0].commonName.split(' ')[0]}`
-              : plant.commonName.split(' ')[0]}
+            {plant.commonName.split(' ')[0]}
           </span>
           {/* Water need indicator */}
           <span
@@ -116,12 +105,6 @@ export function Pocket({
             }`}
             title={`Water: ${plant.water}`}
           />
-          {/* Duo badge */}
-          {hasDuo && (
-            <span className="absolute -top-1 -left-1 w-3.5 h-3.5 rounded-full bg-emerald-500 text-white text-[8px] font-bold flex items-center justify-center">
-              2
-            </span>
-          )}
           <button
             onClick={(e) => {
               e.stopPropagation();

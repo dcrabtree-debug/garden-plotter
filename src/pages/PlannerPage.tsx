@@ -27,7 +27,7 @@ export function PlannerPage() {
   const towers = usePlannerStore((s) => s.towers);
   const locked = usePlannerStore((s) => s.locked);
   const assignPlant = usePlannerStore((s) => s.assignPlant);
-  const assignDuo = usePlannerStore((s) => s.assignDuo);
+
   const removePlant = usePlannerStore((s) => s.removePlant);
   const addTower = usePlannerStore((s) => s.addTower);
   const removeTowerAction = usePlannerStore((s) => s.removeTower);
@@ -363,11 +363,6 @@ export function PlannerPage() {
                 assignPlant(smartPicker.towerId, smartPicker.tierNumber, smartPicker.pocketIndex, slug);
                 setSmartPicker(null);
               }}
-              onSelectDuo={(primary, companion) => {
-                if (smartPicker.currentSlug) removePlant(smartPicker.towerId, smartPicker.tierNumber, smartPicker.pocketIndex);
-                assignDuo(smartPicker.towerId, smartPicker.tierNumber, smartPicker.pocketIndex, primary, companion);
-                setSmartPicker(null);
-              }}
               onRemove={() => {
                 removePlant(smartPicker.towerId, smartPicker.tierNumber, smartPicker.pocketIndex);
                 setSmartPicker(null);
@@ -404,11 +399,6 @@ export function PlannerPage() {
             onSelect={(slug) => {
               if (smartPicker.currentSlug) removePlant(smartPicker.towerId, smartPicker.tierNumber, smartPicker.pocketIndex);
               assignPlant(smartPicker.towerId, smartPicker.tierNumber, smartPicker.pocketIndex, slug);
-              setSmartPicker(null);
-            }}
-            onSelectDuo={(primary, companion) => {
-              if (smartPicker.currentSlug) removePlant(smartPicker.towerId, smartPicker.tierNumber, smartPicker.pocketIndex);
-              assignDuo(smartPicker.towerId, smartPicker.tierNumber, smartPicker.pocketIndex, primary, companion);
               setSmartPicker(null);
             }}
             onRemove={() => {

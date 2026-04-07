@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { PlannerPage } from './pages/PlannerPage';
 import { GardenPage } from './pages/GardenPage';
 import { HarvestPage } from './pages/HarvestPage';
@@ -10,21 +10,23 @@ import { SettingsPage } from './pages/SettingsPage';
 import { SetupGuidePage } from './pages/SetupGuidePage';
 import { ShadowPage } from './pages/ShadowPage';
 import { YieldPage } from './pages/YieldPage';
-import { TodayPage } from './pages/TodayPage';
+import { DashboardPage } from './pages/DashboardPage';
+import { PhotoCoachPage } from './pages/PhotoCoachPage';
 import { useDarkMode } from './hooks/use-dark-mode';
 import { usePlannerStore } from './state/planner-store';
 
-type TopTab = 'today' | 'plan' | 'grow' | 'learn' | 'seeds' | 'settings';
+type TopTab = 'dashboard' | 'coach' | 'plan' | 'grow' | 'learn' | 'seeds' | 'settings';
 type PlanSub = 'greenstalk' | 'garden';
 type GrowSub = 'care' | 'calendar' | 'harvest';
 type LearnSub = 'plants' | 'yield' | 'sun' | 'setup';
 
 const topNav: { id: TopTab; label: string; icon: string }[] = [
-  { id: 'today', label: 'Today', icon: '📋' },
+  { id: 'dashboard', label: 'Dashboard', icon: '📋' },
+  { id: 'coach', label: 'Coach', icon: '📸' },
   { id: 'plan', label: 'Plan', icon: '🗺️' },
   { id: 'grow', label: 'Grow', icon: '🌱' },
   { id: 'learn', label: 'Learn', icon: '📚' },
-  { id: 'seeds', label: 'Seeds', icon: '🛒' },
+  { id: 'seeds', label: 'Shopping', icon: '🛒' },
   { id: 'settings', label: 'Settings', icon: '⚙️' },
 ];
 
@@ -65,12 +67,23 @@ function SubNav({ items, active, onSelect }: { items: { id: string; label: strin
 }
 
 function App() {
-  const [topTab, setTopTab] = useState<TopTab>('today');
+  const [topTab, setTopTab] = useState<TopTab>('dashboard');
   const [planSub, setPlanSub] = useState<PlanSub>('greenstalk');
   const [growSub, setGrowSub] = useState<GrowSub>('care');
   const [learnSub, setLearnSub] = useState<LearnSub>('plants');
+  const [coachInitialView, setCoachInitialView] = useState<string | undefined>();
   const { isDark, toggle: toggleDark } = useDarkMode();
   const location = usePlannerStore((s) => s.settings.location);
+
+  // Cross-tab navigation handler (used by Dashboard snapshot widget)
+  const handleNavigate = useCallback((tab: string, view?: string) => {
+    if (tab === 'coach' && view) {
+      setCoachInitialView(view);
+    } else {
+      setCoachInitialView(undefined);
+    }
+    setTopTab(tab as TopTab);
+  }, []);
 
   return (
     <div className="h-screen flex flex-col bg-stone-100 dark:bg-stone-900 transition-colors">
@@ -95,7 +108,7 @@ function App() {
           </button>
         </div>
 
-        {/* Primary navigation — 6 tabs */}
+        {/* Primary navigation — 7 tabs */}
         <nav className="mt-2 sm:mt-2.5 -mb-1 flex gap-1 sm:gap-1.5 overflow-x-auto scrollbar-hide pb-0.5">
           {topNav.map((item) => (
             <button
@@ -122,7 +135,8 @@ function App() {
       {/* Page content */}
       <main className="flex-1 overflow-hidden">
         <div key={`${topTab}-${planSub}-${growSub}-${learnSub}`} className="h-full animate-fadeIn">
-          {topTab === 'today' && <TodayPage />}
+          {topTab === 'dashboard' && <DashboardPage onNavigate={handleNavigate} />}
+          {topTab === 'coach' && <PhotoCoachPage initialView={coachInitialView as any} key={coachInitialView ?? 'gallery'} />}
           {topTab === 'plan' && planSub === 'greenstalk' && <PlannerPage />}
           {topTab === 'plan' && planSub === 'garden' && <GardenPage />}
           {topTab === 'grow' && growSub === 'care' && <CarePage />}

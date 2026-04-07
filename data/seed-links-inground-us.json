@@ -45,7 +45,7 @@
           },
           {
             "seller": "Territorial Seed Company",
-            "url": "https://www.territorialseed.com/product/chioggia-beet-seeds",
+            "url": "https://www.territorialseed.com/products/chioggia-beet-seeds",
             "priceUSD": 3.45
           }
         ]
@@ -92,7 +92,7 @@
           },
           {
             "seller": "Territorial Seed Company",
-            "url": "https://www.territorialseed.com/product/king-of-the-north-pepper-seeds",
+            "url": "https://www.territorialseed.com/products/king-of-the-north-pepper-seeds",
             "priceUSD": 3.95
           },
           {
@@ -308,7 +308,7 @@
           },
           {
             "seller": "Territorial Seed Company",
-            "url": "https://www.territorialseed.com/product/lemon-cucumber-seeds",
+            "url": "https://www.territorialseed.com/products/lemon-cucumber-seeds",
             "priceUSD": 3.45
           }
         ]
@@ -360,7 +360,7 @@
           },
           {
             "seller": "Territorial Seed Company",
-            "url": "https://www.territorialseed.com/product/ichiban-eggplant-seeds",
+            "url": "https://www.territorialseed.com/products/ichiban-eggplant-seeds",
             "priceUSD": 3.95
           }
         ]
@@ -389,7 +389,7 @@
           },
           {
             "seller": "Territorial Seed Company",
-            "url": "https://www.territorialseed.com/product/chandler-strawberry-plants",
+            "url": "https://www.territorialseed.com/products/chandler-strawberry-plants",
             "priceUSD": 12.75
           }
         ]
@@ -406,7 +406,7 @@
           },
           {
             "seller": "Territorial Seed Company",
-            "url": "https://www.territorialseed.com/product/camarosa-strawberry-plants",
+            "url": "https://www.territorialseed.com/products/camarosa-strawberry-plants",
             "priceUSD": 13.75
           },
           {
@@ -430,11 +430,6 @@
             "seller": "Park Seed",
             "url": "https://www.parkseed.com/ozark-beauty-strawberry-plants/p/05892/",
             "priceUSD": 13.95
-          },
-          {
-            "seller": "Johnny's Selected Seeds",
-            "url": "https://www.johnnyseeds.com/fruit/strawberries/ozark-beauty-strawberry-plants-1050.html",
-            "priceUSD": 12.95
           }
         ]
       }
@@ -445,7 +440,7 @@
     "commonName": "Hot Pepper",
     "varieties": [
       {
-        "name": "Jalape\u00f1o",
+        "name": "Jalapeño",
         "why": "Mexican classic, thick-walled, medium heat, heavy outdoor yields",
         "context": "inground",
         "sellers": [
@@ -470,7 +465,7 @@
       },
       {
         "name": "Serrano",
-        "why": "Hotter than jalape\u00f1o, prolific in SoCal heat, essential for salsa",
+        "why": "Hotter than jalapeño, prolific in SoCal heat, essential for salsa",
         "context": "inground",
         "sellers": [
           {
@@ -516,7 +511,7 @@
           },
           {
             "seller": "Territorial Seed Company",
-            "url": "https://www.territorialseed.com/product/red-russian-kale-seeds",
+            "url": "https://www.territorialseed.com/products/red-russian-kale-seeds",
             "priceUSD": 3.75
           }
         ]
@@ -590,7 +585,7 @@
           },
           {
             "seller": "Territorial Seed Company",
-            "url": "https://www.territorialseed.com/product/parris-island-cos-romaine-lettuce-seeds",
+            "url": "https://www.territorialseed.com/products/parris-island-cos-romaine-lettuce-seeds",
             "priceUSD": 3.45
           }
         ]
@@ -673,7 +668,7 @@
           },
           {
             "seller": "Territorial Seed Company",
-            "url": "https://www.territorialseed.com/product/sugar-snap-pea-seeds",
+            "url": "https://www.territorialseed.com/products/sugar-snap-pea-seeds",
             "priceUSD": 4.95
           }
         ]
@@ -685,7 +680,7 @@
         "sellers": [
           {
             "seller": "Territorial Seed Company",
-            "url": "https://www.territorialseed.com/product/oregon-sugar-pod-ii-pea-seeds",
+            "url": "https://www.territorialseed.com/products/oregon-sugar-pod-ii-pea-seeds",
             "priceUSD": 4.95
           },
           {
@@ -848,7 +843,7 @@
           },
           {
             "seller": "Territorial Seed Company",
-            "url": "https://www.territorialseed.com/product/giant-noble-spinach-seeds",
+            "url": "https://www.territorialseed.com/products/giant-noble-spinach-seeds",
             "priceUSD": 3.45
           },
           {
@@ -905,7 +900,7 @@
           },
           {
             "seller": "Territorial Seed Company",
-            "url": "https://www.territorialseed.com/product/autumn-beauty-sunflower-seeds",
+            "url": "https://www.territorialseed.com/products/autumn-beauty-sunflower-seeds",
             "priceUSD": 3.95
           }
         ]
@@ -921,13 +916,6 @@
         "why": "Classic Italian large-leaf, best for pesto, full-size 24-inch garden plant",
         "context": "inground",
         "sellers": [
-          {
-            "seller": "Johnny's Selected Seeds",
-            "url": "https://www.johnnyseeds.com/herbs/basil/sweet-basil/genovese-organic-basil-seed-970G.html",
-            "priceUSD": 4.25,
-            "badge": "USDA Organic",
-            "recommended": true
-          },
           {
             "seller": "Baker Creek Heirloom",
             "url": "https://www.rareseeds.com/genovese-basil",
@@ -1039,7 +1027,7 @@
           },
           {
             "seller": "Territorial Seed Company",
-            "url": "https://www.territorialseed.com/product/beauregard-sweet-potato-slips",
+            "url": "https://www.territorialseed.com/products/beauregard-sweet-potato-slips",
             "priceUSD": 12.95
           }
         ]
@@ -1240,7 +1228,7 @@
           },
           {
             "seller": "Territorial Seed Company",
-            "url": "https://www.territorialseed.com/product/sugar-baby-watermelon-seeds",
+            "url": "https://www.territorialseed.com/products/sugar-baby-watermelon-seeds",
             "priceUSD": 3.45
           }
         ]
@@ -1287,7 +1275,7 @@
           },
           {
             "seller": "Territorial Seed Company",
-            "url": "https://www.territorialseed.com/product/delicata-winter-squash-seeds",
+            "url": "https://www.territorialseed.com/products/delicata-winter-squash-seeds",
             "priceUSD": 3.95
           },
           {
@@ -1344,7 +1332,7 @@
           },
           {
             "seller": "Territorial Seed Company",
-            "url": "https://www.territorialseed.com/product/costata-romanesco-zucchini-seeds",
+            "url": "https://www.territorialseed.com/products/costata-romanesco-zucchini-seeds",
             "priceUSD": 3.95
           }
         ]

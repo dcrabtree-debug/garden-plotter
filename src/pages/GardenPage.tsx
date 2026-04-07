@@ -291,7 +291,7 @@ export function GardenPage() {
   const [showBloom, setShowBloom] = useState(false);
   const [hoveredCell, setHoveredCell] = useState<{ row: number; col: number } | null>(null);
   const [gardenSmartPicker, setGardenSmartPicker] = useState<{
-    row: number; col: number; sunHours: number | null; cellType: string; neighbourSlugs: string[];
+    row: number; col: number; sunHours: number | null; cellType: string; neighbourSlugs: string[]; currentSlug: string | null;
   } | null>(null);
   const gridRef = useRef<HTMLDivElement>(null);
 
@@ -1012,17 +1012,16 @@ export function GardenPage() {
                     }}
                     onMouseUp={() => setIsPainting(false)}
                     onClick={() => {
-                      if (hasPlant && plant) {
-                        setSelectedPlant(plant);
-                      } else if (!plantToPlace && !hasPlant &&
-                        (cell.type === 'veg-patch' || cell.type === 'raised-bed' || cell.type === 'flower-bed' || cell.type === 'conservatory')) {
-                        // Empty plantable cell — open smart picker
+                      if (plantToPlace && !hasPlant) return; // handled by handleCellInteraction
+                      const isPlantable = cell.type === 'veg-patch' || cell.type === 'raised-bed' || cell.type === 'flower-bed' || cell.type === 'conservatory';
+                      if ((hasPlant || (!plantToPlace && isPlantable))) {
+                        // Planted cell → swap mode, empty plantable cell → pick mode
                         const ns: string[] = [];
                         for (let dr = -2; dr <= 2; dr++) {
                           for (let dc = -2; dc <= 2; dc++) {
                             if (dr === 0 && dc === 0) continue;
                             const s = cells[ri + dr]?.[ci + dc]?.plantSlug;
-                            if (s) ns.push(s);
+                            if (s && s !== cell.plantSlug) ns.push(s);
                           }
                         }
                         setGardenSmartPicker({
@@ -1030,6 +1029,7 @@ export function GardenPage() {
                           sunHours: cell.sunHours,
                           cellType: cell.type,
                           neighbourSlugs: [...new Set(ns)],
+                          currentSlug: cell.plantSlug,
                         });
                       }
                     }}
@@ -1436,25 +1436,23 @@ export function GardenPage() {
         <PlantedPlantsSidebar cells={cells} plants={plants} companionMap={companionMap} />
       </div>
 
-      {/* Plant detail modal */}
-      {selectedPlant && (
-        <PlantDetail
-          plant={selectedPlant}
-          companionMap={companionMap}
-          onClose={() => setSelectedPlant(null)}
-        />
-      )}
-
-      {/* Smart plant picker for empty garden cells */}
+      {/* Smart plant picker for garden cells (pick + swap mode) */}
       {gardenSmartPicker && (
         <SmartPlantPicker
           plants={plants}
+          plantMap={plantMap}
           companionMap={companionMap}
           neighbourSlugs={gardenSmartPicker.neighbourSlugs}
           sunHours={gardenSmartPicker.sunHours}
           cellType={gardenSmartPicker.cellType}
+          currentPlantSlug={gardenSmartPicker.currentSlug}
           onSelect={(slug) => {
+            if (gardenSmartPicker.currentSlug) useGardenStore.getState().removePlantFromCell(gardenSmartPicker.row, gardenSmartPicker.col);
             useGardenStore.getState().plantInCell(gardenSmartPicker.row, gardenSmartPicker.col, slug);
+            setGardenSmartPicker(null);
+          }}
+          onRemove={() => {
+            useGardenStore.getState().removePlantFromCell(gardenSmartPicker.row, gardenSmartPicker.col);
             setGardenSmartPicker(null);
           }}
           onClose={() => setGardenSmartPicker(null)}

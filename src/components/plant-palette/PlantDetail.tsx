@@ -138,7 +138,7 @@ export function PlantDetail({ plant, companionMap, onClose }: PlantDetailProps) 
               {plant.idealTiers.map((t) => (
                 <span
                   key={t}
-                  className="text-[10px] px-1.5 py-0.5 bg-emerald-100 text-emerald-700 rounded-full"
+                  className="text-[10px] px-1.5 py-0.5 bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300 rounded-full"
                 >
                   Tier {t}
                 </span>
@@ -198,7 +198,7 @@ export function PlantDetail({ plant, companionMap, onClose }: PlantDetailProps) 
               </h3>
               <div className="space-y-1">
                 {plant.varieties.map((v) => (
-                  <div key={v.name} className="text-sm text-stone-600">
+                  <div key={v.name} className="text-sm text-stone-600 dark:text-stone-400">
                     <span className="font-medium">{v.name}</span> — {v.notes}
                   </div>
                 ))}

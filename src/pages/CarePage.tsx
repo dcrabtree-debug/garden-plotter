@@ -354,9 +354,9 @@ export function CarePage() {
 
   return (
     <div className="h-full overflow-y-auto">
-      <div className="max-w-4xl mx-auto px-4 py-6 space-y-6">
+      <div className="max-w-6xl mx-auto px-4 py-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Header + month selector */}
-        <div>
+        <div className="lg:col-span-2">
           <h1 className="text-3xl font-bold tracking-tight text-stone-800 dark:text-stone-100">
             Monthly Care Guide
           </h1>
@@ -388,7 +388,7 @@ export function CarePage() {
 
         {/* ❄️ Frost alert */}
         {frost && frost.level !== 'safe' && (
-          <div className={`rounded-2xl p-4 border ${
+          <div className={`lg:col-span-2 rounded-2xl p-4 border ${
             frost.level === 'frost'
               ? 'bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800'
               : 'bg-amber-50 dark:bg-amber-900/20 border-amber-200 dark:border-amber-800'
@@ -407,13 +407,13 @@ export function CarePage() {
 
         {/* 🚀 Late Start Mode (April-June only, UK only) */}
         {!isUS && selectedMonth >= 4 && selectedMonth <= 6 && (
-          <section className="bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/10 rounded-2xl shadow-sm border border-amber-200 dark:border-amber-800 p-5">
+          <section className="lg:col-span-2 bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/10 rounded-2xl shadow-sm border border-amber-200 dark:border-amber-800 p-5">
             <h2 className="text-lg font-semibold text-stone-800 dark:text-stone-100 flex items-center gap-2">
               <span>🚀</span> Late Start Guide — First Season 2026
             </h2>
             <p className="text-xs text-stone-500 dark:text-stone-400 mt-0.5 mb-1">
               {selectedMonth === 4
-                ? 'Moving in April 15 — no gear until mid-May. Start seeds in conservatory with temporary trays from the garden centre.'
+                ? 'Moving in April 17 — no gear until mid-May. Start seeds in conservatory with temporary trays from the garden centre.'
                 : selectedMonth === 5
                   ? 'GreenStalks arrive mid-May! Set up immediately. Buy transplants for tomatoes, peppers, strawberries — too late to start from seed.'
                   : 'Last window for direct sowing fast crops. Buy any remaining plants as transplants.'}
@@ -806,14 +806,14 @@ export function CarePage() {
         })()}
 
         {/* 📋 Monthly tasks */}
-        <section className="bg-white dark:bg-stone-800 rounded-2xl shadow-sm border border-stone-200 dark:border-stone-700 p-5">
+        <section className="lg:col-span-2 bg-white dark:bg-stone-800 rounded-2xl shadow-sm border border-stone-200 dark:border-stone-700 p-5">
           <h2 className="text-lg font-semibold text-stone-800 dark:text-stone-100 flex items-center gap-2">
             <span>📋</span> {getMonthName(selectedMonth)} Tasks
           </h2>
           <p className="text-xs text-stone-400 mt-0.5 mb-3">
             Expert guidance from RHS and BBC Gardeners' World
           </p>
-          <div className="space-y-2">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
             {monthTasks.map((task, i) => (
               <div
                 key={i}
@@ -834,7 +834,7 @@ export function CarePage() {
         </section>
 
         {/* Source attribution */}
-        <p className="text-[10px] text-stone-400 text-center pb-4">
+        <p className="lg:col-span-2 text-[10px] text-stone-400 text-center pb-4">
           Guidance based on RHS growing advice, BBC Gardeners' World monthly tasks, and Garden Organic best practice.
           Frost dates calibrated for Surrey (Walton-on-Thames, RHS H5 / USDA 8b).
         </p>

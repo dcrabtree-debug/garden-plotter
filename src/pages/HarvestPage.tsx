@@ -340,10 +340,10 @@ function HarvestButton({
         {plant.emoji}
       </div>
       <div className="text-center">
-        <div className="text-lg font-bold text-stone-800">{plant.commonName}</div>
-        <div className="text-sm text-stone-500 mt-1">
-          Today: <span className="font-bold text-stone-700">{todayCount}</span>
-          {' '} | Total: <span className="font-bold text-stone-700">{count}</span>
+        <div className="text-lg font-bold text-stone-800 dark:text-stone-100">{plant.commonName}</div>
+        <div className="text-sm text-stone-500 dark:text-stone-400 mt-1">
+          Today: <span className="font-bold text-stone-700 dark:text-stone-200">{todayCount}</span>
+          {' '} | Total: <span className="font-bold text-stone-700 dark:text-stone-200">{count}</span>
         </div>
       </div>
 
@@ -487,7 +487,7 @@ function HarvestLog() {
 
   return (
     <div className="bg-white dark:bg-stone-800 rounded-3xl shadow-md p-5">
-      <h3 className="text-lg font-bold text-stone-700 mb-3">Recent Harvests</h3>
+      <h3 className="text-lg font-bold text-stone-700 dark:text-stone-200 mb-3">Recent Harvests</h3>
       <div className="space-y-2 max-h-64 overflow-y-auto">
         {recentEntries.map((entry) => {
           const harvester = harvesters.find((h) => h.id === entry.harvesterId);
@@ -524,7 +524,7 @@ function Scoreboard() {
 
   return (
     <div className="bg-white dark:bg-stone-800 rounded-3xl shadow-md p-5">
-      <h3 className="text-lg font-bold text-stone-700 mb-3">Scoreboard</h3>
+      <h3 className="text-lg font-bold text-stone-700 dark:text-stone-200 mb-3">Scoreboard</h3>
       <div className="grid grid-cols-2 gap-4">
         {harvesters.map((h) => {
           const total = getCountForHarvester(h.id);
@@ -539,7 +539,7 @@ function Scoreboard() {
               <div className="text-lg font-bold" style={{ color: h.color }}>
                 {h.name}
               </div>
-              <div className="text-3xl font-black text-stone-800 my-1">{total}</div>
+              <div className="text-3xl font-black text-stone-800 dark:text-stone-100 my-1">{total}</div>
               <div className="text-[10px] text-stone-500">total picked</div>
               <div className="flex justify-center gap-1 mt-2">
                 {badges.map((m) => (

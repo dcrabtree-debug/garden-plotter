@@ -10,6 +10,7 @@ import type { Plant } from '../types/plant';
 
 const STORAGE_KEY = 'garden-plotter-garden';
 const ROTATION_STORAGE_KEY = 'garden-plotter-rotation-history';
+const LAYOUT_SNAPSHOT_KEY = 'garden-plotter-saved-layout';
 
 /** Rotation groups that actually need tracking (permanent/any are exempt) */
 const TRACKED_ROTATION_GROUPS = ['legumes', 'brassicas', 'roots-onions', 'potatoes'];
@@ -213,12 +214,20 @@ interface GardenStore {
   showSpacingWarnings: boolean;
   showRotationWarnings: boolean;
   rotationHistory: RotationHistory;
+  locked: boolean;         // locks plant placement
+  layoutLocked: boolean;   // locks cell types (paint operations)
 
+  toggleLock: () => void;
+  toggleLayoutLock: () => void;
   setTool: (tool: CellType) => void;
   paintCell: (row: number, col: number) => void;
+  paintCellAs: (row: number, col: number, type: CellType) => void;
   paintArea: (row: number, col: number, size: number) => void;
   plantInCell: (row: number, col: number, slug: string) => void;
   removePlantFromCell: (row: number, col: number) => void;
+  clearAllPlants: () => void;
+  saveLayout: () => void;
+  restoreLayout: () => void;
   updateConfig: (config: Partial<GardenConfig>) => void;
   renameGarden: (name: string) => void;
   setSunHours: (grid: number[][]) => void;
@@ -241,6 +250,8 @@ export const useGardenStore = create<GardenStore>((set, get) => {
   return {
     garden: initial,
     activeTool: 'veg-patch',
+    locked: false,
+    layoutLocked: false,
     selectedMonth: new Date().getMonth() + 1,
     selectedHour: 12,
     showSunOverlay: false,
@@ -250,9 +261,13 @@ export const useGardenStore = create<GardenStore>((set, get) => {
     showRotationWarnings: true,
     rotationHistory: loadRotationHistory(),
 
+    toggleLock: () => set((state) => ({ locked: !state.locked })),
+    toggleLayoutLock: () => set((state) => ({ layoutLocked: !state.layoutLocked })),
+
     setTool: (tool) => set({ activeTool: tool }),
 
     paintCell: (row, col) => {
+      if (get().layoutLocked) return;
       set((state) => {
         const garden = { ...state.garden };
         const cells = garden.cells.map((r) => r.map((c) => ({ ...c })));
@@ -269,7 +284,22 @@ export const useGardenStore = create<GardenStore>((set, get) => {
       });
     },
 
+    paintCellAs: (row, col, type) => {
+      if (get().layoutLocked) return;
+      set((state) => {
+        const garden = { ...state.garden };
+        const cells = garden.cells.map((r) => r.map((c) => ({ ...c })));
+        if (row >= 0 && row < cells.length && col >= 0 && col < cells[0].length) {
+          cells[row][col] = { ...cells[row][col], type, plantSlug: null };
+        }
+        garden.cells = cells;
+        saveGarden(garden);
+        return { garden };
+      });
+    },
+
     paintArea: (row, col, size) => {
+      if (get().layoutLocked) return;
       set((state) => {
         const garden = { ...state.garden };
         const cells = garden.cells.map((r) => r.map((c) => ({ ...c })));
@@ -287,6 +317,7 @@ export const useGardenStore = create<GardenStore>((set, get) => {
     },
 
     plantInCell: (row, col, slug) => {
+      if (get().locked) return;
       set((state) => {
         const garden = { ...state.garden };
         const cells = garden.cells.map((r) => r.map((c) => ({ ...c })));
@@ -310,6 +341,55 @@ export const useGardenStore = create<GardenStore>((set, get) => {
         saveGarden(garden);
         return { garden };
       });
+    },
+
+    clearAllPlants: () => {
+      set((state) => {
+        const garden = { ...state.garden };
+        const cells = garden.cells.map((r) =>
+          r.map((c) => ({ ...c, plantSlug: null }))
+        );
+        garden.cells = cells;
+        saveGarden(garden);
+        return { garden };
+      });
+    },
+
+    saveLayout: () => {
+      const { garden } = get();
+      // Snapshot cell types + sunHours only (no plants)
+      const snapshot = garden.cells.map((r) =>
+        r.map((c) => ({ type: c.type, sunHours: c.sunHours }))
+      );
+      try {
+        localStorage.setItem(LAYOUT_SNAPSHOT_KEY, JSON.stringify({
+          config: garden.config,
+          cells: snapshot,
+          savedAt: new Date().toISOString(),
+        }));
+      } catch {}
+    },
+
+    restoreLayout: () => {
+      try {
+        const raw = localStorage.getItem(LAYOUT_SNAPSHOT_KEY);
+        if (!raw) return;
+        const saved = JSON.parse(raw);
+        set((state) => {
+          const garden = { ...state.garden, config: saved.config };
+          // Merge saved cell types with current plants
+          const cells = garden.cells.map((r, ri) =>
+            r.map((c, ci) => ({
+              type: saved.cells[ri]?.[ci]?.type ?? c.type,
+              sunHours: saved.cells[ri]?.[ci]?.sunHours ?? c.sunHours,
+              plantSlug: c.plantSlug, // keep existing plants
+            }))
+          );
+          garden.cells = cells;
+          saveGarden(garden);
+          return { garden };
+        });
+      } catch {}
     },
 
     updateConfig: (partial) => {
@@ -374,6 +454,7 @@ export const useGardenStore = create<GardenStore>((set, get) => {
     },
 
     loadTemplate: (config, cells) => {
+      if (get().layoutLocked) return; // don't overwrite a locked layout
       const garden: Garden = {
         id: 'garden-1',
         name: '21 Esher Avenue',

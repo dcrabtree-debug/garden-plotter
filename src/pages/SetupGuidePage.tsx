@@ -112,10 +112,9 @@ const CLAY_SETUP: SetupStep[] = [
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export function SetupGuidePage() {
-  const towers = usePlannerStore((s) => s.towers);
   const garden = useGardenStore((s) => s.garden);
   const region = useRegion();
-  const { plantMap } = usePlantDb(region);
+  usePlantDb(region); // ensure plant data is loaded
   const isUS = region === 'us';
 
   // Find planted crops that need support

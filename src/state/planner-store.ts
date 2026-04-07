@@ -2,12 +2,13 @@ import { create } from 'zustand';
 import type { Tower, Tier, Pocket, Settings, SaveState } from '../types/planner';
 
 const STORAGE_KEY = 'garden-plotter-state';
-const CURRENT_VERSION = 1;
+const CURRENT_VERSION = 2;
 
 function createPocket(towerId: string, tier: number, pocket: number): Pocket {
   return {
     id: `${towerId}-tier-${tier}-pocket-${pocket}`,
     plantSlug: null,
+    companionSlugs: [],
     plantedDate: null,
   };
 }
@@ -50,12 +51,29 @@ function createDefaultState(): SaveState {
   };
 }
 
+function migratePockets(state: SaveState): SaveState {
+  // v1 → v2: add companionSlugs to every pocket
+  for (const tower of state.towers) {
+    for (const tier of tower.tiers) {
+      for (const pocket of tier.pockets) {
+        if (!pocket.companionSlugs) {
+          (pocket as Pocket).companionSlugs = [];
+        }
+      }
+    }
+  }
+  state.version = CURRENT_VERSION;
+  return state;
+}
+
 function loadState(): SaveState {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return createDefaultState();
     const parsed = JSON.parse(raw);
     if (parsed.version === CURRENT_VERSION) return parsed;
+    // Migrate from v1
+    if (parsed.version === 1) return migratePockets(parsed);
     return createDefaultState();
   } catch {
     return createDefaultState();
@@ -84,8 +102,29 @@ interface PlannerStore {
   towers: Tower[];
   raisedBeds: never[];
   settings: Settings;
+  locked: boolean;
 
+  toggleLock: () => void;
   assignPlant: (
+    towerId: string,
+    tierNumber: number,
+    pocketIndex: number,
+    slug: string
+  ) => void;
+  assignDuo: (
+    towerId: string,
+    tierNumber: number,
+    pocketIndex: number,
+    primarySlug: string,
+    companionSlug: string
+  ) => void;
+  addCompanion: (
+    towerId: string,
+    tierNumber: number,
+    pocketIndex: number,
+    slug: string
+  ) => void;
+  removeCompanion: (
     towerId: string,
     tierNumber: number,
     pocketIndex: number,
@@ -113,8 +152,14 @@ export const usePlannerStore = create<PlannerStore>((set, get) => {
     towers: initial.towers,
     raisedBeds: [],
     settings: initial.settings,
+    locked: false,
+
+    toggleLock: () => {
+      set((state) => ({ locked: !state.locked }));
+    },
 
     assignPlant: (towerId, tierNumber, pocketIndex, slug) => {
+      if (get().locked) return;
       set((state) => {
         const towers = state.towers.map((tower) => {
           if (tower.id !== towerId) return tower;
@@ -142,7 +187,8 @@ export const usePlannerStore = create<PlannerStore>((set, get) => {
       });
     },
 
-    removePlant: (towerId, tierNumber, pocketIndex) => {
+    assignDuo: (towerId, tierNumber, pocketIndex, primarySlug, companionSlug) => {
+      if (get().locked) return;
       set((state) => {
         const towers = state.towers.map((tower) => {
           if (tower.id !== towerId) return tower;
@@ -154,7 +200,94 @@ export const usePlannerStore = create<PlannerStore>((set, get) => {
                 ...tier,
                 pockets: tier.pockets.map((pocket, i) => {
                   if (i !== pocketIndex) return pocket;
-                  return { ...pocket, plantSlug: null, plantedDate: null };
+                  return {
+                    ...pocket,
+                    plantSlug: primarySlug,
+                    companionSlugs: [companionSlug],
+                    plantedDate: new Date().toISOString().split('T')[0],
+                  };
+                }),
+              };
+            }),
+          };
+        });
+        const newState = { ...state, towers };
+        saveState(makeSaveState(newState.towers, newState.settings));
+        return newState;
+      });
+    },
+
+    addCompanion: (towerId, tierNumber, pocketIndex, slug) => {
+      if (get().locked) return;
+      set((state) => {
+        const towers = state.towers.map((tower) => {
+          if (tower.id !== towerId) return tower;
+          return {
+            ...tower,
+            tiers: tower.tiers.map((tier) => {
+              if (tier.tierNumber !== tierNumber) return tier;
+              return {
+                ...tier,
+                pockets: tier.pockets.map((pocket, i) => {
+                  if (i !== pocketIndex) return pocket;
+                  if (pocket.companionSlugs.includes(slug)) return pocket;
+                  return {
+                    ...pocket,
+                    companionSlugs: [...pocket.companionSlugs, slug],
+                  };
+                }),
+              };
+            }),
+          };
+        });
+        const newState = { ...state, towers };
+        saveState(makeSaveState(newState.towers, newState.settings));
+        return newState;
+      });
+    },
+
+    removeCompanion: (towerId, tierNumber, pocketIndex, slug) => {
+      if (get().locked) return;
+      set((state) => {
+        const towers = state.towers.map((tower) => {
+          if (tower.id !== towerId) return tower;
+          return {
+            ...tower,
+            tiers: tower.tiers.map((tier) => {
+              if (tier.tierNumber !== tierNumber) return tier;
+              return {
+                ...tier,
+                pockets: tier.pockets.map((pocket, i) => {
+                  if (i !== pocketIndex) return pocket;
+                  return {
+                    ...pocket,
+                    companionSlugs: pocket.companionSlugs.filter((s) => s !== slug),
+                  };
+                }),
+              };
+            }),
+          };
+        });
+        const newState = { ...state, towers };
+        saveState(makeSaveState(newState.towers, newState.settings));
+        return newState;
+      });
+    },
+
+    removePlant: (towerId, tierNumber, pocketIndex) => {
+      if (get().locked) return;
+      set((state) => {
+        const towers = state.towers.map((tower) => {
+          if (tower.id !== towerId) return tower;
+          return {
+            ...tower,
+            tiers: tower.tiers.map((tier) => {
+              if (tier.tierNumber !== tierNumber) return tier;
+              return {
+                ...tier,
+                pockets: tier.pockets.map((pocket, i) => {
+                  if (i !== pocketIndex) return pocket;
+                  return { ...pocket, plantSlug: null, companionSlugs: [], plantedDate: null };
                 }),
               };
             }),
@@ -178,6 +311,7 @@ export const usePlannerStore = create<PlannerStore>((set, get) => {
     },
 
     clearTower: (towerId) => {
+      if (get().locked) return;
       set((state) => {
         const towers = state.towers.map((tower) => {
           if (tower.id !== towerId) return tower;

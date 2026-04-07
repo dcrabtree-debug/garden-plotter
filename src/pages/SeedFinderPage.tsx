@@ -2,10 +2,56 @@ import { useState, useMemo } from 'react';
 import { usePlantDb } from '../data/use-plant-db';
 import { useSeedLinks, type SeedContext, type SeedLink, type SeedProduct, type SeedVariety } from '../data/use-seed-links';
 import { useRegion } from '../data/use-region';
+import { usePlannerStore } from '../state/planner-store';
+import { useGardenStore } from '../state/garden-store';
 import { getMonthName, isInWindow } from '../lib/calendar-utils';
 import type { Plant } from '../types/plant';
 
 type BuyTiming = 'buy-now' | 'buy-soon' | 'not-yet';
+
+// ─── Supplies & equipment (non-plant items) ────────────────────────────────
+type SupplyPhase = 'pre' | 'setup' | 'growing' | 'late';
+
+const PHASE_LABELS_SHORT: Record<SupplyPhase, string> = {
+  pre: 'pre-move', setup: 'setup', growing: 'growing', late: 'late season',
+};
+
+function getPhaseSimple(d: Date): SupplyPhase {
+  const m = d.getMonth() + 1;
+  if (d < new Date('2026-04-17')) return 'pre';
+  if (d < new Date('2026-06-01')) return 'setup';
+  if (m <= 9) return 'growing';
+  return 'late';
+}
+
+interface Supply {
+  id: string;
+  emoji: string;
+  name: string;
+  reason: string;
+  specific?: string;
+  price?: string;
+  url?: string;
+  phases: SupplyPhase[];
+}
+
+const SUPPLIES: Supply[] = [
+  // PRE-MOVE + SETUP
+  { id: 'compost', emoji: '🪴', name: 'Peat-free multipurpose compost (100L+)', reason: 'Mix 3:1 with perlite for GreenStalk pockets. Need at least 100L for 2 towers.', specific: 'Westland Peat Free — best budget option at Homebase/B&Q', price: '~£12-15', url: 'https://www.thompson-morgan.com/p/peat-free-multipurpose-compost/t67890', phases: ['pre', 'setup'] },
+  { id: 'perlite', emoji: '⬜', name: 'Perlite (20L bag)', reason: 'Essential for drainage in GreenStalk pockets. Without it, roots rot.', specific: 'Any brand fine — Westland or Miracle-Gro both work', price: '~£6-8', url: 'https://www.amazon.co.uk/dp/B07FZ6SZK8', phases: ['pre', 'setup'] },
+  { id: 'seed-trays', emoji: '🫙', name: 'Seed trays + 9cm pots', reason: 'Start seeds in conservatory before GreenStalks arrive.', specific: 'Get modular trays (24-cell) + at least 20 x 9cm pots', price: '~£8-12', url: 'https://www.thompson-morgan.com/c/seed-trays-and-pots', phases: ['pre'] },
+  { id: 'slow-release', emoji: '🧪', name: 'Slow-release fertiliser (NPK 14-14-14)', reason: 'Mix into compost when filling GreenStalks. Feeds for 3-4 months.', specific: 'Osmocote Exact Standard — the industry standard for containers', price: '~£8-10', url: 'https://www.amazon.co.uk/dp/B00BARLRH4', phases: ['setup'] },
+  { id: 'liquid-feed', emoji: '🍅', name: 'Tomorite tomato feed (1L concentrate)', reason: 'Weekly liquid feed for all fruiting plants once they start flowering.', specific: 'Tomorite is the UK standard — high potash for fruit production', price: '~£5-7', url: 'https://www.thompson-morgan.com/p/tomorite-concentrated-tomato-food/t69481', phases: ['setup', 'growing'] },
+  { id: 'fleece', emoji: '🛡️', name: 'Horticultural fleece (2m x 10m)', reason: 'Frost protection for tender seedlings April-May. Also deters carrot fly.', specific: '17gsm weight — light enough to lay directly on plants', price: '~£5-8', url: 'https://www.amazon.co.uk/dp/B005LI4R3A', phases: ['pre', 'setup'] },
+  { id: 'netting', emoji: '🕸️', name: 'Butterfly netting / Enviromesh', reason: 'Keeps cabbage white butterflies off brassicas, carrot fly off carrots.', specific: 'Enviromesh is best (ultra-fine) but standard butterfly netting works', price: '~£8-15', url: 'https://www.amazon.co.uk/dp/B00BARLRJ2', phases: ['setup', 'growing'] },
+  // GROWING SEASON
+  { id: 'beer-traps', emoji: '🍺', name: 'Slug beer traps (or cheap lager)', reason: 'Sink jars into soil near lettuce/strawberries. Slugs fall in overnight.', specific: 'Any cheap lager works. Replace every 2-3 days. Or buy dedicated slug traps.', price: '~£3-5', phases: ['growing'] },
+  { id: 'neem-oil', emoji: '🧴', name: 'Neem oil spray (organic)', reason: 'All-purpose organic pest spray for aphids, whitefly, and mites.', specific: 'Neudorff Bug Free or similar neem-based spray — RHS approved', price: '~£6-9', url: 'https://www.amazon.co.uk/dp/B00GXJJ3Q0', phases: ['growing'] },
+  { id: 'twine', emoji: '🧵', name: 'Garden twine (soft jute)', reason: 'Tie in tomatoes, train beans up cages, secure sweet peas to fence.', specific: 'Soft jute won\'t cut stems — avoid plastic-coated wire', price: '~£3-4', phases: ['setup', 'growing'] },
+  { id: 'watering-can', emoji: '🚿', name: 'Watering can with fine rose (9L)', reason: 'GreenStalks need daily watering. A fine rose avoids washing out seeds.', specific: 'Haws or similar long-reach can — fill the top reservoir, not individual pockets', price: '~£12-20', phases: ['setup'] },
+  // LATE SEASON
+  { id: 'green-manure', emoji: '🌿', name: 'Green manure seeds (crimson clover or phacelia)', reason: 'Sow on bare beds after harvest to fix nitrogen and protect soil over winter.', specific: 'Crimson clover for nitrogen; phacelia for pollinators + soil structure', price: '~£4-6', phases: ['late'] },
+];
 
 // ─── Essentials: the must-have crops by context ──────────────────────────────
 // Curated from RHS beginner guidance + GreenStalk best practice.
@@ -322,7 +368,7 @@ export function SeedFinderPage() {
   const sellerInfo = isUS ? SELLER_INFO_US : SELLER_INFO_UK;
   const currentMonth = new Date().getMonth() + 1;
   const [selectedMonth, setSelectedMonth] = useState(currentMonth);
-  const [filter, setFilter] = useState<'essentials' | 'all' | 'buy-now' | 'buy-soon'>('essentials');
+  const [filter, setFilter] = useState<'shopping-list' | 'essentials' | 'all' | 'buy-now' | 'buy-soon'>('shopping-list');
 
   // Pick the right essentials list
   const essentialsDefs = useMemo(() => {
@@ -332,6 +378,123 @@ export function SeedFinderPage() {
 
   const essentialSlugs = useMemo(() => new Set(essentialsDefs.map(e => e.slug)), [essentialsDefs]);
   const essentialReasonMap = useMemo(() => new Map(essentialsDefs.map(e => [e.slug, e.reason])), [essentialsDefs]);
+
+  // ─── Shopping list: read from both GreenStalk + In-Ground stores ───────────
+  const towers = usePlannerStore((s) => s.towers);
+  const garden = useGardenStore((s) => s.garden);
+
+  // Seed links for both contexts (needed for shopping list which spans both)
+  const gsLinks = useSeedLinks(region, 'greenstalk');
+  const igLinks = useSeedLinks(region, 'inground');
+
+  const shoppingList = useMemo(() => {
+    // Count plants needed per slug, separated by source
+    const gsCounts = new Map<string, number>();
+    const igCounts = new Map<string, number>();
+
+    for (const tower of towers) {
+      for (const tier of tower.tiers) {
+        for (const pocket of tier.pockets) {
+          if (pocket.plantSlug) {
+            gsCounts.set(pocket.plantSlug, (gsCounts.get(pocket.plantSlug) ?? 0) + 1);
+          }
+        }
+      }
+    }
+
+    for (const row of garden.cells) {
+      for (const cell of row) {
+        if (cell.plantSlug) {
+          igCounts.set(cell.plantSlug, (igCounts.get(cell.plantSlug) ?? 0) + 1);
+        }
+      }
+    }
+
+    // Merge into a unified list
+    const allSlugs = new Set([...gsCounts.keys(), ...igCounts.keys()]);
+    const items: {
+      slug: string;
+      plant: Plant | undefined;
+      gsQty: number;
+      igQty: number;
+      totalQty: number;
+      source: string;
+      seedProduct: SeedProduct | null;
+      bestPrice: number;
+      bestSeller: string;
+      bestUrl: string;
+      buyAs: string;
+    }[] = [];
+
+    for (const slug of allSlugs) {
+      const plant = plants.find((p) => p.slug === slug);
+      const gsQty = gsCounts.get(slug) ?? 0;
+      const igQty = igCounts.get(slug) ?? 0;
+      const totalQty = gsQty + igQty;
+
+      const source = gsQty > 0 && igQty > 0 ? 'Both' : gsQty > 0 ? 'GreenStalk' : 'In-Ground';
+
+      // Find seed product from either context
+      const sp = gsLinks.find((s) => s.plantSlug === slug)
+        ?? igLinks.find((s) => s.plantSlug === slug)
+        ?? null;
+
+      // Find cheapest recommended seller
+      let bestPrice = 0;
+      let bestSeller = '';
+      let bestUrl = '';
+      if (sp) {
+        for (const v of sp.varieties) {
+          for (const link of v.links) {
+            const priceNum = parseFloat(link.price.replace(/[£$,]/g, ''));
+            if (priceNum > 0 && (bestPrice === 0 || priceNum < bestPrice)) {
+              bestPrice = priceNum;
+              bestSeller = link.seller;
+              bestUrl = link.url;
+            }
+          }
+        }
+      }
+
+      // Recommend: seeds, plugs, or potted plant based on timing and plant type
+      let buyAs = '🌱 Seeds';
+      if (plant) {
+        const pw = plant.plantingWindow;
+        const m = currentMonth;
+        const isPerennial = plant.category === 'fruit' || ['strawberry-everbearing', 'gooseberry', 'redcurrant', 'raspberry', 'blueberry'].includes(plant.slug);
+        const isHerb = plant.category === 'herb';
+        const needsLongSeason = plant.daysToHarvest[0] > 90;
+        const tooLateForSeed = pw.sowIndoors && !isInWindow(m, pw.sowIndoors) && !isInWindow(m, pw.sowOutdoors ?? [0, 0]);
+        const canTransplant = pw.transplant && isInWindow(m, pw.transplant);
+
+        if (isPerennial) {
+          buyAs = '🪴 Potted plant';
+        } else if (tooLateForSeed && canTransplant) {
+          buyAs = '🌿 Plug plants';
+        } else if (tooLateForSeed && needsLongSeason) {
+          buyAs = '🌿 Plug plants';
+        } else if (isHerb && m >= 5) {
+          buyAs = '🪴 Potted herb';
+        } else if (plant.slug === 'dwarf-sweet-pea' && m >= 3) {
+          buyAs = '🌿 Plug plants';
+        }
+      }
+
+      items.push({ slug, plant, gsQty, igQty, totalQty, source, seedProduct: sp, bestPrice, bestSeller, bestUrl, buyAs });
+    }
+
+    // Sort: plants with pricing first, then by total quantity desc
+    items.sort((a, b) => {
+      if (a.bestPrice > 0 && b.bestPrice === 0) return -1;
+      if (b.bestPrice > 0 && a.bestPrice === 0) return 1;
+      return b.totalQty - a.totalQty;
+    });
+
+    const totalBudget = items.reduce((sum, item) => sum + item.bestPrice, 0);
+    const itemsWithPrices = items.filter((i) => i.bestPrice > 0).length;
+
+    return { items, totalBudget, itemsWithPrices, totalItems: items.length };
+  }, [towers, garden.cells, plants, gsLinks, igLinks, currentMonth]);
 
   const plantsWithTiming = useMemo(() => {
     return plants
@@ -354,25 +517,26 @@ export function SeedFinderPage() {
       });
   }, [plants, selectedMonth, seedLinks]);
 
+  const shoppingListSlugs = useMemo(() => new Set(shoppingList.items.map((i) => i.slug)), [shoppingList.items]);
+
   const filtered = useMemo(() => {
+    if (filter === 'shopping-list') return plantsWithTiming.filter((p) => shoppingListSlugs.has(p.plant.slug));
     if (filter === 'essentials') return plantsWithTiming.filter((p) => essentialSlugs.has(p.plant.slug));
     if (filter === 'all') return plantsWithTiming;
     return plantsWithTiming.filter((p) => p.timing === filter);
-  }, [plantsWithTiming, filter, essentialSlugs]);
+  }, [plantsWithTiming, filter, essentialSlugs, shoppingListSlugs]);
 
   const buyNowCount = plantsWithTiming.filter((p) => p.timing === 'buy-now').length;
   const buySoonCount = plantsWithTiming.filter((p) => p.timing === 'buy-soon').length;
 
   return (
     <div className="h-full overflow-y-auto">
-      <div className="max-w-4xl mx-auto px-4 py-6">
+      <div className="max-w-7xl mx-auto px-4 py-6">
         {/* Header */}
         <div className="mb-4">
-          <h1 className="text-3xl font-bold tracking-tight text-stone-800 dark:text-stone-100">Seed Finder</h1>
+          <h1 className="text-3xl font-bold tracking-tight text-stone-800 dark:text-stone-100">Shopping</h1>
           <p className="text-sm text-stone-400 mt-1">
-            {isUS
-              ? 'What to buy now for your SoCal garden. All sellers are AHS members or USDA-certified.'
-              : 'What to buy now for your Surrey garden. All sellers are RHS-endorsed or hold Royal Warrants.'}
+            Everything you need to buy, with specific products, reasoning, and the best price.
           </p>
         </div>
 
@@ -417,7 +581,15 @@ export function SeedFinderPage() {
             </select>
           </div>
 
-          <div className="flex gap-1.5">
+          <div className="flex gap-1.5 flex-wrap">
+            <button
+              onClick={() => setFilter('shopping-list')}
+              className={`text-xs px-3 py-1.5 rounded-lg font-bold ${
+                filter === 'shopping-list' ? 'bg-violet-600 text-white shadow-sm' : 'bg-violet-50 dark:bg-violet-900/20 text-violet-700 dark:text-violet-400'
+              }`}
+            >
+              🛒 My List ({shoppingList.totalItems})
+            </button>
             <button
               onClick={() => setFilter('essentials')}
               className={`text-xs px-3 py-1.5 rounded-lg font-medium ${
@@ -468,8 +640,159 @@ export function SeedFinderPage() {
           </div>
         </div>
 
-        {/* Seed cards grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+        {/* Desktop 2-column layout: sidebar (list + supplies) + plant cards */}
+        <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] lg:gap-6">
+        <div className="lg:space-y-5">
+
+        {/* Shopping list summary */}
+        {filter === 'shopping-list' && shoppingList.items.length > 0 && (
+          <div className="bg-gradient-to-br from-violet-50 to-indigo-50 dark:from-violet-900/20 dark:to-indigo-900/20 rounded-2xl border border-violet-200 dark:border-violet-800/40 p-4 sm:p-5 mb-5 lg:mb-0">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+              <div>
+                <h2 className="text-lg font-bold text-stone-800 dark:text-stone-100 flex items-center gap-2">
+                  🛒 My Shopping List
+                </h2>
+                <p className="text-xs text-stone-500 dark:text-stone-400 mt-0.5">
+                  Everything in your GreenStalk towers + in-ground garden plan
+                </p>
+              </div>
+              <div className="flex items-center gap-3 text-sm">
+                <div className="bg-white dark:bg-stone-800 rounded-lg px-3 py-1.5 border border-violet-200 dark:border-violet-700">
+                  <div className="text-[10px] text-stone-400 uppercase">Items</div>
+                  <div className="font-bold text-stone-800 dark:text-stone-200">{shoppingList.totalItems}</div>
+                </div>
+                <div className="bg-white dark:bg-stone-800 rounded-lg px-3 py-1.5 border border-violet-200 dark:border-violet-700">
+                  <div className="text-[10px] text-stone-400 uppercase">Est. Budget</div>
+                  <div className="font-bold text-emerald-600 dark:text-emerald-400">
+                    {isUS ? '$' : '£'}{shoppingList.totalBudget.toFixed(2)}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Compact table */}
+            <div className="bg-white dark:bg-stone-800 rounded-xl border border-violet-100 dark:border-stone-700 overflow-hidden">
+              <table className="w-full text-xs">
+                <thead>
+                  <tr className="bg-violet-50 dark:bg-violet-900/30 text-[10px] uppercase tracking-wider text-stone-500">
+                    <th className="text-left px-3 py-2">Plant</th>
+                    <th className="text-center px-2 py-2 hidden sm:table-cell">GS</th>
+                    <th className="text-center px-2 py-2 hidden sm:table-cell">Ground</th>
+                    <th className="text-center px-2 py-2">Qty</th>
+                    <th className="text-left px-2 py-2 hidden sm:table-cell">Buy As</th>
+                    <th className="text-left px-2 py-2">Source</th>
+                    <th className="text-right px-3 py-2">Price</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-stone-100 dark:divide-stone-700/50">
+                  {shoppingList.items.map((item) => (
+                    <tr key={item.slug} className="hover:bg-violet-50/50 dark:hover:bg-violet-900/10">
+                      <td className="px-3 py-1.5 font-medium text-stone-700 dark:text-stone-300">
+                        <span className="mr-1">{item.plant?.emoji ?? '🌱'}</span>
+                        <span className="truncate">{item.plant?.commonName ?? item.slug}</span>
+                      </td>
+                      <td className="text-center px-2 py-1.5 text-stone-400 hidden sm:table-cell">
+                        {item.gsQty > 0 ? item.gsQty : '–'}
+                      </td>
+                      <td className="text-center px-2 py-1.5 text-stone-400 hidden sm:table-cell">
+                        {item.igQty > 0 ? item.igQty : '–'}
+                      </td>
+                      <td className="text-center px-2 py-1.5 font-semibold text-stone-600 dark:text-stone-300">
+                        {item.totalQty}
+                      </td>
+                      <td className="px-2 py-1.5 text-[10px] text-stone-500 dark:text-stone-400 hidden sm:table-cell">
+                        {item.buyAs}
+                      </td>
+                      <td className="px-2 py-1.5">
+                        {item.bestSeller ? (
+                          <a href={item.bestUrl} target="_blank" rel="noopener noreferrer"
+                            className="text-violet-600 dark:text-violet-400 hover:underline truncate block max-w-[120px]">
+                            {item.bestSeller}
+                          </a>
+                        ) : (
+                          <span className="text-stone-300 dark:text-stone-600">–</span>
+                        )}
+                      </td>
+                      <td className="text-right px-3 py-1.5 font-medium text-stone-600 dark:text-stone-300">
+                        {item.bestPrice > 0 ? `${isUS ? '$' : '£'}${item.bestPrice.toFixed(2)}` : '–'}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+                <tfoot>
+                  <tr className="bg-violet-50 dark:bg-violet-900/30 font-bold text-stone-700 dark:text-stone-200">
+                    <td colSpan={3} className="px-3 py-2 hidden sm:table-cell">
+                      Total ({shoppingList.itemsWithPrices}/{shoppingList.totalItems} priced)
+                    </td>
+                    <td colSpan={1} className="px-3 py-2 sm:hidden">
+                      Total
+                    </td>
+                    <td className="sm:hidden" />
+                    <td />
+                    <td className="text-right px-3 py-2 text-emerald-600 dark:text-emerald-400">
+                      {isUS ? '$' : '£'}{shoppingList.totalBudget.toFixed(2)}
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+
+            {shoppingList.totalItems === 0 && (
+              <p className="text-center text-stone-400 text-sm py-4">
+                No plants in your plan yet. Use the GreenStalk Planner or Garden page to place plants.
+              </p>
+            )}
+          </div>
+        )}
+
+        {filter === 'shopping-list' && shoppingList.items.length === 0 && (
+          <div className="text-center py-12 text-stone-400">
+            <div className="text-4xl mb-3">🛒</div>
+            <p>No plants in your plan yet.</p>
+            <p className="text-xs mt-1">Place plants on the GreenStalk or Garden page, then come back here for your shopping list.</p>
+          </div>
+        )}
+
+        {/* ── Supplies & Equipment ─────────────────────────────────── */}
+        <div className="bg-white dark:bg-stone-800 rounded-2xl border border-stone-200 dark:border-stone-700 overflow-hidden mb-5 lg:mb-0">
+          <div className="px-4 py-3 border-b border-stone-100 dark:border-stone-700">
+            <h2 className="text-sm font-bold text-stone-800 dark:text-stone-100">
+              🧰 Supplies & Equipment
+            </h2>
+            <p className="text-[10px] text-stone-400 mt-0.5">Non-plant items you need — date-sensitive for your {PHASE_LABELS_SHORT[getPhaseSimple(new Date())]} phase</p>
+          </div>
+          <div className="divide-y divide-stone-50 dark:divide-stone-700/50">
+            {SUPPLIES.filter(s => s.phases.includes(getPhaseSimple(new Date()))).map((supply) => (
+              <div key={supply.id} className="px-4 py-3 flex items-start gap-3">
+                <span className="text-lg shrink-0">{supply.emoji}</span>
+                <div className="flex-1 min-w-0">
+                  <div className="text-xs font-semibold text-stone-800 dark:text-stone-100">{supply.name}</div>
+                  <p className="text-[10px] text-stone-500 dark:text-stone-400 mt-0.5">{supply.reason}</p>
+                  {supply.specific && (
+                    <p className="text-[10px] text-emerald-600 dark:text-emerald-400 mt-0.5 font-medium">{supply.specific}</p>
+                  )}
+                </div>
+                <div className="shrink-0 flex flex-col items-end gap-1">
+                  {supply.price && (
+                    <span className="text-[10px] font-bold text-stone-600 dark:text-stone-300">{supply.price}</span>
+                  )}
+                  {supply.url && (
+                    <a href={supply.url} target="_blank" rel="noopener noreferrer"
+                      className="text-[9px] px-2 py-0.5 rounded bg-emerald-600 text-white hover:bg-emerald-700 transition-colors font-semibold">
+                      Buy →
+                    </a>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        </div>{/* end sidebar column */}
+
+        {/* Plant cards grid */}
+        <div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {filtered.map(({ plant, timing, reason, seedProduct }) => (
             <SeedCard
               key={plant.slug}
@@ -489,6 +812,8 @@ export function SeedFinderPage() {
             <div>No seeds to buy for {getMonthName(selectedMonth)} with this filter.</div>
           </div>
         )}
+        </div>{/* end plant cards column */}
+        </div>{/* end 2-column grid */}
       </div>
     </div>
   );

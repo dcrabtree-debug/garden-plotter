@@ -20,11 +20,14 @@ import { useRegion } from '../data/use-region';
 import { generateLayouts, extractTowerSlugs, type LayoutOption } from '../lib/auto-populate';
 import { generateEsherLayouts } from '../lib/esher-garden-template';
 import { findBestPairing } from '../lib/cross-system-scoring';
+import { GardenGradePanel } from '../components/common/GardenGradePanel';
 import type { Plant } from '../types/plant';
 
 export function PlannerPage() {
   const towers = usePlannerStore((s) => s.towers);
+  const locked = usePlannerStore((s) => s.locked);
   const assignPlant = usePlannerStore((s) => s.assignPlant);
+  const assignDuo = usePlannerStore((s) => s.assignDuo);
   const removePlant = usePlannerStore((s) => s.removePlant);
   const addTower = usePlannerStore((s) => s.addTower);
   const removeTowerAction = usePlannerStore((s) => s.removeTower);
@@ -39,7 +42,7 @@ export function PlannerPage() {
   const [showMobilePalette, setShowMobilePalette] = useState(false);
   const [layouts, setLayouts] = useState<LayoutOption[]>([]);
   const [smartPicker, setSmartPicker] = useState<{
-    towerId: string; tierNumber: number; pocketIndex: number; neighbourSlugs: string[];
+    towerId: string; tierNumber: number; pocketIndex: number; neighbourSlugs: string[]; currentSlug: string | null;
   } | null>(null);
 
   const mouseSensor = useSensor(MouseSensor, {
@@ -138,26 +141,25 @@ export function PlannerPage() {
       tierNumber: number,
       pocketIndex: number
     ) => {
-      if (plant) {
-        // Pocket has a plant — show detail
-        setSelectedPlant(plant);
-      } else if (plantToPlace) {
-        // Pocket is empty and we have a plant selected from palette
-        assignPlant(towerId, tierNumber, pocketIndex, plantToPlace.slug);
-      } else {
-        // Pocket is empty — open smart plant picker
+      if (plant || !plantToPlace) {
+        // Pocket has a plant (swap mode) or is empty (pick mode) — open smart picker
         const tower = towers.find((t) => t.id === towerId);
         const neighbourSlugs: string[] = [];
         if (tower) {
           for (const tier of tower.tiers) {
             if (Math.abs(tier.tierNumber - tierNumber) <= 1) {
               for (const pocket of tier.pockets) {
-                if (pocket.plantSlug) neighbourSlugs.push(pocket.plantSlug);
+                if (pocket.plantSlug && pocket.plantSlug !== plant?.slug) neighbourSlugs.push(pocket.plantSlug);
               }
             }
           }
         }
-        setSmartPicker({ towerId, tierNumber, pocketIndex, neighbourSlugs });
+        setSmartPicker({ towerId, tierNumber, pocketIndex, neighbourSlugs, currentSlug: plant?.slug ?? null });
+        return;
+      }
+      if (plantToPlace) {
+        // Pocket is empty and we have a plant selected from palette
+        assignPlant(towerId, tierNumber, pocketIndex, plantToPlace.slug);
       }
     },
     [plantToPlace, assignPlant, towers]
@@ -249,16 +251,35 @@ export function PlannerPage() {
           />
         </div>
 
-        {/* Main: Tower views */}
+        {/* Main: Tower views + RHS panel */}
+        <div className="flex-1 flex overflow-hidden">
         <div className="flex-1 overflow-auto p-3 sm:p-6">
           <div className="mb-4">
             <div className="flex items-center justify-between">
-              <h1 className="text-xl font-semibold text-stone-800 dark:text-stone-100">
-                GreenStalk Planner
-              </h1>
+              <div className="flex items-center gap-2">
+                <h1 className="text-xl font-semibold text-stone-800 dark:text-stone-100">
+                  GreenStalk Planner
+                </h1>
+                <button
+                  onClick={() => usePlannerStore.getState().toggleLock()}
+                  className={`px-2 py-1 text-xs rounded-lg border transition-all ${
+                    locked
+                      ? 'bg-emerald-100 dark:bg-emerald-900/30 border-emerald-300 dark:border-emerald-700 text-emerald-700 dark:text-emerald-400'
+                      : 'bg-stone-50 dark:bg-stone-700 border-stone-200 dark:border-stone-600 text-stone-400 hover:text-stone-600'
+                  }`}
+                  title={locked ? 'Unlock to edit' : 'Lock to prevent changes'}
+                >
+                  {locked ? '🔒 Locked' : '🔓'}
+                </button>
+              </div>
               <button
                 onClick={handleAutoPopulate}
-                className="shimmer relative overflow-hidden px-4 py-2 text-xs font-semibold bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white rounded-full shadow-lg shadow-emerald-500/20 transition-all duration-200 flex items-center gap-1.5"
+                disabled={locked}
+                className={`shimmer relative overflow-hidden px-4 py-2 text-xs font-semibold rounded-full shadow-lg transition-all duration-200 flex items-center gap-1.5 ${
+                  locked
+                    ? 'bg-stone-300 dark:bg-stone-600 text-stone-500 dark:text-stone-400 cursor-not-allowed shadow-none'
+                    : 'bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white shadow-emerald-500/20'
+                }`}
               >
                 <span>✨</span> Auto-Populate
               </button>
@@ -319,6 +340,42 @@ export function PlannerPage() {
               <span className="text-sm font-medium">Add GreenStalk</span>
             </button>
           </div>
+
+          {/* Real-time Garden Grade — updates as you swap plants */}
+          <div className="mt-6">
+            <GardenGradePanel variant="inline" swapFilter="greenstalk" />
+          </div>
+        </div>
+
+        {/* RHS Smart Picker — inline panel on desktop */}
+        {smartPicker && (
+          <div className="hidden lg:flex w-80 border-l border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-800 flex-shrink-0 flex-col">
+            <SmartPlantPicker
+              inline
+              plants={plants}
+              plantMap={plantMap}
+              companionMap={companionMap}
+              neighbourSlugs={smartPicker.neighbourSlugs}
+              tierNumber={smartPicker.tierNumber}
+              currentPlantSlug={smartPicker.currentSlug}
+              onSelect={(slug) => {
+                if (smartPicker.currentSlug) removePlant(smartPicker.towerId, smartPicker.tierNumber, smartPicker.pocketIndex);
+                assignPlant(smartPicker.towerId, smartPicker.tierNumber, smartPicker.pocketIndex, slug);
+                setSmartPicker(null);
+              }}
+              onSelectDuo={(primary, companion) => {
+                if (smartPicker.currentSlug) removePlant(smartPicker.towerId, smartPicker.tierNumber, smartPicker.pocketIndex);
+                assignDuo(smartPicker.towerId, smartPicker.tierNumber, smartPicker.pocketIndex, primary, companion);
+                setSmartPicker(null);
+              }}
+              onRemove={() => {
+                removePlant(smartPicker.towerId, smartPicker.tierNumber, smartPicker.pocketIndex);
+                setSmartPicker(null);
+              }}
+              onClose={() => setSmartPicker(null)}
+            />
+          </div>
+        )}
         </div>
       </div>
 
@@ -334,28 +391,33 @@ export function PlannerPage() {
         )}
       </DragOverlay>
 
-      {/* Plant detail modal */}
-      {selectedPlant && (
-        <PlantDetail
-          plant={selectedPlant}
-          companionMap={companionMap}
-          onClose={() => setSelectedPlant(null)}
-        />
-      )}
-
-      {/* Smart plant picker */}
+      {/* Smart plant picker — mobile modal (hidden on lg: where inline panel is used) */}
       {smartPicker && (
-        <SmartPlantPicker
-          plants={plants}
-          companionMap={companionMap}
-          neighbourSlugs={smartPicker.neighbourSlugs}
-          tierNumber={smartPicker.tierNumber}
-          onSelect={(slug) => {
-            assignPlant(smartPicker.towerId, smartPicker.tierNumber, smartPicker.pocketIndex, slug);
-            setSmartPicker(null);
-          }}
-          onClose={() => setSmartPicker(null)}
-        />
+        <div className="lg:hidden">
+          <SmartPlantPicker
+            plants={plants}
+            plantMap={plantMap}
+            companionMap={companionMap}
+            neighbourSlugs={smartPicker.neighbourSlugs}
+            tierNumber={smartPicker.tierNumber}
+            currentPlantSlug={smartPicker.currentSlug}
+            onSelect={(slug) => {
+              if (smartPicker.currentSlug) removePlant(smartPicker.towerId, smartPicker.tierNumber, smartPicker.pocketIndex);
+              assignPlant(smartPicker.towerId, smartPicker.tierNumber, smartPicker.pocketIndex, slug);
+              setSmartPicker(null);
+            }}
+            onSelectDuo={(primary, companion) => {
+              if (smartPicker.currentSlug) removePlant(smartPicker.towerId, smartPicker.tierNumber, smartPicker.pocketIndex);
+              assignDuo(smartPicker.towerId, smartPicker.tierNumber, smartPicker.pocketIndex, primary, companion);
+              setSmartPicker(null);
+            }}
+            onRemove={() => {
+              removePlant(smartPicker.towerId, smartPicker.tierNumber, smartPicker.pocketIndex);
+              setSmartPicker(null);
+            }}
+            onClose={() => setSmartPicker(null)}
+          />
+        </div>
       )}
 
       {/* Auto-populate modal */}

@@ -52,6 +52,9 @@ export function TierRow({
           const plant = pocket.plantSlug
             ? plantMap.get(pocket.plantSlug) ?? null
             : null;
+          const companionPlants = (pocket.companionSlugs ?? [])
+            .map((s) => plantMap.get(s))
+            .filter((p): p is Plant => p !== undefined);
           const neighbours = allNeighbourSlugs(tier.tierNumber, i);
           const status = plant
             ? getCompanionStatus(plant.slug, neighbours, companionMap)
@@ -65,6 +68,7 @@ export function TierRow({
               key={pocket.id}
               id={pocket.id}
               plant={plant}
+              companionPlants={companionPlants}
               companionStatus={status}
               tierSuitability={!plant ? suitability : undefined}
               onRemove={() => removePlant(towerId, tier.tierNumber, i)}

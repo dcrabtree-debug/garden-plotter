@@ -6,23 +6,26 @@
  * Garden dimensions: ~10m wide × 12m deep
  * Grid: 0.5m cells = 20 columns × 24 rows
  *
- * Orientation (corrected per owner):
- *   Row 0 = house wall (NE, street side — faces NE)
- *   Row 23 = back of garden (SW)
- *   Col 0 = left (NW) — neighbour 19A side
- *   Col 19 = right (SE) — fence border side
+ * Orientation (from aerial satellite — top of image = true north):
+ *   Row 0 = house wall (SOUTH, street side — Esher Avenue)
+ *   Row 23 = back of garden (NORTH — hedge/trees)
+ *   Col 0 = left (WEST) — neighbour 19A side
+ *   Col 19 = right (EAST) — fence border side, neighbour 23A
  *
- * Photo-verified features:
- * - Conservatory (NW corner, rows 0-2, cols 0-5) — glass, faces SW
- * - Main lawn (rows 3-18) — OFF LIMITS, rental property
- * - Right fence border (cols 18-19) — Cordylines + Euphorbia in narrow bed
- * - Back patio (rows 19-21) — PAVED, GreenStalk positions only
- * - Raised bed (rows 21-22, cols 7-12) — black metal edging, near hedge,
- *     hostas + perennials (shade bed under laurel canopy)
- * - Shed (rows 21-23, cols 0-3) — wooden, glazed panels, N corner
- * - Laurel hedge (rows 22-23, cols 0-17) — 3-4m tall, SW boundary, shades PM
- * - Back gate (rows 21-22, cols 16-19) — white picket, right side
- * - Gooseberry/currant shrubs near back gate
+ * Photo-verified features (aerial + estate agent + ground-level):
+ * - Conservatory (SW corner, rows 0-2, cols 0-5) — west side of house
+ * - Conservatory patio (rows 2-3, cols 4-8) — paving outside French doors
+ * - West boundary (cols 0-1) — established hedge/shrubs (19A side)
+ * - East fence border (cols 18-19) — closeboard + Cordylines + Euphorbia
+ * - Main lawn (rows 3-18) — OFF LIMITS, rental
+ * - Shed (rows 21-23, cols 3-5) — small wooden, NORTHWEST corner (photo-confirmed)
+ * - Ornamental bed (rows 20-21, cols 6-8) — Aucuba, Acer, shrubs
+ * - Raised bed (rows 20-21, cols 9-13) — black metal edging, shade plants (hostas, ferns)
+ * - Old shed pavers (rows 20-22, cols 16-19) — EAST side, old shed removed, GreenStalks here
+ * - Laurel hedge (rows 22-23) — 3-4m tall, full NORTH boundary
+ * - Back gate + fruit (row 21-22, cols 14-15)
+ * - Large deciduous tree (rows 14-19, col 19) — overhangs from east
+ * - Gooseberry/currant near back gate
  */
 
 import type { GardenCell, GardenConfig, CellType } from '../types/planner';
@@ -70,8 +73,8 @@ export function createEsherGarden(): { config: GardenConfig; cells: GardenCell[]
     overrides.push({ row: 1, col: c, type: 'patio' });
   }
 
-  // ── Conservatory (NW corner: rows 0-2, cols 0-5) ──
-  // Victorian-style glass, faces SW — filtered light, frost-free in winter
+  // ── Conservatory (SW corner: rows 0-2, cols 0-5) ──
+  // West side of house. Glass room, French doors to garden.
   for (let r = 0; r <= 2; r++) {
     for (let c = 0; c <= 5; c++) {
       overrides.push({ row: r, col: c, type: 'conservatory', label: 'Conservatory' });
@@ -85,12 +88,14 @@ export function createEsherGarden(): { config: GardenConfig; cells: GardenCell[]
   overrides.push({ row: 2, col: 3, type: 'conservatory', plantSlug: 'mint', label: 'Conservatory' });
   overrides.push({ row: 2, col: 5, type: 'conservatory', plantSlug: 'parsley', label: 'Conservatory' });
 
-  // ── Left fence border (col 0, rows 3-18) ──
+  // ── West boundary (col 0-1, rows 3-18) — established hedge/shrubs ──
+  // 19A side. Dense mixed hedge, not closeboard fencing.
   for (let r = 3; r <= 18; r++) {
-    overrides.push({ row: r, col: 0, type: 'flower-bed' });
+    overrides.push({ row: r, col: 0, type: 'flower-bed', label: 'Boundary hedge' });
+    overrides.push({ row: r, col: 1, type: 'flower-bed', label: 'Shrub border' });
   }
 
-  // ── Right fence border (cols 18-19, rows 3-20) — Cordylines + Euphorbia ──
+  // ── East fence border (cols 18-19, rows 3-20) — Cordylines + Euphorbia ──
   for (let r = 3; r <= 20; r++) {
     overrides.push({ row: r, col: 19, type: 'flower-bed' });
     overrides.push({ row: r, col: 18, type: 'flower-bed' });
@@ -102,55 +107,90 @@ export function createEsherGarden(): { config: GardenConfig; cells: GardenCell[]
     overrides.push({ row: r, col: 18, type: 'flower-bed', label: 'Euphorbia' });
   }
 
-  // ── Back patio (rows 19-21, cols 4-17) — PAVED, GreenStalks here ──
-  for (let r = 19; r <= 21; r++) {
-    for (let c = 4; c <= 17; c++) {
-      overrides.push({ row: r, col: c, type: 'patio', label: 'Back patio' });
+  // ── Patio near conservatory doors (rows 2-3, cols 4-8) ──
+  // Estate agent photo 5: paving slabs outside French doors
+  for (let r = 2; r <= 3; r++) {
+    for (let c = 4; c <= 8; c++) {
+      overrides.push({ row: r, col: c, type: 'patio', label: 'Conservatory patio' });
     }
   }
 
-  // ── GreenStalk positions on patio ──
-  for (let r = 19; r <= 20; r++) {
-    for (let c = 5; c <= 6; c++) {
-      overrides.push({ row: r, col: c, type: 'greenstalk', label: 'GreenStalk 1' });
+  // ── Back area: NO large patio here — lawn extends to the back zone ──
+  // Photos confirm: the lawn goes most of the way to the hedge.
+  // Only hard surfaces in back are: old shed pavers (east) and shed pad (west).
+
+  // ── Shed (rows 21-23, cols 3-5) — NORTHWEST corner ──
+  // Photo-confirmed: wooden shed with felt roof, 4 windows, against the west hedge.
+  // Visible in File_001 (back-left), Unknown-7 (close-up with hedge), Unknown-9 (close-up).
+  for (let r = 21; r <= 23; r++) {
+    for (let c = 3; c <= 5; c++) {
+      overrides.push({ row: r, col: c, type: 'shed', label: 'Shed' });
     }
   }
-  for (let r = 19; r <= 20; r++) {
-    for (let c = 14; c <= 15; c++) {
-      overrides.push({ row: r, col: c, type: 'greenstalk', label: 'GreenStalk 2' });
+  // Small concrete pad in front of shed
+  overrides.push({ row: 20, col: 3, type: 'patio', label: 'Shed pad' });
+  overrides.push({ row: 20, col: 4, type: 'patio', label: 'Shed pad' });
+  overrides.push({ row: 20, col: 5, type: 'patio', label: 'Shed pad' });
+
+  // ── Ornamental planting bed in front of hedge (rows 20-21, cols 6-8) ──
+  // Photo Unknown-7: Aucuba (yellow-green), Acer (red), shrubs between shed and raised bed
+  for (let r = 20; r <= 21; r++) {
+    for (let c = 6; c <= 8; c++) {
+      overrides.push({ row: r, col: c, type: 'flower-bed', label: 'Ornamental bed' });
     }
   }
 
-  // ── Raised bed (rows 21-22, cols 7-12) — shade bed near hedge ──
-  for (let r = 21; r <= 22; r++) {
-    for (let c = 7; c <= 12; c++) {
+  // ── Raised bed (rows 20-21, cols 9-13) — shade bed near hedge ──
+  // Photo Unknown-8: black metal edging, hostas, ferns, shade plants.
+  // Central-back area, in front of the laurel hedge. Gets dappled shade.
+  for (let r = 20; r <= 21; r++) {
+    for (let c = 9; c <= 13; c++) {
       overrides.push({ row: r, col: c, type: 'raised-bed' });
     }
   }
 
-  // ── Shed (rows 21-23, cols 0-3) — N corner ──
-  for (let r = 21; r <= 23; r++) {
-    for (let c = 0; c <= 3; c++) {
-      overrides.push({ row: r, col: c, type: 'shed', label: 'Shed' });
+  // ── Old shed pavers — EAST side (rows 20-22, cols 16-19) ──
+  // Photo Unknown-10: concrete pad where old shed was removed.
+  // THIS is where the 2 GreenStalks go — ready-made hard surface.
+  for (let r = 20; r <= 22; r++) {
+    for (let c = 16; c <= 19; c++) {
+      overrides.push({ row: r, col: c, type: 'patio', label: 'Old shed pavers' });
     }
   }
 
-  // ── Laurel hedge (rows 22-23) — SW boundary ──
+  // ── GreenStalk positions on old shed pavers (east side) ──
+  // 2 GreenStalks only. Each is 2x2 cells (1m x 1m footprint).
+  for (let r = 20; r <= 21; r++) {
+    for (let c = 16; c <= 17; c++) {
+      overrides.push({ row: r, col: c, type: 'greenstalk', label: 'GreenStalk 1' });
+    }
+  }
+  for (let r = 20; r <= 21; r++) {
+    for (let c = 18; c <= 19; c++) {
+      overrides.push({ row: r, col: c, type: 'greenstalk', label: 'GreenStalk 2' });
+    }
+  }
+
+  // ── Laurel/ivy hedge (rows 22-23) — NORTH boundary ──
+  // Photo Unknown-7: very tall (3-4m), dense evergreen. Full width.
   for (let c = 0; c <= 19; c++) {
     overrides.push({ row: 23, col: c, type: 'tree', label: 'Laurel hedge' });
   }
-  for (let c = 4; c <= 17; c++) {
+  for (let c = 6; c <= 15; c++) {
     overrides.push({ row: 22, col: c, type: 'tree', label: 'Hedge canopy' });
   }
 
-  // ── Back gate (rows 21-22, cols 16-19) ──
-  for (let r = 21; r <= 22; r++) {
-    for (let c = 16; c <= 19; c++) {
-      overrides.push({ row: r, col: c, type: 'path', label: 'Back gate' });
-    }
+  // ── Back gate + fruit bushes (rows 21-22, cols 14-15) ──
+  overrides.push({ row: 22, col: 14, type: 'path', label: 'Back gate' });
+  overrides.push({ row: 22, col: 15, type: 'path', label: 'Back gate' });
+  overrides.push({ row: 21, col: 14, type: 'flower-bed', plantSlug: 'gooseberry', label: 'Gooseberry' });
+  overrides.push({ row: 21, col: 15, type: 'flower-bed', plantSlug: 'redcurrant', label: 'Redcurrant' });
+
+  // ── Large deciduous tree overhanging from right (SE) side ──
+  // Estate agent photos: massive tree canopy covers back-right quarter in afternoon
+  for (let r = 14; r <= 19; r++) {
+    overrides.push({ row: r, col: 19, type: 'tree', label: 'Overhanging tree' });
   }
-  overrides.push({ row: 21, col: 17, type: 'flower-bed', plantSlug: 'gooseberry', label: 'Gooseberry' });
-  overrides.push({ row: 21, col: 18, type: 'flower-bed', plantSlug: 'redcurrant', label: 'Redcurrant' });
 
   // ── Sweet peas on right fence ──
   overrides.push({ row: 8, col: 18, type: 'flower-bed', plantSlug: 'dwarf-sweet-pea' });
@@ -176,6 +216,9 @@ export function createEsherGarden(): { config: GardenConfig; cells: GardenCell[]
 // Back patio is PAVED — GreenStalks only. Lawn is OFF LIMITS (rental).
 
 import type { CrossSystemPairing } from './cross-system-scoring';
+import type { Plant } from '../types/plant';
+import type { CompanionMap } from '../types/companion';
+import { getFriends, getConflicts } from './companion-engine';
 
 export interface PlacementDetail {
   plantSlug: string;
@@ -236,9 +279,17 @@ export function generateEsherLayouts(): EsherLayoutOption[] {
         'Raised bed "daily salad bar": Wild Rocket (perennial ground cover, not the annual salad type), Little Gem + Salad Bowl lettuce (full heads, not baby leaf), Perpetual Spinach (a leaf beet that grows 60cm tall — too big for pockets), White Lisbon spring onion, French Breakfast radish. All chosen specifically for the dappled shade cast by the 3-4m laurel hedge.\n\n' +
         'Conservatory: Dwarf lemon (Meyer), dwarf olive, hardy fern, shade-tolerant herbs — plants that need frost protection through Surrey winters.',
       placements: [
+        // Fence border
         { row: 8, col: 18, plantSlug: 'runner-bean' },
         { row: 12, col: 18, plantSlug: 'runner-bean' },
         { row: 16, col: 18, plantSlug: 'dwarf-sweet-pea' },
+        // Conservatory — seed starting + tender herbs + overwintering
+        { row: 1, col: 1, plantSlug: 'basil-sweet' },
+        { row: 1, col: 3, plantSlug: 'pepper-chilli' },
+        { row: 1, col: 5, plantSlug: 'tomato-tumbling' },
+        { row: 2, col: 1, plantSlug: 'parsley' },
+        { row: 2, col: 3, plantSlug: 'coriander' },
+        { row: 2, col: 5, plantSlug: 'mint' },
       ],
       reasoning: [
         { plantSlug: 'runner-bean', plantName: 'Runner Bean (Scarlet Emperor)', row: 8, col: 18, zone: zoneLabel(8, 18), reasons: [
@@ -257,6 +308,36 @@ export function generateEsherLayouts(): EsherLayoutOption[] {
           'Pollinator magnet — attracts bees to the GreenStalks on the adjacent patio',
           'Cut flower supply for the house — the more you cut, the more they flower',
           'Near patio seating area — fragrance drifts to where you sit in the evening',
+        ]},
+        { plantSlug: 'basil-sweet', plantName: 'Sweet Basil (Genovese)', row: 1, col: 1, zone: 'Conservatory', reasons: [
+          'Conservatory gives the warmth basil demands — won\'t tolerate UK outdoor nights until June',
+          'Start indoors April, move to GreenStalk tier 1 when nights stay above 10°C',
+          'Companion to tomatoes on the same windowsill — both need warmth and light',
+        ]},
+        { plantSlug: 'pepper-chilli', plantName: 'Chilli Pepper', row: 1, col: 3, zone: 'Conservatory', reasons: [
+          'Conservatory is the ONLY viable location — chillies need 20°C+ and long season',
+          'Start Feb-Mar indoors, fruit from August. Overwinter in conservatory for year 2',
+          'Kids love watching the colour change from green → red',
+        ]},
+        { plantSlug: 'tomato-tumbling', plantName: 'Tomato (seedlings)', row: 1, col: 5, zone: 'Conservatory', reasons: [
+          'Start seedlings here, transplant to GreenStalk tier 2 when 15cm tall',
+          'Conservatory gives the warmth for germination (18-25°C) that a windowsill can\'t guarantee',
+          'Harden off for 7 days before moving outside',
+        ]},
+        { plantSlug: 'parsley', plantName: 'Flat-leaf Parsley', row: 2, col: 1, zone: 'Conservatory', reasons: [
+          'Slow to germinate (2-3 weeks) — conservatory warmth speeds it up',
+          'Move to GreenStalk tier 1 or raised bed once established',
+          'Cut-and-come-again herb, high-value (£18/kg vs supermarket)',
+        ]},
+        { plantSlug: 'coriander', plantName: 'Coriander (Calypso)', row: 2, col: 3, zone: 'Conservatory', reasons: [
+          'Varietal: Calypso — bolt-resistant, bred for leaf production not seed',
+          'Conservatory shade prevents the bolting that kills coriander outdoors',
+          'Succession sow every 3 weeks for continuous supply',
+        ]},
+        { plantSlug: 'mint', plantName: 'Mint (in pot)', row: 2, col: 5, zone: 'Conservatory', reasons: [
+          'MUST stay in a pot — mint is invasive and will take over any bed',
+          'Conservatory keeps it accessible for kitchen use year-round',
+          'Renter-safe: contained, no risk to property',
         ]},
       ],
       raisedBedReplant: {
@@ -284,7 +365,7 @@ export function generateEsherLayouts(): EsherLayoutOption[] {
           { plantSlug: 'rocket', plantName: 'Wild Rocket', row: 22, col: 12, zone: zoneLabel(22, 12), reasons: ['Third rocket — edge position for easy picking from the path side', 'Three rocket plants supply enough peppery leaves for daily salads all summer'] },
         ],
       },
-      stats: { totalPlants: 15, uniqueVarieties: 6, companionPairs: 5, estimatedYieldKg: 10, estimatedValueGBP: 75 },
+      stats: { totalPlants: 21, uniqueVarieties: 12, companionPairs: 8, estimatedYieldKg: 12, estimatedValueGBP: 95 },
     },
 
     // ═══ 2. Maximum Food from Limited Space ════════════════════════════════════
@@ -463,4 +544,186 @@ export function generateEsherLayouts(): EsherLayoutOption[] {
       stats: { totalPlants: 15, uniqueVarieties: 12, companionPairs: 10, estimatedYieldKg: 3, estimatedValueGBP: 25 },
     },
   ];
+}
+
+// ─── Dynamic paired layout based on actual GreenStalk contents ──────────────
+
+const FENCE_SLOTS = [
+  { row: 8, col: 18 },
+  { row: 12, col: 18 },
+  { row: 16, col: 18 },
+];
+
+const BED_CELLS = [
+  { row: 21, col: 7 }, { row: 21, col: 8 }, { row: 21, col: 9 },
+  { row: 21, col: 10 }, { row: 21, col: 11 }, { row: 21, col: 12 },
+  { row: 22, col: 7 }, { row: 22, col: 8 }, { row: 22, col: 9 },
+  { row: 22, col: 10 }, { row: 22, col: 11 }, { row: 22, col: 12 },
+];
+
+/**
+ * Generate a custom in-ground layout optimised to complement the user's
+ * ACTUAL GreenStalk tower contents.
+ *
+ * Scoring per candidate plant:
+ *   +5 for each friend relationship with a tower plant
+ *   -8 for each foe relationship with a tower plant
+ *   +3 if NOT already in the towers (diversity bonus)
+ *   +2 if shade-tolerant (for raised bed near hedge)
+ *   +2 if climbing habit (for fence border slots)
+ */
+export function generatePairedLayout(
+  actualTowerSlugs: string[],
+  plants: Plant[],
+  companionMap: CompanionMap
+): EsherLayoutOption {
+  const towerSet = new Set(actualTowerSlugs);
+  const uniqueTowerSlugs = [...towerSet];
+
+  // Score every available plant
+  function scoreForBed(plant: Plant): number {
+    let score = 0;
+    const friends = getFriends(plant.slug, uniqueTowerSlugs, companionMap);
+    const foes = getConflicts(plant.slug, uniqueTowerSlugs, companionMap);
+    score += friends.length * 5;
+    score -= foes.length * 8;
+    if (!towerSet.has(plant.slug)) score += 3; // diversity bonus
+    if (plant.sun === 'partial-shade' || plant.sun === 'full-shade') score += 2; // shade tolerance
+    // Penalise plants unsuitable for containers/raised beds
+    if (plant.greenstalkSuitability === 'unsuitable' && plant.growthHabit === 'climbing') score -= 2;
+    return score;
+  }
+
+  function scoreForFence(plant: Plant): number {
+    let score = 0;
+    const friends = getFriends(plant.slug, uniqueTowerSlugs, companionMap);
+    const foes = getConflicts(plant.slug, uniqueTowerSlugs, companionMap);
+    score += friends.length * 5;
+    score -= foes.length * 8;
+    if (!towerSet.has(plant.slug)) score += 3;
+    if (plant.growthHabit === 'climbing') score += 4; // climbing bonus for fence
+    return score;
+  }
+
+  // Get top plants for each zone
+  const bedCandidates = [...plants]
+    .map((p) => ({ plant: p, score: scoreForBed(p) }))
+    .sort((a, b) => b.score - a.score);
+
+  const fenceCandidates = [...plants]
+    .map((p) => ({ plant: p, score: scoreForFence(p) }))
+    .sort((a, b) => b.score - a.score);
+
+  // Pick unique plants (no duplicates across zones)
+  const used = new Set<string>();
+  const fencePicks: { plant: Plant; score: number }[] = [];
+  for (const c of fenceCandidates) {
+    if (fencePicks.length >= FENCE_SLOTS.length) break;
+    if (!used.has(c.plant.slug)) {
+      fencePicks.push(c);
+      used.add(c.plant.slug);
+    }
+  }
+
+  const bedPicks: { plant: Plant; score: number }[] = [];
+  for (const c of bedCandidates) {
+    if (bedPicks.length >= BED_CELLS.length) break;
+    if (!used.has(c.plant.slug) || bedPicks.length >= 6) {
+      // Allow some repeats in the 12-cell bed (e.g., multiple lettuce)
+      bedPicks.push(c);
+      used.add(c.plant.slug);
+    }
+  }
+
+  // Build placements
+  const placements: { row: number; col: number; plantSlug: string }[] = [];
+  const reasoning: PlacementDetail[] = [];
+
+  // Fence placements
+  for (let i = 0; i < FENCE_SLOTS.length && i < fencePicks.length; i++) {
+    const slot = FENCE_SLOTS[i];
+    const pick = fencePicks[i];
+    const friends = getFriends(pick.plant.slug, uniqueTowerSlugs, companionMap);
+    placements.push({ ...slot, plantSlug: pick.plant.slug });
+    reasoning.push({
+      plantSlug: pick.plant.slug,
+      plantName: pick.plant.commonName,
+      row: slot.row,
+      col: slot.col,
+      zone: zoneLabel(slot.row, slot.col),
+      reasons: [
+        friends.length > 0
+          ? `Companion to your tower plants: ${friends.map((f) => f.reason).slice(0, 2).join('; ')}`
+          : 'Adds diversity to complement your GreenStalk crops',
+        pick.plant.growthHabit === 'climbing'
+          ? 'Climbing habit — trains up the fence panel'
+          : 'Fits between existing Cordylines in the border',
+      ],
+    });
+  }
+
+  // Raised bed placements
+  const bedDetails: PlacementDetail[] = [];
+  const bedPlants: { row: number; col: number; plantSlug: string }[] = [];
+  for (let i = 0; i < BED_CELLS.length && i < bedPicks.length; i++) {
+    const cell = BED_CELLS[i];
+    const pick = bedPicks[i];
+    const friends = getFriends(pick.plant.slug, uniqueTowerSlugs, companionMap);
+    const foes = getConflicts(pick.plant.slug, uniqueTowerSlugs, companionMap);
+    bedPlants.push({ ...cell, plantSlug: pick.plant.slug });
+    bedDetails.push({
+      plantSlug: pick.plant.slug,
+      plantName: pick.plant.commonName,
+      row: cell.row,
+      col: cell.col,
+      zone: zoneLabel(cell.row, cell.col),
+      reasons: [
+        friends.length > 0
+          ? `Companions your towers: ${friends.map((f) => f.reason).slice(0, 2).join('; ')}`
+          : `Adds ${pick.plant.category} variety your towers don't have`,
+        towerSet.has(pick.plant.slug)
+          ? 'Also in your GreenStalks — grows bigger in ground'
+          : 'Not in your towers — maximises crop diversity',
+        foes.length > 0
+          ? `⚠️ Watch: ${foes[0].reason}`
+          : pick.plant.sun !== 'full-sun'
+            ? 'Shade-tolerant — ideal for hedge-side raised bed'
+            : 'Tolerates the partial shade near the hedge',
+      ],
+    });
+  }
+
+  // Count companion pairs
+  const allPlacedSlugs = [...placements.map((p) => p.plantSlug), ...bedPlants.map((p) => p.plantSlug)];
+  let companionPairs = 0;
+  for (const slug of allPlacedSlugs) {
+    companionPairs += getFriends(slug, uniqueTowerSlugs, companionMap).length;
+  }
+
+  const towerNames = uniqueTowerSlugs
+    .slice(0, 5)
+    .map((s) => plants.find((p) => p.slug === s)?.commonName ?? s)
+    .join(', ');
+  const moreCount = uniqueTowerSlugs.length > 5 ? ` +${uniqueTowerSlugs.length - 5} more` : '';
+
+  return {
+    id: 'paired-with-towers',
+    name: 'Paired with Your GreenStalks',
+    emoji: '🤝',
+    description: `Custom layout generated from your actual tower plants (${towerNames}${moreCount}). Every pick chosen to complement what's already growing.`,
+    placements,
+    reasoning,
+    raisedBedReplant: {
+      rationale: `Replant raised bed with crops that companion your GreenStalk plants — ${companionPairs} companion benefits across systems.`,
+      placements: bedPlants,
+      details: bedDetails,
+    },
+    stats: {
+      totalPlants: placements.length + bedPlants.length,
+      uniqueVarieties: new Set([...placements.map((p) => p.plantSlug), ...bedPlants.map((p) => p.plantSlug)]).size,
+      companionPairs,
+      estimatedYieldKg: 0, // Dynamic — can't pre-calculate
+      estimatedValueGBP: 0,
+    },
+  };
 }

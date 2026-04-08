@@ -9,6 +9,10 @@ interface PocketProps {
   companionPlants: Plant[];
   companionStatus: CompanionStatus;
   tierSuitability?: TierSuitability;
+  /** 5-axis overall score (0-10) from garden-rating */
+  score?: number;
+  /** In-ground companion slugs that are friends with this pocket's plant */
+  inGroundFriends?: string[];
   onRemove: () => void;
   onClick: () => void;
 }
@@ -37,6 +41,8 @@ export function Pocket({
   companionPlants,
   companionStatus,
   tierSuitability,
+  score,
+  inGroundFriends,
   onRemove,
   onClick,
 }: PocketProps) {
@@ -105,6 +111,26 @@ export function Pocket({
             }`}
             title={`Water: ${plant.water}`}
           />
+          {/* Score badge (5-axis) */}
+          {score != null && (
+            <span
+              className={`absolute -bottom-1 -left-1 w-4 h-4 rounded-full text-white text-[8px] font-bold flex items-center justify-center shadow-sm ${
+                score >= 7 ? 'bg-emerald-600' : score >= 5 ? 'bg-amber-500' : 'bg-red-500'
+              }`}
+              title={`Score: ${score.toFixed(1)}/10 (Kid · Value · Companion · Resilience · Fragrance)`}
+            >
+              {Math.round(score)}
+            </span>
+          )}
+          {/* In-ground companion indicator */}
+          {inGroundFriends && inGroundFriends.length > 0 && (
+            <span
+              className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-violet-500 text-white text-[8px] font-bold flex items-center justify-center shadow-sm"
+              title={`In-ground companions: ${inGroundFriends.join(', ')}`}
+            >
+              🌍
+            </span>
+          )}
           <button
             onClick={(e) => {
               e.stopPropagation();

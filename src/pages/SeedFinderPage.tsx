@@ -456,7 +456,7 @@ export function SeedFinderPage() {
         }
       }
 
-      // Recommend: seeds, plugs, or potted plant based on timing and plant type
+      // Date-aware buy recommendation: seeds, plug plants, or potted based on sowing windows
       let buyAs = '🌱 Seeds';
       if (plant) {
         const pw = plant.plantingWindow;
@@ -464,19 +464,26 @@ export function SeedFinderPage() {
         const isPerennial = plant.category === 'fruit' || ['strawberry-everbearing', 'gooseberry', 'redcurrant', 'raspberry', 'blueberry'].includes(plant.slug);
         const isHerb = plant.category === 'herb';
         const needsLongSeason = plant.daysToHarvest[0] > 90;
-        const tooLateForSeed = pw.sowIndoors && !isInWindow(m, pw.sowIndoors) && !isInWindow(m, pw.sowOutdoors ?? [0, 0]);
+        // Check ALL sowing windows — handles plants with only outdoor sowing too
+        const canSowIndoors = pw.sowIndoors && isInWindow(m, pw.sowIndoors);
+        const canSowOutdoors = pw.sowOutdoors && isInWindow(m, pw.sowOutdoors);
+        const hasSowingWindow = !!(pw.sowIndoors || pw.sowOutdoors);
+        const tooLateForSeed = hasSowingWindow && !canSowIndoors && !canSowOutdoors;
         const canTransplant = pw.transplant && isInWindow(m, pw.transplant);
+        const gc = !isUS ? ' — try RHS Wisley or Squire\u2019s' : '';
 
         if (isPerennial) {
-          buyAs = '🪴 Potted plant';
+          buyAs = `🪴 Potted plant${gc}`;
         } else if (tooLateForSeed && canTransplant) {
-          buyAs = '🌿 Plug plants';
+          buyAs = `🌿 Plug plants${gc}`;
         } else if (tooLateForSeed && needsLongSeason) {
-          buyAs = '🌿 Plug plants';
+          buyAs = `🌿 Plug plants${gc}`;
+        } else if (tooLateForSeed && !canTransplant) {
+          buyAs = '⏰ Too late this year';
         } else if (isHerb && m >= 5) {
-          buyAs = '🪴 Potted herb';
+          buyAs = `🪴 Potted herb${gc}`;
         } else if (plant.slug === 'dwarf-sweet-pea' && m >= 3) {
-          buyAs = '🌿 Plug plants';
+          buyAs = `🌿 Plug plants${gc}`;
         }
       }
 
@@ -494,7 +501,7 @@ export function SeedFinderPage() {
     const itemsWithPrices = items.filter((i) => i.bestPrice > 0).length;
 
     return { items, totalBudget, itemsWithPrices, totalItems: items.length };
-  }, [towers, garden.cells, plants, gsLinks, igLinks, currentMonth]);
+  }, [towers, garden.cells, plants, gsLinks, igLinks, currentMonth, isUS]);
 
   const plantsWithTiming = useMemo(() => {
     return plants
@@ -639,6 +646,19 @@ export function SeedFinderPage() {
             ))}
           </div>
         </div>
+
+        {/* Garden centre tip for late-season UK buyers */}
+        {!isUS && currentMonth >= 4 && (
+          <div className="bg-emerald-50 dark:bg-emerald-900/20 rounded-2xl border border-emerald-200/60 dark:border-emerald-700/40 p-4 mb-5">
+            <h3 className="text-xs font-bold text-emerald-800 dark:text-emerald-300 flex items-center gap-1.5">
+              🌿 Past the sowing window?
+            </h3>
+            <p className="text-[11px] text-emerald-700 dark:text-emerald-400 mt-1">
+              Many crops can still go in as plug plants or potted herbs from your local garden centre.
+              Nearest to Esher: <strong>RHS Wisley</strong> (15 min) and <strong>Squire&apos;s Garden Centres</strong> (Walton &amp; Cobham).
+            </p>
+          </div>
+        )}
 
         {/* Desktop 2-column layout: sidebar (list + supplies) + plant cards */}
         <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] lg:gap-6">

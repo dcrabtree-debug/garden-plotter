@@ -11,6 +11,7 @@ import { ShadowPage } from './pages/ShadowPage';
 import { YieldPage } from './pages/YieldPage';
 import { DashboardPage } from './pages/DashboardPage';
 import { PhotoCoachPage } from './pages/PhotoCoachPage';
+import { CarePage } from './pages/CarePage';
 import { useDarkMode } from './hooks/use-dark-mode';
 import { usePlannerStore } from './state/planner-store';
 

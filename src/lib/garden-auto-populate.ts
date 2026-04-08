@@ -573,6 +573,10 @@ function highestGradeLayout(
     let bestPlant: Plant | null = null;
     let bestReasons: string[] = [];
 
+    // Get adjacent placed plants for companion grouping
+    const neighbours = getNeighbours(cell.row, cell.col, ctx.placements);
+    const uniqueNeighbours = [...new Set(neighbours)];
+
     for (const candidate of plants) {
       if (!sunOk(candidate)) continue;
       if (candidate.greenstalkSuitability === 'unsuitable' && cell.type !== 'raised-bed' && cell.type !== 'veg-patch') continue;
@@ -587,7 +591,13 @@ function highestGradeLayout(
       const slugRisk = getSlugRisk(candidate.slug);
       const slugPenalty = slugRisk === 'high' ? -2 : slugRisk === 'medium' ? -0.5 : 0;
 
-      const totalScore = ps.overall + diversityBonus + slugPenalty;
+      // Companion grouping: bonus for friends nearby, penalty for foes
+      const cs = uniqueNeighbours.length > 0
+        ? companionScore(candidate.slug, uniqueNeighbours, companionMap)
+        : { score: 0, friendReasons: [], foeReasons: [] };
+      const companionGroupBonus = cs.score * 0.3;
+
+      const totalScore = ps.overall + diversityBonus + slugPenalty + companionGroupBonus;
 
       if (totalScore > bestScore) {
         bestScore = totalScore;
@@ -597,6 +607,7 @@ function highestGradeLayout(
           slugRisk === 'high' ? 'Slug risk: HIGH (penalized — better in GreenStalk)' :
           slugRisk === 'low' ? 'Slug resistant — great for in-ground' : '',
           `Sun: ${cell.sunHours}h (needs ${candidate.sun})`,
+          ...cs.friendReasons.slice(0, 2),
         ].filter(Boolean);
       }
     }

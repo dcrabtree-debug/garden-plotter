@@ -288,6 +288,15 @@ export function analyzeZone(
 /**
  * Pre-configured analysis for 21 Esher Avenue based on the handoff document.
  * The laurel hedge is 3-4m tall on the NW side, ~3m from the terrace.
+ *
+ * VERIFIED 2026-04-08: Shadow geometry confirmed correct.
+ * - Laurel hedge (bearing 315° NW, 3.5m, 3m away, 10m wide) →
+ *   widthAngle = atan2(5, 3) ≈ 59°, so blocks when |sunAz - 315| < 59°.
+ * - Mid-June 5pm BST: sunAz ≈ 265°, diff = 50° < 59° → BLOCKED ✓
+ * - Mid-June 3pm BST: sunAz ≈ 240°, diff = 75° > 59° → CLEAR ✓
+ * - Mid-June 10am BST: sunAz ≈ 120°, diff = 165° → CLEAR ✓
+ * - Morning/midday sun from S/SE/E reaches terrace unobstructed.
+ * - Hedge starts casting shadow around 4-5pm, continues until sunset.
  */
 export function analyzeEsherAvenue(): Record<string, ZoneSunAnalysis> {
   // Terrace zone: main planting area. Laurel hedge NW, house to SE.

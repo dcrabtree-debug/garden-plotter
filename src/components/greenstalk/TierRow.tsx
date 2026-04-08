@@ -1,7 +1,8 @@
 import { Pocket } from './Pocket';
 import { getTierLabel, getTierAdvice } from '../../lib/tier-rules';
 import { getTierSuitability } from '../../lib/tier-rules';
-import { getCompanionStatus } from '../../lib/companion-engine';
+import { getCompanionStatus, getFriends } from '../../lib/companion-engine';
+import { scorePlant } from '../../lib/garden-rating';
 import type { Tier } from '../../types/planner';
 import type { Plant } from '../../types/plant';
 import type { CompanionMap } from '../../types/companion';
@@ -12,6 +13,10 @@ interface TierRowProps {
   towerId: string;
   plantMap: Map<string, Plant>;
   companionMap: CompanionMap;
+  /** All planted slugs across all towers (for scoring context) */
+  allPlantedSlugs: string[];
+  /** Slugs planted in the in-ground garden (for cross-system companion labels) */
+  inGroundSlugs: string[];
   allNeighbourSlugs: (tierNumber: number, pocketIndex: number) => string[];
   draggedPlant: Plant | null;
   onPocketClick: (plant: Plant | null, towerId: string, tierNumber: number, pocketIndex: number) => void;
@@ -22,6 +27,8 @@ export function TierRow({
   towerId,
   plantMap,
   companionMap,
+  allPlantedSlugs,
+  inGroundSlugs,
   allNeighbourSlugs,
   draggedPlant,
   onPocketClick,
@@ -63,6 +70,18 @@ export function TierRow({
             ? getTierSuitability(draggedPlant, tier.tierNumber)
             : undefined;
 
+          // Per-pocket score (5-axis) and in-ground companion friends
+          const pocketScore = plant
+            ? scorePlant(plant, allPlantedSlugs, companionMap, 'greenstalk').overall
+            : undefined;
+          const igFriends = plant && inGroundSlugs.length > 0
+            ? getFriends(plant.slug, [...new Set(inGroundSlugs)], companionMap)
+                .map((e) => {
+                  const friendSlug = e.plantA === plant.slug ? e.plantB : e.plantA;
+                  return plantMap.get(friendSlug)?.commonName ?? friendSlug;
+                })
+            : undefined;
+
           return (
             <Pocket
               key={pocket.id}
@@ -71,6 +90,8 @@ export function TierRow({
               companionPlants={companionPlants}
               companionStatus={status}
               tierSuitability={!plant ? suitability : undefined}
+              score={pocketScore}
+              inGroundFriends={igFriends && igFriends.length > 0 ? igFriends : undefined}
               onRemove={() => removePlant(towerId, tier.tierNumber, i)}
               onClick={() => onPocketClick(plant, towerId, tier.tierNumber, i)}
             />

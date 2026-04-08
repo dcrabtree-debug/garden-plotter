@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import {
   DndContext,
   DragOverlay,
@@ -14,6 +14,7 @@ import { PlantPalette } from '../components/plant-palette/PlantPalette';
 import { PlantDetail } from '../components/plant-palette/PlantDetail';
 import { SmartPlantPicker } from '../components/SmartPlantPicker';
 import { usePlannerStore } from '../state/planner-store';
+import { useGardenStore } from '../state/garden-store';
 import { usePlantDb } from '../data/use-plant-db';
 import { useCompanionDb } from '../data/use-companion-db';
 import { useRegion } from '../data/use-region';
@@ -33,6 +34,30 @@ export function PlannerPage() {
   const region = useRegion();
   const { plants, plantMap } = usePlantDb(region);
   const { companionMap } = useCompanionDb();
+  const garden = useGardenStore((s) => s.garden);
+
+  // All planted slugs across towers (for scoring) and in-ground (for cross-system labels)
+  const allPlantedSlugs = useMemo(() => {
+    const slugs: string[] = [];
+    for (const tower of towers) {
+      for (const tier of tower.tiers) {
+        for (const pocket of tier.pockets) {
+          if (pocket.plantSlug) slugs.push(pocket.plantSlug);
+        }
+      }
+    }
+    return slugs;
+  }, [towers]);
+
+  const inGroundSlugs = useMemo(() => {
+    const slugs: string[] = [];
+    for (const row of garden.cells) {
+      for (const cell of row) {
+        if (cell.plantSlug) slugs.push(cell.plantSlug);
+      }
+    }
+    return slugs;
+  }, [garden.cells]);
 
   const [draggedPlant, setDraggedPlant] = useState<Plant | null>(null);
   const [selectedPlant, setSelectedPlant] = useState<Plant | null>(null);
@@ -311,6 +336,8 @@ export function PlannerPage() {
                   tower={tower}
                   plantMap={plantMap}
                   companionMap={companionMap}
+                  allPlantedSlugs={allPlantedSlugs}
+                  inGroundSlugs={inGroundSlugs}
                   draggedPlant={draggedPlant ?? plantToPlace}
                   onPocketClick={handlePocketClick}
                 />

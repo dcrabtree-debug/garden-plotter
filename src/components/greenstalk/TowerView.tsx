@@ -9,6 +9,10 @@ interface TowerViewProps {
   tower: Tower;
   plantMap: Map<string, Plant>;
   companionMap: CompanionMap;
+  /** All planted slugs across all towers (for scoring context) */
+  allPlantedSlugs: string[];
+  /** Slugs planted in the in-ground garden (for cross-system companion labels) */
+  inGroundSlugs: string[];
   draggedPlant: Plant | null;
   onPocketClick: (plant: Plant | null, towerId: string, tierNumber: number, pocketIndex: number) => void;
 }
@@ -17,6 +21,8 @@ export function TowerView({
   tower,
   plantMap,
   companionMap,
+  allPlantedSlugs,
+  inGroundSlugs,
   draggedPlant,
   onPocketClick,
 }: TowerViewProps) {
@@ -75,6 +81,8 @@ export function TowerView({
             towerId={tower.id}
             plantMap={plantMap}
             companionMap={companionMap}
+            allPlantedSlugs={allPlantedSlugs}
+            inGroundSlugs={inGroundSlugs}
             allNeighbourSlugs={allNeighbourSlugs}
             draggedPlant={draggedPlant}
             onPocketClick={onPocketClick}

@@ -2,6 +2,7 @@ import type { Plant } from '../types/plant';
 import type { CompanionMap } from '../types/companion';
 import type { CrossSystemPairing } from './cross-system-scoring';
 import { scorePlant, getSlugRisk } from './garden-rating';
+import { getFriends, getConflicts } from './companion-engine';
 
 export type LayoutStrategy = 'expert-choice' | 'family-harvest' | 'companion-optimal' | 'continuous-harvest';
 
@@ -460,6 +461,16 @@ function highestGradeLayout(
         let bestScore = -1;
         let bestSlug: string | null = null;
 
+        // Collect adjacent slugs (same tier + adjacent tiers) for companion grouping
+        const adjacentSlugs: string[] = [];
+        for (let ti = Math.max(0, tier - 1); ti <= Math.min(4, tier + 1); ti++) {
+          for (let pi = 0; pi < 6; pi++) {
+            const s = grid[ti]?.[pi];
+            if (s) adjacentSlugs.push(s);
+          }
+        }
+        const uniqueAdjacent = [...new Set(adjacentSlugs)];
+
         for (const candidate of candidates) {
           // Prefer diversity — bonus for unplaced species
           const diversityBonus = placed.has(candidate.slug) ? 0 : 1;
@@ -468,9 +479,17 @@ function highestGradeLayout(
           // Tier suitability check
           const tierOk = candidate.idealTiers?.includes(tier + 1) ?? true;
           const tierBonus = tierOk ? 0.3 : 0;
+          // Companion grouping: bonus for friends in adjacent pockets, penalty for foes
+          const adjFriends = uniqueAdjacent.length > 0
+            ? getFriends(candidate.slug, uniqueAdjacent, companionMap).length
+            : 0;
+          const adjFoes = uniqueAdjacent.length > 0
+            ? getConflicts(candidate.slug, uniqueAdjacent, companionMap).length
+            : 0;
+          const companionGroupBonus = adjFriends * 0.5 - adjFoes * 1.0;
 
           const ps = scorePlant(candidate, allSlugs, companionMap, 'greenstalk');
-          const totalScore = ps.overall + diversityBonus + slugBonus + tierBonus;
+          const totalScore = ps.overall + diversityBonus + slugBonus + tierBonus + companionGroupBonus;
 
           if (totalScore > bestScore) {
             bestScore = totalScore;

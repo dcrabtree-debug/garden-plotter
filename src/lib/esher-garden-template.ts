@@ -20,7 +20,9 @@
  * - Main lawn (rows 3-18) — OFF LIMITS, rental
  * - Shed (rows 21-23, cols 3-5) — small wooden, NORTHWEST corner (photo-confirmed)
  * - Ornamental bed (rows 20-21, cols 6-8) — Aucuba, Acer, shrubs
- * - Raised bed (rows 20-21, cols 9-13) — black metal edging, shade plants (hostas, ferns)
+ * - Raised bed (rows 19-20, cols 5-8) — 10cm/4" high, black metal edging.
+ *     Photo-verified April 2026: bluebells, variegated + green hostas,
+ *     strawberry runners (dividable for GreenStalks). Slug-prone (low bed + damp hedge).
  * - Old shed pavers (rows 20-22, cols 16-19) — EAST side, old shed removed, GreenStalks here
  * - Laurel hedge (rows 22-23) — 3-4m tall, full NORTH boundary
  * - Back gate + fruit (row 21-22, cols 14-15)
@@ -215,6 +217,15 @@ export function createEsherGarden(): { config: GardenConfig; cells: GardenCell[]
   overrides.push({ row: 20, col: 17, type: 'flower-bed', plantSlug: 'gooseberry', label: 'Gooseberry' });
   overrides.push({ row: 20, col: 18, type: 'flower-bed', plantSlug: 'redcurrant', label: 'Redcurrant' });
 
+  // ── Existing plants in raised bed (photo-verified April 2026) ──
+  // Bed is ~10cm/4" high with black metal edging, next to laurel hedge
+  // Contains: bluebells, variegated hostas, green hostas, strawberry runners
+  // Strawberry runners can be divided and transplanted to GreenStalks
+  overrides.push({ row: 19, col: 5, type: 'raised-bed', plantSlug: 'strawberry-everbearing', label: 'Existing strawberry runners' });
+  overrides.push({ row: 19, col: 6, type: 'raised-bed', plantSlug: 'strawberry-everbearing', label: 'Existing strawberry runners' });
+  overrides.push({ row: 20, col: 7, type: 'raised-bed', plantSlug: 'strawberry-everbearing', label: 'Existing strawberry runners' });
+  overrides.push({ row: 20, col: 8, type: 'raised-bed', plantSlug: 'strawberry-everbearing', label: 'Existing strawberry runners' });
+
   // Apply overrides (last-write-wins)
   for (const o of overrides) {
     if (o.row >= 0 && o.row < rows && o.col >= 0 && o.col < cols) {
@@ -365,7 +376,7 @@ export function generateEsherLayouts(): EsherLayoutOption[] {
         ]},
       ],
       raisedBedReplant: {
-        rationale: 'Transform the shade bed into a "daily salad bar". SLUG STRATEGY: Bed is only 10cm/4" high — slugs from the damp hedge are the #1 threat. Every other position is an allium (spring onion) whose scent deters slugs. Add copper tape (£5 from garden centre) around the metal edging. Set beer traps at each corner. All crops shade-tolerant — the 3-4m laurel hedge gives only 3-4h direct sun, but lettuce and rocket actually PREFER this (they bolt in full sun).',
+        rationale: 'Transform the shade bed into a "daily salad bar". EXISTING PLANTS: Strawberry runners already here (photo-verified April 2026) — divide and transplant to GreenStalk tiers 3-4 instead of buying new. Keep hostas and bluebells at back (shade plants, ornamental). SLUG STRATEGY: Bed is only 10cm/4" high — slugs from the damp hedge are the #1 threat. Every other position is an allium (spring onion) whose scent deters slugs. Add copper tape (£5 from garden centre) around the metal edging. Set beer traps at each corner. All crops shade-tolerant — the 3-4m laurel hedge gives only 3-4h direct sun, but lettuce and rocket actually PREFER this (they bolt in full sun).',
         placements: [
           { row: 19, col: 5, plantSlug: 'rocket' }, { row: 19, col: 6, plantSlug: 'lettuce' },
           { row: 19, col: 7, plantSlug: 'spring-onion' }, { row: 19, col: 8, plantSlug: 'radish' },

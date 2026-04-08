@@ -472,7 +472,9 @@ export function SeedFinderPage() {
         const canTransplant = pw.transplant && isInWindow(m, pw.transplant);
         const gc = !isUS ? ' — try RHS Wisley or Squire\u2019s' : '';
 
-        if (isPerennial) {
+        if (plant.slug === 'strawberry-everbearing') {
+          buyAs = `🍓 FREE — divide existing runners from raised bed`;
+        } else if (isPerennial) {
           buyAs = `🪴 Potted plant${gc}`;
         } else if (tooLateForSeed && canTransplant) {
           buyAs = `🌿 Plug plants${gc}`;

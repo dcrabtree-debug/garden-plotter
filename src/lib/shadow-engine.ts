@@ -299,7 +299,8 @@ export function analyzeZone(
  * - Hedge starts casting shadow around 4-5pm, continues until sunset.
  */
 export function analyzeEsherAvenue(): Record<string, ZoneSunAnalysis> {
-  // Terrace zone: main planting area. Laurel hedge NW, house to SE.
+  // Terrace zone: main planting area (old shed pavers, east side).
+  // Laurel hedge is NW, house SE, rhododendron to the W, neighbour trees N.
   const terraceObstacles: ShadowObstacle[] = [
     {
       id: 'laurel-hedge',
@@ -315,6 +316,22 @@ export function analyzeEsherAvenue(): Record<string, ZoneSunAnalysis> {
       heightM: 7,
       bearingDeg: 135, // SE of terrace (house is behind)
       distanceM: 8,
+      widthM: 8,
+    },
+    {
+      id: 'rhododendron',
+      name: 'Rhododendron (3m evergreen)',
+      heightM: 3,
+      bearingDeg: 270, // W of the GreenStalk pavers (back-center of garden)
+      distanceM: 3,
+      widthM: 3,
+    },
+    {
+      id: 'neighbour-trees',
+      name: 'Neighbour oak/ash trees (15m+)',
+      heightM: 15,
+      bearingDeg: 0, // N — behind back fence
+      distanceM: 5,
       widthM: 8,
     },
   ];

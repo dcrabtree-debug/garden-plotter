@@ -154,28 +154,47 @@ export function createEsherGarden(): { config: GardenConfig; cells: GardenCell[]
     }
   }
 
-  // ── Shed (rows 19-21, cols 15-16) ──
-  for (let r = 19; r <= 21; r++) {
-    for (let c = 15; c <= 16; c++) {
+  // ── Shed (rows 21-23, cols 3-5) — NORTHWEST corner (photo-verified Apr 2026) ──
+  for (let r = 21; r <= 23; r++) {
+    for (let c = 3; c <= 5; c++) {
       overrides.push({ row: r, col: c, type: 'shed', label: 'Shed' });
     }
   }
-  // Patio/path in front of shed
-  overrides.push({ row: 19, col: 14, type: 'patio', label: 'Shed path' });
-  overrides.push({ row: 20, col: 14, type: 'patio', label: 'Shed path' });
+  // Patio/path in front of shed (south side)
+  overrides.push({ row: 20, col: 3, type: 'patio', label: 'Shed path' });
+  overrides.push({ row: 20, col: 4, type: 'patio', label: 'Shed path' });
+  overrides.push({ row: 20, col: 5, type: 'patio', label: 'Shed path' });
 
-  // ── GreenStalk positions (rows 21-22, cols 9-12) ──
+  // ── Old shed pavers (rows 20-22, cols 16-19) — EAST side ──
+  // Previous shed removed, flat paved area. GreenStalks go here.
+  for (let r = 20; r <= 22; r++) {
+    for (let c = 16; c <= 19; c++) {
+      overrides.push({ row: r, col: c, type: 'patio', label: 'Old shed pavers' });
+    }
+  }
+
+  // ── GreenStalk positions on old shed pavers (east side) ──
   // 2 GreenStalks, each 2×2 cells (1m × 1m footprint)
-  for (let r = 21; r <= 22; r++) {
-    for (let c = 9; c <= 10; c++) {
+  for (let r = 20; r <= 21; r++) {
+    for (let c = 16; c <= 17; c++) {
       overrides.push({ row: r, col: c, type: 'greenstalk', label: 'GreenStalk 1' });
     }
   }
-  for (let r = 21; r <= 22; r++) {
-    for (let c = 11; c <= 12; c++) {
+  for (let r = 20; r <= 21; r++) {
+    for (let c = 18; c <= 19; c++) {
       overrides.push({ row: r, col: c, type: 'greenstalk', label: 'GreenStalk 2' });
     }
   }
+
+  // ── Rhododendron (rows 18-20, cols 10-12) — large evergreen, ~3m, significant shade-caster ──
+  for (let r = 18; r <= 20; r++) {
+    for (let c = 10; c <= 12; c++) {
+      overrides.push({ row: r, col: c, type: 'tree', label: 'Rhododendron' });
+    }
+  }
+
+  // ── Compost bin (row 20, col 6) — black plastic tumbler ──
+  overrides.push({ row: 20, col: 6, type: 'patio', label: 'Compost bin' });
 
   // ── Bottom row (row 23) — hedge/boundary ──
   for (let c = 0; c <= 4; c++) {
@@ -217,14 +236,26 @@ export function createEsherGarden(): { config: GardenConfig; cells: GardenCell[]
   overrides.push({ row: 20, col: 17, type: 'flower-bed', plantSlug: 'gooseberry', label: 'Gooseberry' });
   overrides.push({ row: 20, col: 18, type: 'flower-bed', plantSlug: 'redcurrant', label: 'Redcurrant' });
 
-  // ── Existing plants in raised bed (photo-verified April 2026) ──
-  // Bed is ~10cm/4" high with black metal edging, next to laurel hedge
-  // Contains: bluebells, variegated hostas, green hostas, strawberry runners
-  // Strawberry runners can be divided and transplanted to GreenStalks
+  // ── Existing plants in raised bed (photo-verified April 8, 2026) ──
+  // Bed is ~10cm/4" high with black metal edging, between shed and rhododendron
+  // Contains: bluebells, variegated + green hostas, strawberry runners (dividable for GreenStalks)
+  // SHADED by rhododendron — partial shade only, slug-prone due to damp hedge proximity
   overrides.push({ row: 19, col: 5, type: 'raised-bed', plantSlug: 'strawberry-everbearing', label: 'Existing strawberry runners' });
   overrides.push({ row: 19, col: 6, type: 'raised-bed', plantSlug: 'strawberry-everbearing', label: 'Existing strawberry runners' });
   overrides.push({ row: 20, col: 7, type: 'raised-bed', plantSlug: 'strawberry-everbearing', label: 'Existing strawberry runners' });
   overrides.push({ row: 20, col: 8, type: 'raised-bed', plantSlug: 'strawberry-everbearing', label: 'Existing strawberry runners' });
+
+  // ── Additional photo-verified existing plants (April 8, 2026) ──
+  // Rose — back border near east fence, new spring growth visible
+  overrides.push({ row: 19, col: 17, type: 'flower-bed', label: 'Existing rose' });
+  // Sage/catmint — established large clump, silvery-green foliage, west border
+  overrides.push({ row: 15, col: 0, type: 'flower-bed', label: 'Existing sage/catmint' });
+  // Japanese maple — small ornamental, back border near NW hedge
+  overrides.push({ row: 20, col: 1, type: 'flower-bed', label: 'Japanese maple' });
+  // Comfrey — blue flowers, hairy leaves, near back paved area (excellent companion/compost plant)
+  overrides.push({ row: 19, col: 9, type: 'flower-bed', label: 'Existing comfrey' });
+  // Pittosporum — compact evergreen near east border
+  overrides.push({ row: 12, col: 18, type: 'flower-bed', label: 'Pittosporum' });
 
   // Apply overrides (last-write-wins)
   for (const o of overrides) {
@@ -284,7 +315,7 @@ export interface EsherLayoutOption {
 
 function zoneLabel(row: number, col: number): string {
   if (row <= 2 && col >= 1 && col <= 5) return 'Conservatory (filtered light, frost-free)';
-  if (row >= 19 && row <= 20 && col >= 5 && col <= 8) return 'Raised bed (partial shade, near hedge)';
+  if (row >= 19 && row <= 20 && col >= 5 && col <= 8) return 'Raised bed (partial shade, under rhododendron canopy)';
   if (row >= 21 && row <= 22 && col >= 5 && col <= 8) return 'Back veg patch';
   if (col >= 18) return 'Right fence border';
   if (col === 0) return 'West border';
@@ -307,7 +338,7 @@ export function generateEsherLayouts(): EsherLayoutOption[] {
       description:
         'Our top recommendation for 21 Esher Avenue IN-GROUND areas. Full-size varietals for open ground — NOT the dwarf/container varieties used on GreenStalks.\n\n' +
         'Fence border: Scarlet Emperor runner bean (RHS AGM, full-size climber to 2.5m — NOT suitable for GreenStalk) trained up the 6ft fence panels. Spencer Mix sweet pea for pollinators and cut flowers.\n\n' +
-        'Raised bed "daily salad bar": Wild Rocket (perennial ground cover, not the annual salad type), Little Gem + Salad Bowl lettuce (full heads, not baby leaf), Perpetual Spinach (a leaf beet that grows 60cm tall — too big for pockets), White Lisbon spring onion, French Breakfast radish. All chosen specifically for the dappled shade cast by the 3-4m laurel hedge.\n\n' +
+        'Raised bed "daily salad bar": Wild Rocket (perennial ground cover, not the annual salad type), Little Gem + Salad Bowl lettuce (full heads, not baby leaf), Perpetual Spinach (a leaf beet that grows 60cm tall — too big for pockets), White Lisbon spring onion, French Breakfast radish. All chosen for the dappled shade cast by the 3m rhododendron canopy overhead.\n\n' +
         'Conservatory (LOW LIGHT — ~2-3h effective): NW-facing Victorian glass filters out most UV. NO sun-loving crops here (no tomatoes, basil, or citrus long-term). Used as a seed-starting station Apr-May, then shade-tolerant herbs year-round: fern, mint, lemon balm, parsley, coriander (actually prefers shade — bolts in sun), chives.\n\n' +
         'Raised bed (SLUG RISK): Only 10cm/4" off ground — slugs walk right in from the damp hedge. Every other plant is an allium (spring onion, chives) whose scent deters slugs. Add copper tape around the bed edges and beer traps at corners.',
       placements: [
@@ -376,7 +407,7 @@ export function generateEsherLayouts(): EsherLayoutOption[] {
         ]},
       ],
       raisedBedReplant: {
-        rationale: 'Transform the shade bed into a "daily salad bar". EXISTING PLANTS: Strawberry runners already here (photo-verified April 2026) — divide and transplant to GreenStalk tiers 3-4 instead of buying new. Keep hostas and bluebells at back (shade plants, ornamental). SLUG STRATEGY: Bed is only 10cm/4" high — slugs from the damp hedge are the #1 threat. Every other position is an allium (spring onion) whose scent deters slugs. Add copper tape (£5 from garden centre) around the metal edging. Set beer traps at each corner. All crops shade-tolerant — the 3-4m laurel hedge gives only 3-4h direct sun, but lettuce and rocket actually PREFER this (they bolt in full sun).',
+        rationale: 'Transform the shade bed into a "daily salad bar". EXISTING PLANTS: Strawberry runners already here (photo-verified April 2026) — divide and transplant to GreenStalk tiers 3-4 instead of buying new. Keep hostas and bluebells at back (shade plants, ornamental). SLUG STRATEGY: Bed is only 10cm/4" high — slugs from the damp hedge are the #1 threat. Every other position is an allium (spring onion) whose scent deters slugs. Add copper tape (£5 from garden centre) around the metal edging. Set beer traps at each corner. All crops shade-tolerant — the 3m rhododendron canopy + laurel hedge give only 3-4h direct sun, but lettuce and rocket actually PREFER this (they bolt in full sun).',
         placements: [
           { row: 19, col: 5, plantSlug: 'rocket' }, { row: 19, col: 6, plantSlug: 'lettuce' },
           { row: 19, col: 7, plantSlug: 'spring-onion' }, { row: 19, col: 8, plantSlug: 'radish' },

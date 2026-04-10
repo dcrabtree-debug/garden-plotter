@@ -15,7 +15,7 @@ const LOCATION_PRESETS = [
     longitude: -0.4175,
     lastFrostDate: '04-15',
     firstFrostDate: '10-25',
-    zone: 'RHS H5 / USDA 9a',
+    zone: 'RHS H5 / USDA ~8b',
   },
   {
     id: 'manhattan-beach-ca',

@@ -4,8 +4,54 @@
 
 /* ═══════════════════════════════════════════════════════════════════════════
    GARDEN PLOTTER — Design System
-   A warm, organic design language for a garden planning app.
+   Warm, editorial aesthetic inspired by garden journals & botanical prints.
+   Typography: DM Serif Display (headings) + DM Sans (body)
+   Palette: Earth tones — soil, loam, leaf, sun, cream
    ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ─── Warm Earth-Tone Theme (overrides Tailwind stone/emerald) ──────────── */
+
+@theme {
+  /* Stone → Warm Earth */
+  --color-stone-50:  #faf8f4;
+  --color-stone-100: #f7f3ec;
+  --color-stone-200: #e0d8cc;
+  --color-stone-300: #c4baa8;
+  --color-stone-400: #9a8e7e;
+  --color-stone-500: #7a7060;
+  --color-stone-600: #6b5344;
+  --color-stone-700: #4a3828;
+  --color-stone-800: #2c2416;
+  --color-stone-900: #1a150e;
+  --color-stone-950: #0f0c07;
+
+  /* Emerald → Leaf Green */
+  --color-emerald-50:  #f0f7f2;
+  --color-emerald-100: #dbeee0;
+  --color-emerald-200: #b7ddc2;
+  --color-emerald-300: #86c396;
+  --color-emerald-400: #6fa37e;
+  --color-emerald-500: #4a7c59;
+  --color-emerald-600: #3d6a4a;
+  --color-emerald-700: #2d5a3a;
+  --color-emerald-800: #1f4429;
+  --color-emerald-900: #163319;
+  --color-emerald-950: #0d2210;
+
+  /* Semantic Aliases */
+  --color-soil:       #3d2b1f;
+  --color-loam:       #6b5344;
+  --color-leaf:       #4a7c59;
+  --color-leaf-light: #6fa37e;
+  --color-sun:        #e8b931;
+  --color-sun-pale:   #f5dfa0;
+  --color-cream:      #f7f3ec;
+  --color-warm-white: #faf8f4;
+
+  /* Font Families */
+  --font-serif: 'DM Serif Display', Georgia, 'Times New Roman', serif;
+  --font-sans:  'DM Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
 
 /* ─── Foundation ────────────────────────────────────────────────────────── */
 
@@ -13,7 +59,7 @@ html {
   scroll-behavior: smooth;
   transition: background-color 0.3s ease, color 0.3s ease;
   font-size: 100%;
-  -webkit-tap-highlight-color: transparent; /* Remove blue flash on mobile tap */
+  -webkit-tap-highlight-color: transparent;
 }
 
 @media (min-width: 768px)  { html { font-size: 106%; } }
@@ -23,13 +69,43 @@ body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  letter-spacing: -0.011em; /* Tighten default tracking slightly — modern feel */
+  font-family: var(--font-sans);
+  letter-spacing: -0.011em;
 }
 
 ::selection {
-  background-color: rgba(52, 211, 153, 0.3);
+  background-color: rgba(74, 124, 89, 0.25);
   color: inherit;
+}
+
+/* ─── Serif headings — editorial garden journal style ───────────────────── */
+
+h1, h2, .font-serif {
+  font-family: var(--font-serif);
+  font-weight: 400;
+}
+
+h3 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+}
+
+/* ─── Card styling — warm, flat, editorial ──────────────────────────────── */
+
+.card-warm {
+  background: var(--color-warm-white);
+  border: 1px solid var(--color-stone-200);
+  border-radius: 8px;
+}
+
+/* ─── Label styling — uppercase, spaced, muted ──────────────────────────── */
+
+.label-upper {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--color-stone-500);
 }
 
 #root {
@@ -76,12 +152,12 @@ body {
 /* ─── Glassmorphism for header/overlays ──────────────────────────────────── */
 
 .glass {
-  backdrop-filter: blur(16px) saturate(180%);
-  -webkit-backdrop-filter: blur(16px) saturate(180%);
-  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  background: rgba(250, 248, 244, 0.88);
 }
 .dark .glass {
-  background: rgba(28, 25, 23, 0.78);
+  background: rgba(26, 21, 14, 0.82);
 }
 
 /* ─── Transitions — global defaults ─────────────────────────────────────── */
@@ -167,9 +243,9 @@ button, a, [role="button"], input, select, textarea {
 }
 
 @keyframes pulse-ring {
-  0%   { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.4); }
-  70%  { box-shadow: 0 0 0 8px rgba(52, 211, 153, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
+  0%   { box-shadow: 0 0 0 0 rgba(74, 124, 89, 0.4); }
+  70%  { box-shadow: 0 0 0 8px rgba(74, 124, 89, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(74, 124, 89, 0); }
 }
 .pulse-ring {
   animation: pulse-ring 2s ease-out infinite;
@@ -177,13 +253,13 @@ button, a, [role="button"], input, select, textarea {
 
 /* ─── Companion Glow ─────────────────────────────────────────────────────── */
 
-.glow-emerald { box-shadow: 0 0 6px rgba(52, 211, 153, 0.45), 0 0 2px rgba(52, 211, 153, 0.2); }
+.glow-emerald { box-shadow: 0 0 6px rgba(74, 124, 89, 0.45), 0 0 2px rgba(74, 124, 89, 0.2); }
 .glow-red     { box-shadow: 0 0 6px rgba(248, 113, 113, 0.45), 0 0 2px rgba(248, 113, 113, 0.2); }
 
 /* ─── Progress Bar (gradient fill) ───────────────────────────────────────── */
 
 .progress-bar-fill {
-  background: linear-gradient(90deg, #059669 0%, #34d399 60%, #6ee7b7 100%);
+  background: linear-gradient(90deg, #2d5a3a 0%, #4a7c59 60%, #6fa37e 100%);
   border-radius: 9999px;
   transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
   min-width: 4px; /* Always show a sliver even at 0% */
@@ -210,7 +286,7 @@ button, a, [role="button"], input, select, textarea {
 /* ─── Focus Ring (accessibility) ─────────────────────────────────────────── */
 
 :focus-visible {
-  outline: 2px solid #34d399;
+  outline: 2px solid #4a7c59;
   outline-offset: 2px;
   border-radius: 4px;
 }

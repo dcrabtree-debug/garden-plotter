@@ -43,233 +43,90 @@ export const ESHER_CONFIG: GardenConfig = {
   longitude: -0.4175,
 };
 
-interface CellOverride {
-  row: number;
-  col: number;
-  type: CellType;
-  plantSlug?: string;
-  label?: string;
-}
-
 /**
  * Generate the pre-populated Esher Avenue garden grid.
  * Based on photo analysis + satellite imagery (April 2026).
+ *
+ * Grid key: P=patio, C=conservatory, F=flower-bed, T=tree, L=lawn,
+ *           V=veg-patch, R=raised-bed, S=shed, X=compost, G=greenstalk, H=path
  */
 export function createEsherGarden(): { config: GardenConfig; cells: GardenCell[][] } {
   const cols = Math.round(ESHER_CONFIG.widthM / ESHER_CONFIG.cellSizeM); // 20
   const rows = Math.round(ESHER_CONFIG.depthM / ESHER_CONFIG.cellSizeM); // 24
 
-  const cells: GardenCell[][] = Array.from({ length: rows }, () =>
-    Array.from({ length: cols }, () => ({
-      type: 'lawn' as CellType,
+  // ── Compact grid map — one string per row, 20 chars each ──
+  const GRID_MAP: string[] = [
+    'PCCCCCPPPPPPPPPPPPPP', // row 0
+    'PCCCCCPPPPPPPPPPPPPP', // row 1
+    'PCCCCCPPPPPPPPPPPPFT', // row 2
+    'FLLLLLPPPLLLLLLLLLFT', // row 3
+    'FLLLLLLLLLLLLLLLLLFT', // row 4
+    'FLLLLLLLLLLLLLLLLLFT', // row 5
+    'FLLLLLLLLLLLLLLLLLFT', // row 6
+    'FLLLLLLLLLLLLLLLLLFT', // row 7
+    'FLLLLLLLLLLLLLLLLLFT', // row 8
+    'FLLLLLLLLLLLLLLLLLFT', // row 9
+    'FLLLLLLLLLLLLLLLLLFT', // row 10
+    'FLLLLLLLLLLLLLLLLLFT', // row 11
+    'FLLLLLLLLLLLLLLLLLFT', // row 12
+    'FLLLLLLLLLLLLLLLLLFT', // row 13
+    'FLLLLLLLLLLLLLLLLLFT', // row 14
+    'FLLLLLLLLLLLLLLLLLFT', // row 15
+    'FLLLLLLLLLLLLLLLLLFT', // row 16
+    'FLLLLLLLLLLLLLLLLLFT', // row 17
+    'FLLLLLLLLLTTTLLLLLFT', // row 18
+    'FLLLLRRRRFTTTFLLLFFT', // row 19
+    'FFLPPPXRRFTTTFLLGGGG', // row 20
+    'FFFSSSVVVLLLLFPLGGGG', // row 21
+    'FFFSSSVVVLLLLFPFFFPP', // row 22
+    'FFFSSSVVVTTTTTHTTTTT', // row 23
+  ];
+
+  const TYPE_MAP: Record<string, CellType> = {
+    P: 'patio',
+    C: 'conservatory',
+    F: 'flower-bed',
+    T: 'tree',
+    L: 'lawn',
+    V: 'veg-patch',
+    R: 'raised-bed',
+    S: 'shed',
+    X: 'compost',
+    G: 'greenstalk',
+    H: 'path',
+  };
+
+  // ── Parse grid into cells ──
+  const cells: GardenCell[][] = GRID_MAP.map((rowStr) =>
+    rowStr.split('').map((ch) => ({
+      type: TYPE_MAP[ch] ?? ('lawn' as CellType),
       plantSlug: null,
       sunHours: null,
     }))
   );
 
-  const overrides: CellOverride[] = [];
+  // ── Pre-placed plants: [row, col, slug] ──
+  const PRE_PLACED: [number, number, string][] = [
+    // Conservatory — shade-tolerant herbs
+    [1, 1, 'fern-hardy'],
+    [1, 3, 'mint'],
+    [1, 5, 'lemon-balm'],
+    [2, 1, 'parsley'],
+    [2, 3, 'coriander'],
+    [2, 5, 'chives'],
+    // Raised bed — existing strawberry runners (photo-verified April 2026)
+    [19, 5, 'strawberry-everbearing'],
+    [19, 6, 'strawberry-everbearing'],
+    [20, 7, 'strawberry-everbearing'],
+    [20, 8, 'strawberry-everbearing'],
+    // Fruit bushes near back gate
+    [22, 16, 'redcurrant'],
+    [22, 17, 'gooseberry'],
+  ];
 
-  // ══════════════════════════════════════════════════════════════════════════
-  // Layout rebuilt from David's manually-painted grid (April 7, 2026)
-  // ══════════════════════════════════════════════════════════════════════════
-
-  // ── House wall / patio (rows 0-1) ──
-  for (let c = 0; c < cols; c++) {
-    overrides.push({ row: 0, col: c, type: 'patio' });
-  }
-  // Row 1: patio behind house except conservatory
-  for (let c = 6; c < cols; c++) {
-    overrides.push({ row: 1, col: c, type: 'patio' });
-  }
-
-  // ── Conservatory (west side, rows 0-2, cols 1-5) ──
-  for (let r = 0; r <= 2; r++) {
-    for (let c = 1; c <= 5; c++) {
-      overrides.push({ row: r, col: c, type: 'conservatory', label: 'Conservatory' });
-    }
-  }
-  // Col 0 rows 0-2 = patio/wall beside conservatory
-  overrides.push({ row: 0, col: 0, type: 'patio' });
-  overrides.push({ row: 1, col: 0, type: 'patio' });
-  overrides.push({ row: 2, col: 0, type: 'patio' });
-
-  // Pre-populate conservatory — LOW LIGHT zone (~2-3h effective growing light)
-  // NW-facing Victorian glass = filtered light, most UV blocked
-  // Only shade-tolerant plants: fern, mint, lemon-balm, parsley, coriander, chives
-  overrides.push({ row: 1, col: 1, type: 'conservatory', plantSlug: 'fern-hardy', label: 'Conservatory' });
-  overrides.push({ row: 1, col: 3, type: 'conservatory', plantSlug: 'mint', label: 'Conservatory' });
-  overrides.push({ row: 1, col: 5, type: 'conservatory', plantSlug: 'lemon-balm', label: 'Conservatory' });
-  overrides.push({ row: 2, col: 1, type: 'conservatory', plantSlug: 'parsley', label: 'Conservatory' });
-  overrides.push({ row: 2, col: 3, type: 'conservatory', plantSlug: 'coriander', label: 'Conservatory' });
-  overrides.push({ row: 2, col: 5, type: 'conservatory', plantSlug: 'chives', label: 'Conservatory' });
-
-  // ── Patio near conservatory doors (rows 2-3, cols 6-8) ──
-  for (let r = 2; r <= 3; r++) {
-    for (let c = 6; c <= 8; c++) {
-      overrides.push({ row: r, col: c, type: 'patio', label: 'Conservatory patio' });
-    }
-  }
-  // Row 2-3 patio extends across back of house
-  for (let c = 9; c <= 17; c++) {
-    overrides.push({ row: 2, col: c, type: 'patio' });
-  }
-
-  // ── West boundary (col 0, rows 3-22) — single-width flower bed ──
-  for (let r = 3; r <= 22; r++) {
-    overrides.push({ row: r, col: 0, type: 'flower-bed', label: 'West border' });
-  }
-
-  // ── East fence border (col 18 = flower-bed, col 19 = trees/veg) ──
-  for (let r = 2; r <= 19; r++) {
-    overrides.push({ row: r, col: 18, type: 'flower-bed', label: 'Fence border' });
-    overrides.push({ row: r, col: 19, type: 'tree', label: 'Boundary trees' });
-  }
-  // Cordylines on east fence
-  for (let r = 4; r <= 16; r += 3) {
-    overrides.push({ row: r, col: 19, type: 'tree', label: 'Cordyline' });
-  }
-
-  // ── Bottom-right area (rows 20-22, cols 17-19) — flower beds + veg ──
-  for (let r = 20; r <= 22; r++) {
-    overrides.push({ row: r, col: 18, type: 'flower-bed' });
-    overrides.push({ row: r, col: 19, type: 'flower-bed' });
-  }
-  overrides.push({ row: 20, col: 17, type: 'flower-bed' });
-
-  // ── Raised bed area (rows 19-20, cols 5-8) ──
-  for (let r = 19; r <= 20; r++) {
-    for (let c = 5; c <= 8; c++) {
-      overrides.push({ row: r, col: c, type: 'raised-bed', label: 'Raised bed' });
-    }
-  }
-  // Additional raised/veg area at rows 21-22
-  for (let c = 5; c <= 8; c++) {
-    overrides.push({ row: 21, col: c, type: 'veg-patch', label: 'Back veg patch' });
-  }
-
-  // ── Flower beds in back-center (rows 19-20, cols 9-13) ──
-  for (let r = 19; r <= 20; r++) {
-    for (let c = 9; c <= 13; c++) {
-      overrides.push({ row: r, col: c, type: 'flower-bed', label: 'Back flower bed' });
-    }
-  }
-
-  // ── Rhododendron (rows 18-20, cols 10-12) — large evergreen, ~3m, significant shade-caster ──
-  for (let r = 18; r <= 20; r++) {
-    for (let c = 10; c <= 12; c++) {
-      overrides.push({ row: r, col: c, type: 'tree', label: 'Rhododendron' });
-    }
-  }
-
-  // ── Old shed pavers (rows 20-22, cols 16-19) — EAST side ──
-  // Previous shed removed, flat paved area. GreenStalks go here.
-  for (let r = 20; r <= 22; r++) {
-    for (let c = 16; c <= 19; c++) {
-      overrides.push({ row: r, col: c, type: 'patio', label: 'Old shed pavers' });
-    }
-  }
-
-  // ── Compost bin (row 20, col 6) — black plastic tumbler ──
-  overrides.push({ row: 20, col: 6, type: 'compost', label: 'Compost bin' });
-
-  // ── Bottom row (row 23) — hedge/boundary ──
-  for (let c = 0; c <= 4; c++) {
-    overrides.push({ row: 23, col: c, type: 'flower-bed', label: 'Back border' });
-  }
-  for (let c = 5; c <= 8; c++) {
-    overrides.push({ row: 23, col: c, type: 'veg-patch', label: 'Back veg' });
-  }
-  for (let c = 9; c <= 13; c++) {
-    overrides.push({ row: 23, col: c, type: 'tree', label: 'Hedge' });
-  }
-  overrides.push({ row: 23, col: 14, type: 'path', label: 'Back gate' });
-  for (let c = 15; c <= 19; c++) {
-    overrides.push({ row: 23, col: c, type: 'tree', label: 'Hedge' });
-  }
-
-  // ── Row 22 — mixed back area ──
-  for (let c = 0; c <= 4; c++) {
-    overrides.push({ row: 22, col: c, type: 'flower-bed', label: 'Back border' });
-  }
-  for (let c = 5; c <= 8; c++) {
-    overrides.push({ row: 22, col: c, type: 'veg-patch', label: 'Back veg' });
-  }
-  overrides.push({ row: 22, col: 13, type: 'flower-bed' });
-  overrides.push({ row: 22, col: 14, type: 'patio', label: 'Path' });
-  overrides.push({ row: 22, col: 15, type: 'flower-bed' });
-  overrides.push({ row: 22, col: 16, type: 'flower-bed' });
-  overrides.push({ row: 22, col: 17, type: 'flower-bed' });
-
-  // ── Row 21 — back area continued ──
-  for (let c = 0; c <= 4; c++) {
-    overrides.push({ row: 21, col: c, type: 'flower-bed', label: 'Back border' });
-  }
-  overrides.push({ row: 21, col: 13, type: 'flower-bed' });
-  overrides.push({ row: 21, col: 14, type: 'patio', label: 'Path' });
-  overrides.push({ row: 21, col: 17, type: 'flower-bed' });
-
-  // ══════════════════════════════════════════════════════════════════════════
-  // STRUCTURAL OVERRIDES — applied LAST so they aren't clobbered by area fills
-  // ══════════════════════════════════════════════════════════════════════════
-
-  // ── Shed (rows 21-23, cols 3-5) — NORTHWEST corner (photo-verified Apr 2026) ──
-  for (let r = 21; r <= 23; r++) {
-    for (let c = 3; c <= 5; c++) {
-      overrides.push({ row: r, col: c, type: 'shed', label: 'Shed' });
-    }
-  }
-  // Patio/path in front of shed (south side)
-  overrides.push({ row: 20, col: 3, type: 'patio', label: 'Shed path' });
-  overrides.push({ row: 20, col: 4, type: 'patio', label: 'Shed path' });
-  overrides.push({ row: 20, col: 5, type: 'patio', label: 'Shed path' });
-
-  // ── GreenStalk positions on old shed pavers (east side) ──
-  // 2 GreenStalks, each 2×2 cells (1m × 1m footprint)
-  for (let r = 20; r <= 21; r++) {
-    for (let c = 16; c <= 17; c++) {
-      overrides.push({ row: r, col: c, type: 'greenstalk', label: 'GreenStalk 1' });
-    }
-  }
-  for (let r = 20; r <= 21; r++) {
-    for (let c = 18; c <= 19; c++) {
-      overrides.push({ row: r, col: c, type: 'greenstalk', label: 'GreenStalk 2' });
-    }
-  }
-
-  // ── Existing plants — fruit bushes near back gate ──
-  // Positioned on flower-bed cells ADJACENT to GreenStalks, not on top of them
-  overrides.push({ row: 22, col: 17, type: 'flower-bed', plantSlug: 'gooseberry', label: 'Gooseberry' });
-  overrides.push({ row: 22, col: 16, type: 'flower-bed', plantSlug: 'redcurrant', label: 'Redcurrant' });
-
-  // ── Existing plants in raised bed (photo-verified April 8, 2026) ──
-  // Bed is ~10cm/4" high with black metal edging, between shed and rhododendron
-  // Contains: bluebells, variegated + green hostas, strawberry runners (dividable for GreenStalks)
-  // SHADED by rhododendron — partial shade only, slug-prone due to damp hedge proximity
-  overrides.push({ row: 19, col: 5, type: 'raised-bed', plantSlug: 'strawberry-everbearing', label: 'Existing strawberry runners' });
-  overrides.push({ row: 19, col: 6, type: 'raised-bed', plantSlug: 'strawberry-everbearing', label: 'Existing strawberry runners' });
-  overrides.push({ row: 20, col: 7, type: 'raised-bed', plantSlug: 'strawberry-everbearing', label: 'Existing strawberry runners' });
-  overrides.push({ row: 20, col: 8, type: 'raised-bed', plantSlug: 'strawberry-everbearing', label: 'Existing strawberry runners' });
-
-  // ── Additional photo-verified existing plants (April 8, 2026) ──
-  // Rose — back border near east fence, new spring growth visible
-  overrides.push({ row: 19, col: 17, type: 'flower-bed', label: 'Existing rose' });
-  // Sage/catmint — established large clump, silvery-green foliage, west border
-  overrides.push({ row: 15, col: 0, type: 'flower-bed', label: 'Existing sage/catmint' });
-  // Japanese maple — small ornamental, back border near NW hedge
-  overrides.push({ row: 20, col: 1, type: 'flower-bed', label: 'Japanese maple' });
-  // Comfrey — blue flowers, hairy leaves, near back paved area (excellent companion/compost plant)
-  overrides.push({ row: 19, col: 9, type: 'flower-bed', label: 'Existing comfrey' });
-  // Pittosporum — compact evergreen near east border
-  overrides.push({ row: 12, col: 18, type: 'flower-bed', label: 'Pittosporum' });
-
-  // Apply overrides (last-write-wins)
-  for (const o of overrides) {
-    if (o.row >= 0 && o.row < rows && o.col >= 0 && o.col < cols) {
-      cells[o.row][o.col] = {
-        type: o.type,
-        plantSlug: o.plantSlug ?? null,
-        sunHours: null,
-      };
+  for (const [r, c, slug] of PRE_PLACED) {
+    if (r >= 0 && r < rows && c >= 0 && c < cols) {
+      cells[r][c].plantSlug = slug;
     }
   }
 
@@ -321,7 +178,7 @@ export interface EsherLayoutOption {
 function zoneLabel(row: number, col: number): string {
   if (row <= 2 && col >= 1 && col <= 5) return 'Conservatory (filtered light, frost-free)';
   if (row >= 19 && row <= 20 && col >= 5 && col <= 8) return 'Raised bed (partial shade, under rhododendron canopy)';
-  if (row >= 21 && row <= 22 && col >= 5 && col <= 8) return 'Back veg patch';
+  if (row >= 21 && row <= 22 && col >= 6 && col <= 8) return 'Back veg patch';
   if (col >= 18) return 'Right fence border';
   if (col === 0) return 'West border';
   return 'Garden';

@@ -35,7 +35,7 @@ const CELL_TOOLS: { type: CellType; label: string; color: string; emoji: string 
   { type: 'veg-patch', label: 'Veg Patch', color: '#8a7262', emoji: '\ud83e\udd6c' },
   { type: 'flower-bed', label: 'Flower Bed', color: '#e8879f', emoji: '\ud83c\udf3a' },
   { type: 'raised-bed', label: 'Raised Bed', color: '#9e8474', emoji: '\ud83e\udea8' },
-  { type: 'greenstalk', label: 'GreenStalk', color: '#34d399', emoji: '\ud83c\udf31' },
+  { type: 'greenstalk', label: 'GreenStalk', color: '#4a7c59', emoji: '\ud83c\udf31' },
   { type: 'conservatory', label: 'Conservatory', color: '#7ec8c0', emoji: '\ud83c\udfe1' },
   { type: 'patio', label: 'Patio', color: '#b8b0a4', emoji: '\ud83e\uddf1' },
   { type: 'path', label: 'Path', color: '#cec4b8', emoji: '\ud83d\udeb6' },
@@ -52,7 +52,7 @@ const CELL_COLORS: Record<CellType, string> = {
   lawn: '#7db88a',          // Warm green grass — not too saturated
   'veg-patch': '#8a7262',   // Rich garden soil brown
   'flower-bed': '#e8879f',  // Soft rose pink
-  greenstalk: '#34d399',    // Emerald — matches app accent
+  greenstalk: '#4a7c59',    // Leaf green — matches app accent
   conservatory: '#7ec8c0',  // Warm teal glass
   patio: '#b8b0a4',         // Warm stone grey
   path: '#cec4b8',          // Sandy gravel
@@ -1193,17 +1193,29 @@ export function GardenPage() {
           </p>
         </div>
 
-        {/* Direction indicator + compass */}
+        {/* Direction indicator + compass (rotated to match garden orientation) */}
         <div className="mb-2 flex items-center gap-3 text-xs text-stone-400">
           <span className="font-medium">House wall (south)</span>
           <span className="flex-1 border-t border-dashed border-stone-300" />
           <span>Facing {config.facing}</span>
-          <span className="inline-flex items-center justify-center w-8 h-8 rounded-full border border-stone-300 dark:border-stone-600 text-[9px] font-bold relative bg-white dark:bg-stone-700">
-            <span className="absolute top-0.5 text-red-500">N</span>
-            <span className="absolute bottom-0.5 text-stone-400">S</span>
-            <span className="absolute left-0.5 text-stone-400">W</span>
-            <span className="absolute right-0.5 text-stone-400">E</span>
-          </span>
+          {(() => {
+            // Rotate compass so cardinal directions match the grid orientation.
+            // Grid "up" = opposite of facing direction = (facing + 180)°
+            // Rotate the compass ring by that amount so each letter sits correctly.
+            const rot = -(facingAngle(config.facing) + 180);
+            const counterRot = -rot;
+            return (
+              <span
+                className="inline-flex items-center justify-center w-8 h-8 rounded-full border border-stone-300 dark:border-stone-600 text-[9px] font-bold relative bg-white dark:bg-stone-700"
+                style={{ transform: `rotate(${rot}deg)` }}
+              >
+                <span className="absolute top-0.5 text-red-500" style={{ transform: `rotate(${counterRot}deg)` }}>N</span>
+                <span className="absolute bottom-0.5 text-stone-400" style={{ transform: `rotate(${counterRot}deg)` }}>S</span>
+                <span className="absolute left-0.5 text-stone-400" style={{ transform: `rotate(${counterRot}deg)` }}>W</span>
+                <span className="absolute right-0.5 text-stone-400" style={{ transform: `rotate(${counterRot}deg)` }}>E</span>
+              </span>
+            );
+          })()}
         </div>
 
         {/* Column labels (0-19) */}

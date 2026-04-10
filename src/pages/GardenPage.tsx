@@ -1127,27 +1127,6 @@ export function GardenPage() {
               </button>
             </div>
             <div className="flex flex-wrap items-center gap-2">
-              {hasTowerPlants && (
-                <button
-                  onClick={() => {
-                    const { config: esherConfig, cells: esherCells } = createEsherGarden();
-                    loadTemplate(esherConfig, esherCells);
-                    const paired = generatePairedLayout(actualTowerSlugs, plants, companionMap);
-                    const staticLayouts = generateEsherLayouts();
-                    setEsherLayouts([paired, ...staticLayouts]);
-                    setRaisedBedMode({ 'paired-with-towers': 'replant' });
-                    setShowEsherLayouts(true);
-                  }}
-                  disabled={gardenLocked}
-                  className={`px-3 py-1.5 text-xs rounded-lg transition-colors flex items-center gap-1.5 font-semibold ${
-                    gardenLocked
-                      ? 'bg-stone-200 dark:bg-stone-600 text-stone-400 cursor-not-allowed'
-                      : 'bg-indigo-600 text-white hover:bg-indigo-700'
-                  }`}
-                >
-                  <span>🤝</span> Pair with My GreenStalks
-                </button>
-              )}
               <button
                 onClick={() => setShowSaveSeasonConfirm(true)}
                 className="px-3 py-1.5 text-xs bg-violet-600 text-white rounded-lg hover:bg-violet-700 transition-colors flex items-center gap-1.5"
@@ -1158,10 +1137,10 @@ export function GardenPage() {
                 onClick={() => {
                   const { config: esherConfig, cells: esherCells } = createEsherGarden();
                   loadTemplate(esherConfig, esherCells);
-                  const layouts = generateEsherLayouts();
+                  const staticLayouts = generateEsherLayouts();
                   const gsLayouts = generateGSLayouts(plants, companionMap, 2);
                   const gsForPairing = gsLayouts.map((g) => ({ id: g.id, name: g.name, slugs: extractTowerSlugs(g) }));
-                  const enriched = layouts.map((layout) => ({
+                  const enriched = staticLayouts.map((layout) => ({
                     ...layout,
                     bestPairing: findBestPairing(
                       layout.placements.map((p) => p.plantSlug),
@@ -1171,7 +1150,14 @@ export function GardenPage() {
                       companionMap
                     ),
                   }));
-                  setEsherLayouts(enriched);
+                  // If GreenStalks have plants, generate a paired layout and prepend it
+                  let allLayouts = enriched;
+                  if (hasTowerPlants) {
+                    const paired = generatePairedLayout(actualTowerSlugs, plants, companionMap);
+                    allLayouts = [paired, ...enriched];
+                    setRaisedBedMode({ 'paired-with-towers': 'replant' });
+                  }
+                  setEsherLayouts(allLayouts);
                   // Also generate generic auto-populate strategies
                   const genericLayouts = generateGardenLayouts(plants, esherCells, esherConfig, companionMap);
                   setGardenLayouts(genericLayouts);
@@ -1179,7 +1165,7 @@ export function GardenPage() {
                 }}
                 disabled={gardenLocked}
                 className={`px-3 py-1.5 text-xs rounded-lg transition-colors flex items-center gap-1.5 ${
-                  gardenLocked ? 'bg-stone-200 dark:bg-stone-600 text-stone-400 cursor-not-allowed' : 'bg-amber-600 text-white hover:bg-amber-700'
+                  gardenLocked ? 'bg-stone-200 dark:bg-stone-600 text-stone-400 cursor-not-allowed' : 'bg-emerald-700 text-white hover:bg-emerald-800'
                 }`}
               >
                 <span>🏡</span> Set Up Garden

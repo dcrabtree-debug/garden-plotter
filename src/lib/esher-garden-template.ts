@@ -154,16 +154,12 @@ export function createEsherGarden(): { config: GardenConfig; cells: GardenCell[]
     }
   }
 
-  // ── Shed (rows 21-23, cols 3-5) — NORTHWEST corner (photo-verified Apr 2026) ──
-  for (let r = 21; r <= 23; r++) {
-    for (let c = 3; c <= 5; c++) {
-      overrides.push({ row: r, col: c, type: 'shed', label: 'Shed' });
+  // ── Rhododendron (rows 18-20, cols 10-12) — large evergreen, ~3m, significant shade-caster ──
+  for (let r = 18; r <= 20; r++) {
+    for (let c = 10; c <= 12; c++) {
+      overrides.push({ row: r, col: c, type: 'tree', label: 'Rhododendron' });
     }
   }
-  // Patio/path in front of shed (south side)
-  overrides.push({ row: 20, col: 3, type: 'patio', label: 'Shed path' });
-  overrides.push({ row: 20, col: 4, type: 'patio', label: 'Shed path' });
-  overrides.push({ row: 20, col: 5, type: 'patio', label: 'Shed path' });
 
   // ── Old shed pavers (rows 20-22, cols 16-19) — EAST side ──
   // Previous shed removed, flat paved area. GreenStalks go here.
@@ -173,28 +169,8 @@ export function createEsherGarden(): { config: GardenConfig; cells: GardenCell[]
     }
   }
 
-  // ── GreenStalk positions on old shed pavers (east side) ──
-  // 2 GreenStalks, each 2×2 cells (1m × 1m footprint)
-  for (let r = 20; r <= 21; r++) {
-    for (let c = 16; c <= 17; c++) {
-      overrides.push({ row: r, col: c, type: 'greenstalk', label: 'GreenStalk 1' });
-    }
-  }
-  for (let r = 20; r <= 21; r++) {
-    for (let c = 18; c <= 19; c++) {
-      overrides.push({ row: r, col: c, type: 'greenstalk', label: 'GreenStalk 2' });
-    }
-  }
-
-  // ── Rhododendron (rows 18-20, cols 10-12) — large evergreen, ~3m, significant shade-caster ──
-  for (let r = 18; r <= 20; r++) {
-    for (let c = 10; c <= 12; c++) {
-      overrides.push({ row: r, col: c, type: 'tree', label: 'Rhododendron' });
-    }
-  }
-
   // ── Compost bin (row 20, col 6) — black plastic tumbler ──
-  overrides.push({ row: 20, col: 6, type: 'patio', label: 'Compost bin' });
+  overrides.push({ row: 20, col: 6, type: 'compost', label: 'Compost bin' });
 
   // ── Bottom row (row 23) — hedge/boundary ──
   for (let c = 0; c <= 4; c++) {
@@ -232,9 +208,38 @@ export function createEsherGarden(): { config: GardenConfig; cells: GardenCell[]
   overrides.push({ row: 21, col: 14, type: 'patio', label: 'Path' });
   overrides.push({ row: 21, col: 17, type: 'flower-bed' });
 
+  // ══════════════════════════════════════════════════════════════════════════
+  // STRUCTURAL OVERRIDES — applied LAST so they aren't clobbered by area fills
+  // ══════════════════════════════════════════════════════════════════════════
+
+  // ── Shed (rows 21-23, cols 3-5) — NORTHWEST corner (photo-verified Apr 2026) ──
+  for (let r = 21; r <= 23; r++) {
+    for (let c = 3; c <= 5; c++) {
+      overrides.push({ row: r, col: c, type: 'shed', label: 'Shed' });
+    }
+  }
+  // Patio/path in front of shed (south side)
+  overrides.push({ row: 20, col: 3, type: 'patio', label: 'Shed path' });
+  overrides.push({ row: 20, col: 4, type: 'patio', label: 'Shed path' });
+  overrides.push({ row: 20, col: 5, type: 'patio', label: 'Shed path' });
+
+  // ── GreenStalk positions on old shed pavers (east side) ──
+  // 2 GreenStalks, each 2×2 cells (1m × 1m footprint)
+  for (let r = 20; r <= 21; r++) {
+    for (let c = 16; c <= 17; c++) {
+      overrides.push({ row: r, col: c, type: 'greenstalk', label: 'GreenStalk 1' });
+    }
+  }
+  for (let r = 20; r <= 21; r++) {
+    for (let c = 18; c <= 19; c++) {
+      overrides.push({ row: r, col: c, type: 'greenstalk', label: 'GreenStalk 2' });
+    }
+  }
+
   // ── Existing plants — fruit bushes near back gate ──
-  overrides.push({ row: 20, col: 17, type: 'flower-bed', plantSlug: 'gooseberry', label: 'Gooseberry' });
-  overrides.push({ row: 20, col: 18, type: 'flower-bed', plantSlug: 'redcurrant', label: 'Redcurrant' });
+  // Positioned on flower-bed cells ADJACENT to GreenStalks, not on top of them
+  overrides.push({ row: 22, col: 17, type: 'flower-bed', plantSlug: 'gooseberry', label: 'Gooseberry' });
+  overrides.push({ row: 22, col: 16, type: 'flower-bed', plantSlug: 'redcurrant', label: 'Redcurrant' });
 
   // ── Existing plants in raised bed (photo-verified April 8, 2026) ──
   // Bed is ~10cm/4" high with black metal edging, between shed and rhododendron

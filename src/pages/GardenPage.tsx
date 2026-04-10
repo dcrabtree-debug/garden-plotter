@@ -31,35 +31,36 @@ import {
 import { getMonthName } from '../lib/calendar-utils';
 
 const CELL_TOOLS: { type: CellType; label: string; color: string; emoji: string }[] = [
-  { type: 'lawn', label: 'Lawn', color: '#6fa37e', emoji: '\ud83c\udf3f' },
-  { type: 'veg-patch', label: 'Veg Patch', color: '#5d4037', emoji: '\ud83e\udd6c' },
-  { type: 'flower-bed', label: 'Flower Bed', color: '#e91e63', emoji: '\ud83c\udf3a' },
-  { type: 'raised-bed', label: 'Raised Bed', color: '#795548', emoji: '\ud83e\udea8' },
-  { type: 'greenstalk', label: 'GreenStalk', color: '#10b981', emoji: '\ud83c\udf31' },
-  { type: 'conservatory', label: 'Conservatory', color: '#80cbc4', emoji: '\ud83c\udfe1' },
-  { type: 'patio', label: 'Patio', color: '#9e9e9e', emoji: '\ud83e\uddf1' },
-  { type: 'path', label: 'Path', color: '#bcaaa4', emoji: '\ud83d\udeb6' },
-  { type: 'tree', label: 'Tree', color: '#2e7d32', emoji: '\ud83c\udf33' },
-  { type: 'shed', label: 'Shed', color: '#4e342e', emoji: '\ud83c\udfe0' },
-  { type: 'compost', label: 'Compost', color: '#3e2723', emoji: '\u267b\ufe0f' },
-  { type: 'water-feature', label: 'Water', color: '#1976d2', emoji: '\ud83d\udca7' },
+  { type: 'lawn', label: 'Lawn', color: '#7db88a', emoji: '\ud83c\udf3f' },
+  { type: 'veg-patch', label: 'Veg Patch', color: '#8a7262', emoji: '\ud83e\udd6c' },
+  { type: 'flower-bed', label: 'Flower Bed', color: '#e8879f', emoji: '\ud83c\udf3a' },
+  { type: 'raised-bed', label: 'Raised Bed', color: '#9e8474', emoji: '\ud83e\udea8' },
+  { type: 'greenstalk', label: 'GreenStalk', color: '#34d399', emoji: '\ud83c\udf31' },
+  { type: 'conservatory', label: 'Conservatory', color: '#7ec8c0', emoji: '\ud83c\udfe1' },
+  { type: 'patio', label: 'Patio', color: '#b8b0a4', emoji: '\ud83e\uddf1' },
+  { type: 'path', label: 'Path', color: '#cec4b8', emoji: '\ud83d\udeb6' },
+  { type: 'tree', label: 'Tree', color: '#3a7d45', emoji: '\ud83c\udf33' },
+  { type: 'shed', label: 'Shed', color: '#6b4c3b', emoji: '\ud83c\udfe0' },
+  { type: 'compost', label: 'Compost', color: '#5a4035', emoji: '\u267b\ufe0f' },
+  { type: 'water-feature', label: 'Water', color: '#6aafe0', emoji: '\ud83d\udca7' },
   { type: 'empty', label: 'Eraser', color: '#e0e0e0', emoji: '\ud83e\uddf9' },
 ];
 
+// ── Organic color palette — warm, natural tones inspired by real gardens ──
 const CELL_COLORS: Record<CellType, string> = {
   empty: '#e8e0d0',
-  lawn: '#6fa37e',
-  'veg-patch': '#8d6e63',
-  'flower-bed': '#f48fb1',
-  greenstalk: '#10b981',
-  conservatory: '#80cbc4',
-  patio: '#bdbdbd',
-  path: '#d7ccc8',
-  tree: '#2e7d32',
-  shed: '#5d4037',
-  'raised-bed': '#a1887f',
-  'water-feature': '#64b5f6',
-  compost: '#4e342e',
+  lawn: '#7db88a',          // Warm green grass — not too saturated
+  'veg-patch': '#8a7262',   // Rich garden soil brown
+  'flower-bed': '#e8879f',  // Soft rose pink
+  greenstalk: '#34d399',    // Emerald — matches app accent
+  conservatory: '#7ec8c0',  // Warm teal glass
+  patio: '#b8b0a4',         // Warm stone grey
+  path: '#cec4b8',          // Sandy gravel
+  tree: '#3a7d45',          // Deep leaf green
+  shed: '#6b4c3b',          // Warm timber brown
+  'raised-bed': '#9e8474',  // Weathered wood
+  'water-feature': '#6aafe0', // Clear pond blue
+  compost: '#5a4035',       // Dark humus
 };
 
 const FACING_OPTIONS: GardenFacing[] = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
@@ -751,16 +752,16 @@ export function GardenPage() {
   return (
     <div className="flex h-full overflow-hidden relative">
       {/* Mobile sidebar toggles */}
-      <div className="sm:hidden fixed bottom-4 left-4 right-4 z-40 flex justify-between pointer-events-none">
+      <div className="md:hidden fixed bottom-16 left-3 right-3 z-40 flex justify-between pointer-events-none">
         <button
           onClick={() => setMobilePanel(mobilePanel === 'tools' ? null : 'tools')}
-          className="pointer-events-auto px-3 py-2 bg-stone-800 text-white text-xs rounded-full shadow-lg flex items-center gap-1.5"
+          className="pointer-events-auto px-4 py-2.5 bg-stone-800 text-white text-sm rounded-full shadow-lg flex items-center gap-2 active:scale-95 transition-transform"
         >
           <span>🛠</span> Tools
         </button>
         <button
           onClick={() => setMobilePanel(mobilePanel === 'plants' ? null : 'plants')}
-          className="pointer-events-auto px-3 py-2 bg-stone-800 text-white text-xs rounded-full shadow-lg flex items-center gap-1.5"
+          className="pointer-events-auto px-4 py-2.5 bg-stone-800 text-white text-sm rounded-full shadow-lg flex items-center gap-2 active:scale-95 transition-transform"
         >
           <span>🌿</span> Plants
         </button>
@@ -768,14 +769,14 @@ export function GardenPage() {
 
       {/* Mobile overlay backdrop */}
       {mobilePanel && (
-        <div className="sm:hidden fixed inset-0 bg-black/30 z-30" onClick={() => setMobilePanel(null)} />
+        <div className="md:hidden fixed inset-0 bg-black/30 z-30" onClick={() => setMobilePanel(null)} />
       )}
 
       {/* Left sidebar: tools + config */}
       <div className={`w-64 border-r border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 flex-shrink-0 overflow-y-auto p-3 space-y-4 ${
         mobilePanel === 'tools'
           ? 'fixed inset-y-0 left-0 z-40 shadow-2xl'
-          : 'hidden sm:block'
+          : 'hidden md:block'
       }`}>
         {/* Garden name */}
         <div>
@@ -1725,7 +1726,7 @@ export function GardenPage() {
       <div className={`w-64 border-l border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 flex-shrink-0 overflow-y-auto p-3 ${
         mobilePanel === 'plants'
           ? 'fixed inset-y-0 right-0 z-40 shadow-2xl'
-          : 'hidden sm:block'
+          : 'hidden md:block'
       }`}>
         {/* Hover reasoning panel — changes as you hover different cells */}
         <HoverReasoningPanel

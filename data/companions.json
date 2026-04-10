@@ -281,7 +281,7 @@
   },
   {
     "plantA": "strawberry-everbearing",
-    "plantB": "bush-bean",
+    "plantB": "dwarf-french-bean",
     "relationship": "friend",
     "reason": "Different root depths reduce competition; beans fix nitrogen benefiting strawberries",
     "source": "https://extension.wvu.edu/lawn-gardening-pests/gardening/garden-management/companion-planting"
@@ -309,7 +309,7 @@
   },
   {
     "plantA": "strawberry-everbearing",
-    "plantB": "zucchini",
+    "plantB": "courgette",
     "relationship": "foe",
     "reason": "Mutual inhibition between strawberries and squash family",
     "source": "https://extension.wvu.edu/lawn-gardening-pests/gardening/garden-management/companion-planting"
@@ -344,7 +344,7 @@
   },
   {
     "plantA": "cucumber",
-    "plantB": "bush-bean",
+    "plantB": "dwarf-french-bean",
     "relationship": "friend",
     "reason": "Spatial compatibility; varied root depths and maturity rates",
     "source": "https://www.pubs.ext.vt.edu/SPES/spes-620.html"
@@ -378,7 +378,7 @@
     "source": "https://extension.umn.edu/planting-and-growing-guides/companion-planting-home-gardens"
   },
   {
-    "plantA": "zucchini",
+    "plantA": "courgette",
     "plantB": "nasturtium",
     "relationship": "friend",
     "reason": "Confirmed to reduce squash bug populations",
@@ -392,35 +392,35 @@
     "source": "https://blogs.ifas.ufl.edu/duvalco/2026/03/02/companion-planting-can-help-reduce-or-eliminate-insecticide-use-in-the-garden/"
   },
   {
-    "plantA": "zucchini",
+    "plantA": "courgette",
     "plantB": "marigold",
     "relationship": "friend",
     "reason": "Increased natural aphid predators in field trials",
     "source": "https://blogs.ifas.ufl.edu/duvalco/2026/03/02/companion-planting-can-help-reduce-or-eliminate-insecticide-use-in-the-garden/"
   },
   {
-    "plantA": "bush-bean",
+    "plantA": "dwarf-french-bean",
     "plantB": "nasturtium",
     "relationship": "friend",
     "reason": "Nasturtiums draw aphids away from beans as a sacrificial trap crop",
     "source": "https://www.rhs.org.uk/companion-planting"
   },
   {
-    "plantA": "bush-bean",
+    "plantA": "dwarf-french-bean",
     "plantB": "marigold",
     "relationship": "friend",
     "reason": "Marigolds deter bean beetles and other pests",
     "source": "https://www.rhs.org.uk/companion-planting"
   },
   {
-    "plantA": "bush-bean",
+    "plantA": "dwarf-french-bean",
     "plantB": "radish",
     "relationship": "friend",
     "reason": "Radishes break up soil and are harvested before beans need the space",
     "source": "https://extension.umn.edu/planting-and-growing-guides/companion-planting-home-gardens"
   },
   {
-    "plantA": "bush-bean",
+    "plantA": "dwarf-french-bean",
     "plantB": "chives",
     "relationship": "foe",
     "reason": "Alliums can inhibit the growth of beans and other legumes",

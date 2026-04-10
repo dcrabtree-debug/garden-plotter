@@ -325,8 +325,13 @@ export const usePlannerStore = create<PlannerStore>((set, get) => {
 
     addTower: () => {
       set((state) => {
-        const id = `tower-${state.towers.length + 1}`;
-        const towers = [...state.towers, createTower(id, `Tower ${state.towers.length + 1}`)];
+        // Use max existing ID + 1 to avoid collisions after removals
+        const existingNums = state.towers
+          .map((t) => parseInt(t.id.replace('tower-', ''), 10))
+          .filter((n) => !isNaN(n));
+        const nextNum = existingNums.length > 0 ? Math.max(...existingNums) + 1 : 1;
+        const id = `tower-${nextNum}`;
+        const towers = [...state.towers, createTower(id, `Tower ${nextNum}`)];
         const newState = { ...state, towers };
         saveState(makeSaveState(newState.towers, newState.settings));
         return newState;

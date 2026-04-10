@@ -7,6 +7,7 @@ import type {
   GardenFacing,
 } from '../types/planner';
 import type { Plant } from '../types/plant';
+import { createEsherGarden, ESHER_CONFIG } from '../lib/esher-garden-template';
 
 const STORAGE_KEY = 'garden-plotter-garden';
 const ROTATION_STORAGE_KEY = 'garden-plotter-rotation-history';
@@ -179,11 +180,12 @@ function createEmptyGrid(config: GardenConfig): GardenCell[][] {
 }
 
 function createDefaultGarden(): Garden {
+  const { config, cells } = createEsherGarden();
   return {
     id: 'garden-1',
     name: '21 Esher Avenue',
-    config: DEFAULT_CONFIG,
-    cells: createEmptyGrid(DEFAULT_CONFIG),
+    config,
+    cells,
   };
 }
 

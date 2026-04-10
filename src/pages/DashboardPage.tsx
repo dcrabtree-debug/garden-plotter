@@ -431,60 +431,60 @@ export function DashboardPage({ onNavigate }: { onNavigate?: (tab: string, view?
   }
 
   return (
-    <div className="h-full overflow-y-auto">
-      <div className="max-w-2xl mx-auto px-3 sm:px-6 py-4 sm:py-6 space-y-4">
-        {/* Header */}
+    <div className="h-full overflow-y-auto scroll-touch">
+      <div className="max-w-2xl mx-auto px-4 sm:px-6 py-5 sm:py-7 space-y-5">
+        {/* Header — refined hierarchy */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
           <div>
-            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-stone-800 dark:text-stone-100">
+            <h1 className="text-xl sm:text-2xl font-semibold tracking-tight text-stone-800 dark:text-stone-100">
               Dashboard
             </h1>
-            <p className="text-sm text-stone-400 mt-0.5">
+            <p className="text-[13px] text-stone-400 dark:text-stone-500 mt-0.5">
               {today.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
             </p>
           </div>
-          <div className="flex items-center gap-2 flex-wrap">
-            <div className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold ${PHASE_BADGE_COLORS[phase]}`}>
+          <div className="flex items-center gap-2.5 flex-wrap">
+            <div className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold ${PHASE_BADGE_COLORS[phase]}`}>
               {phaseInfo.emoji} {phaseInfo.label}
             </div>
             {daysToFrost > 0 && (
-              <span className="text-[10px] text-stone-400">{daysToFrost}d left in season</span>
+              <span className="text-[11px] text-stone-400 dark:text-stone-500 tabular-nums">{daysToFrost}d left in season</span>
             )}
           </div>
         </div>
 
-        {/* Progress bar */}
+        {/* Progress bar — gradient fill, always visible sliver */}
         {totalOneTime > 0 && (
-          <div className="bg-white dark:bg-stone-800 rounded-xl border border-stone-200 dark:border-stone-700 px-4 py-3">
-            <div className="flex items-center justify-between mb-1.5">
+          <div className="bg-white dark:bg-stone-800/80 rounded-2xl border border-stone-200/60 dark:border-stone-700/40 px-4 py-3.5 elevation-1">
+            <div className="flex items-center justify-between mb-2">
               <span className="text-xs font-medium text-stone-600 dark:text-stone-300">Season progress</span>
-              <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400">{progressPct}%</span>
+              <span className="text-xs font-bold tabular-nums text-emerald-600 dark:text-emerald-400">{progressPct}%</span>
             </div>
-            <div className="w-full h-2 bg-stone-200 dark:bg-stone-600 rounded-full overflow-hidden">
-              <div className="h-full bg-emerald-500 rounded-full transition-all duration-500" style={{ width: `${progressPct}%` }} />
+            <div className="w-full h-2 bg-stone-100 dark:bg-stone-700 rounded-full overflow-hidden">
+              <div className="progress-bar-fill h-full" style={{ width: `${Math.max(progressPct, 2)}%` }} />
             </div>
-            <div className="flex items-center justify-between mt-1">
-              <span className="text-[10px] text-stone-400">{completedCount} of {totalOneTime} setup tasks done</span>
+            <div className="flex items-center justify-between mt-1.5">
+              <span className="text-[11px] text-stone-400 dark:text-stone-500">{completedCount} of {totalOneTime} setup tasks done</span>
               {overdueTasks.length > 0 && (
-                <span className="text-[10px] font-semibold text-red-500">{overdueTasks.length} overdue</span>
+                <span className="text-[11px] font-semibold text-red-500">{overdueTasks.length} overdue</span>
               )}
             </div>
           </div>
         )}
 
-        {/* Alerts row — weather-driven + seasonal */}
-        <div className="flex flex-col gap-2">
+        {/* Alerts row — refined gradient banners */}
+        <div className="flex flex-col gap-2.5">
           {frostAlert && frostAlert.level !== 'none' && (
-            <div className={`text-xs px-3 py-2 rounded-lg font-medium ${
+            <div className={`text-[13px] px-4 py-2.5 rounded-xl font-medium border ${
               frostAlert.level === 'hard'
-                ? 'bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 border border-red-200 dark:border-red-800'
-                : 'bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-300'
+                ? 'bg-gradient-to-r from-red-50 to-red-50/50 dark:from-red-900/20 dark:to-red-900/10 text-red-700 dark:text-red-300 border-red-200/60 dark:border-red-800/40'
+                : 'bg-gradient-to-r from-amber-50 to-amber-50/50 dark:from-amber-900/20 dark:to-amber-900/10 text-amber-700 dark:text-amber-300 border-amber-200/60 dark:border-amber-800/40'
             }`}>
-              {frostAlert.level === 'hard' ? '🥶' : '❄️'} {frostAlert.message}
+              {frostAlert.level === 'hard' ? '🥶' : '⚠️'} {frostAlert.message}
             </div>
           )}
           {rainAlert?.message && (
-            <div className="text-xs px-3 py-2 bg-sky-50 dark:bg-sky-900/20 text-sky-700 dark:text-sky-300 rounded-lg font-medium">
+            <div className="text-[13px] px-4 py-2.5 bg-gradient-to-r from-sky-50 to-sky-50/50 dark:from-sky-900/20 dark:to-sky-900/10 text-sky-700 dark:text-sky-300 rounded-xl font-medium border border-sky-200/60 dark:border-sky-800/40">
               {rainAlert.totalMm > 30 ? '🌧️' : '☀️'} {rainAlert.message}
             </div>
           )}
@@ -501,7 +501,7 @@ export function DashboardPage({ onNavigate }: { onNavigate?: (tab: string, view?
             </div>
           )}
           {harvestNow.length > 0 && (
-            <div className="text-xs px-3 py-2 bg-rose-50 dark:bg-rose-900/20 text-rose-700 dark:text-rose-300 rounded-lg font-medium">
+            <div className="text-[13px] px-4 py-2.5 bg-gradient-to-r from-rose-50 to-orange-50/50 dark:from-rose-900/20 dark:to-orange-900/10 text-rose-700 dark:text-rose-300 rounded-xl font-medium border border-rose-200/60 dark:border-rose-800/40">
               🍎 Harvest ready: {harvestNow.map((p) => `${p.emoji} ${p.commonName}`).join(', ')}
             </div>
           )}
@@ -521,7 +521,7 @@ export function DashboardPage({ onNavigate }: { onNavigate?: (tab: string, view?
 
         {/* ── YOUR TO-DO LIST ───────────────────────────────────────────── */}
         {(todayTasks.length > 0 || recurringTasks.length > 0) && (
-          <div className="bg-white dark:bg-stone-800 rounded-2xl border border-stone-200 dark:border-stone-700 overflow-hidden">
+          <div className="bg-white dark:bg-stone-800/80 rounded-2xl border border-stone-200/60 dark:border-stone-700/40 overflow-hidden elevation-1">
             <SectionHeader section="today" title="📋 Your To-Do List" count={todayTasks.length + recurringTasks.length} />
             {!collapsed.has('today') && (
               <div className="divide-y divide-stone-50 dark:divide-stone-700/50">

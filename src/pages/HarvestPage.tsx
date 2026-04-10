@@ -11,7 +11,7 @@ import type { Plant } from '../types/plant';
 // Harvestable plants (things kids can actually pick)
 const HARVESTABLE_SLUGS = [
   'strawberry-everbearing',
-  'tumbling-tom-tomato',
+  'tomato-tumbling',
   'dwarf-french-bean',
   'perpetual-spinach',
   'swiss-chard',

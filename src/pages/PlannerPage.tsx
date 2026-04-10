@@ -252,21 +252,21 @@ export function PlannerPage() {
         {/* Mobile palette toggle */}
         <button
           onClick={() => setShowMobilePalette(!showMobilePalette)}
-          className="sm:hidden fixed bottom-4 left-4 z-40 px-3 py-2 bg-stone-800 text-white text-xs rounded-full shadow-lg flex items-center gap-1.5"
+          className="md:hidden fixed bottom-16 left-3 z-40 px-4 py-2.5 bg-stone-800 text-white text-sm rounded-full shadow-lg flex items-center gap-2 active:scale-95 transition-transform"
         >
           <span>🌱</span> Plants
         </button>
 
         {/* Mobile overlay backdrop */}
         {showMobilePalette && (
-          <div className="sm:hidden fixed inset-0 bg-black/30 z-30" onClick={() => setShowMobilePalette(false)} />
+          <div className="md:hidden fixed inset-0 bg-black/30 z-30" onClick={() => setShowMobilePalette(false)} />
         )}
 
         {/* Sidebar: Plant Palette */}
         <div className={`w-64 border-r border-stone-200 dark:border-stone-700/50 bg-stone-50 dark:bg-stone-900/50 dark:backdrop-blur-sm flex-shrink-0 overflow-hidden flex flex-col ${
           showMobilePalette
             ? 'fixed inset-y-0 left-0 z-40 shadow-2xl'
-            : 'hidden sm:flex'
+            : 'hidden md:flex'
         }`}>
           <PlantPalette
             plants={plants}

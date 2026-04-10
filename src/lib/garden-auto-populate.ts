@@ -291,7 +291,7 @@ function sunOptimizedLayout(
   const flowerCells = sortedCells.filter((c) => c.type === 'flower-bed');
 
   // Phase 1: Place tall sun-hungry plants in sunniest spots far from house
-  const tallSlugs = ['tomato-tumbling', 'zucchini', 'courgette', 'cucumber', 'pepper-chilli', 'bell-pepper', 'eggplant'];
+  const tallSlugs = ['tomato-tumbling', 'courgette', 'cucumber', 'pepper-chilli', 'bell-pepper', 'aubergine'];
   const tallFarCells = vegCells.filter((c) => c.sunHours >= 6).sort((a, b) => b.row - a.row);
 
   for (const slug of tallSlugs) {
@@ -322,9 +322,9 @@ function sunOptimizedLayout(
 
   // Phase 3: Fill remaining spots with appropriate crops
   const fillSlugs = [
-    'dwarf-french-bean', 'bush-bean', 'pea', 'lettuce', 'radish', 'spring-onion',
-    'perpetual-spinach', 'spinach', 'swiss-chard', 'kale', 'arugula', 'rocket',
-    'carrot', 'beet', 'beetroot', 'thyme', 'oregano',
+    'dwarf-french-bean', 'pea', 'lettuce', 'radish', 'spring-onion',
+    'perpetual-spinach', 'spinach', 'swiss-chard', 'kale', 'rocket',
+    'carrot', 'beetroot', 'thyme', 'oregano',
   ];
 
   for (const cell of vegCells) {
@@ -387,7 +387,7 @@ function kitchenGardenLayout(
   const farGarden = plantable.filter((c) => c.row > maxRow * 0.7);
 
   // Near house: herbs (grab-and-go for cooking)
-  const herbSlugs = ['basil-sweet', 'thyme', 'oregano', 'parsley', 'chives', 'mint', 'rosemary', 'cilantro', 'dill', 'sage'];
+  const herbSlugs = ['basil-sweet', 'thyme', 'oregano', 'parsley', 'chives', 'mint', 'rosemary', 'coriander', 'dill', 'sage'];
   for (const cell of nearHouse) {
     if (cell.type === 'flower-bed') {
       for (const slug of ['nasturtium', 'marigold', 'calendula']) {
@@ -405,7 +405,7 @@ function kitchenGardenLayout(
   }
 
   // Mid garden: salad + quick crops
-  const saladSlugs = ['lettuce', 'arugula', 'rocket', 'radish', 'spring-onion', 'perpetual-spinach', 'spinach', 'swiss-chard', 'beet', 'beetroot'];
+  const saladSlugs = ['lettuce', 'rocket', 'radish', 'spring-onion', 'perpetual-spinach', 'spinach', 'swiss-chard', 'beetroot'];
   for (const cell of midGarden) {
     if (cell.type === 'flower-bed') {
       const p = plants.find((pl) => pl.slug === 'calendula' || pl.slug.includes('calendula'));
@@ -420,7 +420,7 @@ function kitchenGardenLayout(
   }
 
   // Far garden: main crops
-  const mainSlugs = ['tomato-tumbling', 'zucchini', 'courgette', 'dwarf-french-bean', 'bush-bean', 'pea', 'carrot', 'cucumber', 'kale', 'pepper-chilli', 'bell-pepper'];
+  const mainSlugs = ['tomato-tumbling', 'courgette', 'dwarf-french-bean', 'pea', 'carrot', 'cucumber', 'kale', 'pepper-chilli'];
   for (const cell of farGarden) {
     if (cell.type === 'flower-bed') {
       const p = plants.find((pl) => pl.slug === 'sunflower' || pl.slug.includes('sunflower'));
@@ -470,9 +470,9 @@ function maximumYieldLayout(
   const sorted = [...plantable].sort((a, b) => b.sunHours - a.sunHours);
 
   const yieldRanked = [
-    'tomato-tumbling', 'zucchini', 'courgette', 'dwarf-french-bean', 'bush-bean',
-    'beet', 'beetroot', 'lettuce', 'radish', 'perpetual-spinach', 'spinach', 'swiss-chard',
-    'spring-onion', 'pea', 'carrot', 'kale', 'arugula', 'rocket', 'cucumber',
+    'tomato-tumbling', 'courgette', 'dwarf-french-bean',
+    'beetroot', 'lettuce', 'radish', 'perpetual-spinach', 'spinach', 'swiss-chard',
+    'spring-onion', 'pea', 'carrot', 'kale', 'rocket', 'cucumber',
   ];
 
   const flowerCompanions = ['nasturtium', 'marigold', 'calendula'];

@@ -106,8 +106,8 @@ const SUPERMARKET_PRICES_GBP: Record<string, number> = {
 const GREENSTALK_POCKET_AREA_M2 = 0.03;
 
 // Standard garden grid cell (from garden store config)
-// Default 0.3m x 0.3m = 0.09 m²
-const DEFAULT_CELL_AREA_M2 = 0.09;
+// Default 0.5m x 0.5m = 0.25 m²
+const DEFAULT_CELL_AREA_M2 = 0.25;
 
 // ─── Yield parsing ───────────────────────────────────────────────────────────
 

@@ -73,6 +73,7 @@ export interface Settings {
   location: string;
   latitude: number;
   longitude: number;
+  childFriendlyMode?: boolean;
 }
 
 export interface SaveState {

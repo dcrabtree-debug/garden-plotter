@@ -15,7 +15,7 @@ const LOCATION_PRESETS = [
     longitude: -0.4175,
     lastFrostDate: '04-15',
     firstFrostDate: '10-25',
-    zone: 'RHS H5 / USDA 8b',
+    zone: 'RHS H5 / USDA 9a',
   },
   {
     id: 'manhattan-beach-ca',
@@ -274,6 +274,86 @@ export function SettingsPage() {
             <p>🔴 <strong>Risky:</strong> Needs permanent planting or structures — get landlord permission first</p>
           </div>
         </div>
+
+        {/* Child-Friendly Mode */}
+        <div className="bg-white dark:bg-stone-800 rounded-2xl shadow-sm border border-stone-200 dark:border-stone-700 p-5">
+          <h2 className="text-sm font-semibold text-stone-700 dark:text-stone-300 mb-3">
+            👶 Child-Friendly Garden
+          </h2>
+          <div className="flex items-center justify-between mb-3">
+            <div>
+              <div className="text-sm text-stone-700 dark:text-stone-300">Child-Safe Plant Filtering</div>
+              <div className="text-xs text-stone-400">
+                Highlights safe plants and warns about toxic species. Based on the RHS Potentially Harmful Plants list.
+              </div>
+            </div>
+            <button
+              onClick={() => updateSettings({ ...settings, childFriendlyMode: !settings.childFriendlyMode })}
+              className={`relative w-12 h-6 rounded-full transition-colors ${
+                settings.childFriendlyMode ? 'bg-sky-500' : 'bg-stone-300'
+              }`}
+            >
+              <div
+                className={`absolute top-0.5 w-5 h-5 rounded-full bg-white shadow transition-transform ${
+                  settings.childFriendlyMode ? 'translate-x-6' : 'translate-x-0.5'
+                }`}
+              />
+            </button>
+          </div>
+          {settings.childFriendlyMode && (
+            <div className="text-[10px] text-stone-400 space-y-1 mt-2 p-3 rounded-xl bg-sky-50 dark:bg-sky-900/20 border border-sky-200/50 dark:border-sky-800/30">
+              <p className="text-sky-800 dark:text-sky-200 font-medium text-xs mb-1.5">When enabled:</p>
+              <p>👶 <strong>Child Safe</strong> badge on verified non-toxic plants</p>
+              <p>⚠️ <strong>Caution</strong> badge on plants with toxic parts (e.g., rhubarb leaves)</p>
+              <p>🐾 <strong>Pet Warning</strong> on plants toxic to dogs/cats</p>
+              <p>🎯 <strong>Kid Activities</strong> shown in plant detail (seed racing, edible flowers, etc.)</p>
+              <p className="mt-1.5 text-[9px] text-stone-400">Based on the RHS Potentially Harmful Plants list and "A Kid-Friendly Planting Guide for Esher, Surrey."</p>
+            </div>
+          )}
+        </div>
+
+        {/* Toxic Plants Reference */}
+        {settings.childFriendlyMode && (
+          <div className="bg-white dark:bg-stone-800 rounded-2xl shadow-sm border border-red-200/60 dark:border-red-900/40 p-5">
+            <h2 className="text-sm font-semibold text-red-700 dark:text-red-400 mb-2">
+              ⚠️ Toxic Plants — Surrey Watch List
+            </h2>
+            <p className="text-[10px] text-stone-400 mb-3">
+              Common Surrey garden plants that are dangerous to children. If any are present in your garden, remove them or fence them off.
+              Source: RHS Potentially Harmful Plants List (Category A).
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-xs">
+              {[
+                { name: 'Monkshood', latin: 'Aconitum napellus', danger: 'Potentially fatal — avoid even skin contact' },
+                { name: 'Foxglove', latin: 'Digitalis purpurea', danger: 'Cardiac glycosides in all parts including pollen' },
+                { name: 'Yew', latin: 'Taxus baccata', danger: 'All parts lethal except fleshy red aril — ubiquitous in Surrey hedging' },
+                { name: 'Lily of the Valley', latin: 'Convallaria majalis', danger: 'Just two leaves can be fatal — attractive red berries appeal to children' },
+                { name: 'Deadly Nightshade', latin: 'Atropa belladonna', danger: 'Extremely poisonous — attractive black berries' },
+                { name: 'Castor Oil Plant', latin: 'Ricinus communis', danger: 'Seeds contain ricin' },
+                { name: 'Laburnum', latin: 'Laburnum spp.', danger: 'Seed pods resemble pea pods — attract children' },
+                { name: 'Euphorbia', latin: 'Euphorbia spp.', danger: 'Milky sap causes blistering and eye damage' },
+                { name: 'Giant Hogweed', latin: 'Heracleum mantegazzianum', danger: 'Phototoxic sap causes severe burns' },
+                { name: 'Lords-and-Ladies', latin: 'Arum maculatum', danger: 'Bright red berries, burning sap — self-seeds in hedgerows' },
+                { name: 'Daphne', latin: 'Daphne mezereum', danger: 'All parts toxic — attractive berries' },
+                { name: 'Oleander', latin: 'Nerium oleander', danger: 'All parts highly toxic' },
+                { name: "Angel's Trumpet", latin: 'Brugmansia', danger: 'All parts toxic — hallucinogenic' },
+                { name: 'Autumn Crocus', latin: 'Colchicum autumnale', danger: 'Contains colchicine — toxic in small amounts' },
+              ].map((p) => (
+                <div key={p.name} className="flex gap-2 p-2 rounded-lg bg-red-50 dark:bg-red-900/10 border border-red-100 dark:border-red-900/20">
+                  <span className="text-red-400">☠️</span>
+                  <div className="flex-1 min-w-0">
+                    <div className="font-semibold text-red-700 dark:text-red-400">{p.name}</div>
+                    <div className="text-[9px] text-stone-400 italic">{p.latin}</div>
+                    <div className="text-[9px] text-red-600 dark:text-red-300 mt-0.5">{p.danger}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <p className="text-[9px] text-stone-400 mt-3">
+              RHS rule: "If it is not a food plant, do not eat it." If poisoning is suspected, go to A&E immediately with a sample of the plant. Do not try to induce vomiting.
+            </p>
+          </div>
+        )}
 
         {/* Microclimate Zones */}
         <MicroclimateZonesSection />

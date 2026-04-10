@@ -1,0 +1,114 @@
+[
+  {
+    "name": "Monkshood",
+    "latinName": "Aconitum napellus",
+    "rhsCategory": "A",
+    "danger": "Potentially fatal — avoid even skin contact",
+    "commonInSurrey": true,
+    "notes": "Tops the RHS danger list. Ingestion is nearly always fatal."
+  },
+  {
+    "name": "Foxglove",
+    "latinName": "Digitalis purpurea",
+    "rhsCategory": "A",
+    "danger": "Cardiac glycosides in all parts including pollen",
+    "commonInSurrey": true,
+    "notes": "One of the UK's most commonly grown plants and wildflowers."
+  },
+  {
+    "name": "Yew",
+    "latinName": "Taxus baccata",
+    "rhsCategory": "A",
+    "danger": "All parts lethal except fleshy red aril — seeds inside aril are toxic",
+    "commonInSurrey": true,
+    "notes": "Ubiquitous in Surrey hedging and churchyards."
+  },
+  {
+    "name": "Lily of the Valley",
+    "latinName": "Convallaria majalis",
+    "rhsCategory": "A",
+    "danger": "Consuming just two leaves can be fatal — attractive red berries appeal to children",
+    "commonInSurrey": true,
+    "notes": "Produces attractive red berries that appeal to children."
+  },
+  {
+    "name": "Deadly Nightshade",
+    "latinName": "Atropa belladonna",
+    "rhsCategory": "A",
+    "danger": "Extremely poisonous — attractive black berries",
+    "commonInSurrey": false,
+    "notes": "Found wild in some parts of southern England."
+  },
+  {
+    "name": "Castor Oil Plant",
+    "latinName": "Ricinus communis",
+    "rhsCategory": "A",
+    "danger": "Seeds contain ricin — one of the most toxic natural substances",
+    "commonInSurrey": false,
+    "notes": "Sometimes grown as an ornamental annual."
+  },
+  {
+    "name": "Laburnum",
+    "latinName": "Laburnum spp.",
+    "rhsCategory": "A",
+    "danger": "Seed pods resemble pea pods and strongly attract children",
+    "commonInSurrey": true,
+    "notes": "A very common Surrey garden tree."
+  },
+  {
+    "name": "Euphorbia",
+    "latinName": "Euphorbia spp.",
+    "rhsCategory": "A",
+    "danger": "Milky sap causes skin blistering and eye damage",
+    "commonInSurrey": true,
+    "notes": "Extremely common in borders."
+  },
+  {
+    "name": "Giant Hogweed",
+    "latinName": "Heracleum mantegazzianum",
+    "rhsCategory": "A",
+    "danger": "Phototoxic sap causes severe burns on contact with skin in sunlight",
+    "commonInSurrey": true,
+    "notes": "Found along Surrey waterways. A notifiable invasive species."
+  },
+  {
+    "name": "Lords-and-Ladies",
+    "latinName": "Arum maculatum",
+    "rhsCategory": "A",
+    "danger": "Bright red berries and burning sap — self-seeds into gardens from hedgerows",
+    "commonInSurrey": true,
+    "notes": "Self-seeds into Surrey gardens from hedgerows."
+  },
+  {
+    "name": "Daphne",
+    "latinName": "Daphne mezereum",
+    "rhsCategory": "A",
+    "danger": "All parts toxic — attractive berries",
+    "commonInSurrey": false,
+    "notes": "Sometimes found in established gardens."
+  },
+  {
+    "name": "Oleander",
+    "latinName": "Nerium oleander",
+    "rhsCategory": "A",
+    "danger": "All parts highly toxic — even smoke from burning is dangerous",
+    "commonInSurrey": false,
+    "notes": "More common in Mediterranean climates but grown under cover in UK."
+  },
+  {
+    "name": "Angel's Trumpet",
+    "latinName": "Brugmansia",
+    "rhsCategory": "A",
+    "danger": "All parts toxic and hallucinogenic",
+    "commonInSurrey": false,
+    "notes": "Grown as a conservatory plant in the UK."
+  },
+  {
+    "name": "Autumn Crocus",
+    "latinName": "Colchicum autumnale",
+    "rhsCategory": "A",
+    "danger": "Contains colchicine — toxic in small amounts",
+    "commonInSurrey": true,
+    "notes": "Found in meadows and sometimes in garden borders."
+  }
+]

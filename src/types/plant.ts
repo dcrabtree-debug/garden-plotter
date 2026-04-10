@@ -1,7 +1,7 @@
 export type SunLevel = 'full-sun' | 'partial-shade' | 'full-shade';
 export type WaterNeed = 'low' | 'moderate' | 'high';
 export type GrowthHabit = 'trailing' | 'upright' | 'bushy' | 'climbing' | 'rosette' | 'spreading';
-export type PlantCategory = 'vegetable' | 'herb' | 'fruit' | 'flower' | 'legume';
+export type PlantCategory = 'vegetable' | 'herb' | 'fruit' | 'flower' | 'legume' | 'fern';
 export type RHSHardiness = 'H1' | 'H2' | 'H3' | 'H4' | 'H5' | 'H6' | 'H7';
 
 export interface PlantingWindow {
@@ -58,4 +58,9 @@ export interface Plant {
   varieties: PlantVariety[];
   notes: string;
   sources: string[];
+  childSafe?: boolean;
+  petSafe?: boolean;
+  toxicWarning?: string;
+  kidActivity?: string;
+  soilTipSurrey?: string;
 }

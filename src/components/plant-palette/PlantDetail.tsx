@@ -191,6 +191,61 @@ export function PlantDetail({ plant, companionMap, onClose }: PlantDetailProps) 
             </div>
           )}
 
+          {/* Safety Information */}
+          {(plant.childSafe !== undefined || plant.petSafe !== undefined || plant.toxicWarning || plant.kidActivity) && (
+            <div className="mb-4">
+              <h3 className="text-xs font-semibold text-stone-600 dark:text-stone-300 mb-2">
+                Safety & Family Info
+              </h3>
+              <div className="space-y-2">
+                <div className="flex gap-2">
+                  {plant.childSafe === true && (
+                    <span className="text-[10px] px-2 py-1 bg-sky-100 text-sky-700 dark:bg-sky-900/30 dark:text-sky-300 rounded-lg font-medium">
+                      👶 Child Safe
+                    </span>
+                  )}
+                  {plant.childSafe === false && (
+                    <span className="text-[10px] px-2 py-1 bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300 rounded-lg font-medium">
+                      ⚠️ Not Child Safe
+                    </span>
+                  )}
+                  {plant.petSafe === true && (
+                    <span className="text-[10px] px-2 py-1 bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300 rounded-lg font-medium">
+                      🐾 Pet Safe
+                    </span>
+                  )}
+                  {plant.petSafe === false && (
+                    <span className="text-[10px] px-2 py-1 bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300 rounded-lg font-medium">
+                      🐾 Toxic to Pets
+                    </span>
+                  )}
+                </div>
+                {plant.toxicWarning && (
+                  <div className="text-xs text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20 p-2 rounded-lg border border-red-200/50 dark:border-red-800/30">
+                    <span className="font-semibold">Warning:</span> {plant.toxicWarning}
+                  </div>
+                )}
+                {plant.kidActivity && (
+                  <div className="text-xs text-sky-700 dark:text-sky-300 bg-sky-50 dark:bg-sky-900/20 p-2 rounded-lg border border-sky-200/50 dark:border-sky-800/30">
+                    <span className="font-semibold">Kid activity:</span> {plant.kidActivity}
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Surrey Soil Tip */}
+          {plant.soilTipSurrey && (
+            <div className="mb-4">
+              <h3 className="text-xs font-semibold text-stone-600 dark:text-stone-300 mb-1">
+                Surrey Clay Soil Tip
+              </h3>
+              <div className="text-xs text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-900/20 p-2 rounded-lg border border-amber-200/50 dark:border-amber-800/30">
+                {plant.soilTipSurrey}
+              </div>
+            </div>
+          )}
+
           {plant.varieties.length > 0 && (
             <div className="mb-4">
               <h3 className="text-xs font-semibold text-stone-600 dark:text-stone-300 mb-1">

@@ -54,8 +54,9 @@ function getPlantableCells(cells: GardenCell[][]): PlantableCell[] {
 // NO sun-lovers: no tomatoes, basil, citrus, peppers — they need 6h+ direct sun
 // Only shade-tolerant herbs and foliage that thrive in filtered light
 const CONSERVATORY_SLUGS = [
-  'fern-hardy', 'mint', 'lemon-balm', 'parsley', 'coriander', 'chives',
+  'fern-hardy', 'fern-copper-shield', 'mint', 'lemon-balm', 'parsley', 'coriander', 'chives',
   'bay-laurel',  // tolerates shade, architectural evergreen
+  'busy-lizzy',  // vivid colour in shade, exploding seed pods for kids
 ];
 
 function plantNeedsSun(plant: Plant): number {
@@ -336,8 +337,8 @@ function sunOptimizedLayout(
     }
   }
 
-  // Phase 4: Flowers in flower beds (pest deterrents)
-  const flowerSlugs = ['nasturtium', 'marigold', 'calendula', 'sunflower', 'dwarf-sweet-pea'];
+  // Phase 4: Flowers in flower beds (pest deterrents + kid-friendly)
+  const flowerSlugs = ['nasturtium', 'marigold', 'calendula', 'sunflower', 'cosmos', 'dwarf-sweet-pea', 'forget-me-not'];
   for (const cell of flowerCells) {
     for (const slug of flowerSlugs) {
       const plant = plants.find((p) => p.slug === slug || p.slug.includes(slug));

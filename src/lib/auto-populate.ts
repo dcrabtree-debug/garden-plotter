@@ -1,7 +1,6 @@
 import type { Plant } from '../types/plant';
 import type { CompanionMap } from '../types/companion';
 import type { CrossSystemPairing } from './cross-system-scoring';
-import { scorePlant, getSlugRisk } from './garden-rating';
 import { getFriends, getConflicts } from './companion-engine';
 
 export type LayoutStrategy = 'expert-choice' | 'family-harvest' | 'companion-optimal' | 'continuous-harvest';
@@ -429,106 +428,12 @@ function fragrantEdibleLayout(plants: Plant[], towerCount: number): LayoutOption
   };
 }
 
-/**
- * Highest Garden Grade — greedy algorithm that picks GreenStalk-suitable plants
- * maximizing the overall garden grade score. Slug-prone plants are steered HERE
- * (elevated GreenStalks = natural slug defence for lettuce, strawberries, basil, etc).
- *
- * Algorithm: score every candidate plant against the current composition,
- * pick the highest-scoring one for each pocket, tier by tier.
- */
-function highestGradeLayout(
-  plants: Plant[],
-  companionMap: CompanionMap,
-  towerCount: number
-): LayoutOption {
-  // Filter to GreenStalk-suitable plants
-  const candidates = plants.filter(
-    (p) => p.greenstalkSuitability === 'ideal' || p.greenstalkSuitability === 'good'
-  );
-
-  const towers: (string | null)[][][] = [];
-  const placed = new Set<string>(); // track placed slugs for diversity
-  const allSlugs: string[] = [];
-
-  for (let t = 0; t < towerCount; t++) {
-    const grid: (string | null)[][] = Array.from({ length: 5 }, () =>
-      new Array(6).fill(null)
-    );
-
-    for (let tier = 0; tier < 5; tier++) {
-      for (let pocket = 0; pocket < 6; pocket++) {
-        let bestScore = -1;
-        let bestSlug: string | null = null;
-
-        // Collect adjacent slugs (same tier + adjacent tiers) for companion grouping
-        const adjacentSlugs: string[] = [];
-        for (let ti = Math.max(0, tier - 1); ti <= Math.min(4, tier + 1); ti++) {
-          for (let pi = 0; pi < 6; pi++) {
-            const s = grid[ti]?.[pi];
-            if (s) adjacentSlugs.push(s);
-          }
-        }
-        const uniqueAdjacent = [...new Set(adjacentSlugs)];
-
-        for (const candidate of candidates) {
-          // Prefer diversity — bonus for unplaced species
-          const diversityBonus = placed.has(candidate.slug) ? 0 : 1;
-          // Slug-prone plants get a bonus for being in GreenStalks (elevated = safe)
-          const slugBonus = getSlugRisk(candidate.slug) === 'high' ? 0.5 : 0;
-          // Tier suitability check
-          const tierOk = candidate.idealTiers?.includes(tier + 1) ?? true;
-          const tierBonus = tierOk ? 0.3 : 0;
-          // Companion grouping: bonus for friends in adjacent pockets, penalty for foes
-          const adjFriends = uniqueAdjacent.length > 0
-            ? getFriends(candidate.slug, uniqueAdjacent, companionMap).length
-            : 0;
-          const adjFoes = uniqueAdjacent.length > 0
-            ? getConflicts(candidate.slug, uniqueAdjacent, companionMap).length
-            : 0;
-          const companionGroupBonus = adjFriends * 0.5 - adjFoes * 1.0;
-
-          const ps = scorePlant(candidate, allSlugs, companionMap, 'greenstalk');
-          const totalScore = ps.overall + diversityBonus + slugBonus + tierBonus + companionGroupBonus;
-
-          if (totalScore > bestScore) {
-            bestScore = totalScore;
-            bestSlug = candidate.slug;
-          }
-        }
-
-        if (bestSlug) {
-          grid[tier][pocket] = bestSlug;
-          allSlugs.push(bestSlug);
-          placed.add(bestSlug);
-        }
-      }
-    }
-    towers.push(grid);
-  }
-
-  return {
-    id: 'highest-grade',
-    name: 'Highest Garden Grade',
-    description:
-      'Algorithmically optimized for the highest overall Garden Grade score. ' +
-      'Slug-prone plants (lettuce, strawberries, basil) are steered to GreenStalks ' +
-      'where elevation provides natural slug defence. Weights respond to your ' +
-      'current priority sliders.',
-    strategy: 'expert-choice' as LayoutStrategy,
-    towers,
-    tower1: towers[0],
-    tower2: towers[1] ?? towers[0],
-  };
-}
-
 export function generateLayouts(
   plants: Plant[],
   companionMap: CompanionMap,
   towerCount: number = 2
 ): LayoutOption[] {
   return [
-    highestGradeLayout(plants, companionMap, towerCount),
     expertChoiceLayout(plants, towerCount),
     fragrantEdibleLayout(plants, towerCount),
     familyHarvestLayout(plants, towerCount),

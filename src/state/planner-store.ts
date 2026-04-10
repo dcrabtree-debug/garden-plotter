@@ -135,6 +135,12 @@ interface PlannerStore {
     tierNumber: number,
     pocketIndex: number
   ) => void;
+  markPlanted: (
+    towerId: string,
+    tierNumber: number,
+    pocketIndex: number,
+    date?: string
+  ) => void;
   renameTower: (towerId: string, name: string) => void;
   clearTower: (towerId: string) => void;
   addTower: () => void;
@@ -174,7 +180,7 @@ export const usePlannerStore = create<PlannerStore>((set, get) => {
                   return {
                     ...pocket,
                     plantSlug: slug,
-                    plantedDate: new Date().toISOString().split('T')[0],
+                    plantedDate: null, // Planning mode — use markPlanted to start harvest clock
                   };
                 }),
               };
@@ -288,6 +294,31 @@ export const usePlannerStore = create<PlannerStore>((set, get) => {
                 pockets: tier.pockets.map((pocket, i) => {
                   if (i !== pocketIndex) return pocket;
                   return { ...pocket, plantSlug: null, companionSlugs: [], plantedDate: null };
+                }),
+              };
+            }),
+          };
+        });
+        const newState = { ...state, towers };
+        saveState(makeSaveState(newState.towers, newState.settings));
+        return newState;
+      });
+    },
+
+    markPlanted: (towerId, tierNumber, pocketIndex, date) => {
+      set((state) => {
+        const plantedDate = date ?? new Date().toISOString().split('T')[0];
+        const towers = state.towers.map((tower) => {
+          if (tower.id !== towerId) return tower;
+          return {
+            ...tower,
+            tiers: tower.tiers.map((tier) => {
+              if (tier.tierNumber !== tierNumber) return tier;
+              return {
+                ...tier,
+                pockets: tier.pockets.map((pocket, i) => {
+                  if (i !== pocketIndex) return pocket;
+                  return { ...pocket, plantedDate };
                 }),
               };
             }),

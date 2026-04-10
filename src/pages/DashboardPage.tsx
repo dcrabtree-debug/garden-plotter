@@ -183,6 +183,7 @@ type Section = 'overdue' | 'today' | 'care' | 'setup' | 'upcoming' | 'harvest';
 export function DashboardPage({ onNavigate }: { onNavigate?: (tab: string, view?: string) => void }) {
   const settings = usePlannerStore((s) => s.settings);
   const towers = usePlannerStore((s) => s.towers);
+  const markPlanted = usePlannerStore((s) => s.markPlanted);
   const garden = useGardenStore((s) => s.garden);
   const region = useRegion();
   const { plants, plantMap } = usePlantDb(region);
@@ -331,6 +332,29 @@ export function DashboardPage({ onNavigate }: { onNavigate?: (tab: string, view?
     () => getHarvestEstimates(towers, plantMap),
     [towers, plantMap],
   );
+
+  // Count planned-but-not-planted pockets (plantSlug set, plantedDate null)
+  const unplantedPockets = useMemo(() => {
+    const items: { towerId: string; towerName: string; tierNumber: number; pocketIndex: number; slug: string; name: string; emoji: string }[] = [];
+    for (const tower of towers) {
+      for (const tier of tower.tiers) {
+        for (let pi = 0; pi < tier.pockets.length; pi++) {
+          const p = tier.pockets[pi];
+          if (p.plantSlug && !p.plantedDate) {
+            const plant = plantMap.get(p.plantSlug);
+            items.push({
+              towerId: tower.id, towerName: tower.name,
+              tierNumber: tier.tierNumber, pocketIndex: pi,
+              slug: p.plantSlug,
+              name: plant?.commonName ?? p.plantSlug,
+              emoji: plant?.emoji ?? '🌱',
+            });
+          }
+        }
+      }
+    }
+    return items;
+  }, [towers, plantMap]);
 
   // ── Progress ──────────────────────────────────────────────────────────────
 
@@ -577,6 +601,53 @@ export function DashboardPage({ onNavigate }: { onNavigate?: (tab: string, view?
           onStartSnapshot={() => onNavigate?.('coach', 'snapshot')}
           onViewTimeline={() => onNavigate?.('coach', 'timeline')}
         />
+
+        {/* ── PLANT THE CLOCK — planned but not yet physically planted ──── */}
+        {unplantedPockets.length > 0 && (
+          <div className="bg-white dark:bg-stone-800 rounded-2xl border border-amber-200 dark:border-amber-800 overflow-hidden">
+            <div className="px-4 py-2.5 border-b border-amber-100 dark:border-amber-800/50 flex items-center justify-between">
+              <h2 className="text-sm font-bold text-amber-800 dark:text-amber-300">
+                🌱 Ready to plant? Start the clock!
+              </h2>
+              <button
+                onClick={() => {
+                  for (const p of unplantedPockets) {
+                    markPlanted(p.towerId, p.tierNumber, p.pocketIndex);
+                  }
+                }}
+                className="text-[11px] px-3 py-1.5 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-700 active:scale-95 transition-all"
+              >
+                Plant all today
+              </button>
+            </div>
+            <div className="px-4 py-3">
+              <p className="text-xs text-stone-500 dark:text-stone-400 mb-3">
+                You have {unplantedPockets.length} plants planned but not yet marked as planted. Tap individual plants or "Plant all" to start harvest countdowns.
+              </p>
+              <div className="flex flex-wrap gap-1.5">
+                {[...new Map(unplantedPockets.map(p => [p.slug, p])).values()].map((p) => {
+                  const count = unplantedPockets.filter(x => x.slug === p.slug).length;
+                  return (
+                    <button
+                      key={p.slug}
+                      onClick={() => {
+                        for (const pocket of unplantedPockets.filter(x => x.slug === p.slug)) {
+                          markPlanted(pocket.towerId, pocket.tierNumber, pocket.pocketIndex);
+                        }
+                      }}
+                      className="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 text-amber-800 dark:text-amber-300 hover:bg-amber-100 dark:hover:bg-amber-900/30 active:scale-95 transition-all"
+                    >
+                      <span>{p.emoji}</span>
+                      <span className="font-medium">{p.name}</span>
+                      {count > 1 && <span className="text-amber-500">x{count}</span>}
+                      <span className="text-emerald-600 dark:text-emerald-400 font-bold">Plant</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* ── HARVEST COUNTDOWN ─────────────────────────────────────────── */}
         {harvestEstimates.length > 0 && (

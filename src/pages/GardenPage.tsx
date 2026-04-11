@@ -442,6 +442,7 @@ export function GardenPage() {
     garden, activeTool, selectedMonth, selectedHour,
     showSunOverlay, showShadowOverlay, showCompanionOverlay,
     showSpacingWarnings, showRotationWarnings, rotationHistory,
+    sunHoursVersion,
     locked: gardenLocked, toggleLock: toggleGardenLock,
     setTool, paintCell, updateConfig, renameGarden,
     setSunHours, setSelectedMonth, setSelectedHour,
@@ -507,7 +508,7 @@ export function GardenPage() {
       latitude, longitude
     );
     setSunHours(grid);
-  }, [selectedMonth, cols, rows, cellSizeM, facing, houseWallHeightM, fenceHeightM, latitude, longitude, setSunHours]);
+  }, [selectedMonth, cols, rows, cellSizeM, facing, houseWallHeightM, fenceHeightM, latitude, longitude, setSunHours, sunHoursVersion]);
 
   // GreenStalk positions: detect cells with type 'greenstalk', grouped into towers
   // (moved above handleCellInteraction to avoid use-before-declaration)

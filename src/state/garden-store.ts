@@ -216,6 +216,7 @@ interface GardenStore {
   showSpacingWarnings: boolean;
   showRotationWarnings: boolean;
   rotationHistory: RotationHistory;
+  sunHoursVersion: number; // bumped on template load to force sun-hours recalc
   locked: boolean;         // locks plant placement
   layoutLocked: boolean;   // locks cell types (paint operations)
 
@@ -262,6 +263,7 @@ export const useGardenStore = create<GardenStore>((set, get) => {
     showSpacingWarnings: true,
     showRotationWarnings: true,
     rotationHistory: loadRotationHistory(),
+    sunHoursVersion: 0,
 
     toggleLock: () => set((state) => ({ locked: !state.locked })),
     toggleLayoutLock: () => set((state) => ({ layoutLocked: !state.layoutLocked })),
@@ -464,7 +466,7 @@ export const useGardenStore = create<GardenStore>((set, get) => {
         cells,
       };
       saveGarden(garden);
-      set({ garden });
+      set((s) => ({ garden, sunHoursVersion: s.sunHoursVersion + 1 }));
     },
 
     resetGarden: () => {

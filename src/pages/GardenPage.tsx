@@ -477,7 +477,7 @@ export function GardenPage() {
   const [showPlan, setShowPlan] = useState(false);
   const [zoom, setZoom] = useState(1);
   const [showGreenStalks, setShowGreenStalks] = useState(true);
-  const [showBloom, setShowBloom] = useState(false);
+
   const [hoveredCell, setHoveredCell] = useState<{ row: number; col: number } | null>(null);
   const gridRef = useRef<HTMLDivElement>(null);
 
@@ -601,44 +601,6 @@ export function GardenPage() {
       setZoom((z) => Math.min(3, Math.max(0.5, z - e.deltaY * 0.002)));
     }
   }, []);
-
-  // Bloom visualization data
-  const bloomGrid = useMemo(() => {
-    if (!showBloom) return null;
-    const currentMonth = selectedMonth;
-    const grid: { inBloom: boolean; color: string }[][] = Array.from(
-      { length: rows },
-      () => Array.from({ length: cols }, () => ({ inBloom: false, color: '' }))
-    );
-    const bloomColors: Record<string, string> = {
-      'vegetable': '#4caf50',
-      'herb': '#66bb6a',
-      'fruit': '#e91e63',
-      'flower': '#e040fb',
-      'legume': '#8bc34a',
-    };
-    for (let r = 0; r < rows; r++) {
-      for (let c = 0; c < cols; c++) {
-        const slug = cells[r][c].plantSlug;
-        if (!slug) continue;
-        const plant = plantMap.get(slug);
-        if (!plant) continue;
-        const hw = plant.plantingWindow.harvest;
-        if (hw) {
-          // Approximate bloom as 1-2 months before harvest
-          const bloomStart = hw[0] >= 2 ? hw[0] - 1 : hw[0];
-          const bloomEnd = hw[1];
-          const inRange = bloomStart <= bloomEnd
-            ? currentMonth >= bloomStart && currentMonth <= bloomEnd
-            : currentMonth >= bloomStart || currentMonth <= bloomEnd;
-          if (inRange) {
-            grid[r][c] = { inBloom: true, color: bloomColors[plant.category] ?? '#e040fb' };
-          }
-        }
-      }
-    }
-    return grid;
-  }, [showBloom, selectedMonth, cells, rows, cols, plantMap]);
 
   // Real-time shadow grid for the selected hour
   const shadowGrid = useMemo(() => {
@@ -969,15 +931,6 @@ export function GardenPage() {
                 className="rounded border-stone-300 accent-emerald-500"
               />
               GreenStalk towers
-            </label>
-            <label className="flex items-center gap-2 text-xs text-stone-600 dark:text-stone-400 cursor-pointer">
-              <input
-                type="checkbox"
-                checked={showBloom}
-                onChange={() => setShowBloom(!showBloom)}
-                className="rounded border-stone-300 accent-pink-500"
-              />
-              Bloom visualization
             </label>
           </div>
 
@@ -1416,21 +1369,6 @@ export function GardenPage() {
                         {cell.sunHours}
                       </span>
                     )}
-                    {/* Bloom glow overlay */}
-                    {bloomGrid?.[ri]?.[ci]?.inBloom && (
-                      <div
-                        style={{
-                          position: 'absolute', inset: 0,
-                          backgroundColor: bloomGrid[ri][ci].color,
-                          opacity: 0.4,
-                          borderRadius: '50%',
-                          transform: 'scale(1.1)',
-                          filter: 'blur(2px)',
-                          pointerEvents: 'none',
-                          zIndex: 1,
-                        }}
-                      />
-                    )}
                     {/* GreenStalk tower marker */}
                     {showGreenStalks && greenStalkCells.some((g) => g.row === ri && g.col === ci) && (
                       <div
@@ -1651,12 +1589,6 @@ export function GardenPage() {
             <span className="flex items-center gap-1">
               <span className="w-3 h-3 border-2 border-emerald-500 rounded-sm shadow-[0_0_4px_rgba(16,185,129,0.5)]" />
               GreenStalk
-            </span>
-          )}
-          {showBloom && (
-            <span className="flex items-center gap-1">
-              <span className="w-3 h-3 rounded-full bg-gradient-to-r from-pink-400 to-purple-400" />
-              In bloom
             </span>
           )}
         </div>

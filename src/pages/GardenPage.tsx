@@ -465,6 +465,7 @@ export function GardenPage() {
     row: number; col: number; sunHours: number | null; cellType: string; neighbourSlugs: string[]; currentSlug: string | null;
   } | null>(null);
   const [showPlantPanel, setShowPlantPanel] = useState(false);
+  const [tierFilter, setTierFilter] = useState<number | null>(null);
   const [showAutoPopulate, setShowAutoPopulate] = useState(false);
   const [showEsherLayouts, setShowEsherLayouts] = useState(false);
   const [esherLayouts, setEsherLayouts] = useState<EsherLayoutOption[]>([]);
@@ -794,19 +795,52 @@ export function GardenPage() {
             </button>
           )}
           {showPlantPanel && (
-            <div className="mt-2 max-h-48 overflow-y-auto space-y-1 bg-white dark:bg-stone-700 rounded-lg border border-stone-200 dark:border-stone-600 p-1.5">
-              {inGroundPlants.map((p) => (
-                <button
-                  key={p.slug}
-                  onClick={() => { setPlantToPlace(p); setShowPlantPanel(false); }}
-                  className={`w-full text-left text-[11px] px-2 py-1 rounded flex items-center gap-1.5 hover:bg-emerald-50 ${
-                    plantToPlace?.slug === p.slug ? 'bg-emerald-100' : ''
-                  }`}
-                >
-                  <span>{p.emoji}</span>
-                  <span className="truncate">{p.commonName}</span>
-                </button>
+            <div className="mt-2 bg-white dark:bg-stone-700 rounded-lg border border-stone-200 dark:border-stone-600 p-1.5">
+              {/* Tier filter */}
+              <div className="flex items-center gap-1 mb-1.5 pb-1.5 border-b border-stone-100 dark:border-stone-600">
+                <span className="text-[9px] text-stone-400 shrink-0">GS Tier:</span>
+                {[1, 2, 3, 4, 5].map((t) => (
+                  <button
+                    key={t}
+                    onClick={() => setTierFilter(tierFilter === t ? null : t)}
+                    className={`text-[9px] px-1.5 py-0.5 rounded-full transition-colors ${
+                      tierFilter === t
+                        ? 'bg-emerald-600 text-white'
+                        : 'bg-stone-100 dark:bg-stone-600 text-stone-500 dark:text-stone-300 hover:bg-stone-200'
+                    }`}
+                  >
+                    {t}
+                  </button>
+                ))}
+                {tierFilter && (
+                  <button onClick={() => setTierFilter(null)} className="text-[9px] text-stone-400 hover:text-stone-600 ml-auto">clear</button>
+                )}
+              </div>
+              <div className="max-h-48 overflow-y-auto space-y-1">
+              {(tierFilter
+                ? inGroundPlants.filter((p) => p.idealTiers?.includes(tierFilter))
+                : inGroundPlants
+              ).map((p) => (
+                <div key={p.slug} className="flex items-center gap-0.5">
+                  <button
+                    onClick={() => { setPlantToPlace(p); setShowPlantPanel(false); }}
+                    className={`flex-1 text-left text-[11px] px-2 py-1 rounded flex items-center gap-1.5 hover:bg-emerald-50 ${
+                      plantToPlace?.slug === p.slug ? 'bg-emerald-100' : ''
+                    }`}
+                  >
+                    <span>{p.emoji}</span>
+                    <span className="truncate">{p.commonName}</span>
+                  </button>
+                  <button
+                    onClick={() => setSelectedPlant(p)}
+                    className="shrink-0 w-5 h-5 flex items-center justify-center text-[10px] text-stone-400 hover:text-stone-700 hover:bg-stone-100 rounded"
+                    title="View details"
+                  >
+                    i
+                  </button>
+                </div>
               ))}
+              </div>
             </div>
           )}
         </div>
@@ -1950,6 +1984,15 @@ export function GardenPage() {
                 Save {getSeasonLabel(getCurrentSeasonKey())}
               </button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Plant detail modal */}
+      {selectedPlant && (
+        <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4" onClick={() => setSelectedPlant(null)}>
+          <div className="bg-white dark:bg-stone-800 rounded-2xl shadow-2xl max-w-lg w-full max-h-[80vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+            <PlantDetail plant={selectedPlant} companionMap={companionMap} onClose={() => setSelectedPlant(null)} />
           </div>
         </div>
       )}

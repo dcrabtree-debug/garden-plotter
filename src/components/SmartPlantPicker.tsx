@@ -415,6 +415,13 @@ export function SmartPlantPicker({
                     ))}
                   </div>
                 )}
+
+                <button
+                  onClick={() => setShowFullDetail(false)}
+                  className="w-full text-[10px] text-emerald-600 dark:text-emerald-400 hover:underline pt-1 border-t border-stone-100 dark:border-stone-700"
+                >
+                  Hide details ▴
+                </button>
               </div>
             )}
 

@@ -75,7 +75,7 @@ export function createEsherGarden(): { config: GardenConfig; cells: GardenCell[]
     'FLLLLLLLLLLLLLLLLLFT', // row 17
     'FLLLLLLLLLLLLLLLLLFT', // row 18
     'FLLLLLLLLLLLLLLLLFFT', // row 19 — extra flower bed col 17
-    'FFGGGGFFFFRRRRHHFFFG', // row 20 — GreenStalks, flower beds, raised beds, path, flower beds, GreenStalk
+    'FFGGGGFFFFRRRRHHFFFT', // row 20 — GreenStalks, flower beds, raised beds, path, flower beds, tree
     'FFGGGGTTTTRRRRHHSSSS', // row 21 — GreenStalks, trees, raised beds, path, shed
     'FFPPPPTTTTTTTTHHSSSS', // row 22 — patio, trees, path, shed
     'TTTTTTTTTTTTTTXTTTTT', // row 23 — hedge/trees + compost

@@ -35,7 +35,7 @@ const CELL_TOOLS: { type: CellType; label: string; color: string; emoji: string 
   { type: 'veg-patch', label: 'Veg Patch', color: '#8a7262', emoji: '\ud83e\udd6c' },
   { type: 'flower-bed', label: 'Flower Bed', color: '#e8879f', emoji: '\ud83c\udf3a' },
   { type: 'raised-bed', label: 'Raised Bed', color: '#9e8474', emoji: '\ud83e\udea8' },
-  { type: 'greenstalk', label: 'GreenStalk', color: '#4a7c59', emoji: '\ud83c\udf31' },
+  { type: 'greenstalk', label: 'GreenStalk', color: '#2a9d8f', emoji: '\ud83c\udf31' },
   { type: 'conservatory', label: 'Conservatory', color: '#7ec8c0', emoji: '\ud83c\udfe1' },
   { type: 'patio', label: 'Patio', color: '#b8b0a4', emoji: '\ud83e\uddf1' },
   { type: 'path', label: 'Path', color: '#cec4b8', emoji: '\ud83d\udeb6' },
@@ -52,7 +52,7 @@ const CELL_COLORS: Record<CellType, string> = {
   lawn: '#7db88a',          // Warm green grass — not too saturated
   'veg-patch': '#8a7262',   // Rich garden soil brown
   'flower-bed': '#e8879f',  // Soft rose pink
-  greenstalk: '#4a7c59',    // Leaf green — matches app accent
+  greenstalk: '#2a9d8f',    // Teal green — distinct from tree
   conservatory: '#7ec8c0',  // Warm teal glass
   patio: '#b8b0a4',         // Warm stone grey
   path: '#cec4b8',          // Sandy gravel

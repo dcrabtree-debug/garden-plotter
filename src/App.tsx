@@ -12,6 +12,7 @@ import { YieldPage } from './pages/YieldPage';
 import { DashboardPage } from './pages/DashboardPage';
 import { PhotoCoachPage } from './pages/PhotoCoachPage';
 import { CarePage } from './pages/CarePage';
+import { PrintPage } from './pages/PrintPage';
 import { useDarkMode } from './hooks/use-dark-mode';
 
 type TopTab = 'dashboard' | 'coach' | 'plan' | 'calendar' | 'harvest' | 'care' | 'learn' | 'seeds' | 'settings';
@@ -84,6 +85,7 @@ function App() {
   const [learnSub, setLearnSub] = useState<LearnSub>('plants');
   const [coachInitialView, setCoachInitialView] = useState<string | undefined>();
   const [moreOpen, setMoreOpen] = useState(false);
+  const [showPrint, setShowPrint] = useState(false);
   const { isDark, toggle: toggleDark } = useDarkMode();
 
   // Cross-tab navigation handler (used by Dashboard snapshot widget)
@@ -123,13 +125,22 @@ function App() {
               51.3867°N, -0.4175°W · Elev ~17m · RHS Zone H5 · USDA ~8b
             </div>
           </div>
-          <button
-            onClick={toggleDark}
-            className="w-9 h-9 flex items-center justify-center rounded-lg text-sm hover:bg-stone-200/60 dark:hover:bg-stone-700/60 active:scale-95 transition-all"
-            title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-          >
-            {isDark ? '\u2600\ufe0f' : '\ud83c\udf19'}
-          </button>
+          <div className="flex items-center gap-1">
+            <button
+              onClick={() => setShowPrint(true)}
+              className="w-9 h-9 flex items-center justify-center rounded-lg text-sm hover:bg-stone-200/60 dark:hover:bg-stone-700/60 active:scale-95 transition-all"
+              title="Export garden plan as PDF"
+            >
+              📄
+            </button>
+            <button
+              onClick={toggleDark}
+              className="w-9 h-9 flex items-center justify-center rounded-lg text-sm hover:bg-stone-200/60 dark:hover:bg-stone-700/60 active:scale-95 transition-all"
+              title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+            >
+              {isDark ? '\u2600\ufe0f' : '\ud83c\udf19'}
+            </button>
+          </div>
         </div>
 
         {/* Desktop-only primary navigation — understated tab bar */}
@@ -230,6 +241,9 @@ function App() {
           );
         })}
       </nav>
+
+      {/* Print / PDF Export overlay */}
+      {showPrint && <PrintPage onClose={() => setShowPrint(false)} />}
     </div>
   );
 }

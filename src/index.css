@@ -328,3 +328,48 @@ button, a, [role="button"], input, select, textarea {
     transition: transform 0.1s ease;
   }
 }
+
+/* ─── Print Styles ──────────────────────────────────────────────────────── */
+
+@media print {
+  @page {
+    size: A4;
+    margin: 15mm 12mm;
+  }
+
+  body {
+    font-size: 10pt;
+    color: #000;
+    background: #fff;
+  }
+
+  /* Hide app chrome */
+  header, nav, .print\\:hidden {
+    display: none !important;
+  }
+
+  /* Reset dark mode for print */
+  .dark * {
+    color: #000 !important;
+    background: transparent !important;
+    border-color: #ccc !important;
+  }
+
+  /* Page breaks */
+  .print\\:break-after-page {
+    page-break-after: always;
+  }
+  .print\\:break-before-page {
+    page-break-before: always;
+  }
+
+  /* Tables */
+  table { page-break-inside: auto; }
+  tr { page-break-inside: avoid; }
+
+  /* Ensure grid prints with colors */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}

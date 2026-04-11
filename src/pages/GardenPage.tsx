@@ -4,6 +4,7 @@ import { usePlantDb } from '../data/use-plant-db';
 import { PlantDetail } from '../components/plant-palette/PlantDetail';
 import { PlanViewIllustration } from '../components/PlanViewIllustration';
 import { SeasonalTimeline } from '../components/SeasonalTimeline';
+import { IsometricGarden } from '../components/IsometricGarden';
 import {
   calculateMicroclimate,
   MicroclimateOverlayGrid,
@@ -488,6 +489,7 @@ export function GardenPage() {
   const [showGreenStalks, setShowGreenStalks] = useState(true);
   const [showPlanView, setShowPlanView] = useState(false);
   const [showMicroclimate, setShowMicroclimate] = useState(false);
+  const [viewMode, setViewMode] = useState<'grid' | 'isometric'>('grid');
   const [hoveredMicroclimateZone, setHoveredMicroclimateZone] = useState<string | null>(null);
 
   const [hoveredCell, setHoveredCell] = useState<{ row: number; col: number } | null>(null);
@@ -1247,6 +1249,39 @@ export function GardenPage() {
           })()}
         </div>
 
+        {/* View mode toggle */}
+        <div className="flex items-center gap-2 mb-2">
+          <span className="text-[9px] text-stone-400">View:</span>
+          <button
+            onClick={() => setViewMode('grid')}
+            className={`text-[10px] px-2 py-0.5 rounded-full transition-colors ${
+              viewMode === 'grid'
+                ? 'bg-stone-700 text-white dark:bg-stone-300 dark:text-stone-900'
+                : 'bg-stone-100 dark:bg-stone-700 text-stone-500 dark:text-stone-400 hover:bg-stone-200'
+            }`}
+          >
+            Grid
+          </button>
+          <button
+            onClick={() => setViewMode('isometric')}
+            className={`text-[10px] px-2 py-0.5 rounded-full transition-colors ${
+              viewMode === 'isometric'
+                ? 'bg-stone-700 text-white dark:bg-stone-300 dark:text-stone-900'
+                : 'bg-stone-100 dark:bg-stone-700 text-stone-500 dark:text-stone-400 hover:bg-stone-200'
+            }`}
+          >
+            3D View
+          </button>
+        </div>
+
+        {/* Isometric 3D view */}
+        {viewMode === 'isometric' && (
+          <IsometricGarden cells={cells} config={config} plantMap={plantMap} />
+        )}
+
+        {/* Standard grid view */}
+        {viewMode === 'grid' && (<>
+
         {/* Column labels (0-19) */}
         <div className="flex" style={{ marginLeft: cellSize * 1.5, marginBottom: 2 }}>
           {Array.from({ length: cols }, (_, i) => (
@@ -1760,6 +1795,7 @@ export function GardenPage() {
             )}
           </div>
         )}
+      </>)}
       </div>
 
       {/* Right sidebar: Hover reasoning + Planted plants */}

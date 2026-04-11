@@ -90,7 +90,7 @@ export function TowerView({
         ))}
       </div>
 
-      <div className="mt-3 flex items-center gap-4 text-[10px] text-stone-400">
+      <div className="mt-3 flex items-center flex-wrap gap-x-4 gap-y-1 text-[10px] text-stone-400">
         <span className="flex items-center gap-1">
           <span className="w-2 h-2 rounded-full bg-emerald-400 glow-emerald" /> Friends nearby
         </span>
@@ -99,6 +99,9 @@ export function TowerView({
         </span>
         <span className="flex items-center gap-1">
           <span className="w-2 h-2 rounded-full border border-stone-300" /> Neutral
+        </span>
+        <span className="flex items-center gap-1">
+          <span className="w-2 h-2 rounded-full bg-amber-500" /> Root competition
         </span>
       </div>
     </div>

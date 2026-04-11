@@ -3,8 +3,8 @@
   "configurations": [
     {
       "name": "garden-plotter",
-      "runtimeExecutable": "/bin/bash",
-      "runtimeArgs": ["-c", "cd /Users/davidcrabtree/garden-plotter && /opt/homebrew/bin/npm run dev -- --host"],
+      "runtimeExecutable": "/Users/davidcrabtree/garden-plotter/.claude/start-dev.sh",
+      "runtimeArgs": [],
       "port": 5173
     }
   ]

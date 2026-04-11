@@ -1,5 +1,5 @@
 import { Pocket } from './Pocket';
-import { getTierLabel, getTierAdvice } from '../../lib/tier-rules';
+import { getTierLabel, getTierAdvice, getTierRootLoad, ROOT_LOAD_META } from '../../lib/tier-rules';
 import { getTierSuitability } from '../../lib/tier-rules';
 import { getCompanionStatus, getFriends } from '../../lib/companion-engine';
 import { scorePlant } from '../../lib/garden-rating';
@@ -35,6 +35,13 @@ export function TierRow({
 }: TierRowProps) {
   const removePlant = usePlannerStore((s) => s.removePlant);
 
+  // Root competition scoring for this tier
+  const tierPlants = tier.pockets
+    .map((p) => (p.plantSlug ? plantMap.get(p.plantSlug) : undefined))
+    .filter((p): p is Plant => p !== undefined);
+  const rootLoad = getTierRootLoad(tierPlants);
+  const rootMeta = ROOT_LOAD_META[rootLoad];
+
   // Gradient: top tiers warmer/lighter, bottom tiers cooler
   const tierGradient = (() => {
     const total = 6;
@@ -53,6 +60,20 @@ export function TierRow({
         <div className="text-[9px] sm:text-[10px] text-stone-400 hidden sm:block" title={getTierAdvice(tier.tierNumber)}>
           Tier {tier.tierNumber}
         </div>
+        {rootLoad !== 'light' && tierPlants.length > 0 && (
+          <div
+            className="hidden sm:flex items-center justify-end gap-0.5 mt-0.5"
+            title={rootMeta.advice}
+          >
+            <span
+              className="w-1.5 h-1.5 rounded-full shrink-0"
+              style={{ backgroundColor: rootMeta.color }}
+            />
+            <span className="text-[7px] font-medium leading-tight" style={{ color: rootMeta.color }}>
+              {rootLoad === 'heavy' ? 'Roots!' : 'Roots'}
+            </span>
+          </div>
+        )}
       </div>
       <div className="flex flex-wrap gap-1 sm:gap-1.5">
         {tier.pockets.map((pocket, i) => {

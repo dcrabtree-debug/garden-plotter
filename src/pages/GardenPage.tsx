@@ -596,7 +596,12 @@ export function GardenPage() {
           useGardenStore.getState().plantInCell(row, col, plantToPlace.slug);
         }
       } else {
-        paintCell(row, col);
+        // Don't paint over cells that already have a plant —
+        // let onClick open the SmartPlantPicker for swap/remove instead
+        const cell = cells[row]?.[col];
+        if (!cell?.plantSlug) {
+          paintCell(row, col);
+        }
       }
     },
     [plantToPlace, cells, paintCell, movingGreenStalk, greenStalkCells, activeTool, rows, cols]

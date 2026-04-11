@@ -4,6 +4,7 @@ import type { Plant } from '../../types/plant';
 interface PlantCardProps {
   plant: Plant;
   onSelect: (plant: Plant) => void;
+  onInfoClick?: (plant: Plant) => void;
   isActive?: boolean;
 }
 
@@ -14,7 +15,7 @@ const suitColors: Record<string, string> = {
   unsuitable: 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300',
 };
 
-export function PlantCard({ plant, onSelect, isActive }: PlantCardProps) {
+export function PlantCard({ plant, onSelect, onInfoClick, isActive }: PlantCardProps) {
   const { attributes, listeners, setNodeRef, isDragging } = useDraggable({
     id: `palette-${plant.slug}`,
     data: { plant },
@@ -56,6 +57,19 @@ export function PlantCard({ plant, onSelect, isActive }: PlantCardProps) {
       >
         {plant.greenstalkSuitability}
       </span>
+      {onInfoClick && (
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            onInfoClick(plant);
+          }}
+          className="shrink-0 w-5 h-5 flex items-center justify-center text-[10px] font-bold text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 hover:bg-stone-100 dark:hover:bg-stone-600 rounded transition-colors"
+          title="View details"
+        >
+          i
+        </button>
+      )}
     </div>
   );
 }

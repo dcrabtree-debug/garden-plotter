@@ -271,6 +271,7 @@ export function PlannerPage() {
           <PlantPalette
             plants={plants}
             onSelectPlant={(p) => { handlePaletteSelect(p); setShowMobilePalette(false); }}
+            onInfoClick={(p) => setSelectedPlant(p)}
             activePlantSlug={plantToPlace?.slug ?? null}
           />
         </div>
@@ -547,6 +548,14 @@ export function PlannerPage() {
             <div className="p-4 border-t border-stone-100 dark:border-stone-700 text-[10px] text-stone-400 text-center">
               Applying a layout will clear existing plants. You can manually adjust afterwards.
             </div>
+          </div>
+        </div>
+      )}
+      {/* Plant detail modal */}
+      {selectedPlant && (
+        <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4" onClick={() => setSelectedPlant(null)}>
+          <div className="bg-white dark:bg-stone-800 rounded-2xl shadow-2xl max-w-lg w-full max-h-[80vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+            <PlantDetail plant={selectedPlant} companionMap={companionMap} onClose={() => setSelectedPlant(null)} />
           </div>
         </div>
       )}

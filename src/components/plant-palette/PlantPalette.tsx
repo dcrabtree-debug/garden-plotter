@@ -7,6 +7,7 @@ type SortMode = 'best-fit' | 'a-z' | 'season';
 interface PlantPaletteProps {
   plants: Plant[];
   onSelectPlant: (plant: Plant) => void;
+  onInfoClick?: (plant: Plant) => void;
   activePlantSlug?: string | null;
   context?: 'greenstalk' | 'garden';
 }
@@ -32,10 +33,11 @@ function isInSeason(plant: Plant): boolean {
   return check(pw.sowIndoors) || check(pw.sowOutdoors) || check(pw.transplant);
 }
 
-export function PlantPalette({ plants, onSelectPlant, activePlantSlug, context = 'greenstalk' }: PlantPaletteProps) {
+export function PlantPalette({ plants, onSelectPlant, onInfoClick, activePlantSlug, context = 'greenstalk' }: PlantPaletteProps) {
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState<PlantCategory | 'all'>('all');
   const [sortMode, setSortMode] = useState<SortMode>(context === 'greenstalk' ? 'best-fit' : 'a-z');
+  const [tierFilter, setTierFilter] = useState<number | null>(null);
 
   const filtered = useMemo(() => {
     let result = plants;
@@ -49,6 +51,9 @@ export function PlantPalette({ plants, onSelectPlant, activePlantSlug, context =
           p.commonName.toLowerCase().includes(q) ||
           p.botanicalName.toLowerCase().includes(q)
       );
+    }
+    if (tierFilter !== null) {
+      result = result.filter((p) => p.idealTiers?.includes(tierFilter));
     }
 
     // Sort
@@ -67,7 +72,7 @@ export function PlantPalette({ plants, onSelectPlant, activePlantSlug, context =
     });
 
     return result;
-  }, [plants, search, category, sortMode, context]);
+  }, [plants, search, category, sortMode, context, tierFilter]);
 
   return (
     <div className="flex flex-col h-full">
@@ -121,6 +126,33 @@ export function PlantPalette({ plants, onSelectPlant, activePlantSlug, context =
             </button>
           ))}
         </div>
+        {/* GreenStalk tier filter */}
+        {context === 'greenstalk' && (
+          <div className="flex items-center gap-1 mt-1.5">
+            <span className="text-[9px] text-stone-400 shrink-0">Tier:</span>
+            {[1, 2, 3, 4, 5].map((t) => (
+              <button
+                key={t}
+                onClick={() => setTierFilter(tierFilter === t ? null : t)}
+                className={`text-[9px] px-1.5 py-0.5 rounded-full transition-colors ${
+                  tierFilter === t
+                    ? 'bg-emerald-600 text-white'
+                    : 'bg-stone-100 dark:bg-stone-700 text-stone-500 dark:text-stone-400 hover:bg-stone-200 dark:hover:bg-stone-600'
+                }`}
+              >
+                {t}
+              </button>
+            ))}
+            {tierFilter !== null && (
+              <button
+                onClick={() => setTierFilter(null)}
+                className="text-[9px] text-stone-400 hover:text-stone-600 dark:hover:text-stone-300 ml-auto"
+              >
+                clear
+              </button>
+            )}
+          </div>
+        )}
       </div>
       <div className="flex-1 overflow-y-auto p-2 space-y-1.5">
         {filtered.map((plant) => (
@@ -128,6 +160,7 @@ export function PlantPalette({ plants, onSelectPlant, activePlantSlug, context =
             key={plant.slug}
             plant={plant}
             onSelect={onSelectPlant}
+            onInfoClick={onInfoClick}
             isActive={activePlantSlug === plant.slug}
           />
         ))}

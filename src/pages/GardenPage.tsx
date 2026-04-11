@@ -2,6 +2,7 @@ import { useState, useRef, useCallback, useEffect, useMemo, type WheelEvent as R
 import { useGardenStore, getSpacingWarnings, getRotationWarnings, getCurrentSeasonKey, getSeasonLabel } from '../state/garden-store';
 import { usePlantDb } from '../data/use-plant-db';
 import { PlantDetail } from '../components/plant-palette/PlantDetail';
+import { PlanViewIllustration } from '../components/PlanViewIllustration';
 import { SmartPlantPicker } from '../components/SmartPlantPicker';
 import { useCompanionDb } from '../data/use-companion-db';
 import { useRegion } from '../data/use-region';
@@ -478,6 +479,7 @@ export function GardenPage() {
   const [showPlan, setShowPlan] = useState(false);
   const [zoom, setZoom] = useState(1);
   const [showGreenStalks, setShowGreenStalks] = useState(true);
+  const [showPlanView, setShowPlanView] = useState(false);
 
   const [hoveredCell, setHoveredCell] = useState<{ row: number; col: number } | null>(null);
   const gridRef = useRef<HTMLDivElement>(null);
@@ -966,6 +968,15 @@ export function GardenPage() {
               />
               GreenStalk towers
             </label>
+            <label className="flex items-center gap-2 text-xs text-stone-600 dark:text-stone-400 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={showPlanView}
+                onChange={() => setShowPlanView(!showPlanView)}
+                className="rounded border-stone-300 accent-green-600"
+              />
+              Plan-view illustration
+            </label>
           </div>
 
           {/* Zoom control */}
@@ -1421,6 +1432,16 @@ export function GardenPage() {
               })}
             </div>
           ))}
+
+          {/* Plan-view botanical illustration overlay */}
+          {showPlanView && (
+            <PlanViewIllustration
+              cells={cells}
+              plantMap={plantMap}
+              cellSize={cellSize}
+              cellSizeM={config.cellSizeM}
+            />
+          )}
 
           {/* GreenStalk tower labels (positioned above grid) */}
           {showGreenStalks && (() => {

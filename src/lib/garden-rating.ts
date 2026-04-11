@@ -17,7 +17,7 @@ import type { CompanionMap } from '../types/companion';
 import { getFriends, getConflicts } from './companion-engine';
 
 // ─── Known fragrant plants (from RESEARCH-FRAGRANCE-PLANTS.md) ──────────────
-const FRAGRANT_SLUGS = new Set([
+export const FRAGRANT_SLUGS = new Set([
   'lavender', 'rosemary', 'thyme', 'basil-sweet', 'mint', 'lemon-balm',
   'chamomile', 'corsican-mint', 'scented-geranium', 'night-scented-stock',
   'dianthus', 'nicotiana', 'sweet-william', 'oregano', 'sage',
@@ -31,7 +31,7 @@ const HERB_SLUGS = new Set([
 ]);
 
 // Kid-favourite fruits/veg that are fun to pick
-const KID_FAVOURITES = new Set([
+export const KID_FAVOURITES = new Set([
   'strawberry-everbearing', 'tomato-tumbling', 'radish', 'pea',
   'sunflower', 'nasturtium', 'dwarf-french-bean', 'lettuce',
   'runner-bean', 'raspberry', 'blueberry', 'gooseberry',

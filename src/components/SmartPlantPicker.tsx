@@ -627,7 +627,7 @@ export function SmartPlantPicker({
                             {sp.reasons.slice(0, 2).map(r => r.text).join(' · ')}
                           </div>
                         </div>
-                        {sp.duos.length > 0 && (
+                        {sp.duos.length > 0 && onSelectDuo && (
                           <span className="text-violet-400 text-[9px] shrink-0">duo</span>
                         )}
                         {hasWarn && <span className="text-amber-400 text-xs shrink-0">⚠</span>}

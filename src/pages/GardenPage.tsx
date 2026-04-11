@@ -20,7 +20,7 @@ import { usePlannerStore } from '../state/planner-store';
 import { generateLayouts as generateGSLayouts, extractTowerSlugs } from '../lib/auto-populate';
 import { findBestPairing } from '../lib/cross-system-scoring';
 import { checkPair, getFriends, getConflicts } from '../lib/companion-engine';
-import { scorePlant } from '../lib/garden-rating';
+import { scorePlant, FRAGRANT_SLUGS, KID_FAVOURITES } from '../lib/garden-rating';
 import { GardenGradePanel } from '../components/common/GardenGradePanel';
 import type { CellType, GardenFacing, GardenCell } from '../types/planner';
 import type { Plant } from '../types/plant';
@@ -37,7 +37,7 @@ import {
   SUN_ZONE_COLORS,
   sunHoursColor,
 } from '../lib/solar-engine';
-import { getMonthName } from '../lib/calendar-utils';
+import { getMonthName, isInWindow, getCurrentMonth } from '../lib/calendar-utils';
 
 const CELL_TOOLS: { type: CellType; label: string; color: string; emoji: string }[] = [
   { type: 'lawn', label: 'Lawn', color: '#7db88a', emoji: '\ud83c\udf3f' },
@@ -475,6 +475,8 @@ export function GardenPage() {
   } | null>(null);
   const [showPlantPanel, setShowPlantPanel] = useState(false);
   const [tierFilter, setTierFilter] = useState<number | null>(null);
+  const [traitFilter, setTraitFilter] = useState<string | null>(null);
+  const [plantSearch, setPlantSearch] = useState('');
   const [showAutoPopulate, setShowAutoPopulate] = useState(false);
   const [showEsherLayouts, setShowEsherLayouts] = useState(false);
   const [esherLayouts, setEsherLayouts] = useState<EsherLayoutOption[]>([]);
@@ -820,50 +822,89 @@ export function GardenPage() {
           )}
           {showPlantPanel && (
             <div className="mt-2 bg-white dark:bg-stone-700 rounded-lg border border-stone-200 dark:border-stone-600 p-1.5">
-              {/* Tier filter */}
-              <div className="flex items-center gap-1 mb-1.5 pb-1.5 border-b border-stone-100 dark:border-stone-600">
-                <span className="text-[9px] text-stone-400 shrink-0">GS Tier:</span>
-                {[1, 2, 3, 4, 5].map((t) => (
+              {/* Search */}
+              <input
+                type="text"
+                placeholder="Search plants..."
+                value={plantSearch}
+                onChange={(e) => setPlantSearch(e.target.value)}
+                className="w-full px-2 py-1 text-[11px] border border-stone-200 dark:border-stone-600 rounded bg-stone-50 dark:bg-stone-800 dark:text-stone-200 focus:outline-none focus:border-emerald-400 mb-1.5"
+              />
+              {/* Trait filters */}
+              <div className="flex flex-wrap gap-1 mb-1.5 pb-1.5 border-b border-stone-100 dark:border-stone-600">
+                {([
+                  { key: 'full-sun', label: '☀️ Full sun' },
+                  { key: 'part-shade', label: '⛅ Part shade' },
+                  { key: 'kid-fav', label: '🧒 Kid favs' },
+                  { key: 'fragrant', label: '🌸 Fragrant' },
+                  { key: 'tall', label: '📏 Tall' },
+                  { key: 'compact', label: '🌿 Compact' },
+                  { key: 'in-season', label: '🌱 In season' },
+                ] as const).map((f) => (
                   <button
-                    key={t}
-                    onClick={() => setTierFilter(tierFilter === t ? null : t)}
+                    key={f.key}
+                    onClick={() => setTraitFilter(traitFilter === f.key ? null : f.key)}
                     className={`text-[9px] px-1.5 py-0.5 rounded-full transition-colors ${
-                      tierFilter === t
+                      traitFilter === f.key
                         ? 'bg-emerald-600 text-white'
                         : 'bg-stone-100 dark:bg-stone-600 text-stone-500 dark:text-stone-300 hover:bg-stone-200'
                     }`}
                   >
-                    {t}
+                    {f.label}
                   </button>
                 ))}
-                {tierFilter && (
-                  <button onClick={() => setTierFilter(null)} className="text-[9px] text-stone-400 hover:text-stone-600 ml-auto">clear</button>
-                )}
               </div>
               <div className="max-h-48 overflow-y-auto space-y-1">
-              {(tierFilter
-                ? inGroundPlants.filter((p) => p.idealTiers?.includes(tierFilter))
-                : inGroundPlants
-              ).map((p) => (
-                <div key={p.slug} className="flex items-center gap-0.5">
-                  <button
-                    onClick={() => { setPlantToPlace(p); setShowPlantPanel(false); }}
-                    className={`flex-1 text-left text-[11px] px-2 py-1 rounded flex items-center gap-1.5 hover:bg-emerald-50 ${
-                      plantToPlace?.slug === p.slug ? 'bg-emerald-100' : ''
-                    }`}
-                  >
-                    <span>{p.emoji}</span>
-                    <span className="truncate">{p.commonName}</span>
-                  </button>
-                  <button
-                    onClick={() => setSelectedPlant(p)}
-                    className="shrink-0 w-5 h-5 flex items-center justify-center text-[10px] text-stone-400 hover:text-stone-700 hover:bg-stone-100 rounded"
-                    title="View details"
-                  >
-                    i
-                  </button>
-                </div>
-              ))}
+              {(() => {
+                const month = getCurrentMonth();
+                return inGroundPlants
+                  .filter((p) => {
+                    // Search filter
+                    if (plantSearch) {
+                      const q = plantSearch.toLowerCase();
+                      if (!p.commonName.toLowerCase().includes(q) && !p.botanicalName.toLowerCase().includes(q)) return false;
+                    }
+                    // Trait filter
+                    if (traitFilter === 'full-sun' && p.sun !== 'full-sun') return false;
+                    if (traitFilter === 'part-shade' && p.sun === 'full-sun') return false;
+                    if (traitFilter === 'kid-fav' && !p.childSafe && !KID_FAVOURITES.has(p.slug)) return false;
+                    if (traitFilter === 'fragrant' && !FRAGRANT_SLUGS.has(p.slug)) return false;
+                    if (traitFilter === 'tall' && p.growthHabit !== 'upright' && p.growthHabit !== 'climbing') return false;
+                    if (traitFilter === 'compact' && p.growthHabit !== 'bushy' && p.growthHabit !== 'rosette') return false;
+                    if (traitFilter === 'in-season') {
+                      const pw = p.plantingWindow;
+                      if (!isInWindow(month, pw.sowIndoors) && !isInWindow(month, pw.sowOutdoors) && !isInWindow(month, pw.transplant)) return false;
+                    }
+                    return true;
+                  })
+                  .map((p) => (
+                    <div key={p.slug} className="flex items-center gap-0.5">
+                      <button
+                        onClick={() => { setPlantToPlace(p); setShowPlantPanel(false); }}
+                        className={`flex-1 text-left text-[11px] px-2 py-1 rounded flex items-center gap-1.5 hover:bg-emerald-50 dark:hover:bg-emerald-900/30 ${
+                          plantToPlace?.slug === p.slug ? 'bg-emerald-100 dark:bg-emerald-900/40' : ''
+                        }`}
+                      >
+                        <span>{p.emoji}</span>
+                        <span className="truncate dark:text-stone-200">{p.commonName}</span>
+                        <span className="ml-auto flex gap-0.5 shrink-0">
+                          {p.sun === 'full-sun' && <span className="text-[8px]" title="Full sun">☀️</span>}
+                          {p.sun === 'partial-shade' && <span className="text-[8px]" title="Part shade">⛅</span>}
+                          {p.sun === 'full-shade' && <span className="text-[8px]" title="Full shade">🌙</span>}
+                          {(p.childSafe || KID_FAVOURITES.has(p.slug)) && <span className="text-[8px]" title="Kid-friendly">🧒</span>}
+                          {FRAGRANT_SLUGS.has(p.slug) && <span className="text-[8px]" title="Fragrant">🌸</span>}
+                        </span>
+                      </button>
+                      <button
+                        onClick={() => setSelectedPlant(p)}
+                        className="shrink-0 w-5 h-5 flex items-center justify-center text-[10px] text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 hover:bg-stone-100 dark:hover:bg-stone-600 rounded"
+                        title="View details"
+                      >
+                        i
+                      </button>
+                    </div>
+                  ));
+              })()}
               </div>
             </div>
           )}

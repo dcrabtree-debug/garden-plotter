@@ -12,22 +12,20 @@
  *   Col 0 = left (WEST) — neighbour 19A side
  *   Col 19 = right (EAST) — fence border side, neighbour 23A
  *
- * Photo-verified features (aerial + estate agent + ground-level):
- * - Conservatory (SW corner, rows 0-2, cols 0-5) — west side of house
- * - Conservatory patio (rows 2-3, cols 4-8) — paving outside French doors
- * - West boundary (cols 0-1) — established hedge/shrubs (19A side)
- * - East fence border (cols 18-19) — closeboard + Cordylines + Euphorbia
- * - Main lawn (rows 3-18) — OFF LIMITS, rental
- * - Shed (rows 21-23, cols 3-5) — small wooden, NORTHWEST corner (photo-confirmed)
- * - Ornamental bed (rows 20-21, cols 6-8) — Aucuba, Acer, shrubs
- * - Raised bed (rows 19-20, cols 5-8) — 10cm/4" high, black metal edging.
- *     Photo-verified April 2026: bluebells, variegated + green hostas,
- *     strawberry runners (dividable for GreenStalks). Slug-prone (low bed + damp hedge).
- * - Old shed pavers (rows 20-22, cols 16-19) — EAST side, old shed removed, GreenStalks here
- * - Laurel hedge (rows 22-23) — 3-4m tall, full NORTH boundary
- * - Back gate + fruit (row 21-22, cols 14-15)
- * - Large deciduous tree (rows 14-19, col 19) — overhangs from east
- * - Gooseberry/currant near back gate
+ * Layout painted by David in-app, April 2026:
+ * - Path (rows 0-3, col 0; row 3 cols 0-5) — side access
+ * - Conservatory (rows 0-2, cols 1-5) — west side of house
+ * - Patio (rows 0-3, cols 6-19 area) — main terrace
+ * - Main lawn (rows 4-19) — OFF LIMITS, rental
+ * - West flower bed (rows 4-19, col 0) — border
+ * - East fence border (rows 4-19, col 18 flower-bed + col 19 tree)
+ * - GreenStalks west (rows 20-21, cols 2-5) + east (row 20, col 19)
+ * - Flower beds (row 20, cols 0-1 and 6-9 and 16-18)
+ * - Raised bed (rows 20-21, cols 10-13)
+ * - Path/access (rows 20-22, cols 14-15)
+ * - Trees/shrubs (rows 21-22, cols 6-9/6-13)
+ * - Shed (rows 21-22, cols 16-19)
+ * - Laurel hedge + compost (row 23) — full NORTH boundary
  */
 
 import type { GardenCell, GardenConfig, CellType } from '../types/planner';
@@ -55,12 +53,13 @@ export function createEsherGarden(): { config: GardenConfig; cells: GardenCell[]
   const rows = Math.round(ESHER_CONFIG.depthM / ESHER_CONFIG.cellSizeM); // 24
 
   // ── Compact grid map — one string per row, 20 chars each ──
+  // Painted by David in-app, April 2026
   const GRID_MAP: string[] = [
-    'PCCCCCPPPPPPPPPPPPPP', // row 0
-    'PCCCCCPPPPPPPPPPPPPP', // row 1
-    'PCCCCCPPPPPPPPPPPPFT', // row 2
-    'FLLLLLPPPLLLLLLLLLFT', // row 3
-    'FLLLLLLLLLLLLLLLLLFT', // row 4
+    'HCCCCCPPPPPPPPPPPPPP', // row 0  — path + conservatory + patio (house wall)
+    'HCCCCCPPPPPPPPPPPPPP', // row 1
+    'HCCCCCPPPPPPPPPPPPPP', // row 2
+    'HHHHHHPPPLLLLLLLLLLL', // row 3  — path strip + patio + lawn starts
+    'FLLLLLLLLLLLLLLLLLFT', // row 4  — west flower bed | lawn | east flower bed + tree
     'FLLLLLLLLLLLLLLLLLFT', // row 5
     'FLLLLLLLLLLLLLLLLLFT', // row 6
     'FLLLLLLLLLLLLLLLLLFT', // row 7
@@ -74,12 +73,12 @@ export function createEsherGarden(): { config: GardenConfig; cells: GardenCell[]
     'FLLLLLLLLLLLLLLLLLFT', // row 15
     'FLLLLLLLLLLLLLLLLLFT', // row 16
     'FLLLLLLLLLLLLLLLLLFT', // row 17
-    'FLLLLLLLLLTTTLLLLLFT', // row 18
-    'FLLLLRRRRFTTTFLLLFFT', // row 19
-    'FFLPPPXRRFTTTFLLGGGG', // row 20
-    'FFFSSSVVVLLLLFPLGGGG', // row 21
-    'FFFSSSVVVLLLLFPFFFPP', // row 22
-    'FFFSSSVVVTTTTTHTTTTT', // row 23
+    'FLLLLLLLLLLLLLLLLLFT', // row 18
+    'FLLLLLLLLLLLLLLLLFFT', // row 19 — extra flower bed col 17
+    'FFGGGGFFFFRRRRHHFFFG', // row 20 — GreenStalks, flower beds, raised beds, path, flower beds, GreenStalk
+    'FFGGGGTTTTRRRRHHSSSS', // row 21 — GreenStalks, trees, raised beds, path, shed
+    'FFPPPPTTTTTTTTHHSSSS', // row 22 — patio, trees, path, shed
+    'TTTTTTTTTTTTTTXTTTTT', // row 23 — hedge/trees + compost
   ];
 
   const TYPE_MAP: Record<string, CellType> = {
@@ -105,31 +104,7 @@ export function createEsherGarden(): { config: GardenConfig; cells: GardenCell[]
     }))
   );
 
-  // ── Pre-placed plants: [row, col, slug] ──
-  const PRE_PLACED: [number, number, string][] = [
-    // Conservatory — shade-tolerant herbs
-    [1, 1, 'fern-hardy'],
-    [1, 3, 'mint'],
-    [1, 5, 'lemon-balm'],
-    [2, 1, 'parsley'],
-    [2, 3, 'coriander'],
-    [2, 5, 'chives'],
-    // Raised bed — existing strawberry runners (photo-verified April 2026)
-    [19, 5, 'strawberry-everbearing'],
-    [19, 6, 'strawberry-everbearing'],
-    [20, 7, 'strawberry-everbearing'],
-    [20, 8, 'strawberry-everbearing'],
-    // Fruit bushes near back gate
-    [22, 16, 'redcurrant'],
-    [22, 17, 'gooseberry'],
-  ];
-
-  for (const [r, c, slug] of PRE_PLACED) {
-    if (r >= 0 && r < rows && c >= 0 && c < cols) {
-      cells[r][c].plantSlug = slug;
-    }
-  }
-
+  // No pre-placed plants — user starts with a clean layout
   return { config: ESHER_CONFIG, cells };
 }
 
@@ -177,18 +152,20 @@ export interface EsherLayoutOption {
 
 function zoneLabel(row: number, col: number): string {
   if (row <= 2 && col >= 1 && col <= 5) return 'Conservatory (filtered light, frost-free)';
-  if (row >= 19 && row <= 20 && col >= 5 && col <= 8) return 'Raised bed (partial shade, under rhododendron canopy)';
-  if (row >= 21 && row <= 22 && col >= 6 && col <= 8) return 'Back veg patch';
-  if (col >= 18) return 'Right fence border';
-  if (col === 0) return 'West border';
+  if (row >= 20 && row <= 21 && col >= 10 && col <= 13) return 'Raised bed';
+  if (row >= 20 && row <= 21 && col >= 2 && col <= 5) return 'GreenStalk area (west)';
+  if (row === 20 && col === 19) return 'GreenStalk area (east)';
+  if (row >= 21 && row <= 22 && col >= 16 && col <= 19) return 'Shed';
+  if (col >= 18 && row >= 4 && row <= 19) return 'East fence border';
+  if (col === 0 && row >= 4) return 'West border';
   return 'Garden';
 }
 
 /**
  * Generate layout options targeting ACTUAL plantable in-ground areas.
- * Fence border: 3 slots between Cordylines (col 18, rows 8/12/16).
- * Raised bed: 8 cells (rows 19-20, cols 5-8).
- * Back veg patches: rows 21-22, cols 5-8.
+ * Fence border: 3 slots (col 18, rows 8/12/16).
+ * Raised bed: 8 cells (rows 20-21, cols 10-13).
+ * Flower beds: row 20 cols 6-9, west border col 0.
  */
 export function generateEsherLayouts(): EsherLayoutOption[] {
   return [
@@ -271,20 +248,20 @@ export function generateEsherLayouts(): EsherLayoutOption[] {
       raisedBedReplant: {
         rationale: 'Transform the shade bed into a "daily salad bar". EXISTING PLANTS: Strawberry runners already here (photo-verified April 2026) — divide and transplant to GreenStalk tiers 3-4 instead of buying new. Keep hostas and bluebells at back (shade plants, ornamental). SLUG STRATEGY: Bed is only 10cm/4" high — slugs from the damp hedge are the #1 threat. Every other position is an allium (spring onion) whose scent deters slugs. Add copper tape (£5 from garden centre) around the metal edging. Set beer traps at each corner. All crops shade-tolerant — the 3m rhododendron canopy + laurel hedge give only 3-4h direct sun, but lettuce and rocket actually PREFER this (they bolt in full sun).',
         placements: [
-          { row: 19, col: 5, plantSlug: 'rocket' }, { row: 19, col: 6, plantSlug: 'lettuce' },
-          { row: 19, col: 7, plantSlug: 'spring-onion' }, { row: 19, col: 8, plantSlug: 'radish' },
-          { row: 20, col: 5, plantSlug: 'lettuce' }, { row: 20, col: 6, plantSlug: 'perpetual-spinach' },
-          { row: 20, col: 7, plantSlug: 'spring-onion' }, { row: 20, col: 8, plantSlug: 'rocket' },
+          { row: 20, col: 10, plantSlug: 'rocket' }, { row: 20, col: 11, plantSlug: 'lettuce' },
+          { row: 20, col: 12, plantSlug: 'spring-onion' }, { row: 20, col: 13, plantSlug: 'radish' },
+          { row: 21, col: 10, plantSlug: 'lettuce' }, { row: 21, col: 11, plantSlug: 'perpetual-spinach' },
+          { row: 21, col: 12, plantSlug: 'spring-onion' }, { row: 21, col: 13, plantSlug: 'rocket' },
         ],
         details: [
-          { plantSlug: 'rocket', plantName: 'Wild Rocket (Diplotaxis tenuifolia)', row: 19, col: 5, zone: zoneLabel(19, 5), reasons: ['Varietal: Wild Rocket — perennial, stronger flavour than salad rocket, cut-and-come-again for 2+ years', 'Thrives in partial shade (3-4h sun here) — BOLTS in full sun', 'First harvest 28 days from sowing, then every 2-3 weeks', '⚠️ SLUG TARGET: peppery leaves attract slugs — relies on neighbouring alliums + copper tape'] },
-          { plantSlug: 'lettuce', plantName: 'Lettuce (Little Gem)', row: 19, col: 6, zone: zoneLabel(19, 6), reasons: ['Varietal: Little Gem — RHS "reliable and compact", mini cos, sweet and crunchy', 'Bolt-resistant — partial shade here (3-4h) actually helps prevent bolting', '⚠️ SLUG TARGET: lettuce is slug favourite — flanked by spring onion allium barrier', 'Perfect size for Max and Noelle to pick whole heads'] },
-          { plantSlug: 'spring-onion', plantName: 'Spring Onion (White Lisbon)', row: 19, col: 7, zone: zoneLabel(19, 7), reasons: ['Varietal: White Lisbon — the UK standard, RHS "reliable and fast"', 'Allium scent is a natural slug deterrent — critical near the damp hedge', 'Direct sow every 3 weeks for continuous supply May-October'] },
-          { plantSlug: 'radish', plantName: 'Radish (French Breakfast)', row: 19, col: 8, zone: zoneLabel(19, 8), reasons: ['Varietal: French Breakfast — elongated red/white, milder than Cherry Belle', 'Fastest crop in the garden: 25 days seed to plate', 'Succession-sow every 2 weeks for continuous "treasure hunts" with Max'] },
-          { plantSlug: 'lettuce', plantName: 'Lettuce (Salad Bowl)', row: 20, col: 5, zone: zoneLabel(20, 5), reasons: ['Varietal: Salad Bowl — RHS "excellent cut-and-come-again", oak-leaf type', 'Different leaf shape from Little Gem gives salad variety'] },
-          { plantSlug: 'perpetual-spinach', plantName: 'Perpetual Spinach (Leaf Beet)', row: 20, col: 6, zone: zoneLabel(20, 6), reasons: ['NOT true spinach — it\'s a leaf beet (Beta vulgaris)', 'BBC Gardeners\' World "most forgiving green"', 'SLUG-RESISTANT: tough waxy leaves that slugs avoid'] },
-          { plantSlug: 'spring-onion', plantName: 'Spring Onion', row: 20, col: 7, zone: zoneLabel(20, 7), reasons: ['Second allium barrier — extends slug protection', 'Harvest in 8-10 weeks'] },
-          { plantSlug: 'rocket', plantName: 'Wild Rocket', row: 20, col: 8, zone: zoneLabel(20, 8), reasons: ['Second rocket for larger harvests', 'Perennial — comes back next year without replanting'] },
+          { plantSlug: 'rocket', plantName: 'Wild Rocket (Diplotaxis tenuifolia)', row: 20, col: 10, zone: zoneLabel(19, 5), reasons: ['Varietal: Wild Rocket — perennial, stronger flavour than salad rocket, cut-and-come-again for 2+ years', 'Thrives in partial shade (3-4h sun here) — BOLTS in full sun', 'First harvest 28 days from sowing, then every 2-3 weeks', '⚠️ SLUG TARGET: peppery leaves attract slugs — relies on neighbouring alliums + copper tape'] },
+          { plantSlug: 'lettuce', plantName: 'Lettuce (Little Gem)', row: 20, col: 11, zone: zoneLabel(19, 6), reasons: ['Varietal: Little Gem — RHS "reliable and compact", mini cos, sweet and crunchy', 'Bolt-resistant — partial shade here (3-4h) actually helps prevent bolting', '⚠️ SLUG TARGET: lettuce is slug favourite — flanked by spring onion allium barrier', 'Perfect size for Max and Noelle to pick whole heads'] },
+          { plantSlug: 'spring-onion', plantName: 'Spring Onion (White Lisbon)', row: 20, col: 12, zone: zoneLabel(19, 7), reasons: ['Varietal: White Lisbon — the UK standard, RHS "reliable and fast"', 'Allium scent is a natural slug deterrent — critical near the damp hedge', 'Direct sow every 3 weeks for continuous supply May-October'] },
+          { plantSlug: 'radish', plantName: 'Radish (French Breakfast)', row: 20, col: 13, zone: zoneLabel(19, 8), reasons: ['Varietal: French Breakfast — elongated red/white, milder than Cherry Belle', 'Fastest crop in the garden: 25 days seed to plate', 'Succession-sow every 2 weeks for continuous "treasure hunts" with Max'] },
+          { plantSlug: 'lettuce', plantName: 'Lettuce (Salad Bowl)', row: 21, col: 10, zone: zoneLabel(20, 5), reasons: ['Varietal: Salad Bowl — RHS "excellent cut-and-come-again", oak-leaf type', 'Different leaf shape from Little Gem gives salad variety'] },
+          { plantSlug: 'perpetual-spinach', plantName: 'Perpetual Spinach (Leaf Beet)', row: 21, col: 11, zone: zoneLabel(20, 6), reasons: ['NOT true spinach — it\'s a leaf beet (Beta vulgaris)', 'BBC Gardeners\' World "most forgiving green"', 'SLUG-RESISTANT: tough waxy leaves that slugs avoid'] },
+          { plantSlug: 'spring-onion', plantName: 'Spring Onion', row: 21, col: 12, zone: zoneLabel(20, 7), reasons: ['Second allium barrier — extends slug protection', 'Harvest in 8-10 weeks'] },
+          { plantSlug: 'rocket', plantName: 'Wild Rocket', row: 21, col: 13, zone: zoneLabel(20, 8), reasons: ['Second rocket for larger harvests', 'Perennial — comes back next year without replanting'] },
         ],
       },
       stats: { totalPlants: 17, uniqueVarieties: 10, companionPairs: 8, estimatedYieldKg: 8, estimatedValueGBP: 70 },
@@ -309,20 +286,20 @@ export function generateEsherLayouts(): EsherLayoutOption[] {
       raisedBedReplant: {
         rationale: 'Shade-tolerant salad crops. The hedge provides dappled shade ideal for lettuce and rocket that would bolt in full sun.',
         placements: [
-          { row: 19, col: 5, plantSlug: 'lettuce' }, { row: 19, col: 6, plantSlug: 'rocket' },
-          { row: 19, col: 7, plantSlug: 'spring-onion' }, { row: 19, col: 8, plantSlug: 'radish' },
-          { row: 20, col: 5, plantSlug: 'rocket' }, { row: 20, col: 6, plantSlug: 'lettuce' },
-          { row: 20, col: 7, plantSlug: 'radish' }, { row: 20, col: 8, plantSlug: 'spinach' },
+          { row: 20, col: 10, plantSlug: 'lettuce' }, { row: 20, col: 11, plantSlug: 'rocket' },
+          { row: 20, col: 12, plantSlug: 'spring-onion' }, { row: 20, col: 13, plantSlug: 'radish' },
+          { row: 21, col: 10, plantSlug: 'rocket' }, { row: 21, col: 11, plantSlug: 'lettuce' },
+          { row: 21, col: 12, plantSlug: 'radish' }, { row: 21, col: 13, plantSlug: 'spinach' },
         ],
         details: [
-          { plantSlug: 'lettuce', plantName: 'Lettuce', row: 19, col: 5, zone: zoneLabel(19, 5), reasons: ['Shade-tolerant — hedge dappled light prevents bolting', 'Cut-and-come-again for continuous harvest'] },
-          { plantSlug: 'rocket', plantName: 'Rocket', row: 19, col: 6, zone: zoneLabel(19, 6), reasons: ['Thrives in partial shade, bolts in full sun', '28-day harvest, £12/kg shop value'] },
-          { plantSlug: 'spring-onion', plantName: 'Spring Onion', row: 19, col: 7, zone: zoneLabel(19, 7), reasons: ['Allium scent deters slugs — key pest near hedge', 'Narrow profile interplants well'] },
-          { plantSlug: 'radish', plantName: 'Radish', row: 19, col: 8, zone: zoneLabel(19, 8), reasons: ['Fastest crop: 25 days to harvest', 'Succession-sow 3-4 times per season'] },
-          { plantSlug: 'rocket', plantName: 'Rocket', row: 20, col: 5, zone: zoneLabel(20, 5), reasons: ['Second rocket for larger harvests', 'Perennial wild rocket comes back next year'] },
-          { plantSlug: 'lettuce', plantName: 'Lettuce', row: 20, col: 6, zone: zoneLabel(20, 6), reasons: ['Second lettuce for daily salad supply', 'Quick 30-day harvest cycle'] },
-          { plantSlug: 'radish', plantName: 'Radish', row: 20, col: 7, zone: zoneLabel(20, 7), reasons: ['Stagger sowing with row above', 'Breaks up raised bed soil'] },
-          { plantSlug: 'spinach', plantName: 'Spinach', row: 20, col: 8, zone: zoneLabel(20, 8), reasons: ['Shade-loving crop — ideal near hedge', 'High nutritional value, continuous picking'] },
+          { plantSlug: 'lettuce', plantName: 'Lettuce', row: 20, col: 10, zone: zoneLabel(19, 5), reasons: ['Shade-tolerant — hedge dappled light prevents bolting', 'Cut-and-come-again for continuous harvest'] },
+          { plantSlug: 'rocket', plantName: 'Rocket', row: 20, col: 11, zone: zoneLabel(19, 6), reasons: ['Thrives in partial shade, bolts in full sun', '28-day harvest, £12/kg shop value'] },
+          { plantSlug: 'spring-onion', plantName: 'Spring Onion', row: 20, col: 12, zone: zoneLabel(19, 7), reasons: ['Allium scent deters slugs — key pest near hedge', 'Narrow profile interplants well'] },
+          { plantSlug: 'radish', plantName: 'Radish', row: 20, col: 13, zone: zoneLabel(19, 8), reasons: ['Fastest crop: 25 days to harvest', 'Succession-sow 3-4 times per season'] },
+          { plantSlug: 'rocket', plantName: 'Rocket', row: 21, col: 10, zone: zoneLabel(20, 5), reasons: ['Second rocket for larger harvests', 'Perennial wild rocket comes back next year'] },
+          { plantSlug: 'lettuce', plantName: 'Lettuce', row: 21, col: 11, zone: zoneLabel(20, 6), reasons: ['Second lettuce for daily salad supply', 'Quick 30-day harvest cycle'] },
+          { plantSlug: 'radish', plantName: 'Radish', row: 21, col: 12, zone: zoneLabel(20, 7), reasons: ['Stagger sowing with row above', 'Breaks up raised bed soil'] },
+          { plantSlug: 'spinach', plantName: 'Spinach', row: 21, col: 13, zone: zoneLabel(20, 8), reasons: ['Shade-loving crop — ideal near hedge', 'High nutritional value, continuous picking'] },
         ],
       },
       stats: { totalPlants: 11, uniqueVarieties: 7, companionPairs: 4, estimatedYieldKg: 6, estimatedValueGBP: 50 },
@@ -347,20 +324,20 @@ export function generateEsherLayouts(): EsherLayoutOption[] {
       raisedBedReplant: {
         rationale: 'Kid-friendly bed: strawberries for daily picking, radishes for treasure-hunting, peas for sweet snacking. All at raised-bed height — perfect for Noelle (age 3).',
         placements: [
-          { row: 19, col: 5, plantSlug: 'strawberry-everbearing' }, { row: 19, col: 6, plantSlug: 'strawberry-everbearing' },
-          { row: 19, col: 7, plantSlug: 'radish' }, { row: 19, col: 8, plantSlug: 'pea' },
-          { row: 20, col: 5, plantSlug: 'radish' }, { row: 20, col: 6, plantSlug: 'strawberry-everbearing' },
-          { row: 20, col: 7, plantSlug: 'strawberry-everbearing' }, { row: 20, col: 8, plantSlug: 'lettuce' },
+          { row: 20, col: 10, plantSlug: 'strawberry-everbearing' }, { row: 20, col: 11, plantSlug: 'strawberry-everbearing' },
+          { row: 20, col: 12, plantSlug: 'radish' }, { row: 20, col: 13, plantSlug: 'pea' },
+          { row: 21, col: 10, plantSlug: 'radish' }, { row: 21, col: 11, plantSlug: 'strawberry-everbearing' },
+          { row: 21, col: 12, plantSlug: 'strawberry-everbearing' }, { row: 21, col: 13, plantSlug: 'lettuce' },
         ],
         details: [
-          { plantSlug: 'strawberry-everbearing', plantName: 'Strawberry', row: 19, col: 5, zone: zoneLabel(19, 5), reasons: ['#1 kid-favourite fruit', 'Everbearing = berries all summer long'] },
-          { plantSlug: 'strawberry-everbearing', plantName: 'Strawberry', row: 19, col: 6, zone: zoneLabel(19, 6), reasons: ['Berry patch feel — multiple plants together', 'Kids can count daily harvest'] },
-          { plantSlug: 'radish', plantName: 'Radish', row: 19, col: 7, zone: zoneLabel(19, 7), reasons: ['Pull-up-and-eat treasure hunt', '25 days to harvest — instant gratification'] },
-          { plantSlug: 'pea', plantName: 'Pea', row: 19, col: 8, zone: zoneLabel(19, 8), reasons: ['Sugar snap peas eaten straight from pod', 'Sweet taste — kids love them'] },
-          { plantSlug: 'radish', plantName: 'Radish', row: 20, col: 5, zone: zoneLabel(20, 5), reasons: ['Stagger sowing for continuous treasure hunts', 'Colourful varieties keep kids engaged'] },
-          { plantSlug: 'strawberry-everbearing', plantName: 'Strawberry', row: 20, col: 6, zone: zoneLabel(20, 6), reasons: ['Three strawberry plants total', 'Continuous harvest June-September'] },
-          { plantSlug: 'strawberry-everbearing', plantName: 'Strawberry', row: 20, col: 7, zone: zoneLabel(20, 7), reasons: ['Four strawberry plants across the bed', 'Raised bed height perfect for Noelle'] },
-          { plantSlug: 'lettuce', plantName: 'Lettuce', row: 20, col: 8, zone: zoneLabel(20, 8), reasons: ['Tear-and-eat leaves for dinner salad', 'Teaches "food grows back" lesson'] },
+          { plantSlug: 'strawberry-everbearing', plantName: 'Strawberry', row: 20, col: 10, zone: zoneLabel(19, 5), reasons: ['#1 kid-favourite fruit', 'Everbearing = berries all summer long'] },
+          { plantSlug: 'strawberry-everbearing', plantName: 'Strawberry', row: 20, col: 11, zone: zoneLabel(19, 6), reasons: ['Berry patch feel — multiple plants together', 'Kids can count daily harvest'] },
+          { plantSlug: 'radish', plantName: 'Radish', row: 20, col: 12, zone: zoneLabel(19, 7), reasons: ['Pull-up-and-eat treasure hunt', '25 days to harvest — instant gratification'] },
+          { plantSlug: 'pea', plantName: 'Pea', row: 20, col: 13, zone: zoneLabel(19, 8), reasons: ['Sugar snap peas eaten straight from pod', 'Sweet taste — kids love them'] },
+          { plantSlug: 'radish', plantName: 'Radish', row: 21, col: 10, zone: zoneLabel(20, 5), reasons: ['Stagger sowing for continuous treasure hunts', 'Colourful varieties keep kids engaged'] },
+          { plantSlug: 'strawberry-everbearing', plantName: 'Strawberry', row: 21, col: 11, zone: zoneLabel(20, 6), reasons: ['Three strawberry plants total', 'Continuous harvest June-September'] },
+          { plantSlug: 'strawberry-everbearing', plantName: 'Strawberry', row: 21, col: 12, zone: zoneLabel(20, 7), reasons: ['Four strawberry plants across the bed', 'Raised bed height perfect for Noelle'] },
+          { plantSlug: 'lettuce', plantName: 'Lettuce', row: 21, col: 13, zone: zoneLabel(20, 8), reasons: ['Tear-and-eat leaves for dinner salad', 'Teaches "food grows back" lesson'] },
         ],
       },
       stats: { totalPlants: 11, uniqueVarieties: 5, companionPairs: 3, estimatedYieldKg: 4, estimatedValueGBP: 35 },
@@ -385,20 +362,20 @@ export function generateEsherLayouts(): EsherLayoutOption[] {
       raisedBedReplant: {
         rationale: 'Scented herb garden at raised-bed height — brush-past fragrance near the patio. Shade-tolerant aromatics that thrive under hedge canopy.',
         placements: [
-          { row: 19, col: 5, plantSlug: 'chamomile' }, { row: 19, col: 6, plantSlug: 'lemon-balm' },
-          { row: 19, col: 7, plantSlug: 'lavender' }, { row: 19, col: 8, plantSlug: 'thyme' },
-          { row: 20, col: 5, plantSlug: 'night-scented-stock' }, { row: 20, col: 6, plantSlug: 'rosemary' },
-          { row: 20, col: 7, plantSlug: 'scented-geranium' }, { row: 20, col: 8, plantSlug: 'night-scented-stock' },
+          { row: 20, col: 10, plantSlug: 'chamomile' }, { row: 20, col: 11, plantSlug: 'lemon-balm' },
+          { row: 20, col: 12, plantSlug: 'lavender' }, { row: 20, col: 13, plantSlug: 'thyme' },
+          { row: 21, col: 10, plantSlug: 'night-scented-stock' }, { row: 21, col: 11, plantSlug: 'rosemary' },
+          { row: 21, col: 12, plantSlug: 'scented-geranium' }, { row: 21, col: 13, plantSlug: 'night-scented-stock' },
         ],
         details: [
-          { plantSlug: 'chamomile', plantName: 'Chamomile', row: 19, col: 5, zone: zoneLabel(19, 5), reasons: ['Apple scent at raised-bed height', 'Makes soothing herbal tea'] },
-          { plantSlug: 'lemon-balm', plantName: 'Lemon Balm', row: 19, col: 6, zone: zoneLabel(19, 6), reasons: ['Citrus burst when leaves brushed', 'Raised bed contains spreading habit'] },
-          { plantSlug: 'lavender', plantName: 'Lavender', row: 19, col: 7, zone: zoneLabel(19, 7), reasons: ['Classic calming fragrance', 'Bee magnet — pollinator attractor'] },
-          { plantSlug: 'thyme', plantName: 'Thyme', row: 19, col: 8, zone: zoneLabel(19, 8), reasons: ['Aromatic culinary herb', 'Slug deterrent for raised bed'] },
-          { plantSlug: 'night-scented-stock', plantName: 'Night-Scented Stock', row: 20, col: 5, zone: zoneLabel(20, 5), reasons: ['Releases sweet scent after sunset', 'Position near patio for evening enjoyment'] },
-          { plantSlug: 'rosemary', plantName: 'Rosemary', row: 20, col: 6, zone: zoneLabel(20, 6), reasons: ['Strong aromatic oils, evergreen structure', 'Culinary herb and pest deterrent'] },
-          { plantSlug: 'scented-geranium', plantName: 'Scented Geranium', row: 20, col: 7, zone: zoneLabel(20, 7), reasons: ['Rose-lemon scent on touch', 'Textured leaves release fragrance'] },
-          { plantSlug: 'night-scented-stock', plantName: 'Night-Scented Stock', row: 20, col: 8, zone: zoneLabel(20, 8), reasons: ['Second stock for evening scent coverage', 'Spectacular fragrance at dusk'] },
+          { plantSlug: 'chamomile', plantName: 'Chamomile', row: 20, col: 10, zone: zoneLabel(19, 5), reasons: ['Apple scent at raised-bed height', 'Makes soothing herbal tea'] },
+          { plantSlug: 'lemon-balm', plantName: 'Lemon Balm', row: 20, col: 11, zone: zoneLabel(19, 6), reasons: ['Citrus burst when leaves brushed', 'Raised bed contains spreading habit'] },
+          { plantSlug: 'lavender', plantName: 'Lavender', row: 20, col: 12, zone: zoneLabel(19, 7), reasons: ['Classic calming fragrance', 'Bee magnet — pollinator attractor'] },
+          { plantSlug: 'thyme', plantName: 'Thyme', row: 20, col: 13, zone: zoneLabel(19, 8), reasons: ['Aromatic culinary herb', 'Slug deterrent for raised bed'] },
+          { plantSlug: 'night-scented-stock', plantName: 'Night-Scented Stock', row: 21, col: 10, zone: zoneLabel(20, 5), reasons: ['Releases sweet scent after sunset', 'Position near patio for evening enjoyment'] },
+          { plantSlug: 'rosemary', plantName: 'Rosemary', row: 21, col: 11, zone: zoneLabel(20, 6), reasons: ['Strong aromatic oils, evergreen structure', 'Culinary herb and pest deterrent'] },
+          { plantSlug: 'scented-geranium', plantName: 'Scented Geranium', row: 21, col: 12, zone: zoneLabel(20, 7), reasons: ['Rose-lemon scent on touch', 'Textured leaves release fragrance'] },
+          { plantSlug: 'night-scented-stock', plantName: 'Night-Scented Stock', row: 21, col: 13, zone: zoneLabel(20, 8), reasons: ['Second stock for evening scent coverage', 'Spectacular fragrance at dusk'] },
         ],
       },
       stats: { totalPlants: 11, uniqueVarieties: 8, companionPairs: 5, estimatedYieldKg: 1, estimatedValueGBP: 20 },
@@ -423,20 +400,20 @@ export function generateEsherLayouts(): EsherLayoutOption[] {
       raisedBedReplant: {
         rationale: 'A companion "control centre" — protective herbs and alliums that shield both GreenStalks and the fence border from pests. Radiating protection from the centre of the garden.',
         placements: [
-          { row: 19, col: 5, plantSlug: 'chives' }, { row: 19, col: 6, plantSlug: 'basil-sweet' },
-          { row: 19, col: 7, plantSlug: 'marigold' }, { row: 19, col: 8, plantSlug: 'nasturtium' },
-          { row: 20, col: 5, plantSlug: 'rosemary' }, { row: 20, col: 6, plantSlug: 'oregano' },
-          { row: 20, col: 7, plantSlug: 'calendula' }, { row: 20, col: 8, plantSlug: 'borage' },
+          { row: 20, col: 10, plantSlug: 'chives' }, { row: 20, col: 11, plantSlug: 'basil-sweet' },
+          { row: 20, col: 12, plantSlug: 'marigold' }, { row: 20, col: 13, plantSlug: 'nasturtium' },
+          { row: 21, col: 10, plantSlug: 'rosemary' }, { row: 21, col: 11, plantSlug: 'oregano' },
+          { row: 21, col: 12, plantSlug: 'calendula' }, { row: 21, col: 13, plantSlug: 'borage' },
         ],
         details: [
-          { plantSlug: 'chives', plantName: 'Chives', row: 19, col: 5, zone: zoneLabel(19, 5), reasons: ['Allium barrier — deters aphids and grey mould', 'Scent radiates to nearby GreenStalks'] },
-          { plantSlug: 'basil-sweet', plantName: 'Sweet Basil', row: 19, col: 6, zone: zoneLabel(19, 6), reasons: ['Whitefly deterrent — protects tomatoes on GreenStalks', 'Aromatic shield effect'] },
-          { plantSlug: 'marigold', plantName: 'Marigold', row: 19, col: 7, zone: zoneLabel(19, 7), reasons: ['Root nematode deterrent', 'Attracts hoverflies (aphid predators)'] },
-          { plantSlug: 'nasturtium', plantName: 'Nasturtium', row: 19, col: 8, zone: zoneLabel(19, 8), reasons: ['Aphid trap — draws pests away from crops', 'Edible flowers as bonus'] },
-          { plantSlug: 'rosemary', plantName: 'Rosemary', row: 20, col: 5, zone: zoneLabel(20, 5), reasons: ['Strong scent disrupts pest navigation', 'Evergreen — year-round protection'] },
-          { plantSlug: 'oregano', plantName: 'Oregano', row: 20, col: 6, zone: zoneLabel(20, 6), reasons: ['Carvacrol oils deter many insect pests', 'Mediterranean herb thrives in raised bed'] },
-          { plantSlug: 'calendula', plantName: 'Calendula', row: 20, col: 7, zone: zoneLabel(20, 7), reasons: ['Attracts beneficial insects (ladybirds, hoverflies)', 'Sticky stems trap whitefly'] },
-          { plantSlug: 'borage', plantName: 'Borage', row: 20, col: 8, zone: zoneLabel(20, 8), reasons: ['Major bee attractor for pollination', 'Deters tomato hornworm'] },
+          { plantSlug: 'chives', plantName: 'Chives', row: 20, col: 10, zone: zoneLabel(19, 5), reasons: ['Allium barrier — deters aphids and grey mould', 'Scent radiates to nearby GreenStalks'] },
+          { plantSlug: 'basil-sweet', plantName: 'Sweet Basil', row: 20, col: 11, zone: zoneLabel(19, 6), reasons: ['Whitefly deterrent — protects tomatoes on GreenStalks', 'Aromatic shield effect'] },
+          { plantSlug: 'marigold', plantName: 'Marigold', row: 20, col: 12, zone: zoneLabel(19, 7), reasons: ['Root nematode deterrent', 'Attracts hoverflies (aphid predators)'] },
+          { plantSlug: 'nasturtium', plantName: 'Nasturtium', row: 20, col: 13, zone: zoneLabel(19, 8), reasons: ['Aphid trap — draws pests away from crops', 'Edible flowers as bonus'] },
+          { plantSlug: 'rosemary', plantName: 'Rosemary', row: 21, col: 10, zone: zoneLabel(20, 5), reasons: ['Strong scent disrupts pest navigation', 'Evergreen — year-round protection'] },
+          { plantSlug: 'oregano', plantName: 'Oregano', row: 21, col: 11, zone: zoneLabel(20, 6), reasons: ['Carvacrol oils deter many insect pests', 'Mediterranean herb thrives in raised bed'] },
+          { plantSlug: 'calendula', plantName: 'Calendula', row: 21, col: 12, zone: zoneLabel(20, 7), reasons: ['Attracts beneficial insects (ladybirds, hoverflies)', 'Sticky stems trap whitefly'] },
+          { plantSlug: 'borage', plantName: 'Borage', row: 21, col: 13, zone: zoneLabel(20, 8), reasons: ['Major bee attractor for pollination', 'Deters tomato hornworm'] },
         ],
       },
       stats: { totalPlants: 11, uniqueVarieties: 8, companionPairs: 8, estimatedYieldKg: 2, estimatedValueGBP: 20 },
@@ -453,10 +430,8 @@ const FENCE_SLOTS = [
 ];
 
 const BED_CELLS = [
-  { row: 21, col: 7 }, { row: 21, col: 8 }, { row: 21, col: 9 },
-  { row: 21, col: 10 }, { row: 21, col: 11 }, { row: 21, col: 12 },
-  { row: 22, col: 7 }, { row: 22, col: 8 }, { row: 22, col: 9 },
-  { row: 22, col: 10 }, { row: 22, col: 11 }, { row: 22, col: 12 },
+  { row: 20, col: 10 }, { row: 20, col: 11 }, { row: 20, col: 12 }, { row: 20, col: 13 },
+  { row: 21, col: 10 }, { row: 21, col: 11 }, { row: 21, col: 12 }, { row: 21, col: 13 },
 ];
 
 /**

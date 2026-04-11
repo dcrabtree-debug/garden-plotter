@@ -1154,7 +1154,7 @@ export function GardenPage() {
                   let allLayouts = enriched;
                   if (hasTowerPlants) {
                     const paired = generatePairedLayout(actualTowerSlugs, plants, companionMap);
-                    allLayouts = [paired, ...enriched];
+                    allLayouts = [{ ...paired, bestPairing: undefined }, ...enriched];
                     setRaisedBedMode({ 'paired-with-towers': 'replant' });
                   }
                   setEsherLayouts(allLayouts);

@@ -3,6 +3,13 @@ import { useGardenStore, getSpacingWarnings, getRotationWarnings, getCurrentSeas
 import { usePlantDb } from '../data/use-plant-db';
 import { PlantDetail } from '../components/plant-palette/PlantDetail';
 import { PlanViewIllustration } from '../components/PlanViewIllustration';
+import { SeasonalTimeline } from '../components/SeasonalTimeline';
+import {
+  calculateMicroclimate,
+  MicroclimateOverlayGrid,
+  MicroclimateLegend,
+  type MicroclimateCell,
+} from '../components/MicroclimateOverlay';
 import { SmartPlantPicker } from '../components/SmartPlantPicker';
 import { useCompanionDb } from '../data/use-companion-db';
 import { useRegion } from '../data/use-region';
@@ -480,6 +487,8 @@ export function GardenPage() {
   const [zoom, setZoom] = useState(1);
   const [showGreenStalks, setShowGreenStalks] = useState(true);
   const [showPlanView, setShowPlanView] = useState(false);
+  const [showMicroclimate, setShowMicroclimate] = useState(false);
+  const [hoveredMicroclimateZone, setHoveredMicroclimateZone] = useState<string | null>(null);
 
   const [hoveredCell, setHoveredCell] = useState<{ row: number; col: number } | null>(null);
   const gridRef = useRef<HTMLDivElement>(null);
@@ -651,6 +660,12 @@ export function GardenPage() {
   }, [showShadowOverlay, selectedMonth, selectedHour, config.latitude, config.longitude]);
 
   // Companion planting indicators per cell
+  // Microclimate zone grid
+  const microclimateGrid = useMemo(() => {
+    if (!showMicroclimate) return null;
+    return calculateMicroclimate(cells, config);
+  }, [showMicroclimate, cells, config]);
+
   // Two modes: placement mode (highlighting friends/foes of plantToPlace)
   // and static mode (checking neighbours of already-placed plants)
   const companionGrid = useMemo(() => {
@@ -977,6 +992,15 @@ export function GardenPage() {
               />
               Plan-view illustration
             </label>
+            <label className="flex items-center gap-2 text-xs text-stone-600 dark:text-stone-400 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={showMicroclimate}
+                onChange={() => setShowMicroclimate(!showMicroclimate)}
+                className="rounded border-stone-300 accent-purple-500"
+              />
+              Microclimate zones
+            </label>
           </div>
 
           {/* Zoom control */}
@@ -1049,6 +1073,26 @@ export function GardenPage() {
         <SolarPanel month={selectedMonth} />
         <SoilCard />
         <ZoneGuide />
+
+        {/* Microclimate Legend */}
+        {showMicroclimate && (
+          <MicroclimateLegend
+            hoveredZone={hoveredMicroclimateZone as any}
+            onHoverZone={(z) => setHoveredMicroclimateZone(z)}
+          />
+        )}
+
+        {/* Seasonal Timeline */}
+        <SeasonalTimeline
+          cells={cells}
+          plantMap={plantMap}
+          towerPlants={plannerTowers
+            .flatMap((t) => t.tiers)
+            .flatMap((ti) => ti.pockets)
+            .filter((p) => p.plantSlug !== null)
+            .map((p) => ({ slug: p.plantSlug!, tierNumber: 0 }))
+          }
+        />
 
         {/* GreenStalk Placement Advisor */}
         {showGreenStalks && (
@@ -1440,6 +1484,16 @@ export function GardenPage() {
               plantMap={plantMap}
               cellSize={cellSize}
               cellSizeM={config.cellSizeM}
+            />
+          )}
+
+          {/* Microclimate zone overlay */}
+          {showMicroclimate && microclimateGrid && (
+            <MicroclimateOverlayGrid
+              microclimateGrid={microclimateGrid}
+              cellSize={cellSize}
+              hoveredZone={hoveredMicroclimateZone as any}
+              onHoverZone={(z) => setHoveredMicroclimateZone(z)}
             />
           )}
 

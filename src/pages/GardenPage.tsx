@@ -1164,13 +1164,7 @@ export function GardenPage() {
         <SoilCard />
         <ZoneGuide />
 
-        {/* Microclimate Legend */}
-        {showMicroclimate && (
-          <MicroclimateLegend
-            hoveredZone={hoveredMicroclimateZone as any}
-            onHoverZone={(z) => setHoveredMicroclimateZone(z)}
-          />
-        )}
+        {/* Microclimate Legend — now rendered as floating overlay inside the map container */}
 
         {/* Seasonal Timeline */}
         <SeasonalTimeline
@@ -1610,14 +1604,20 @@ export function GardenPage() {
             />
           )}
 
-          {/* Microclimate zone overlay */}
+          {/* Microclimate zone overlay + floating legend */}
           {showMicroclimate && microclimateGrid && (
-            <MicroclimateOverlayGrid
-              microclimateGrid={microclimateGrid}
-              cellSize={cellSize}
-              hoveredZone={hoveredMicroclimateZone as any}
-              onHoverZone={(z) => setHoveredMicroclimateZone(z)}
-            />
+            <>
+              <MicroclimateOverlayGrid
+                microclimateGrid={microclimateGrid}
+                cellSize={cellSize}
+                hoveredZone={hoveredMicroclimateZone as any}
+                onHoverZone={(z) => setHoveredMicroclimateZone(z)}
+              />
+              <MicroclimateLegend
+                hoveredZone={hoveredMicroclimateZone as any}
+                onHoverZone={(z) => setHoveredMicroclimateZone(z)}
+              />
+            </>
           )}
 
           {/* GreenStalk tower labels (positioned above grid) */}

@@ -246,54 +246,69 @@ export function MicroclimateOverlayGrid({ microclimateGrid, cellSize, hoveredZon
         ))}
       </div>
 
-      {/* Zone boundary labels — rendered where zones transition */}
+      {/* Zone labels — placed at the centroid of each zone for readability */}
       {(() => {
-        const labels: { zone: MicroclimateZoneType; row: number; col: number }[] = [];
-        const seen = new Set<MicroclimateZoneType>();
+        // Collect all cells per zone to compute centroids
+        const zoneCells = new Map<MicroclimateZoneType, { rows: number[]; cols: number[] }>();
 
-        // Find first cell of each zone to place label
         for (let r = 0; r < rows; r++) {
           for (let c = 0; c < cols; c++) {
             const zone = microclimateGrid[r][c].zone;
             if (zone === 'neutral' || zone === 'structure') continue;
-            if (seen.has(zone)) continue;
-            seen.add(zone);
-            labels.push({ zone, row: r, col: c });
+            if (!zoneCells.has(zone)) zoneCells.set(zone, { rows: [], cols: [] });
+            const entry = zoneCells.get(zone)!;
+            entry.rows.push(r);
+            entry.cols.push(c);
           }
         }
 
-        return labels.map(({ zone, row, col }) => (
-          <div
-            key={zone}
-            style={{
-              position: 'absolute',
-              left: col * cellSize,
-              top: row * cellSize - 10,
-              zIndex: 6,
-              pointerEvents: 'auto',
-              cursor: 'pointer',
-            }}
-            onMouseEnter={() => onHoverZone(zone)}
-            onMouseLeave={() => onHoverZone(null)}
-          >
-            <span
-              className="text-[7px] font-bold px-1 py-0.5 rounded whitespace-nowrap"
+        return [...zoneCells.entries()].map(([zone, { rows: zRows, cols: zCols }]) => {
+          const avgRow = zRows.reduce((a, b) => a + b, 0) / zRows.length;
+          const avgCol = zCols.reduce((a, b) => a + b, 0) / zCols.length;
+
+          return (
+            <div
+              key={zone}
               style={{
-                backgroundColor: ZONE_COLORS[zone].replace(/\d{2}$/, 'cc'),
-                color: '#fff',
-                textShadow: '0 1px 2px rgba(0,0,0,0.3)',
+                position: 'absolute',
+                left: avgCol * cellSize + cellSize / 2,
+                top: avgRow * cellSize + cellSize / 2,
+                transform: 'translate(-50%, -50%)',
+                zIndex: 6,
+                pointerEvents: 'auto',
+                cursor: 'pointer',
               }}
+              onMouseEnter={() => onHoverZone(zone)}
+              onMouseLeave={() => onHoverZone(null)}
             >
-              {ZONE_LABELS[zone]}
-            </span>
-          </div>
-        ));
+              <span
+                className="text-[9px] font-bold px-1.5 py-0.5 rounded-md whitespace-nowrap shadow-sm"
+                style={{
+                  backgroundColor: ZONE_COLORS[zone].replace(/\d{2}$/, 'dd'),
+                  color: '#fff',
+                  textShadow: '0 1px 2px rgba(0,0,0,0.5)',
+                  border: '1px solid rgba(255,255,255,0.3)',
+                }}
+              >
+                {ZONE_LABELS[zone]}
+              </span>
+              {hoveredZone === zone && (
+                <div
+                  className="absolute left-1/2 -translate-x-1/2 mt-1 bg-stone-900/90 text-white text-[8px] px-2 py-1 rounded-md shadow-lg whitespace-nowrap"
+                  style={{ zIndex: 10 }}
+                >
+                  {ZONE_ADVICE[zone]}
+                </div>
+              )}
+            </div>
+          );
+        });
       })()}
     </>
   );
 }
 
-// ── Legend component ──
+// ── Floating legend overlay — positioned over the map ──
 
 export function MicroclimateLegend({
   hoveredZone,
@@ -308,34 +323,39 @@ export function MicroclimateLegend({
   ];
 
   return (
-    <div className="bg-stone-50 dark:bg-stone-800 rounded-xl border border-stone-200 dark:border-stone-700 p-4">
-      <h3 className="text-sm font-semibold text-stone-700 dark:text-stone-200 mb-2">
+    <div className="absolute top-2 right-2 z-20 bg-white/95 dark:bg-stone-800/95 backdrop-blur-sm rounded-xl border border-stone-200 dark:border-stone-700 shadow-lg p-3 max-w-[200px]">
+      <h3 className="text-[11px] font-bold text-stone-700 dark:text-stone-200 mb-1.5">
         Microclimate Zones
       </h3>
-      <div className="space-y-2">
+      <div className="space-y-1">
         {displayZones.map((zone) => (
           <div
             key={zone}
-            className={`flex items-start gap-2 cursor-pointer rounded-lg p-1.5 transition-colors ${
+            className={`flex items-start gap-1.5 cursor-pointer rounded-lg px-1.5 py-1 transition-colors ${
               hoveredZone === zone ? 'bg-stone-100 dark:bg-stone-700' : ''
             }`}
             onMouseEnter={() => onHoverZone(zone)}
             onMouseLeave={() => onHoverZone(null)}
           >
             <span
-              className="w-3 h-3 rounded-sm mt-0.5 border border-stone-200 shrink-0"
+              className="w-2.5 h-2.5 rounded-sm mt-0.5 shrink-0"
               style={{ backgroundColor: ZONE_COLORS[zone].replace(/\d{2}$/, 'ff') }}
             />
-            <div>
-              <div className="text-xs font-medium text-stone-700 dark:text-stone-200">
+            <div className="min-w-0">
+              <div className="text-[10px] font-medium text-stone-700 dark:text-stone-200 leading-tight">
                 {ZONE_LABELS[zone]}
               </div>
-              <div className="text-[9px] text-stone-400 leading-snug">
-                {ZONE_ADVICE[zone]}
-              </div>
+              {hoveredZone === zone && (
+                <div className="text-[8px] text-stone-400 leading-snug mt-0.5">
+                  {ZONE_ADVICE[zone]}
+                </div>
+              )}
             </div>
           </div>
         ))}
+      </div>
+      <div className="mt-2 pt-1.5 border-t border-stone-200 dark:border-stone-700 text-[8px] text-stone-400 leading-snug">
+        Hover a zone for planting advice. Grey = neutral conditions.
       </div>
     </div>
   );

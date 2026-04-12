@@ -253,7 +253,7 @@ export function PrintPage({ onClose }: { onClose: () => void }) {
             <span>🛒</span> Plant Shopping List
           </h2>
           <p className="text-xs text-stone-400 mb-3">
-            Take this to RHS Wisley, Squires Garden Centre, or your local nursery. Tick off as you shop.
+            Based on today's date ({new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long' })}). Buy as column shows what form to buy in right now.
           </p>
 
           <table className="w-full text-xs border-collapse">
@@ -262,21 +262,67 @@ export function PrintPage({ onClose }: { onClose: () => void }) {
                 <th className="text-left py-1.5 w-6 print:w-4"></th>
                 <th className="text-left py-1.5 font-semibold text-stone-600">Plant</th>
                 <th className="text-left py-1.5 font-semibold text-stone-600">Variety</th>
-                <th className="text-center py-1.5 font-semibold text-stone-600 w-12">Qty</th>
+                <th className="text-center py-1.5 font-semibold text-stone-600 w-10">Qty</th>
                 <th className="text-left py-1.5 font-semibold text-stone-600">Location</th>
-                <th className="text-left py-1.5 font-semibold text-stone-600">Sun</th>
-                <th className="text-left py-1.5 font-semibold text-stone-600 w-20">Plant by</th>
+                <th className="text-left py-1.5 font-semibold text-stone-600">Buy as</th>
+                <th className="text-left py-1.5 font-semibold text-stone-600">Where</th>
+                <th className="text-left py-1.5 font-semibold text-stone-600 w-24">Timing</th>
               </tr>
             </thead>
             <tbody>
               {plantEntries.map((entry, i) => {
                 const p = entry.plant;
                 const pw = p.plantingWindow;
-                // Determine best "plant by" window for current time of year
-                const plantByMonths: string[] = [];
-                if (pw.sowIndoors) plantByMonths.push(`Sow in: ${getMonthName(pw.sowIndoors[0])}-${getMonthName(pw.sowIndoors[1])}`);
-                if (pw.sowOutdoors) plantByMonths.push(`Out: ${getMonthName(pw.sowOutdoors[0])}-${getMonthName(pw.sowOutdoors[1])}`);
-                if (pw.transplant) plantByMonths.push(`Plant: ${getMonthName(pw.transplant[0])}-${getMonthName(pw.transplant[1])}`);
+
+                // Determine buy form based on current month vs planting windows
+                const canSowIndoors = isInWindow(currentMonth, pw.sowIndoors);
+                const canSowOutdoors = isInWindow(currentMonth, pw.sowOutdoors);
+                const canTransplant = isInWindow(currentMonth, pw.transplant);
+                // Past sowing window? Need plugs or plants instead
+                const sowIndoorsPast = pw.sowIndoors && currentMonth > pw.sowIndoors[1] && pw.sowIndoors[1] >= pw.sowIndoors[0];
+                const sowOutdoorsPast = pw.sowOutdoors && currentMonth > pw.sowOutdoors[1] && pw.sowOutdoors[1] >= pw.sowOutdoors[0];
+
+                let buyAs: string;
+                let buyIcon: string;
+                if (canSowIndoors || canSowOutdoors) {
+                  buyAs = 'Seed';
+                  buyIcon = '🌰';
+                } else if (canTransplant) {
+                  buyAs = 'Plugs';
+                  buyIcon = '🌿';
+                } else if (sowIndoorsPast || sowOutdoorsPast) {
+                  // Missed seed window — buy as plug or established plant
+                  if (canTransplant) {
+                    buyAs = 'Plugs';
+                    buyIcon = '🌿';
+                  } else {
+                    buyAs = 'Plant';
+                    buyIcon = '🪴';
+                  }
+                } else {
+                  // Before any window opens or outside all windows
+                  buyAs = 'Seed';
+                  buyIcon = '🌰';
+                }
+
+                // Where to buy — local garden centres for plugs/plants, online for seed
+                let whereToBuy: string;
+                if (buyAs === 'Seed') {
+                  whereToBuy = 'Online / Squires';
+                } else if (buyAs === 'Plugs') {
+                  whereToBuy = 'Squires / Wisley';
+                } else {
+                  whereToBuy = 'Squires / Wisley';
+                }
+
+                // Timing summary
+                const timing: string[] = [];
+                if (canSowIndoors) timing.push('Sow indoors now');
+                else if (canSowOutdoors) timing.push('Sow outdoors now');
+                else if (canTransplant) timing.push('Plant out now');
+                else if (pw.sowIndoors) timing.push(`Sow from ${getMonthName(pw.sowIndoors[0])}`);
+                else if (pw.sowOutdoors) timing.push(`Sow from ${getMonthName(pw.sowOutdoors[0])}`);
+                else if (pw.transplant) timing.push(`Plant from ${getMonthName(pw.transplant[0])}`);
 
                 const bestVariety = p.varieties.length > 0 ? p.varieties[0].name : '—';
 
@@ -289,16 +335,39 @@ export function PrintPage({ onClose }: { onClose: () => void }) {
                       <span className="mr-1">{p.emoji}</span>
                       <span className="font-medium text-stone-700">{p.commonName}</span>
                     </td>
-                    <td className="py-1.5 text-stone-500 italic">{bestVariety}</td>
+                    <td className="py-1.5 text-stone-500 italic text-[10px]">{bestVariety}</td>
                     <td className="py-1.5 text-center font-semibold text-stone-700">{entry.quantity}</td>
-                    <td className="py-1.5 text-stone-500">{entry.locations.join(', ')}</td>
-                    <td className="py-1.5 text-stone-500">{p.sun.replace('-', ' ')}</td>
-                    <td className="py-1.5 text-stone-500 text-[9px]">{plantByMonths[0] ?? '—'}</td>
+                    <td className="py-1.5 text-stone-500 text-[10px]">{entry.locations.join(', ')}</td>
+                    <td className="py-1.5">
+                      <span className={`inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full text-[9px] font-medium ${
+                        buyAs === 'Seed' ? 'bg-amber-50 text-amber-700 border border-amber-200'
+                          : buyAs === 'Plugs' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                          : 'bg-violet-50 text-violet-700 border border-violet-200'
+                      }`}>
+                        {buyIcon} {buyAs}
+                      </span>
+                    </td>
+                    <td className="py-1.5 text-stone-500 text-[10px]">{whereToBuy}</td>
+                    <td className="py-1.5 text-stone-500 text-[9px]">{timing[0] ?? '—'}</td>
                   </tr>
                 );
               })}
             </tbody>
           </table>
+
+          {/* Buy-as key */}
+          <div className="mt-2 flex gap-4 text-[9px] text-stone-400">
+            <span>🌰 Seed — sow yourself (cheapest)</span>
+            <span>🌿 Plugs — young plants, transplant-ready</span>
+            <span>🪴 Plant — established, ready to go in</span>
+          </div>
+
+          {/* Where-to-buy key */}
+          <div className="mt-1 text-[9px] text-stone-400">
+            <strong className="text-stone-500">Squires</strong> = Squires Garden Centre, Hersham Rd ·
+            <strong className="text-stone-500 ml-1">Wisley</strong> = RHS Garden Wisley plant centre ·
+            <strong className="text-stone-500 ml-1">Online</strong> = Thompson & Morgan, Suttons, Mr Fothergill's
+          </div>
 
           {plantEntries.length === 0 && (
             <div className="text-center text-stone-400 py-8 text-sm">
@@ -306,18 +375,20 @@ export function PrintPage({ onClose }: { onClose: () => void }) {
             </div>
           )}
 
-          {/* Variety notes */}
+          {/* Alternative Varieties — compact inline layout */}
           {plantEntries.some((e) => e.plant.varieties.length > 1) && (
             <div className="mt-4 bg-stone-50 rounded-lg p-3 border border-stone-200">
-              <h3 className="text-[10px] font-bold text-stone-600 uppercase mb-1.5">Alternative Varieties</h3>
-              {plantEntries
-                .filter((e) => e.plant.varieties.length > 1)
-                .map((entry) => (
-                  <div key={entry.plant.slug} className="text-[10px] text-stone-500 mb-1">
-                    <span className="font-medium text-stone-600">{entry.plant.commonName}:</span>{' '}
-                    {entry.plant.varieties.map((v) => v.name).join(', ')}
-                  </div>
-                ))}
+              <h3 className="text-[10px] font-bold text-stone-600 uppercase mb-1">Alternative Varieties</h3>
+              <div className="flex flex-wrap gap-x-4 gap-y-0.5">
+                {plantEntries
+                  .filter((e) => e.plant.varieties.length > 1)
+                  .map((entry) => (
+                    <span key={entry.plant.slug} className="text-[9px] text-stone-500">
+                      <span className="font-medium text-stone-600">{entry.plant.emoji} {entry.plant.commonName}:</span>{' '}
+                      {entry.plant.varieties.slice(1).map((v) => v.name).join(', ')}
+                    </span>
+                  ))}
+              </div>
             </div>
           )}
         </div>

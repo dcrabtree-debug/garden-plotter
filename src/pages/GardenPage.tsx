@@ -493,6 +493,7 @@ export function GardenPage() {
   const [showPlanView, setShowPlanView] = useState(false);
   const [showMicroclimate, setShowMicroclimate] = useState(false);
   const [viewMode, setViewMode] = useState<'grid' | 'isometric'>('grid');
+  const [northUp, setNorthUp] = useState(false);
   const [hoveredMicroclimateZone, setHoveredMicroclimateZone] = useState<string | null>(null);
 
   const [hoveredCell, setHoveredCell] = useState<{ row: number; col: number } | null>(null);
@@ -616,6 +617,9 @@ export function GardenPage() {
     return Math.min(Math.floor(maxWidth / cols), isMobile ? 18 : 28);
   }, [cols]);
   const cellSize = Math.round(baseCellSize * zoom);
+  // North-up rotation: rotate grid so true north points to screen top
+  const northUpAngle = 180 - facingAngle(config.facing);
+  const counterRotate = northUp ? `rotate(${-northUpAngle}deg)` : undefined;
 
   const handleWheel = useCallback((e: ReactWheelEvent) => {
     if (e.ctrlKey || e.metaKey) {
@@ -1354,6 +1358,17 @@ export function GardenPage() {
           >
             3D View
           </button>
+          <span className="mx-1 border-l border-stone-200 dark:border-stone-600 h-4" />
+          <button
+            onClick={() => setNorthUp(!northUp)}
+            className={`text-[10px] px-2 py-0.5 rounded-full transition-colors flex items-center gap-1 ${
+              northUp
+                ? 'bg-red-600 text-white'
+                : 'bg-stone-100 dark:bg-stone-700 text-stone-500 dark:text-stone-400 hover:bg-stone-200'
+            }`}
+          >
+            <span className="text-[8px]">🧭</span> North Up
+          </button>
         </div>
 
         {/* Isometric 3D view */}
@@ -1363,6 +1378,17 @@ export function GardenPage() {
 
         {/* Standard grid view */}
         {viewMode === 'grid' && (<>
+
+        {/* Rotation wrapper for north-up mode */}
+        <div
+          className="transition-transform duration-500 ease-in-out"
+          style={northUp ? {
+            transform: `rotate(${180 - facingAngle(config.facing)}deg)`,
+            transformOrigin: 'center center',
+            // Ensure rotated grid has enough room — pad with the diagonal size
+            margin: `${Math.round((Math.sqrt(2) - 1) * (rows * cellSize + cols * cellSize) * 0.25)}px auto`,
+          } : {}}
+        >
 
         {/* Column labels (0-19) */}
         <div className="flex" style={{ marginLeft: cellSize * 1.5, marginBottom: 2 }}>
@@ -1568,10 +1594,10 @@ export function GardenPage() {
                       />
                     )}
                     {/* Plant emoji (always visible on top) */}
-                    {plant && <span style={{ pointerEvents: 'none', position: 'relative', zIndex: 1 }}>{plant.emoji}</span>}
+                    {plant && <span style={{ pointerEvents: 'none', position: 'relative', zIndex: 1, transform: counterRotate }}>{plant.emoji}</span>}
                     {/* Sun hours label */}
                     {showSunOverlay && !plant && cell.sunHours !== null && cellSize >= 20 && (
-                      <span className="text-[8px] font-bold opacity-70" style={{ pointerEvents: 'none', position: 'relative', zIndex: 1 }}>
+                      <span className="text-[8px] font-bold opacity-70" style={{ pointerEvents: 'none', position: 'relative', zIndex: 1, transform: counterRotate }}>
                         {cell.sunHours}
                       </span>
                     )}
@@ -1774,6 +1800,8 @@ export function GardenPage() {
             </div>
           );
         })()}
+
+        </div>{/* end rotation wrapper */}
 
         {/* Scale indicator */}
         <div className="mt-2 flex items-center gap-3 text-[10px] text-stone-400">

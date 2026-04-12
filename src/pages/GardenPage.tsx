@@ -20,7 +20,7 @@ import { usePlannerStore } from '../state/planner-store';
 import { generateLayouts as generateGSLayouts, extractTowerSlugs } from '../lib/auto-populate';
 import { findBestPairing } from '../lib/cross-system-scoring';
 import { checkPair, getFriends, getConflicts } from '../lib/companion-engine';
-import { scorePlant, FRAGRANT_SLUGS, KID_FAVOURITES } from '../lib/garden-rating';
+import { scorePlant, FRAGRANT_SLUGS, KID_FAVOURITES, scoreSiteSuitability, getSuitabilityBand, SUITABILITY_META } from '../lib/garden-rating';
 import { GardenGradePanel } from '../components/common/GardenGradePanel';
 import type { CellType, GardenFacing, GardenCell } from '../types/planner';
 import type { Plant } from '../types/plant';
@@ -468,6 +468,7 @@ export function GardenPage() {
   const { companionMap } = useCompanionDb();
   const towers = usePlannerStore((s) => s.towers);
   const [isPainting, setIsPainting] = useState(false);
+  const [selectMode, setSelectMode] = useState(false);
   const [plantToPlace, setPlantToPlace] = useState<Plant | null>(null);
   const [selectedPlant, setSelectedPlant] = useState<Plant | null>(null);
   const [gardenSmartPicker, setGardenSmartPicker] = useState<{
@@ -597,7 +598,7 @@ export function GardenPage() {
         if (cell && (cell.type === 'veg-patch' || cell.type === 'raised-bed' || cell.type === 'flower-bed' || cell.type === 'conservatory')) {
           useGardenStore.getState().plantInCell(row, col, plantToPlace.slug);
         }
-      } else {
+      } else if (!selectMode) {
         // Don't paint over cells that already have a plant —
         // let onClick open the SmartPlantPicker for swap/remove instead
         const cell = cells[row]?.[col];
@@ -606,7 +607,7 @@ export function GardenPage() {
         }
       }
     },
-    [plantToPlace, cells, paintCell, movingGreenStalk, greenStalkCells, activeTool, rows, cols]
+    [plantToPlace, cells, paintCell, movingGreenStalk, greenStalkCells, activeTool, rows, cols, selectMode]
   );
 
   const baseCellSize = useMemo(() => {
@@ -733,9 +734,17 @@ export function GardenPage() {
     return grid;
   }, [showCompanionOverlay, plantToPlace, cells, rows, cols, companionMap]);
 
-  // Veg-suitable plants for the plant panel — sorted alphabetically
+  // Veg-suitable plants for the plant panel — ranked by site suitability for 21 Esher Avenue
   const inGroundPlants = useMemo(
-    () => [...plants].sort((a, b) => a.commonName.localeCompare(b.commonName)),
+    () => [...plants]
+      .map((p) => ({ plant: p, siteScore: scoreSiteSuitability(p) }))
+      .sort((a, b) => b.siteScore - a.siteScore || a.plant.commonName.localeCompare(b.plant.commonName))
+      .map(({ plant }) => plant),
+    [plants]
+  );
+  // Pre-compute site scores for display
+  const siteScores = useMemo(
+    () => new Map(plants.map((p) => [p.slug, scoreSiteSuitability(p)])),
     [plants]
   );
 
@@ -784,12 +793,23 @@ export function GardenPage() {
         <div>
           <h3 className="text-[10px] font-semibold text-stone-500 uppercase tracking-wide mb-1.5">Paint Tools</h3>
           <div className="grid grid-cols-2 gap-1">
+            <button
+              onClick={() => { setSelectMode(true); setPlantToPlace(null); }}
+              className={`text-[10px] px-2 py-1.5 rounded-lg text-left flex items-center gap-1.5 transition-colors ${
+                selectMode && !plantToPlace
+                  ? 'bg-stone-800 text-white dark:bg-stone-200 dark:text-stone-900'
+                  : 'bg-white dark:bg-stone-700 border border-stone-200 dark:border-stone-600 text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-600'
+              }`}
+            >
+              <span>👆</span>
+              Select
+            </button>
             {CELL_TOOLS.map((tool) => (
               <button
                 key={tool.type}
-                onClick={() => { setTool(tool.type); setPlantToPlace(null); }}
+                onClick={() => { setSelectMode(false); setTool(tool.type); setPlantToPlace(null); }}
                 className={`text-[10px] px-2 py-1.5 rounded-lg text-left flex items-center gap-1.5 transition-colors ${
-                  activeTool === tool.type && !plantToPlace
+                  activeTool === tool.type && !plantToPlace && !selectMode
                     ? 'bg-stone-800 text-white dark:bg-stone-200 dark:text-stone-900'
                     : 'bg-white dark:bg-stone-700 border border-stone-200 dark:border-stone-600 text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-600'
                 }`}
@@ -887,7 +907,11 @@ export function GardenPage() {
                     }
                     return true;
                   })
-                  .map((p) => (
+                  .map((p) => {
+                    const ss = siteScores.get(p.slug) ?? 50;
+                    const band = getSuitabilityBand(ss);
+                    const meta = SUITABILITY_META[band];
+                    return (
                     <div key={p.slug} className="flex items-center gap-0.5">
                       <button
                         onClick={() => { setPlantToPlace(p); setShowPlantPanel(false); }}
@@ -895,6 +919,13 @@ export function GardenPage() {
                           plantToPlace?.slug === p.slug ? 'bg-emerald-100 dark:bg-emerald-900/40' : ''
                         }`}
                       >
+                        <span
+                          className="shrink-0 w-5 text-center text-[8px] font-bold rounded"
+                          style={{ color: meta.color }}
+                          title={`${meta.label} (${ss}/100)`}
+                        >
+                          {ss}
+                        </span>
                         <span>{p.emoji}</span>
                         <span className="truncate dark:text-stone-200">{p.commonName}</span>
                         <span className="ml-auto flex gap-0.5 shrink-0">
@@ -913,7 +944,8 @@ export function GardenPage() {
                         i
                       </button>
                     </div>
-                  ));
+                    );
+                  })
               })()}
               </div>
             </div>

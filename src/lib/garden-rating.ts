@@ -62,6 +62,95 @@ export function getSlugRisk(slug: string): 'high' | 'medium' | 'low' {
   return SLUG_VULNERABILITY[slug] ?? 'medium';
 }
 
+// ─── Site suitability scoring for 21 Esher Avenue, Surrey ──────────────────
+//
+// Factors: RHS hardiness (Surrey = H5 zone), soil compatibility (London Clay,
+// pH 6.5-7.5, moisture-retentive), sun exposure (NE-facing garden, 7m house
+// wall to south → mostly partial shade), slug pressure (clay + damp evenings),
+// growing season (late May start → fast-harvest favoured), kid-friendliness
+// (Max 5, Noelle 3), and RHS AGM/expert recommendation signals in variety data.
+//
+// Returns 0-100 score. Higher = better fit for this specific site.
+
+/** Soil types that work well in Surrey's heavy London Clay */
+const CLAY_FRIENDLY_KEYWORDS = ['clay', 'any', 'moist', 'moisture-retentive', 'fertile'];
+/** Soil types that struggle in clay (need sandy/free-draining) */
+const CLAY_HOSTILE_KEYWORDS = ['sandy', 'light', 'ericaceous', 'poor to moderate'];
+
+export function scoreSiteSuitability(plant: Plant): number {
+  let score = 50; // baseline
+
+  // ── RHS Hardiness (Surrey = H5 zone, mild winters) ──
+  const h = parseInt(plant.hardiness.replace('H', ''));
+  if (h >= 5) score += 12;       // fully hardy — thrives year-round
+  else if (h === 4) score += 4;  // borderline — needs winter protection
+  else if (h === 3) score -= 2;  // frost-tender — needs bringing indoors
+  else score -= 8;               // tropical — very risky outdoors
+
+  // ── Sun exposure (NE-facing, mostly partial shade) ──
+  if (plant.sun === 'partial-shade') score += 10; // best match for this garden
+  else if (plant.sun === 'full-shade') score += 6; // good for hedge-side/north beds
+  else if (plant.sun === 'full-sun') score += 2;   // only sunniest spots work
+
+  // ── Soil compatibility (London Clay — heavy, alkaline, moist) ──
+  const soilType = plant.soil.type.toLowerCase();
+  const soilNotes = plant.soil.notes.toLowerCase();
+  const soilAll = soilType + ' ' + soilNotes;
+  if (CLAY_FRIENDLY_KEYWORDS.some(k => soilAll.includes(k))) score += 6;
+  if (CLAY_HOSTILE_KEYWORDS.some(k => soilType.includes(k))) score -= 6;
+  // pH match — clay is typically 6.5-7.5
+  const [phLow, phHigh] = plant.soil.phRange;
+  if (phLow <= 6.5 && phHigh >= 7.0) score += 3; // good pH overlap
+  else if (phHigh < 5.5) score -= 5; // acid-loving — will struggle
+
+  // ── Slug resistance (high slug pressure in Surrey clay gardens) ──
+  const slugRisk = getSlugRisk(plant.slug);
+  if (slugRisk === 'low') score += 8;     // slug-resistant aromatics, alliums, roots
+  else if (slugRisk === 'high') score -= 4; // vulnerable — better in GreenStalks
+
+  // ── Water needs vs clay retention ──
+  if (plant.water === 'low') score -= 2;  // may waterlog in clay
+  if (plant.water === 'high') score += 2; // clay's moisture retention is a plus
+
+  // ── Growing season (late May start, first frost ~mid Nov) ──
+  const [minDays] = plant.daysToHarvest;
+  if (minDays <= 30) score += 4;       // quick wins for compressed season
+  else if (minDays <= 60) score += 2;
+  else if (minDays > 150) score -= 3;  // may not mature before frost
+
+  // ── Kid-friendly bonus (Max 5, Noelle 3) ──
+  if (KID_FAVOURITES.has(plant.slug)) score += 4;
+  if (plant.childSafe) score += 2;
+
+  // ── RHS AGM / expert signals in variety data ──
+  const hasAGM = plant.varieties.some(v => {
+    const n = v.notes.toLowerCase();
+    return n.includes('agm') || n.includes('award of garden merit') || n.includes('rhs');
+  });
+  if (hasAGM) score += 5;
+
+  // ── Surrey-specific curated advice exists ──
+  if (plant.soilTipSurrey) score += 2;
+
+  return Math.max(0, Math.min(100, score));
+}
+
+export type SiteSuitabilityBand = 'excellent' | 'good' | 'fair' | 'poor';
+
+export function getSuitabilityBand(score: number): SiteSuitabilityBand {
+  if (score >= 75) return 'excellent';
+  if (score >= 60) return 'good';
+  if (score >= 45) return 'fair';
+  return 'poor';
+}
+
+export const SUITABILITY_META: Record<SiteSuitabilityBand, { label: string; color: string }> = {
+  excellent: { label: 'Excellent for Esher', color: '#16a34a' },
+  good:      { label: 'Good for Esher',      color: '#65a30d' },
+  fair:      { label: 'Fair for Esher',       color: '#d97706' },
+  poor:      { label: 'Poor fit for Esher',   color: '#dc2626' },
+};
+
 // ─── Yield price map (subset for scoring — full map in yield-engine.ts) ─────
 const VALUE_MAP: Record<string, number> = {
   // £ per kg at UK supermarkets (April 2026)

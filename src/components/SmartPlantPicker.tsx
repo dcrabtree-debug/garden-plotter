@@ -226,6 +226,7 @@ export function SmartPlantPicker({
   onRemove,
 }: SmartPickerProps) {
   const [filter, setFilter] = useState<'all' | 'vegetable' | 'herb' | 'fruit' | 'flower'>('all');
+  const [traitFilter, setTraitFilter] = useState<'none' | 'companions' | 'in-season'>('none');
   const [tab, setTab] = useState<'single' | 'duo'>('single');
   const [showFullDetail, setShowFullDetail] = useState(false);
   const isGreenStalk = tierNumber !== undefined;
@@ -248,19 +249,45 @@ export function SmartPlantPicker({
     return { friends, foes };
   }, [currentPlant, companionMap]);
 
+  // Pre-compute the set of slugs that are companions of current neighbours
+  const companionSlugs = useMemo(() => {
+    if (neighbourSlugs.length === 0) return new Set<string>();
+    const result = new Set<string>();
+    for (const ns of neighbourSlugs) {
+      const edges = companionMap.get(ns);
+      if (edges) {
+        for (const edge of edges.values()) {
+          if (edge.relationship === 'friend') {
+            const other = edge.plantA === ns ? edge.plantB : edge.plantA;
+            result.add(other);
+          }
+        }
+      }
+    }
+    return result;
+  }, [neighbourSlugs, companionMap]);
+
   const scored = useMemo(() => {
     const eligible = plants.filter(p => {
       if (isGreenStalk && p.greenstalkSuitability === 'unsuitable') return false;
       if (filter !== 'all' && p.category !== filter) return false;
       // In swap mode, exclude the current plant from suggestions
       if (currentPlantSlug && p.slug === currentPlantSlug) return false;
+      // Trait filters
+      if (traitFilter === 'companions' && !companionSlugs.has(p.slug)) return false;
+      if (traitFilter === 'in-season') {
+        const canSow = isInWindow(currentMonth, p.plantingWindow.sowIndoors) ||
+          isInWindow(currentMonth, p.plantingWindow.sowOutdoors);
+        const canTransplant = isInWindow(currentMonth, p.plantingWindow.transplant);
+        if (!canSow && !canTransplant) return false;
+      }
       return true;
     });
 
     return eligible
       .map(p => scorePlant(p, neighbourSlugs, companionMap, plantMap, tierNumber, sunHours, currentMonth, isGreenStalk))
       .sort((a, b) => b.score - a.score);
-  }, [plants, plantMap, neighbourSlugs, companionMap, tierNumber, sunHours, currentMonth, isGreenStalk, filter, currentPlantSlug]);
+  }, [plants, plantMap, neighbourSlugs, companionMap, tierNumber, sunHours, currentMonth, isGreenStalk, filter, currentPlantSlug, traitFilter, companionSlugs]);
 
   const duoPlants = useMemo(
     () => scored.filter((sp) => sp.duos.length > 0),
@@ -483,6 +510,26 @@ export function SmartPlantPicker({
               }`}
             >
               {cat === 'all' ? 'All' : cat.charAt(0).toUpperCase() + cat.slice(1)}
+            </button>
+          ))}
+        </div>
+
+        {/* Trait filter chips */}
+        <div className="flex gap-1 mt-1.5 overflow-x-auto scrollbar-hide">
+          {([
+            { value: 'companions' as const, label: '🤝 Companions', show: neighbourSlugs.length > 0 },
+            { value: 'in-season' as const, label: '🌱 In season', show: true },
+          ]).filter(t => t.show).map(t => (
+            <button
+              key={t.value}
+              onClick={() => setTraitFilter(traitFilter === t.value ? 'none' : t.value)}
+              className={`text-[10px] px-2.5 py-1 rounded-full whitespace-nowrap transition-colors ${
+                traitFilter === t.value
+                  ? 'bg-stone-700 text-white dark:bg-stone-300 dark:text-stone-900'
+                  : 'bg-stone-100 dark:bg-stone-700 text-stone-500 dark:text-stone-400'
+              }`}
+            >
+              {t.label}
             </button>
           ))}
         </div>

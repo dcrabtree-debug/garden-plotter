@@ -835,10 +835,15 @@ export function GardenPage() {
                 {([
                   { key: 'full-sun', label: '☀️ Full sun' },
                   { key: 'part-shade', label: '⛅ Part shade' },
+                  { key: 'shade', label: '🌙 Shade' },
                   { key: 'kid-fav', label: '🧒 Kid favs' },
+                  { key: 'pet-safe', label: '🐕 Pet safe' },
                   { key: 'fragrant', label: '🌸 Fragrant' },
+                  { key: 'low-water', label: '💧 Low water' },
                   { key: 'tall', label: '📏 Tall' },
                   { key: 'compact', label: '🌿 Compact' },
+                  { key: 'trailing', label: '🌊 Trailing' },
+                  { key: 'edible', label: '🥗 Edible' },
                   { key: 'in-season', label: '🌱 In season' },
                 ] as const).map((f) => (
                   <button
@@ -866,11 +871,16 @@ export function GardenPage() {
                     }
                     // Trait filter
                     if (traitFilter === 'full-sun' && p.sun !== 'full-sun') return false;
-                    if (traitFilter === 'part-shade' && p.sun === 'full-sun') return false;
+                    if (traitFilter === 'part-shade' && p.sun !== 'partial-shade') return false;
+                    if (traitFilter === 'shade' && p.sun !== 'full-shade') return false;
                     if (traitFilter === 'kid-fav' && !p.childSafe && !KID_FAVOURITES.has(p.slug)) return false;
+                    if (traitFilter === 'pet-safe' && !p.petSafe) return false;
                     if (traitFilter === 'fragrant' && !FRAGRANT_SLUGS.has(p.slug)) return false;
+                    if (traitFilter === 'low-water' && p.water !== 'low') return false;
                     if (traitFilter === 'tall' && p.growthHabit !== 'upright' && p.growthHabit !== 'climbing') return false;
                     if (traitFilter === 'compact' && p.growthHabit !== 'bushy' && p.growthHabit !== 'rosette') return false;
+                    if (traitFilter === 'trailing' && p.growthHabit !== 'trailing' && p.growthHabit !== 'spreading') return false;
+                    if (traitFilter === 'edible' && p.category !== 'vegetable' && p.category !== 'herb' && p.category !== 'fruit' && p.category !== 'legume') return false;
                     if (traitFilter === 'in-season') {
                       const pw = p.plantingWindow;
                       if (!isInWindow(month, pw.sowIndoors) && !isInWindow(month, pw.sowOutdoors) && !isInWindow(month, pw.transplant)) return false;

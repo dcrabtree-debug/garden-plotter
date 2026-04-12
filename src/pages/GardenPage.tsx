@@ -1453,7 +1453,7 @@ export function GardenPage() {
                     }}
                     onMouseEnter={() => {
                       if (isPainting && !plantToPlace) handleCellInteraction(ri, ci);
-                      if (hasPlant) setHoveredCell({ row: ri, col: ci });
+                      setHoveredCell(hasPlant ? { row: ri, col: ci } : null);
                     }}
                     onMouseUp={() => setIsPainting(false)}
                     onClick={() => {

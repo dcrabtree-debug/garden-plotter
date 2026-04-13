@@ -80,34 +80,69 @@ export function CalendarPage() {
     .filter(Boolean)
     .sort((a, b) => a!.commonName.localeCompare(b!.commonName));
 
-  // Actions for this month
-  const thisMonthActions = useMemo(() => {
-    const actions: { emoji: string; name: string; action: string; urgency: 'now' | 'soon' | 'info' }[] = [];
+  // Grouped actions for this month
+  interface CalendarAction {
+    emoji: string;
+    name: string;
+    timing: 'last-chance' | 'all-month' | 'just-started';
+  }
+
+  interface ActionGroup {
+    id: string;
+    title: string;
+    icon: string;
+    headingClass: string;
+    chipClass: string;
+    actions: CalendarAction[];
+  }
+
+  const actionGroups = useMemo(() => {
+    const sowIndoors: CalendarAction[] = [];
+    const sowOutdoors: CalendarAction[] = [];
+    const transplant: CalendarAction[] = [];
+    const harvest: CalendarAction[] = [];
+    const comingNext: CalendarAction[] = [];
+    const nextMonth = currentMonth === 12 ? 1 : currentMonth + 1;
+
+    const getTiming = (w: [number, number] | null): 'last-chance' | 'all-month' | 'just-started' => {
+      if (!w) return 'all-month';
+      if (currentMonth === w[1]) return 'last-chance';
+      if (currentMonth === w[0]) return 'just-started';
+      return 'all-month';
+    };
+
     for (const plant of plantedPlants) {
       if (!plant) continue;
       const pw = plant.plantingWindow;
-      if (isInWindow(currentMonth, pw.sowIndoors)) {
-        actions.push({ emoji: plant.emoji, name: plant.commonName, action: 'Sow indoors', urgency: 'now' });
-      }
-      if (isInWindow(currentMonth, pw.sowOutdoors)) {
-        actions.push({ emoji: plant.emoji, name: plant.commonName, action: 'Sow outdoors', urgency: 'now' });
-      }
-      if (isInWindow(currentMonth, pw.transplant)) {
-        actions.push({ emoji: plant.emoji, name: plant.commonName, action: 'Transplant out', urgency: 'now' });
-      }
-      if (isInWindow(currentMonth, pw.harvest)) {
-        actions.push({ emoji: plant.emoji, name: plant.commonName, action: 'Harvest', urgency: 'now' });
-      }
-      // Check next month for "coming soon" items
-      const nextMonth = currentMonth === 12 ? 1 : currentMonth + 1;
-      if (!isInWindow(currentMonth, pw.sowIndoors) && isInWindow(nextMonth, pw.sowIndoors)) {
-        actions.push({ emoji: plant.emoji, name: plant.commonName, action: `Sow indoors from ${getMonthName(nextMonth)}`, urgency: 'soon' });
-      }
-      if (!isInWindow(currentMonth, pw.transplant) && isInWindow(nextMonth, pw.transplant)) {
-        actions.push({ emoji: plant.emoji, name: plant.commonName, action: `Transplant from ${getMonthName(nextMonth)}`, urgency: 'soon' });
-      }
+      const base = { emoji: plant.emoji, name: plant.commonName };
+
+      if (isInWindow(currentMonth, pw.sowIndoors)) sowIndoors.push({ ...base, timing: getTiming(pw.sowIndoors) });
+      if (isInWindow(currentMonth, pw.sowOutdoors)) sowOutdoors.push({ ...base, timing: getTiming(pw.sowOutdoors) });
+      if (isInWindow(currentMonth, pw.transplant)) transplant.push({ ...base, timing: getTiming(pw.transplant) });
+      if (isInWindow(currentMonth, pw.harvest)) harvest.push({ ...base, timing: getTiming(pw.harvest) });
+
+      if (!isInWindow(currentMonth, pw.sowIndoors) && isInWindow(nextMonth, pw.sowIndoors)) comingNext.push({ ...base, timing: 'all-month' });
+      if (!isInWindow(currentMonth, pw.transplant) && isInWindow(nextMonth, pw.transplant)) comingNext.push({ ...base, timing: 'all-month' });
     }
-    return actions;
+
+    const sortByUrgency = (a: CalendarAction, b: CalendarAction) => {
+      const order = { 'last-chance': 0, 'just-started': 1, 'all-month': 2 };
+      return order[a.timing] - order[b.timing];
+    };
+
+    sowIndoors.sort(sortByUrgency);
+    sowOutdoors.sort(sortByUrgency);
+    transplant.sort(sortByUrgency);
+    harvest.sort(sortByUrgency);
+
+    const groups: ActionGroup[] = [];
+    if (sowIndoors.length > 0) groups.push({ id: 'sow-indoors', title: 'Sow Indoors', icon: '🏠', headingClass: 'text-sky-700 dark:text-sky-300', chipClass: 'bg-sky-50 dark:bg-sky-900/20 border-sky-200 dark:border-sky-800', actions: sowIndoors });
+    if (sowOutdoors.length > 0) groups.push({ id: 'sow-outdoors', title: 'Direct Sow Outdoors', icon: '🌤️', headingClass: 'text-emerald-700 dark:text-emerald-300', chipClass: 'bg-emerald-50 dark:bg-emerald-900/20 border-emerald-200 dark:border-emerald-800', actions: sowOutdoors });
+    if (transplant.length > 0) groups.push({ id: 'transplant', title: 'Transplant Out', icon: '🪴', headingClass: 'text-amber-700 dark:text-amber-300', chipClass: 'bg-amber-50 dark:bg-amber-900/20 border-amber-200 dark:border-amber-800', actions: transplant });
+    if (harvest.length > 0) groups.push({ id: 'harvest', title: 'Ready to Harvest', icon: '🍎', headingClass: 'text-rose-700 dark:text-rose-300', chipClass: 'bg-rose-50 dark:bg-rose-900/20 border-rose-200 dark:border-rose-800', actions: harvest });
+    if (comingNext.length > 0) groups.push({ id: 'coming-next', title: `Coming in ${getMonthName(nextMonth)}`, icon: '📅', headingClass: 'text-stone-500 dark:text-stone-400', chipClass: 'bg-stone-50 dark:bg-stone-700/50 border-stone-200 dark:border-stone-700', actions: comingNext });
+
+    return groups;
   }, [plantedPlants, currentMonth]);
 
   if (plantedPlants.length === 0) {
@@ -132,28 +167,39 @@ export function CalendarPage() {
         Surrey, UK growing season — {plantedPlants.length} crops from GreenStalk towers + garden map
       </p>
 
-      {/* This month action panel */}
-      {thisMonthActions.length > 0 && (
+      {/* This month action panel — grouped by action type */}
+      {actionGroups.length > 0 && (
         <div className="bg-emerald-50 dark:bg-emerald-900/20 rounded-xl border border-emerald-200 dark:border-emerald-800 p-4 mb-4">
-          <h2 className="text-sm font-bold text-emerald-800 dark:text-emerald-300 mb-2">
+          <h2 className="text-sm font-bold text-emerald-800 dark:text-emerald-300 mb-3">
             📋 {getMonthName(currentMonth)} — What to do now
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
-            {thisMonthActions.map((a, i) => (
-              <div
-                key={i}
-                className={`flex items-center gap-2 text-xs px-2 py-1 rounded-lg ${
-                  a.urgency === 'now'
-                    ? 'bg-white dark:bg-stone-800 text-stone-700 dark:text-stone-200'
-                    : 'text-stone-400 dark:text-stone-500'
-                }`}
-              >
-                <span>{a.emoji}</span>
-                <span className="font-medium">{a.action}</span>
-                <span className="text-stone-400 dark:text-stone-500">{a.name}</span>
-                {a.urgency === 'soon' && (
-                  <span className="text-[8px] px-1 py-0.5 bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 rounded">soon</span>
-                )}
+          <div className="space-y-3">
+            {actionGroups.map((group) => (
+              <div key={group.id}>
+                <h3 className={`text-xs font-semibold ${group.headingClass} mb-1.5`}>
+                  {group.icon} {group.title}
+                </h3>
+                <div className="flex flex-wrap gap-1.5">
+                  {group.actions.map((a, i) => (
+                    <span
+                      key={`${group.id}-${i}`}
+                      className={`inline-flex items-center gap-1 text-[11px] px-2 py-1 rounded-full border ${
+                        a.timing === 'last-chance'
+                          ? 'bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 font-semibold'
+                          : `${group.chipClass} text-stone-700 dark:text-stone-200`
+                      }`}
+                    >
+                      <span>{a.emoji}</span>
+                      <span>{a.name}</span>
+                      {a.timing === 'last-chance' && (
+                        <span className="text-[8px] ml-0.5 text-red-500">last chance</span>
+                      )}
+                      {a.timing === 'just-started' && (
+                        <span className="text-[8px] ml-0.5 text-emerald-500 font-medium">new</span>
+                      )}
+                    </span>
+                  ))}
+                </div>
               </div>
             ))}
           </div>

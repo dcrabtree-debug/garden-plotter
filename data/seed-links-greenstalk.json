@@ -1744,5 +1744,25 @@
         ]
       }
     ]
+  },
+  {
+    "slug": "mizuna",
+    "commonName": "Mizuna",
+    "varieties": [{ "name": "Green", "why": "Ideal for GreenStalk pockets — shallow roots, compact rosette, cut-and-come-again all season.", "context": "greenstalk", "sellers": [{ "seller": "Thompson & Morgan", "url": "https://www.thompson-morgan.com/search?searchTerm=mizuna", "priceGBP": 2.49, "recommended": true }, { "seller": "Suttons Seeds", "url": "https://www.suttons.co.uk/search?q=mizuna", "priceGBP": 2.29 }] }]
+  },
+  {
+    "slug": "sweet-marjoram",
+    "commonName": "Sweet Marjoram",
+    "varieties": [{ "name": "Sweet Marjoram", "why": "Compact bushy herb for middle tiers. Sweeter than oregano, benefits from GreenStalk shelter.", "context": "greenstalk", "sellers": [{ "seller": "Thompson & Morgan", "url": "https://www.thompson-morgan.com/search?searchTerm=sweet+marjoram", "priceGBP": 1.99, "recommended": true }, { "seller": "Mr Fothergill's", "url": "https://www.mr-fothergills.co.uk/search?q=marjoram", "priceGBP": 1.89 }] }]
+  },
+  {
+    "slug": "alpine-strawberry",
+    "commonName": "Alpine Strawberry",
+    "varieties": [{ "name": "Alexandria", "why": "No runners, stays compact in pocket. Intense wild strawberry flavour. Top tiers for slug protection.", "context": "greenstalk", "sellers": [{ "seller": "Thompson & Morgan", "url": "https://www.thompson-morgan.com/search?searchTerm=alpine+strawberry", "priceGBP": 2.49, "recommended": true }, { "seller": "Suttons Seeds", "url": "https://www.suttons.co.uk/search?q=alpine+strawberry", "priceGBP": 2.29 }] }]
+  },
+  {
+    "slug": "busy-lizzy",
+    "commonName": "Busy Lizzy",
+    "varieties": [{ "name": "Beacon Mixed", "why": "Shade-tolerant colour for lower GreenStalk tiers. Downy mildew resistant Imara series.", "context": "greenstalk", "sellers": [{ "seller": "Thompson & Morgan", "url": "https://www.thompson-morgan.com/search?searchTerm=impatiens+beacon", "priceGBP": 3.99, "badge": "Plug plants", "recommended": true }] }]
   }
 ]

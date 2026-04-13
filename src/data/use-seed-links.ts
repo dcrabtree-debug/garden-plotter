@@ -61,6 +61,9 @@ const SELLER_LOGOS: Record<string, string> = {
   'Baker Creek Heirloom': '\ud83c\udf3b',
   'Park Seed': '\ud83c\udf3f',
   'Territorial Seed Company': '\ud83c\udf3f',
+  'Crocus': '\ud83c\udf3a',
+  'Squires Garden Centres': '\ud83c\udf3f',
+  'RHS Plants': '\ud83c\udfc5',
 };
 
 function normalizeSeller(s: RawSeller, region: 'uk' | 'us'): SeedLink {

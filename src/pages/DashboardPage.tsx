@@ -21,88 +21,13 @@ import {
 import { getHarvestEstimates, type HarvestEstimate } from '../lib/harvest-countdown';
 import { SnapshotDashboardWidget } from '../components/SnapshotFlow';
 import type { Plant } from '../types/plant';
-
-// ── Key dates ────────────────────────────────────────────────────────────────
-const MOVE_IN = new Date('2026-04-17');
-const GEAR_ARRIVES = new Date('2026-05-15');
-const FIRST_FROST = new Date('2026-10-25');
-
-type Phase = 'PRE_MOVE' | 'NO_GEAR' | 'EARLY_SEASON' | 'PEAK_SEASON' | 'LATE_SEASON' | 'DORMANT';
-
-function getPhase(d: Date): Phase {
-  if (d < MOVE_IN) return 'PRE_MOVE';
-  if (d < GEAR_ARRIVES) return 'NO_GEAR';
-  const m = d.getMonth() + 1;
-  if (m <= 6) return 'EARLY_SEASON';
-  if (m <= 8) return 'PEAK_SEASON';
-  if (m <= 10) return 'LATE_SEASON';
-  return 'DORMANT';
-}
-
-const PHASE_LABELS: Record<Phase, { label: string; emoji: string }> = {
-  PRE_MOVE: { label: 'Pre-Move', emoji: '📦' },
-  NO_GEAR: { label: 'Conservatory Season', emoji: '🏠' },
-  EARLY_SEASON: { label: 'Setup & Planting', emoji: '🌱' },
-  PEAK_SEASON: { label: 'Peak Growing', emoji: '☀️' },
-  LATE_SEASON: { label: 'Harvest & Wind Down', emoji: '🍂' },
-  DORMANT: { label: 'Planning Season', emoji: '❄️' },
-};
-
-const PHASE_BADGE_COLORS: Record<Phase, string> = {
-  PRE_MOVE: 'bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300',
-  NO_GEAR: 'bg-sky-100 text-sky-800 dark:bg-sky-900/30 dark:text-sky-300',
-  EARLY_SEASON: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-300',
-  PEAK_SEASON: 'bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-300',
-  LATE_SEASON: 'bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300',
-  DORMANT: 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300',
-};
-
-function daysBetween(a: Date, b: Date): number {
-  return Math.ceil((b.getTime() - a.getTime()) / (1000 * 60 * 60 * 24));
-}
-
-// ── Priority Tasks with parseable deadlines ─────────────────────────────────
-
-interface PriorityTask {
-  id: string;
-  priority: number;
-  label: string;
-  detail: string;
-  phases: Phase[];
-  category: 'setup' | 'planting' | 'maintenance' | 'shopping';
-  oneTime: boolean;
-  deadline?: string;       // Display string
-  deadlineDate?: string;   // ISO date for comparison (2026-MM-DD)
-  buyUrl?: string;
-  /** When overdue, what should the user do instead? */
-  overdueAlt?: string;
-}
-
-const PRIORITY_TASKS: PriorityTask[] = [
-  { id: 'buy-compost', priority: 1, label: 'Buy peat-free compost + perlite', detail: 'Mix 3:1 ratio. Get at least 100L for two GreenStalks. Can order online now or buy at garden centre after move-in.', phases: ['PRE_MOVE', 'NO_GEAR'], category: 'shopping', oneTime: true, deadline: 'Apr 20', deadlineDate: '2026-04-20', buyUrl: 'https://www.thompson-morgan.com/p/peat-free-multipurpose-compost/t67890' },
-  { id: 'buy-seed-trays', priority: 2, label: 'Buy seed trays + small pots', detail: 'Start seeds indoors on conservatory windowsill. First weekend after move-in.', phases: ['PRE_MOVE', 'NO_GEAR'], category: 'shopping', oneTime: true, deadline: 'Apr 19', deadlineDate: '2026-04-19', buyUrl: 'https://www.thompson-morgan.com/c/seed-trays-and-pots' },
-  { id: 'sow-tomato-indoor', priority: 3, label: 'Sow tomato seeds indoors', detail: 'Tumbling Tom needs 6-8 weeks to transplant size. Sow first weekend in new house.', phases: ['PRE_MOVE', 'NO_GEAR'], category: 'planting', oneTime: true, deadline: 'Apr 20', deadlineDate: '2026-04-20', overdueAlt: 'Getting tight for seed — buy Tumbling Tom transplants from garden centre in mid-May if you miss this window.', buyUrl: 'https://www.thompson-morgan.com/p/tomato-tumbling-tom-red/t59034' },
-  { id: 'sow-basil-indoor', priority: 4, label: 'Sow basil seeds indoors', detail: 'Needs warmth to germinate. Conservatory windowsill ideal.', phases: ['PRE_MOVE', 'NO_GEAR'], category: 'planting', oneTime: true, deadline: 'Apr 22', deadlineDate: '2026-04-22', overdueAlt: 'Still OK until early May from seed — or buy basil plug plants from garden centre.', buyUrl: 'https://www.thompson-morgan.com/p/basil-sweet-genovese/t55100' },
-  { id: 'sow-courgette-indoor', priority: 5, label: 'Sow courgette seeds indoors', detail: 'One seed per 9cm pot. Grows fast — sow 4 weeks before transplant.', phases: ['PRE_MOVE', 'NO_GEAR'], category: 'planting', oneTime: true, deadline: 'Apr 25', deadlineDate: '2026-04-25', overdueAlt: 'Still viable until end of May — sow now or buy transplants.' },
-  { id: 'divide-strawberries', priority: 6, label: 'Divide existing strawberry runners from raised bed', detail: 'FREE strawberries! The raised bed already has healthy runners (photo-verified). Snip rooted plantlets, pot into 9cm pots, keep watered 2-3 weeks, then transplant to GreenStalk tiers 3-4 when gear arrives. No need to buy new plants.', phases: ['NO_GEAR', 'EARLY_SEASON'], category: 'planting', oneTime: true, deadline: 'May 10', deadlineDate: '2026-05-10', overdueAlt: 'Still fine to divide until June — runners keep producing all summer.' },
-  { id: 'buy-sweet-pea-plugs', priority: 7, label: 'Buy sweet pea plug plants', detail: 'Too late to start from seed (should have been February). Buy as plugs.', phases: ['PRE_MOVE', 'NO_GEAR', 'EARLY_SEASON'], category: 'shopping', oneTime: true, deadline: 'May 1', deadlineDate: '2026-05-01', overdueAlt: 'Still available as plugs through May — buy now before stock runs out.', buyUrl: 'https://www.thompson-morgan.com/p/sweet-pea-spencer-mixed/t10886' },
-  { id: 'assess-garden', priority: 8, label: 'Assess garden: photos + sun patterns', detail: 'Take photos from every angle. Note morning vs afternoon sun on the terrace. Use Photo Coach tab!', phases: ['NO_GEAR'], category: 'setup', oneTime: true, deadline: 'Apr 26', deadlineDate: '2026-04-26' },
-  { id: 'position-greenstalks', priority: 9, label: 'Position GreenStalks on sunniest spot', detail: 'Use the Sun Heatmap on the Garden page. Aim for 6+ hours direct sun.', phases: ['EARLY_SEASON'], category: 'setup', oneTime: true, deadline: 'May 16', deadlineDate: '2026-05-16' },
-  { id: 'fill-greenstalks', priority: 10, label: 'Fill GreenStalks with compost mix', detail: '3:1 peat-free compost to perlite. Add slow-release fertiliser (NPK 14-14-14).', phases: ['EARLY_SEASON'], category: 'setup', oneTime: true, deadline: 'May 17', deadlineDate: '2026-05-17' },
-  { id: 'check-drainage', priority: 11, label: 'Check all GreenStalk drainage holes', detail: 'Poke a pencil through each pocket drain. Blocked drains = root rot.', phases: ['EARLY_SEASON'], category: 'setup', oneTime: true, deadline: 'May 17', deadlineDate: '2026-05-17' },
-  { id: 'test-watering', priority: 12, label: 'Fill top reservoir + test water flow', detail: 'Water should trickle through all 5 tiers evenly. Adjust perlite ratio if pooling.', phases: ['EARLY_SEASON'], category: 'setup', oneTime: true, deadline: 'May 18', deadlineDate: '2026-05-18' },
-  { id: 'setup-titan-cages', priority: 13, label: 'Set up Titan cages for climbers', detail: 'Allocate: 2x runner beans, 2x cucumbers, 2x cordon tomatoes (if in-ground).', phases: ['EARLY_SEASON'], category: 'setup', oneTime: true, deadline: 'May 25', deadlineDate: '2026-05-25' },
-  { id: 'transplant-seedlings', priority: 14, label: 'Transplant indoor seedlings to GreenStalks', detail: 'Harden off for 7 days first. Move outside during day, in at night.', phases: ['EARLY_SEASON'], category: 'planting', oneTime: true, deadline: 'May 25', deadlineDate: '2026-05-25', overdueAlt: 'Transplant ASAP — each day of delay reduces growing season.' },
-  { id: 'direct-sow-salad', priority: 15, label: 'Direct sow: radish, lettuce, rocket, peas', detail: 'Safe late-start crops. Radish ready in 25 days, lettuce in 30.', phases: ['EARLY_SEASON', 'NO_GEAR'], category: 'planting', oneTime: true, deadline: 'May 30', deadlineDate: '2026-05-30' },
-  { id: 'sow-beans', priority: 16, label: 'Direct sow French beans + runner beans', detail: 'Beans from seed are fine in late May. Sow 5cm deep, 15cm apart.', phases: ['EARLY_SEASON'], category: 'planting', oneTime: true, deadline: 'Jun 7', deadlineDate: '2026-06-07', overdueAlt: 'Still OK until mid-June — sow now for late-season harvest.' },
-  { id: 'buy-herb-plants', priority: 17, label: 'Buy potted herbs: mint, chives, thyme, rosemary', detail: 'Garden centre potted herbs establish faster than seed at this stage.', phases: ['NO_GEAR', 'EARLY_SEASON'], category: 'shopping', oneTime: true, deadline: 'May 20', deadlineDate: '2026-05-20', buyUrl: 'https://www.thompson-morgan.com/c/herb-plants' },
-  { id: 'water-daily', priority: 20, label: 'Water GreenStalks', detail: 'Daily in spring/autumn, twice daily June–August. Fill the top reservoir.', phases: ['EARLY_SEASON', 'PEAK_SEASON', 'LATE_SEASON'], category: 'maintenance', oneTime: false },
-  { id: 'pest-check', priority: 21, label: 'Check for pests (undersides of leaves)', detail: 'Look for aphids, whitefly, caterpillars. Check twice weekly minimum.', phases: ['EARLY_SEASON', 'PEAK_SEASON', 'LATE_SEASON'], category: 'maintenance', oneTime: false },
-  { id: 'feed-weekly', priority: 22, label: 'Liquid feed tomatoes + peppers', detail: 'Tomato feed (high potash) once flowering starts. Weekly through summer.', phases: ['PEAK_SEASON', 'LATE_SEASON'], category: 'maintenance', oneTime: false, buyUrl: 'https://www.thompson-morgan.com/p/tomorite-concentrated-tomato-food/t69481' },
-  { id: 'harvest-daily', priority: 23, label: 'Harvest ripe crops daily', detail: 'Regular picking encourages more fruit. Don\'t let beans go stringy.', phases: ['PEAK_SEASON', 'LATE_SEASON'], category: 'maintenance', oneTime: false },
-  { id: 'succession-sow', priority: 24, label: 'Succession sow salads every 2 weeks', detail: 'Lettuce, rocket, radish — keep sowing for continuous harvest.', phases: ['EARLY_SEASON', 'PEAK_SEASON'], category: 'planting', oneTime: false },
-  { id: 'rotate-greenstalks', priority: 25, label: 'Rotate GreenStalks 90° every 2 weeks', detail: 'Ensures even sun exposure on all sides.', phases: ['EARLY_SEASON', 'PEAK_SEASON', 'LATE_SEASON'], category: 'maintenance', oneTime: false },
-];
+import {
+  type Phase, type PriorityTask, PRIORITY_TASKS,
+  MOVE_IN, GEAR_ARRIVES, FIRST_FROST,
+  PHASE_LABELS, PHASE_BADGE_COLORS, CATEGORY_COLORS,
+  getPhase, daysBetween,
+  loadChecklist, saveChecklist,
+} from '../lib/priority-tasks';
 
 // ── Care data (condensed from CarePage) ─────────────────────────────────────
 
@@ -152,28 +77,7 @@ const GREENSTALK_SETUP: SetupStep[] = [
   { emoji: '☀️', title: 'Positioning', detail: '6+ hours direct sun. Rotate 90° every 2 weeks.', tip: 'Afternoon shade for lettuce/spinach prevents bolting.' },
 ];
 
-// ── Checklist persistence ───────────────────────────────────────────────────
-
-const CHECKLIST_STORAGE_KEY = 'garden-plotter-checklist';
-
-function loadChecklist(): Set<string> {
-  try {
-    const raw = localStorage.getItem(CHECKLIST_STORAGE_KEY);
-    if (!raw) return new Set();
-    return new Set(JSON.parse(raw));
-  } catch { return new Set(); }
-}
-
-function saveChecklist(completed: Set<string>) {
-  localStorage.setItem(CHECKLIST_STORAGE_KEY, JSON.stringify([...completed]));
-}
-
-const CATEGORY_COLORS: Record<string, { bg: string; text: string; label: string }> = {
-  setup: { bg: 'bg-sky-100 dark:bg-sky-900/30', text: 'text-sky-700 dark:text-sky-300', label: '🔧 Setup' },
-  planting: { bg: 'bg-emerald-100 dark:bg-emerald-900/30', text: 'text-emerald-700 dark:text-emerald-300', label: '🌱 Planting' },
-  maintenance: { bg: 'bg-amber-100 dark:bg-amber-900/30', text: 'text-amber-700 dark:text-amber-300', label: '🔄 Ongoing' },
-  shopping: { bg: 'bg-violet-100 dark:bg-violet-900/30', text: 'text-violet-700 dark:text-violet-300', label: '🛒 Buy' },
-};
+// Checklist persistence + CATEGORY_COLORS imported from ../lib/priority-tasks
 
 // ── Section collapse state ──────────────────────────────────────────────────
 type Section = 'overdue' | 'today' | 'care' | 'setup' | 'upcoming' | 'harvest';
@@ -530,6 +434,73 @@ export function DashboardPage({ onNavigate }: { onNavigate?: (tab: string, view?
             </div>
           )}
         </div>
+
+        {/* ── GARDEN CENTRE TRIPS ──────────────────────────────────────── */}
+        {(() => {
+          const gcTrips = PRIORITY_TASKS
+            .filter((t) => t.id.startsWith('gc-') && t.phases.includes(phase) && !completedTasks.has(t.id))
+            .sort((a, b) => (a.deadlineDate ?? '').localeCompare(b.deadlineDate ?? ''));
+          if (gcTrips.length === 0) return null;
+          return (
+            <div className="bg-white dark:bg-stone-800/80 rounded-2xl border border-teal-200/60 dark:border-teal-800/40 overflow-hidden elevation-1">
+              <div className="px-4 py-2.5 border-b border-teal-100 dark:border-teal-800/50">
+                <h2 className="text-sm font-bold text-teal-800 dark:text-teal-300">
+                  🚗 Garden Centre Trips
+                </h2>
+                <p className="text-[10px] text-stone-400 mt-0.5">Max 1 trip per week — Squires for plugs, Wisley for premium starts</p>
+              </div>
+              <div className="divide-y divide-stone-50 dark:divide-stone-700/50">
+                {gcTrips.map((trip) => {
+                  const done = completedTasks.has(trip.id);
+                  // Extract plant names from detail (after "Buy: ")
+                  const plantList = trip.detail.match(/Buy:\s*([^.]+)/)?.[1] ?? '';
+                  const isOverdue = trip.deadlineDate ? daysBetween(today, new Date(trip.deadlineDate)) < 0 : false;
+                  return (
+                    <div
+                      key={trip.id}
+                      className={`px-4 py-3 cursor-pointer hover:bg-stone-50 dark:hover:bg-stone-700/30 transition-colors ${done ? 'opacity-50' : ''}`}
+                      onClick={() => toggleTask(trip.id)}
+                    >
+                      <div className="flex items-center justify-between mb-1.5">
+                        <div className="flex items-center gap-2">
+                          <div className={`w-4 h-4 rounded border-2 flex items-center justify-center shrink-0 ${
+                            done ? 'bg-emerald-500 border-emerald-500 text-white' : 'border-teal-400 dark:border-teal-600'
+                          }`}>
+                            {done && <span className="text-[10px]">✓</span>}
+                          </div>
+                          <span className="text-sm font-semibold text-stone-800 dark:text-stone-100">{trip.label}</span>
+                        </div>
+                        <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${
+                          isOverdue ? 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300' : 'bg-teal-50 dark:bg-teal-900/20 text-teal-700 dark:text-teal-400'
+                        }`}>
+                          📅 By {trip.deadline}
+                        </span>
+                      </div>
+                      <div className="flex flex-wrap gap-1 ml-6">
+                        {plantList.split(',').map((p, i) => (
+                          <span key={i} className="text-[10px] px-2 py-0.5 rounded-full bg-teal-50 dark:bg-teal-900/20 border border-teal-200 dark:border-teal-800 text-teal-700 dark:text-teal-300">
+                            {p.trim()}
+                          </span>
+                        ))}
+                      </div>
+                      {trip.buyUrl && (
+                        <a
+                          href={trip.buyUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-block ml-6 mt-1.5 text-[10px] text-teal-600 dark:text-teal-400 hover:underline"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          📍 Directions →
+                        </a>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          );
+        })()}
 
         {/* ── OVERDUE ─────────────────────────────────────────────────────── */}
         {overdueTasks.length > 0 && (

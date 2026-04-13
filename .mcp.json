@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "plant-seasons": {
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "https://plant-seasons-mcp.onrender.com/mcp"]
+    }
+  }
+}

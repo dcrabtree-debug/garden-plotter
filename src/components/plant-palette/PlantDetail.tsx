@@ -155,6 +155,9 @@ export function PlantDetail({ plant, companionMap, onClose }: PlantDetailProps) 
               <div className="text-sm text-stone-600 dark:text-stone-400 space-y-0.5">
                 <div><span className="text-xs text-stone-400">pH:</span> {(plant as any).soil.phRange[0]} - {(plant as any).soil.phRange[1]}</div>
                 <div><span className="text-xs text-stone-400">Type:</span> {(plant as any).soil.type}</div>
+                {plant.soilTemp && (
+                  <div><span className="text-xs text-stone-400">Soil temp:</span> {plant.soilTemp.min}–{plant.soilTemp.max}°C</div>
+                )}
                 {(plant as any).soil.notes && <div className="text-xs text-stone-500">{(plant as any).soil.notes}</div>}
               </div>
             </div>

@@ -86,6 +86,10 @@
       ],
       "type": "Fertile, well-drained",
       "notes": "Grows well in most garden soils improved with organic matter."
+    },
+    "soilTemp": {
+      "min": 10,
+      "max": 20
     }
   },
   {
@@ -106,7 +110,7 @@
     "plantingWindow": {
       "sowIndoors": [
         2,
-        3
+        4
       ],
       "sowOutdoors": null,
       "transplant": [
@@ -169,7 +173,11 @@
       "notes": "Grows well in most garden soils improved with organic matter."
     },
     "childSafe": true,
-    "petSafe": true
+    "petSafe": true,
+    "soilTemp": {
+      "min": 16,
+      "max": 35
+    }
   },
   {
     "slug": "basil-sweet",
@@ -253,7 +261,11 @@
       "notes": "Grows well in most garden soils improved with organic matter."
     },
     "childSafe": true,
-    "petSafe": true
+    "petSafe": true,
+    "soilTemp": {
+      "min": 18,
+      "max": 35
+    }
   },
   {
     "slug": "dwarf-french-bean",
@@ -335,7 +347,11 @@
       "notes": "Grows well in most garden soils improved with organic matter."
     },
     "childSafe": true,
-    "petSafe": true
+    "petSafe": true,
+    "soilTemp": {
+      "min": 16,
+      "max": 30
+    }
   },
   {
     "slug": "perpetual-spinach",
@@ -356,7 +372,7 @@
       "sowIndoors": null,
       "sowOutdoors": [
         3,
-        7
+        10
       ],
       "transplant": null,
       "harvest": [
@@ -408,7 +424,11 @@
       "notes": "Grows well in most garden soils improved with organic matter."
     },
     "childSafe": true,
-    "petSafe": true
+    "petSafe": true,
+    "soilTemp": {
+      "min": 10,
+      "max": 25
+    }
   },
   {
     "slug": "swiss-chard",
@@ -493,7 +513,11 @@
       "notes": "Grows well in most garden soils improved with organic matter."
     },
     "childSafe": true,
-    "petSafe": true
+    "petSafe": true,
+    "soilTemp": {
+      "min": 10,
+      "max": 30
+    }
   },
   {
     "slug": "thyme",
@@ -574,7 +598,11 @@
       "notes": "Mediterranean herbs prefer lean alkaline soil with good drainage."
     },
     "childSafe": true,
-    "petSafe": true
+    "petSafe": true,
+    "soilTemp": {
+      "min": 15,
+      "max": 25
+    }
   },
   {
     "slug": "oregano",
@@ -650,7 +678,11 @@
       "notes": "Mediterranean herbs prefer lean alkaline soil with good drainage."
     },
     "childSafe": true,
-    "petSafe": true
+    "petSafe": true,
+    "soilTemp": {
+      "min": 18,
+      "max": 25
+    }
   },
   {
     "slug": "parsley",
@@ -734,7 +766,11 @@
       "notes": "Grows well in most garden soils improved with organic matter."
     },
     "childSafe": true,
-    "petSafe": true
+    "petSafe": true,
+    "soilTemp": {
+      "min": 10,
+      "max": 30
+    }
   },
   {
     "slug": "nasturtium",
@@ -925,7 +961,7 @@
       ],
       "sowOutdoors": [
         3,
-        8
+        9
       ],
       "transplant": [
         3,
@@ -988,7 +1024,11 @@
       "notes": "Grows well in most garden soils improved with organic matter."
     },
     "childSafe": true,
-    "petSafe": true
+    "petSafe": true,
+    "soilTemp": {
+      "min": 8,
+      "max": 27
+    }
   },
   {
     "slug": "chives",
@@ -1012,7 +1052,7 @@
       ],
       "sowOutdoors": [
         3,
-        5
+        9
       ],
       "transplant": [
         4,
@@ -1070,6 +1110,10 @@
       ],
       "type": "Fertile, well-drained",
       "notes": "Grows well in most garden soils improved with organic matter."
+    },
+    "soilTemp": {
+      "min": 10,
+      "max": 30
     }
   },
   {
@@ -1148,7 +1192,11 @@
       "notes": "Grows well in most garden soils improved with organic matter."
     },
     "childSafe": true,
-    "petSafe": true
+    "petSafe": true,
+    "soilTemp": {
+      "min": 21,
+      "max": 24
+    }
   },
   {
     "slug": "marigold",
@@ -1247,7 +1295,7 @@
     "plantingWindow": {
       "sowIndoors": null,
       "sowOutdoors": [
-        3,
+        2,
         9
       ],
       "transplant": null,
@@ -1306,7 +1354,11 @@
       "notes": "Grows well in most garden soils improved with organic matter."
     },
     "childSafe": true,
-    "petSafe": true
+    "petSafe": true,
+    "soilTemp": {
+      "min": 8,
+      "max": 30
+    }
   },
   {
     "slug": "rocket",
@@ -1327,7 +1379,7 @@
       "sowIndoors": null,
       "sowOutdoors": [
         3,
-        9
+        10
       ],
       "transplant": null,
       "harvest": [
@@ -1380,7 +1432,11 @@
       "notes": "Grows well in most garden soils improved with organic matter."
     },
     "childSafe": true,
-    "petSafe": true
+    "petSafe": true,
+    "soilTemp": {
+      "min": 10,
+      "max": 25
+    }
   },
   {
     "slug": "spring-onion",
@@ -1458,7 +1514,11 @@
       "notes": "Grows well in most garden soils improved with organic matter."
     },
     "childSafe": true,
-    "petSafe": true
+    "petSafe": true,
+    "soilTemp": {
+      "min": 10,
+      "max": 20
+    }
   },
   {
     "slug": "kale",
@@ -1544,7 +1604,11 @@
       "notes": "Grows well in most garden soils improved with organic matter."
     },
     "childSafe": true,
-    "petSafe": true
+    "petSafe": true,
+    "soilTemp": {
+      "min": 8,
+      "max": 30
+    }
   },
   {
     "slug": "pepper-chilli",
@@ -1626,7 +1690,11 @@
       "notes": "Grows well in most garden soils improved with organic matter."
     },
     "childSafe": true,
-    "petSafe": true
+    "petSafe": true,
+    "soilTemp": {
+      "min": 18,
+      "max": 35
+    }
   },
   {
     "slug": "runner-bean",
@@ -1713,7 +1781,11 @@
       "notes": "Grows well in most garden soils improved with organic matter."
     },
     "childSafe": true,
-    "petSafe": true
+    "petSafe": true,
+    "soilTemp": {
+      "min": 16,
+      "max": 30
+    }
   },
   {
     "slug": "broad-bean",
@@ -1796,7 +1868,11 @@
       "notes": "Grows well in most garden soils improved with organic matter."
     },
     "childSafe": true,
-    "petSafe": true
+    "petSafe": true,
+    "soilTemp": {
+      "min": 6,
+      "max": 24
+    }
   },
   {
     "slug": "pea",
@@ -1884,7 +1960,11 @@
       "notes": "Grows well in most garden soils improved with organic matter."
     },
     "childSafe": true,
-    "petSafe": true
+    "petSafe": true,
+    "soilTemp": {
+      "min": 8,
+      "max": 24
+    }
   },
   {
     "slug": "courgette",
@@ -1966,7 +2046,11 @@
       "notes": "Grows well in most garden soils improved with organic matter."
     },
     "childSafe": true,
-    "petSafe": true
+    "petSafe": true,
+    "soilTemp": {
+      "min": 21,
+      "max": 35
+    }
   },
   {
     "slug": "cucumber",
@@ -2046,7 +2130,11 @@
       "notes": "Grows well in most garden soils improved with organic matter."
     },
     "childSafe": true,
-    "petSafe": true
+    "petSafe": true,
+    "soilTemp": {
+      "min": 16,
+      "max": 35
+    }
   },
   {
     "slug": "beetroot",
@@ -2129,7 +2217,11 @@
       "notes": "Grows well in most garden soils improved with organic matter."
     },
     "childSafe": true,
-    "petSafe": true
+    "petSafe": true,
+    "soilTemp": {
+      "min": 7,
+      "max": 25
+    }
   },
   {
     "slug": "carrot",
@@ -2149,7 +2241,7 @@
     "plantingWindow": {
       "sowIndoors": null,
       "sowOutdoors": [
-        3,
+        2,
         7
       ],
       "transplant": null,
@@ -2210,7 +2302,11 @@
       "notes": "Grows well in most garden soils improved with organic matter."
     },
     "childSafe": true,
-    "petSafe": true
+    "petSafe": true,
+    "soilTemp": {
+      "min": 5,
+      "max": 27
+    }
   },
   {
     "slug": "parsnip",
@@ -2285,7 +2381,11 @@
       "notes": "Grows well in most garden soils improved with organic matter."
     },
     "childSafe": true,
-    "petSafe": true
+    "petSafe": true,
+    "soilTemp": {
+      "min": 6,
+      "max": 21
+    }
   },
   {
     "slug": "potato-early",
@@ -2362,7 +2462,11 @@
       "notes": "Grows well in most garden soils improved with organic matter."
     },
     "childSafe": true,
-    "petSafe": true
+    "petSafe": true,
+    "soilTemp": {
+      "min": 4,
+      "max": 30
+    }
   },
   {
     "slug": "potato-maincrop",
@@ -2440,7 +2544,11 @@
       "notes": "Grows well in most garden soils improved with organic matter."
     },
     "childSafe": true,
-    "petSafe": true
+    "petSafe": true,
+    "soilTemp": {
+      "min": 4,
+      "max": 30
+    }
   },
   {
     "slug": "onion-sets",
@@ -2521,7 +2629,11 @@
       "notes": "Grows well in most garden soils improved with organic matter."
     },
     "childSafe": true,
-    "petSafe": true
+    "petSafe": true,
+    "soilTemp": {
+      "min": 8,
+      "max": 30
+    }
   },
   {
     "slug": "garlic",
@@ -2600,7 +2712,11 @@
       "notes": "Grows well in most garden soils improved with organic matter."
     },
     "childSafe": true,
-    "petSafe": true
+    "petSafe": true,
+    "soilTemp": {
+      "min": 10,
+      "max": 35
+    }
   },
   {
     "slug": "leek",
@@ -2683,7 +2799,11 @@
       "notes": "Grows well in most garden soils improved with organic matter."
     },
     "childSafe": true,
-    "petSafe": true
+    "petSafe": true,
+    "soilTemp": {
+      "min": 8,
+      "max": 30
+    }
   },
   {
     "slug": "sweetcorn",
@@ -2764,7 +2884,11 @@
       "notes": "Grows well in most garden soils improved with organic matter."
     },
     "childSafe": true,
-    "petSafe": true
+    "petSafe": true,
+    "soilTemp": {
+      "min": 16,
+      "max": 35
+    }
   },
   {
     "slug": "broccoli-sprouting",
@@ -2847,7 +2971,11 @@
       "notes": "Grows well in most garden soils improved with organic matter."
     },
     "childSafe": true,
-    "petSafe": true
+    "petSafe": true,
+    "soilTemp": {
+      "min": 7,
+      "max": 30
+    }
   },
   {
     "slug": "cauliflower",
@@ -2932,7 +3060,11 @@
       "notes": "Grows well in most garden soils improved with organic matter."
     },
     "childSafe": true,
-    "petSafe": true
+    "petSafe": true,
+    "soilTemp": {
+      "min": 10,
+      "max": 30
+    }
   },
   {
     "slug": "cabbage",
@@ -3016,7 +3148,11 @@
       "notes": "Grows well in most garden soils improved with organic matter."
     },
     "childSafe": true,
-    "petSafe": true
+    "petSafe": true,
+    "soilTemp": {
+      "min": 5,
+      "max": 18
+    }
   },
   {
     "slug": "brussels-sprouts",
@@ -3100,7 +3236,11 @@
       "notes": "Grows well in most garden soils improved with organic matter."
     },
     "childSafe": true,
-    "petSafe": true
+    "petSafe": true,
+    "soilTemp": {
+      "min": 7,
+      "max": 30
+    }
   },
   {
     "slug": "turnip",
@@ -3180,7 +3320,11 @@
       "notes": "Grows well in most garden soils improved with organic matter."
     },
     "childSafe": true,
-    "petSafe": true
+    "petSafe": true,
+    "soilTemp": {
+      "min": 12,
+      "max": 30
+    }
   },
   {
     "slug": "squash",
@@ -3260,7 +3404,11 @@
       "notes": "Grows well in most garden soils improved with organic matter."
     },
     "childSafe": true,
-    "petSafe": true
+    "petSafe": true,
+    "soilTemp": {
+      "min": 15,
+      "max": 35
+    }
   },
   {
     "slug": "celery",
@@ -3340,7 +3488,11 @@
       "notes": "Grows well in most garden soils improved with organic matter."
     },
     "childSafe": true,
-    "petSafe": true
+    "petSafe": true,
+    "soilTemp": {
+      "min": 12,
+      "max": 21
+    }
   },
   {
     "slug": "pepper-sweet",
@@ -3423,7 +3575,11 @@
       "notes": "Grows well in most garden soils improved with organic matter."
     },
     "childSafe": true,
-    "petSafe": true
+    "petSafe": true,
+    "soilTemp": {
+      "min": 18,
+      "max": 35
+    }
   },
   {
     "slug": "aubergine",
@@ -3505,7 +3661,11 @@
       "notes": "Grows well in most garden soils improved with organic matter."
     },
     "childSafe": true,
-    "petSafe": true
+    "petSafe": true,
+    "soilTemp": {
+      "min": 24,
+      "max": 32
+    }
   },
   {
     "slug": "asparagus",
@@ -3584,7 +3744,11 @@
       "notes": "Grows well in most garden soils improved with organic matter."
     },
     "childSafe": true,
-    "petSafe": true
+    "petSafe": true,
+    "soilTemp": {
+      "min": 16,
+      "max": 30
+    }
   },
   {
     "slug": "rosemary",
@@ -3667,7 +3831,11 @@
       "notes": "Mediterranean herbs prefer lean alkaline soil with good drainage."
     },
     "childSafe": true,
-    "petSafe": true
+    "petSafe": true,
+    "soilTemp": {
+      "min": 15,
+      "max": 20
+    }
   },
   {
     "slug": "sage",
@@ -3751,7 +3919,11 @@
       "notes": "Mediterranean herbs prefer lean alkaline soil with good drainage."
     },
     "childSafe": true,
-    "petSafe": true
+    "petSafe": true,
+    "soilTemp": {
+      "min": 10,
+      "max": 25
+    }
   },
   {
     "slug": "coriander",
@@ -3832,7 +4004,11 @@
       "notes": "Grows well in most garden soils improved with organic matter."
     },
     "childSafe": true,
-    "petSafe": true
+    "petSafe": true,
+    "soilTemp": {
+      "min": 10,
+      "max": 25
+    }
   },
   {
     "slug": "dill",
@@ -3911,7 +4087,11 @@
       "notes": "Grows well in most garden soils improved with organic matter."
     },
     "childSafe": true,
-    "petSafe": true
+    "petSafe": true,
+    "soilTemp": {
+      "min": 10,
+      "max": 20
+    }
   },
   {
     "slug": "bay-laurel",
@@ -4058,7 +4238,11 @@
       "notes": "Grows well in most garden soils improved with organic matter."
     },
     "childSafe": true,
-    "petSafe": true
+    "petSafe": true,
+    "soilTemp": {
+      "min": 10,
+      "max": 25
+    }
   },
   {
     "slug": "raspberry",
@@ -4901,6 +5085,10 @@
       ],
       "type": "Fertile, well-drained",
       "notes": "Grows well in most garden soils improved with organic matter."
+    },
+    "soilTemp": {
+      "min": 5,
+      "max": 20
     }
   },
   {
@@ -5061,7 +5249,11 @@
       "notes": "Grows well in most garden soils improved with organic matter."
     },
     "childSafe": true,
-    "petSafe": true
+    "petSafe": true,
+    "soilTemp": {
+      "min": 10,
+      "max": 25
+    }
   },
   {
     "slug": "sunflower",
@@ -5146,7 +5338,11 @@
     },
     "childSafe": true,
     "petSafe": true,
-    "kidActivity": "Children can race sunflowers for height — growth can hit 30cm per week. Feed birds from the ripe seedheads in autumn."
+    "kidActivity": "Children can race sunflowers for height — growth can hit 30cm per week. Feed birds from the ripe seedheads in autumn.",
+    "soilTemp": {
+      "min": 10,
+      "max": 30
+    }
   },
   {
     "slug": "lavender",
@@ -5473,7 +5669,11 @@
       "https://www.rhs.org.uk/herbs/lemon-balm/grow-your-own"
     ],
     "childSafe": true,
-    "petSafe": true
+    "petSafe": true,
+    "soilTemp": {
+      "min": 10,
+      "max": 25
+    }
   },
   {
     "slug": "corsican-mint",
@@ -6016,16 +6216,28 @@
     "spacingCm": 80,
     "depthCm": 20,
     "growthHabit": "bushy",
-    "daysToHarvest": [365, 730],
+    "daysToHarvest": [
+      365,
+      730
+    ],
     "plantingWindow": {
       "sowIndoors": null,
       "sowOutdoors": null,
-      "transplant": [4, 5],
-      "harvest": [9, 11]
+      "transplant": [
+        4,
+        5
+      ],
+      "harvest": [
+        9,
+        11
+      ]
     },
     "hardiness": "H4",
     "soil": {
-      "phRange": [6.5, 8],
+      "phRange": [
+        6.5,
+        8
+      ],
       "type": "Well-drained, tolerates poor soil",
       "notes": "Excellent in pots. Tolerates clay if drainage is good. Drought-tolerant once established."
     },
@@ -6037,7 +6249,9 @@
       "expectedYieldPerM2": "Ornamental; may fruit in warm conservatory",
       "rotation": "permanent",
       "feeding": "Balanced liquid feed monthly spring-summer",
-      "pests": ["scale insect"],
+      "pests": [
+        "scale insect"
+      ],
       "diseases": [],
       "commonProblems": "Needs winter protection below -5°C. May not fruit in UK without warm conservatory or south wall."
     },
@@ -6074,16 +6288,28 @@
     "spacingCm": 80,
     "depthCm": 20,
     "growthHabit": "bushy",
-    "daysToHarvest": [180, 365],
+    "daysToHarvest": [
+      180,
+      365
+    ],
     "plantingWindow": {
       "sowIndoors": null,
       "sowOutdoors": null,
-      "transplant": [5, 6],
-      "harvest": [10, 3]
+      "transplant": [
+        5,
+        6
+      ],
+      "harvest": [
+        10,
+        3
+      ]
     },
     "hardiness": "H2",
     "soil": {
-      "phRange": [5.5, 6.5],
+      "phRange": [
+        5.5,
+        6.5
+      ],
       "type": "Ericaceous, well-drained",
       "notes": "Use citrus-specific compost. Needs acidic soil — do NOT use garden soil or multi-purpose."
     },
@@ -6095,7 +6321,11 @@
       "expectedYieldPerM2": "10-20 lemons/year in ideal conditions",
       "rotation": "permanent",
       "feeding": "Citrus feed fortnightly spring-summer, monthly autumn-winter",
-      "pests": ["scale insect", "mealybug", "red spider mite"],
+      "pests": [
+        "scale insect",
+        "mealybug",
+        "red spider mite"
+      ],
       "diseases": [],
       "commonProblems": "Needs minimum 10°C in winter — conservatory essential in Surrey. Leaf drop if temperature fluctuates. Yellow leaves = overwatering or iron deficiency."
     },
@@ -6132,16 +6362,28 @@
     "spacingCm": 45,
     "depthCm": 10,
     "growthHabit": "rosette",
-    "daysToHarvest": [90, 120],
+    "daysToHarvest": [
+      90,
+      120
+    ],
     "plantingWindow": {
       "sowIndoors": null,
       "sowOutdoors": null,
-      "transplant": [3, 5],
-      "harvest": [4, 10]
+      "transplant": [
+        3,
+        5
+      ],
+      "harvest": [
+        4,
+        10
+      ]
     },
     "hardiness": "H7",
     "soil": {
-      "phRange": [5, 7],
+      "phRange": [
+        5,
+        7
+      ],
       "type": "Moist, humus-rich",
       "notes": "Thrives in shade and damp conditions. Add leaf mould or compost."
     },
@@ -6191,16 +6433,31 @@
     "spacingCm": 60,
     "depthCm": 10,
     "growthHabit": "bushy",
-    "daysToHarvest": [60, 90],
+    "daysToHarvest": [
+      60,
+      90
+    ],
     "plantingWindow": {
       "sowIndoors": null,
-      "sowOutdoors": [3, 5],
-      "transplant": [3, 5],
-      "harvest": [5, 10]
+      "sowOutdoors": [
+        3,
+        5
+      ],
+      "transplant": [
+        3,
+        5
+      ],
+      "harvest": [
+        5,
+        10
+      ]
     },
     "hardiness": "H7",
     "soil": {
-      "phRange": [5, 7.5],
+      "phRange": [
+        5,
+        7.5
+      ],
       "type": "Any — thrives in clay",
       "notes": "Grows in almost any soil including heavy clay. Deep roots break up compacted subsoil and mine minerals."
     },
@@ -6244,16 +6501,28 @@
     "spacingCm": 15,
     "depthCm": 5,
     "growthHabit": "spreading",
-    "daysToHarvest": [60, 90],
+    "daysToHarvest": [
+      60,
+      90
+    ],
     "plantingWindow": {
       "sowIndoors": null,
-      "sowOutdoors": [3, 5],
+      "sowOutdoors": [
+        3,
+        5
+      ],
       "transplant": null,
-      "harvest": [5, 10]
+      "harvest": [
+        5,
+        10
+      ]
     },
     "hardiness": "H5",
     "soil": {
-      "phRange": [5.5, 7.5],
+      "phRange": [
+        5.5,
+        7.5
+      ],
       "type": "Any — improves all soil types",
       "notes": "Fixes atmospheric nitrogen into the soil. Dig in before flowering as green manure."
     },
@@ -6271,7 +6540,11 @@
     },
     "greenstalkSuitability": "marginal",
     "greenstalkNotes": "Can be used as a winter cover crop in empty GreenStalk pockets to fix nitrogen between seasons.",
-    "idealTiers": [3, 4, 5],
+    "idealTiers": [
+      3,
+      4,
+      5
+    ],
     "varieties": [
       {
         "name": "Common Crimson",
@@ -6297,16 +6570,28 @@
     "spacingCm": 15,
     "depthCm": 5,
     "growthHabit": "upright",
-    "daysToHarvest": [45, 60],
+    "daysToHarvest": [
+      45,
+      60
+    ],
     "plantingWindow": {
       "sowIndoors": null,
-      "sowOutdoors": [3, 9],
+      "sowOutdoors": [
+        3,
+        9
+      ],
       "transplant": null,
-      "harvest": [5, 10]
+      "harvest": [
+        5,
+        10
+      ]
     },
     "hardiness": "H3",
     "soil": {
-      "phRange": [5.5, 8],
+      "phRange": [
+        5.5,
+        8
+      ],
       "type": "Any — improves soil structure",
       "notes": "Dense root network breaks up compacted soil and improves drainage. Excellent for clay."
     },
@@ -6324,7 +6609,11 @@
     },
     "greenstalkSuitability": "marginal",
     "greenstalkNotes": "Quick filler for empty pockets — attracts pollinators to the tower.",
-    "idealTiers": [3, 4, 5],
+    "idealTiers": [
+      3,
+      4,
+      5
+    ],
     "varieties": [
       {
         "name": "Common Phacelia",
@@ -6350,12 +6639,27 @@
     "spacingCm": 30,
     "depthCm": 10,
     "growthHabit": "upright",
-    "daysToHarvest": [70, 84],
+    "daysToHarvest": [
+      70,
+      84
+    ],
     "plantingWindow": {
-      "sowIndoors": [3, 4],
-      "sowOutdoors": [4, 5],
-      "transplant": [5, 6],
-      "harvest": [6, 10]
+      "sowIndoors": [
+        3,
+        4
+      ],
+      "sowOutdoors": [
+        4,
+        5
+      ],
+      "transplant": [
+        5,
+        6
+      ],
+      "harvest": [
+        6,
+        10
+      ]
     },
     "greenstalkSuitability": "unsuitable",
     "greenstalkNotes": "Grows 60-120cm tall — too large for GreenStalk pockets.",
@@ -6384,13 +6688,19 @@
       "expectedYieldPerM2": "N/A — ornamental/cut flower",
       "rotation": "any",
       "feeding": "No feeding — poor soil produces more flowers",
-      "pests": ["aphids", "slugs"],
+      "pests": [
+        "aphids",
+        "slugs"
+      ],
       "diseases": [],
       "commonProblems": "Rich soil produces foliage at the expense of flowers. Stake tall varieties."
     },
     "hardiness": "H2",
     "soil": {
-      "phRange": [6, 7],
+      "phRange": [
+        6,
+        7
+      ],
       "type": "Poor to moderate, well-drained",
       "notes": "Like nasturtiums, cosmos flower best in poor soil. Avoid overfeeding."
     },
@@ -6409,12 +6719,21 @@
     "spacingCm": 30,
     "depthCm": 10,
     "growthHabit": "upright",
-    "daysToHarvest": [90, 120],
+    "daysToHarvest": [
+      90,
+      120
+    ],
     "plantingWindow": {
       "sowIndoors": null,
       "sowOutdoors": null,
-      "transplant": [4, 5],
-      "harvest": [6, 10]
+      "transplant": [
+        4,
+        5
+      ],
+      "harvest": [
+        6,
+        10
+      ]
     },
     "greenstalkSuitability": "unsuitable",
     "greenstalkNotes": "Tuberous perennial — needs ground planting or large container.",
@@ -6438,13 +6757,18 @@
       "expectedYieldPerM2": "N/A — ornamental/sensory",
       "rotation": "any",
       "feeding": "Monthly liquid feed during growing season",
-      "pests": ["slugs"],
+      "pests": [
+        "slugs"
+      ],
       "diseases": [],
       "commonProblems": "Not fully hardy — lift tubers in autumn and store frost-free, or mulch heavily."
     },
     "hardiness": "H3",
     "soil": {
-      "phRange": [6, 7],
+      "phRange": [
+        6,
+        7
+      ],
       "type": "Fertile, well-drained",
       "notes": "Needs good drainage. Add grit to clay soil."
     },
@@ -6464,16 +6788,35 @@
     "spacingCm": 25,
     "depthCm": 5,
     "growthHabit": "spreading",
-    "daysToHarvest": [90, 120],
+    "daysToHarvest": [
+      90,
+      120
+    ],
     "plantingWindow": {
-      "sowIndoors": [2, 3],
-      "sowOutdoors": [3, 5],
-      "transplant": [4, 6],
-      "harvest": [6, 10]
+      "sowIndoors": [
+        2,
+        3
+      ],
+      "sowOutdoors": [
+        3,
+        5
+      ],
+      "transplant": [
+        4,
+        6
+      ],
+      "harvest": [
+        6,
+        10
+      ]
     },
     "greenstalkSuitability": "good",
     "greenstalkNotes": "Compact enough for pockets. Fruits in partial shade — good for lower tiers.",
-    "idealTiers": [3, 4, 5],
+    "idealTiers": [
+      3,
+      4,
+      5
+    ],
     "varieties": [
       {
         "name": "Alexandria",
@@ -6498,19 +6841,29 @@
       "expectedYieldPerM2": "0.5-1 kg/m2 (small but intensely flavoured)",
       "rotation": "any",
       "feeding": "Light feed in spring",
-      "pests": ["slugs", "birds"],
+      "pests": [
+        "slugs",
+        "birds"
+      ],
       "diseases": [],
       "commonProblems": "Fruit is small — manage expectations. Plant along path edges for easy picking."
     },
     "hardiness": "H6",
     "soil": {
-      "phRange": [5.5, 7],
+      "phRange": [
+        5.5,
+        7
+      ],
       "type": "Humus-rich, moist",
       "notes": "Tolerates most soils. Woodland-edge plant that prefers some organic matter."
     },
     "childSafe": true,
     "petSafe": true,
-    "kidActivity": "Children love foraging for tiny, intensely sweet berries among the leaves. Runners teach propagation — pot up babies as gifts."
+    "kidActivity": "Children love foraging for tiny, intensely sweet berries among the leaves. Runners teach propagation — pot up babies as gifts.",
+    "soilTemp": {
+      "min": 10,
+      "max": 20
+    }
   },
   {
     "slug": "sweet-cicely",
@@ -6523,12 +6876,24 @@
     "spacingCm": 60,
     "depthCm": 10,
     "growthHabit": "bushy",
-    "daysToHarvest": [90, 120],
+    "daysToHarvest": [
+      90,
+      120
+    ],
     "plantingWindow": {
       "sowIndoors": null,
-      "sowOutdoors": [3, 4],
-      "transplant": [3, 5],
-      "harvest": [4, 10]
+      "sowOutdoors": [
+        3,
+        4
+      ],
+      "transplant": [
+        3,
+        5
+      ],
+      "harvest": [
+        4,
+        10
+      ]
     },
     "greenstalkSuitability": "unsuitable",
     "greenstalkNotes": "Grows to 90cm+ — far too large for GreenStalk pockets.",
@@ -6558,7 +6923,10 @@
     },
     "hardiness": "H7",
     "soil": {
-      "phRange": [5.5, 7.5],
+      "phRange": [
+        5.5,
+        7.5
+      ],
       "type": "Moist, humus-rich",
       "notes": "Woodland-edge conditions — moist, organic-rich soil in dappled shade."
     },
@@ -6577,12 +6945,21 @@
     "spacingCm": 60,
     "depthCm": 10,
     "growthHabit": "rosette",
-    "daysToHarvest": [90, 120],
+    "daysToHarvest": [
+      90,
+      120
+    ],
     "plantingWindow": {
       "sowIndoors": null,
       "sowOutdoors": null,
-      "transplant": [3, 5],
-      "harvest": [4, 10]
+      "transplant": [
+        3,
+        5
+      ],
+      "harvest": [
+        4,
+        10
+      ]
     },
     "greenstalkSuitability": "unsuitable",
     "greenstalkNotes": "Grows to 1.5m tall with vase-shaped crowns — needs open ground in shade.",
@@ -6612,7 +6989,10 @@
     },
     "hardiness": "H7",
     "soil": {
-      "phRange": [5, 7],
+      "phRange": [
+        5,
+        7
+      ],
       "type": "Rich, moist, humus-heavy",
       "notes": "Needs permanently moist, humus-rich soil. Add generous organic matter. Never let it dry out."
     },
@@ -6631,12 +7011,21 @@
     "spacingCm": 45,
     "depthCm": 10,
     "growthHabit": "rosette",
-    "daysToHarvest": [90, 120],
+    "daysToHarvest": [
+      90,
+      120
+    ],
     "plantingWindow": {
       "sowIndoors": null,
       "sowOutdoors": null,
-      "transplant": [3, 5],
-      "harvest": [4, 10]
+      "transplant": [
+        3,
+        5
+      ],
+      "harvest": [
+        4,
+        10
+      ]
     },
     "greenstalkSuitability": "unsuitable",
     "greenstalkNotes": "Shade-dependent perennial — needs ground planting in shade.",
@@ -6666,7 +7055,10 @@
     },
     "hardiness": "H4",
     "soil": {
-      "phRange": [5, 7],
+      "phRange": [
+        5,
+        7
+      ],
       "type": "Moist, humus-rich",
       "notes": "Thrives in shade and damp conditions. Add leaf mould or compost."
     },
@@ -6685,12 +7077,21 @@
     "spacingCm": 45,
     "depthCm": 10,
     "growthHabit": "rosette",
-    "daysToHarvest": [90, 120],
+    "daysToHarvest": [
+      90,
+      120
+    ],
     "plantingWindow": {
       "sowIndoors": null,
       "sowOutdoors": null,
-      "transplant": [3, 5],
-      "harvest": [4, 10]
+      "transplant": [
+        3,
+        5
+      ],
+      "harvest": [
+        4,
+        10
+      ]
     },
     "greenstalkSuitability": "unsuitable",
     "greenstalkNotes": "Large foliage clumps need ground planting. Also very slug-prone — GreenStalk elevation won't fully protect.",
@@ -6719,13 +7120,22 @@
       "expectedYieldPerM2": "Ornamental — edible spring hostons (Japanese delicacy)",
       "rotation": "permanent",
       "feeding": "General fertiliser in spring, mulch annually",
-      "pests": ["slugs", "snails", "vine weevil"],
-      "diseases": ["crown rot in wet conditions"],
+      "pests": [
+        "slugs",
+        "snails",
+        "vine weevil"
+      ],
+      "diseases": [
+        "crown rot in wet conditions"
+      ],
       "commonProblems": "Slugs are the main enemy. Use wool pellets, copper tape, beer traps, or raised containers."
     },
     "hardiness": "H7",
     "soil": {
-      "phRange": [5.5, 7.5],
+      "phRange": [
+        5.5,
+        7.5
+      ],
       "type": "Rich, moist, well-drained",
       "notes": "Rich soil in shade. Add organic matter annually."
     },
@@ -6745,16 +7155,31 @@
     "spacingCm": 25,
     "depthCm": 5,
     "growthHabit": "bushy",
-    "daysToHarvest": [60, 90],
+    "daysToHarvest": [
+      60,
+      90
+    ],
     "plantingWindow": {
-      "sowIndoors": [2, 3],
+      "sowIndoors": [
+        2,
+        3
+      ],
       "sowOutdoors": null,
-      "transplant": [5, 6],
-      "harvest": [6, 10]
+      "transplant": [
+        5,
+        6
+      ],
+      "harvest": [
+        6,
+        10
+      ]
     },
     "greenstalkSuitability": "good",
     "greenstalkNotes": "Compact, shade-tolerant, and colourful — works well in lower tiers with less light.",
-    "idealTiers": [4, 5],
+    "idealTiers": [
+      4,
+      5
+    ],
     "varieties": [
       {
         "name": "Super Elfin Mix",
@@ -6779,13 +7204,20 @@
       "expectedYieldPerM2": "N/A — ornamental",
       "rotation": "any",
       "feeding": "Liquid feed fortnightly when flowering",
-      "pests": ["aphids"],
-      "diseases": ["downy mildew"],
+      "pests": [
+        "aphids"
+      ],
+      "diseases": [
+        "downy mildew"
+      ],
       "commonProblems": "Very frost-tender — don't plant out until late May. Downy mildew can be a problem — choose resistant varieties."
     },
     "hardiness": "H2",
     "soil": {
-      "phRange": [6, 7],
+      "phRange": [
+        6,
+        7
+      ],
       "type": "Moist, humus-rich",
       "notes": "Keep moist but not waterlogged. Rich soil produces better flowering."
     },
@@ -6804,16 +7236,28 @@
     "spacingCm": 15,
     "depthCm": 5,
     "growthHabit": "spreading",
-    "daysToHarvest": [60, 90],
+    "daysToHarvest": [
+      60,
+      90
+    ],
     "plantingWindow": {
       "sowIndoors": null,
-      "sowOutdoors": [3, 5],
+      "sowOutdoors": [
+        3,
+        5
+      ],
       "transplant": null,
-      "harvest": [4, 6]
+      "harvest": [
+        4,
+        6
+      ]
     },
     "greenstalkSuitability": "marginal",
     "greenstalkNotes": "Can fill empty pockets in partial shade but self-seeding habit is messy in containers.",
-    "idealTiers": [4, 5],
+    "idealTiers": [
+      4,
+      5
+    ],
     "varieties": [
       {
         "name": "Blue Ball",
@@ -6839,12 +7283,17 @@
       "rotation": "any",
       "feeding": "No feeding needed",
       "pests": [],
-      "diseases": ["powdery mildew"],
+      "diseases": [
+        "powdery mildew"
+      ],
       "commonProblems": "Self-seeds prolifically — can become invasive. Pull unwanted seedlings. Biennial — sow each year or let self-seed."
     },
     "hardiness": "H7",
     "soil": {
-      "phRange": [5.5, 7.5],
+      "phRange": [
+        5.5,
+        7.5
+      ],
       "type": "Any moist soil",
       "notes": "Thrives in most conditions. Prefers moist shade but tolerates most situations."
     },
@@ -6863,16 +7312,35 @@
     "spacingCm": 20,
     "depthCm": 8,
     "growthHabit": "rosette",
-    "daysToHarvest": [21, 40],
+    "daysToHarvest": [
+      21,
+      40
+    ],
     "plantingWindow": {
-      "sowIndoors": [3, 4],
-      "sowOutdoors": [4, 9],
-      "transplant": [4, 5],
-      "harvest": [5, 11]
+      "sowIndoors": [
+        3,
+        4
+      ],
+      "sowOutdoors": [
+        4,
+        9
+      ],
+      "transplant": [
+        4,
+        5
+      ],
+      "harvest": [
+        5,
+        11
+      ]
     },
     "greenstalkSuitability": "ideal",
     "greenstalkNotes": "Shallow roots and compact rosette habit perfect for pockets. Cut-and-come-again harvesting extends season.",
-    "idealTiers": [1, 2, 3],
+    "idealTiers": [
+      1,
+      2,
+      3
+    ],
     "varieties": [
       {
         "name": "Mizuna Green",
@@ -6897,20 +7365,34 @@
       "expectedYieldPerM2": "1-2 kg/m2",
       "rotation": "brassicas",
       "feeding": "Light feed only — too much nitrogen makes leaves bitter",
-      "pests": ["flea beetle", "slugs", "aphids"],
-      "diseases": ["clubroot", "downy mildew"],
+      "pests": [
+        "flea beetle",
+        "slugs",
+        "aphids"
+      ],
+      "diseases": [
+        "clubroot",
+        "downy mildew"
+      ],
       "commonProblems": "Flea beetle makes tiny holes in leaves — cover with fleece early season. Bolts in prolonged heat."
     },
     "hardiness": "H5",
     "soil": {
-      "phRange": [6, 7.5],
+      "phRange": [
+        6,
+        7.5
+      ],
       "type": "Moist, fertile, well-drained",
       "notes": "Tolerates most soils. Add compost to clay. Does well in partial shade — NE-facing gardens actually suit it."
     },
     "childSafe": true,
     "petSafe": true,
     "kidActivity": "Quick grower — kids can see results in under a month. Great for salad-bowl picking.",
-    "soilTipSurrey": "London Clay is fine once improved with compost. Mizuna actually prefers cooler roots, so clay's moisture retention helps."
+    "soilTipSurrey": "London Clay is fine once improved with compost. Mizuna actually prefers cooler roots, so clay's moisture retention helps.",
+    "soilTemp": {
+      "min": 10,
+      "max": 30
+    }
   },
   {
     "slug": "snow-pea",
@@ -6923,12 +7405,27 @@
     "spacingCm": 8,
     "depthCm": 15,
     "growthHabit": "climbing",
-    "daysToHarvest": [55, 75],
+    "daysToHarvest": [
+      55,
+      75
+    ],
     "plantingWindow": {
-      "sowIndoors": [2, 3],
-      "sowOutdoors": [3, 6],
-      "transplant": [4, 5],
-      "harvest": [6, 9]
+      "sowIndoors": [
+        2,
+        3
+      ],
+      "sowOutdoors": [
+        3,
+        6
+      ],
+      "transplant": [
+        4,
+        5
+      ],
+      "harvest": [
+        6,
+        9
+      ]
     },
     "greenstalkSuitability": "unsuitable",
     "greenstalkNotes": "Climbing habit needs support netting. Too tall for pockets.",
@@ -6962,20 +7459,35 @@
       "expectedYieldPerM2": "1-2 kg/m2",
       "rotation": "legumes",
       "feeding": "No nitrogen needed — fixes own. Liquid feed when flowering.",
-      "pests": ["pea moth", "birds", "mice", "slugs"],
-      "diseases": ["powdery mildew", "pea wilt"],
+      "pests": [
+        "pea moth",
+        "birds",
+        "mice",
+        "slugs"
+      ],
+      "diseases": [
+        "powdery mildew",
+        "pea wilt"
+      ],
       "commonProblems": "Mice eat seeds — start in guttering or loo rolls indoors. Birds attack seedlings — cover with netting."
     },
     "hardiness": "H5",
     "soil": {
-      "phRange": [6, 7.5],
+      "phRange": [
+        6,
+        7.5
+      ],
       "type": "Fertile, well-drained",
       "notes": "Tolerates most soils. Add organic matter to heavy clay."
     },
     "childSafe": true,
     "petSafe": true,
     "kidActivity": "Kids love eating pods straight off the plant — sweet and crunchy. Easy to pick.",
-    "soilTipSurrey": "Clay soil is fine for peas. Add grit to planting trench if drainage is poor."
+    "soilTipSurrey": "Clay soil is fine for peas. Add grit to planting trench if drainage is poor.",
+    "soilTemp": {
+      "min": 8,
+      "max": 20
+    }
   },
   {
     "slug": "marrow",
@@ -6988,12 +7500,27 @@
     "spacingCm": 120,
     "depthCm": 25,
     "growthHabit": "trailing",
-    "daysToHarvest": [70, 90],
+    "daysToHarvest": [
+      70,
+      90
+    ],
     "plantingWindow": {
-      "sowIndoors": [4, 5],
-      "sowOutdoors": [5, 6],
-      "transplant": [5, 6],
-      "harvest": [8, 10]
+      "sowIndoors": [
+        4,
+        5
+      ],
+      "sowOutdoors": [
+        5,
+        6
+      ],
+      "transplant": [
+        5,
+        6
+      ],
+      "harvest": [
+        8,
+        10
+      ]
     },
     "greenstalkSuitability": "unsuitable",
     "greenstalkNotes": "Enormous trailing plant with 120cm+ spread. Needs ground or very large containers.",
@@ -7027,20 +7554,34 @@
       "expectedYieldPerM2": "3-5 fruits per plant",
       "rotation": "any",
       "feeding": "Heavy feeder — liquid feed fortnightly once fruits set. Plant on compost mound.",
-      "pests": ["slugs", "aphids", "cucumber beetle"],
-      "diseases": ["powdery mildew", "grey mould"],
+      "pests": [
+        "slugs",
+        "aphids",
+        "cucumber beetle"
+      ],
+      "diseases": [
+        "powdery mildew",
+        "grey mould"
+      ],
       "commonProblems": "Slugs destroy young plants — protect with cloches or slug pellets until established. Hand-pollinate if fruits rot at tip (poor pollination)."
     },
     "hardiness": "H2",
     "soil": {
-      "phRange": [5.5, 7],
+      "phRange": [
+        5.5,
+        7
+      ],
       "type": "Rich, moisture-retentive",
       "notes": "Hungry plant — dig in plenty of compost. Plant on a raised mound to improve drainage on clay."
     },
     "childSafe": true,
     "petSafe": true,
     "kidActivity": "Kids love the giant fruits — can grow to enormous sizes for competitions. Fun to stuff and bake together.",
-    "soilTipSurrey": "London Clay retains moisture well for marrows but drainage is key. Plant on a raised mound of compost mixed with garden soil."
+    "soilTipSurrey": "London Clay retains moisture well for marrows but drainage is key. Plant on a raised mound of compost mixed with garden soil.",
+    "soilTemp": {
+      "min": 20,
+      "max": 35
+    }
   },
   {
     "slug": "sweet-marjoram",
@@ -7053,16 +7594,35 @@
     "spacingCm": 25,
     "depthCm": 10,
     "growthHabit": "bushy",
-    "daysToHarvest": [60, 90],
+    "daysToHarvest": [
+      60,
+      90
+    ],
     "plantingWindow": {
-      "sowIndoors": [3, 4],
-      "sowOutdoors": [5, 6],
-      "transplant": [5, 6],
-      "harvest": [6, 10]
+      "sowIndoors": [
+        3,
+        4
+      ],
+      "sowOutdoors": [
+        5,
+        6
+      ],
+      "transplant": [
+        5,
+        6
+      ],
+      "harvest": [
+        6,
+        10
+      ]
     },
     "greenstalkSuitability": "good",
     "greenstalkNotes": "Compact bushy herb, suits middle tiers. Similar to oregano but more tender — benefits from GreenStalk's sheltered environment.",
-    "idealTiers": [2, 3, 4],
+    "idealTiers": [
+      2,
+      3,
+      4
+    ],
     "varieties": [
       {
         "name": "Sweet Marjoram",
@@ -7087,19 +7647,391 @@
       "expectedYieldPerM2": "N/A — harvest as needed",
       "rotation": "permanent",
       "feeding": "Light feed in spring. Over-feeding reduces flavour.",
-      "pests": ["aphids"],
+      "pests": [
+        "aphids"
+      ],
       "diseases": [],
       "commonProblems": "Not reliably hardy in Surrey winters (H3). Treat as annual or bring indoors over winter. Needs good drainage."
     },
     "hardiness": "H3",
     "soil": {
-      "phRange": [6.5, 7.5],
+      "phRange": [
+        6.5,
+        7.5
+      ],
       "type": "Light, well-drained",
       "notes": "Prefers poor to moderate soil — too rich reduces essential oil content. Add grit to clay soils."
     },
     "childSafe": true,
     "petSafe": true,
     "kidActivity": "Rub leaves between fingers to release the sweet scent — kids love the smell. Good for pizza herb mixes.",
-    "soilTipSurrey": "London Clay is too heavy without amendment. Add generous grit and sharp sand to planting area. Mediterranean herbs need drainage above all else."
+    "soilTipSurrey": "London Clay is too heavy without amendment. Add generous grit and sharp sand to planting area. Mediterranean herbs need drainage above all else.",
+    "soilTemp": {
+      "min": 10,
+      "max": 25
+    }
+  },
+  {
+    "slug": "shallots",
+    "commonName": "Shallots",
+    "botanicalName": "Allium cepa var. aggregatum",
+    "category": "vegetable",
+    "emoji": "🧅",
+    "sun": "full-sun",
+    "water": "low",
+    "spacingCm": 15,
+    "depthCm": 2,
+    "growthHabit": "upright",
+    "daysToHarvest": [
+      84,
+      105
+    ],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": [
+        2,
+        4
+      ],
+      "transplant": null,
+      "harvest": [
+        7,
+        9
+      ]
+    },
+    "greenstalkSuitability": "unsuitable",
+    "greenstalkNotes": "Need full ground depth for bulb development.",
+    "idealTiers": [],
+    "varieties": [
+      {
+        "name": "Golden Gourmet",
+        "notes": "Most popular UK variety, reliable yields from sets",
+        "containerFriendly": false
+      },
+      {
+        "name": "Red Sun",
+        "notes": "Red-skinned, sweet flavour, stores well through winter",
+        "containerFriendly": false
+      }
+    ],
+    "notes": "Plant sets with tips just showing above soil. Easier than onions from seed — perfect for first-year gardens.",
+    "sources": [
+      "https://www.rhs.org.uk/vegetables/shallots/grow-your-own"
+    ],
+    "childSafe": true,
+    "petSafe": true,
+    "kidActivity": "Kids can push sets into soil and pull up clusters at harvest — satisfying!",
+    "inGround": {
+      "rowSpacingCm": 30,
+      "plantSpacingCm": 15,
+      "sowDepthCm": 2,
+      "bedType": "either",
+      "expectedYieldPerM2": "3-4 kg/m²",
+      "rotation": "roots-onions",
+      "feeding": "Low feeder — avoid fresh manure. Light compost dressing at planting.",
+      "pests": [
+        "onion fly",
+        "allium leaf miner"
+      ],
+      "diseases": [
+        "white rot",
+        "downy mildew"
+      ],
+      "commonProblems": "Bolting if planted too early. Wait until soil warms above 8°C."
+    },
+    "hardiness": "H5",
+    "soil": {
+      "phRange": [
+        6.0,
+        7.0
+      ],
+      "type": "Well-drained, fertile",
+      "notes": "Tolerates London Clay if amended with compost. Avoid freshly manured ground."
+    },
+    "soilTemp": {
+      "min": 8,
+      "max": 30
+    },
+    "soilTipSurrey": "London Clay suits shallots well once broken up with compost. Good drainage is key."
+  },
+  {
+    "slug": "pumpkin",
+    "commonName": "Pumpkin",
+    "botanicalName": "Cucurbita maxima / C. pepo",
+    "category": "vegetable",
+    "emoji": "🎃",
+    "sun": "full-sun",
+    "water": "high",
+    "spacingCm": 120,
+    "depthCm": 3,
+    "growthHabit": "trailing",
+    "daysToHarvest": [
+      105,
+      140
+    ],
+    "plantingWindow": {
+      "sowIndoors": [
+        4,
+        5
+      ],
+      "sowOutdoors": [
+        5,
+        6
+      ],
+      "transplant": [
+        5,
+        6
+      ],
+      "harvest": [
+        9,
+        10
+      ]
+    },
+    "greenstalkSuitability": "unsuitable",
+    "greenstalkNotes": "Far too large and sprawling for vertical growing.",
+    "idealTiers": [],
+    "varieties": [
+      {
+        "name": "Crown Prince",
+        "notes": "Blue-grey skin, superb eating quality — UK favourite",
+        "containerFriendly": false
+      },
+      {
+        "name": "Jack O'Lantern",
+        "notes": "Classic carving pumpkin, great for kids at Halloween",
+        "containerFriendly": false
+      },
+      {
+        "name": "Baby Bear",
+        "notes": "Compact 15cm fruits, good for smaller gardens",
+        "containerFriendly": false
+      }
+    ],
+    "notes": "Hungry feeders — plant on a mound of compost. Train vines along garden edges to save space.",
+    "sources": [
+      "https://www.rhs.org.uk/vegetables/pumpkins/grow-your-own"
+    ],
+    "childSafe": true,
+    "petSafe": true,
+    "kidActivity": "Kids love growing giant pumpkins for Halloween! Measure weekly and keep a growth chart.",
+    "inGround": {
+      "rowSpacingCm": 180,
+      "plantSpacingCm": 120,
+      "sowDepthCm": 3,
+      "bedType": "flat",
+      "expectedYieldPerM2": "2-4 fruits per plant",
+      "rotation": "any",
+      "feeding": "Heavy feeder — liquid feed weekly once fruits set. Mulch generously.",
+      "pests": [
+        "slugs",
+        "aphids",
+        "squash vine borer"
+      ],
+      "diseases": [
+        "powdery mildew",
+        "grey mould"
+      ],
+      "commonProblems": "Fruits rotting on wet ground. Place a tile under each developing fruit."
+    },
+    "hardiness": "H2",
+    "soil": {
+      "phRange": [
+        6.0,
+        7.0
+      ],
+      "type": "Rich, moisture-retentive",
+      "notes": "Loves compost-rich soil. London Clay retains moisture well which pumpkins appreciate."
+    },
+    "soilTemp": {
+      "min": 20,
+      "max": 32
+    },
+    "soilTipSurrey": "London Clay holds moisture well for pumpkins. Dig in plenty of compost and create a slight mound."
+  },
+  {
+    "slug": "pak-choy",
+    "commonName": "Pak Choy",
+    "botanicalName": "Brassica rapa subsp. chinensis",
+    "category": "vegetable",
+    "emoji": "🥬",
+    "sun": "partial-shade",
+    "water": "high",
+    "spacingCm": 30,
+    "depthCm": 1,
+    "growthHabit": "rosette",
+    "daysToHarvest": [
+      30,
+      60
+    ],
+    "plantingWindow": {
+      "sowIndoors": [
+        4,
+        5
+      ],
+      "sowOutdoors": [
+        6,
+        8
+      ],
+      "transplant": [
+        5,
+        6
+      ],
+      "harvest": [
+        7,
+        10
+      ]
+    },
+    "greenstalkSuitability": "good",
+    "greenstalkNotes": "Compact and fast-growing — ideal for GreenStalk pockets. Harvest as baby leaves from 4 weeks.",
+    "idealTiers": [
+      2,
+      3,
+      4
+    ],
+    "varieties": [
+      {
+        "name": "Joi Choi",
+        "notes": "Thick white stems, bolt-resistant, classic stir-fry variety",
+        "containerFriendly": true
+      },
+      {
+        "name": "Shanghai Green",
+        "notes": "Baby pak choy, very fast 30-day harvest",
+        "containerFriendly": true
+      }
+    ],
+    "notes": "Sow June onwards to avoid bolting. Succession sow every 2-3 weeks for continuous harvest.",
+    "sources": [
+      "https://www.rhs.org.uk/vegetables/pak-choi/grow-your-own"
+    ],
+    "childSafe": true,
+    "petSafe": true,
+    "kidActivity": "Super-fast growth visible in days! Great for impatient young gardeners.",
+    "inGround": {
+      "rowSpacingCm": 30,
+      "plantSpacingCm": 30,
+      "sowDepthCm": 1,
+      "bedType": "either",
+      "expectedYieldPerM2": "3-5 kg/m²",
+      "rotation": "brassicas",
+      "feeding": "Moderate feeder — nitrogen-rich feed encourages leafy growth.",
+      "pests": [
+        "flea beetle",
+        "slugs",
+        "cabbage white butterfly"
+      ],
+      "diseases": [
+        "club root",
+        "downy mildew"
+      ],
+      "commonProblems": "Bolts quickly in hot weather or long days. Sow midsummer onwards for best results."
+    },
+    "hardiness": "H3",
+    "soil": {
+      "phRange": [
+        6.0,
+        7.5
+      ],
+      "type": "Fertile, moisture-retentive",
+      "notes": "Needs consistent moisture — London Clay is fine with added compost."
+    },
+    "soilTemp": {
+      "min": 21,
+      "max": 30
+    },
+    "soilTipSurrey": "London Clay holds moisture well for pak choy. Bolts in hot dry spells — water regularly."
+  },
+  {
+    "slug": "kohlrabi",
+    "commonName": "Kohlrabi",
+    "botanicalName": "Brassica oleracea var. gongylodes",
+    "category": "vegetable",
+    "emoji": "🥦",
+    "sun": "full-sun",
+    "water": "moderate",
+    "spacingCm": 20,
+    "depthCm": 1,
+    "growthHabit": "rosette",
+    "daysToHarvest": [
+      49,
+      70
+    ],
+    "plantingWindow": {
+      "sowIndoors": [
+        2,
+        3
+      ],
+      "sowOutdoors": [
+        3,
+        8
+      ],
+      "transplant": [
+        4,
+        5
+      ],
+      "harvest": [
+        5,
+        10
+      ]
+    },
+    "greenstalkSuitability": "good",
+    "greenstalkNotes": "Compact brassica — the bulb sits above soil. Works well in GreenStalk pockets.",
+    "idealTiers": [
+      2,
+      3,
+      4,
+      5
+    ],
+    "varieties": [
+      {
+        "name": "Purple Vienna",
+        "notes": "Purple skin, crisp white flesh — kids love the alien look",
+        "containerFriendly": true
+      },
+      {
+        "name": "White Vienna",
+        "notes": "Classic pale green, mild apple-turnip flavour",
+        "containerFriendly": true
+      }
+    ],
+    "notes": "Harvest at tennis-ball size for best flavour. Succession sow every 3 weeks Mar-Aug.",
+    "sources": [
+      "https://www.rhs.org.uk/vegetables/kohlrabi/grow-your-own"
+    ],
+    "childSafe": true,
+    "petSafe": true,
+    "kidActivity": "Kids love the 'alien spaceship' shape! Can eat raw like an apple — crunchy and mild.",
+    "inGround": {
+      "rowSpacingCm": 30,
+      "plantSpacingCm": 20,
+      "sowDepthCm": 1,
+      "bedType": "either",
+      "expectedYieldPerM2": "5-8 kg/m²",
+      "rotation": "brassicas",
+      "feeding": "Moderate feeder — compost at planting is usually sufficient.",
+      "pests": [
+        "flea beetle",
+        "cabbage root fly",
+        "cabbage white butterfly"
+      ],
+      "diseases": [
+        "club root",
+        "downy mildew"
+      ],
+      "commonProblems": "Becomes woody if left too long. Harvest at 5-8cm diameter."
+    },
+    "hardiness": "H4",
+    "soil": {
+      "phRange": [
+        6.0,
+        7.0
+      ],
+      "type": "Fertile, well-drained",
+      "notes": "Tolerates most soils including clay if not waterlogged."
+    },
+    "soilTemp": {
+      "min": 8,
+      "max": 30
+    },
+    "soilTipSurrey": "London Clay works fine for kohlrabi. The bulb grows above ground so drainage less critical than root crops."
   }
 ]

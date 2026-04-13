@@ -63,4 +63,5 @@ export interface Plant {
   toxicWarning?: string;
   kidActivity?: string;
   soilTipSurrey?: string;
+  soilTemp?: { min: number; max: number };
 }

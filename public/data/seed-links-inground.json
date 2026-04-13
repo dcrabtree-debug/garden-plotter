@@ -1648,6 +1648,29 @@
     "commonName": "Pumpkin",
     "varieties": [
       {
+        "name": "Crown Prince",
+        "why": "UK favourite for eating quality, blue-grey skin with rich orange flesh, outstanding flavour for soups and roasting",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=pumpkin%20crown%20prince",
+            "priceGBP": 2.99,
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/search?q=pumpkin%20crown%20prince",
+            "priceGBP": 2.49
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/search?q=Crown+Prince+Pumpkin",
+            "priceGBP": 2.49
+          }
+        ]
+      },
+      {
         "name": "Jack O'Lantern",
         "why": "Classic carving pumpkin, 4-5kg fruits, kids love growing these for Halloween",
         "context": "inground",
@@ -2657,96 +2680,641 @@
   {
     "slug": "mizuna",
     "commonName": "Mizuna",
-    "varieties": [{ "name": "Green", "why": "Fast-growing Asian salad green. Baby leaf in 3 weeks, cut-and-come-again all season.", "context": "inground", "sellers": [{ "seller": "Thompson & Morgan", "url": "https://www.thompson-morgan.com/search?searchTerm=mizuna", "priceGBP": 2.49, "recommended": true }, { "seller": "Suttons Seeds", "url": "https://www.suttons.co.uk/search?q=mizuna", "priceGBP": 2.29 }] }]
+    "varieties": [
+      {
+        "name": "Green",
+        "why": "Fast-growing Asian salad green. Baby leaf in 3 weeks, cut-and-come-again all season.",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=mizuna",
+            "priceGBP": 2.49,
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/search?q=mizuna",
+            "priceGBP": 2.29
+          }
+        ]
+      }
+    ]
   },
   {
     "slug": "snow-pea",
     "commonName": "Snow Pea (Mangetout)",
-    "varieties": [{ "name": "Oregon Sugar Pod", "why": "Heavy cropper, stringless flat pods. Classic mangetout — eat whole pod before peas develop.", "context": "inground", "sellers": [{ "seller": "Thompson & Morgan", "url": "https://www.thompson-morgan.com/search?searchTerm=mangetout+oregon+sugar+pod", "priceGBP": 3.49, "recommended": true }, { "seller": "Mr Fothergill's", "url": "https://www.mr-fothergills.co.uk/search?q=mangetout", "priceGBP": 2.99 }] }, { "name": "Norli", "why": "Dwarf variety, no staking needed. Perfect for small spaces.", "context": "inground", "sellers": [{ "seller": "Suttons Seeds", "url": "https://www.suttons.co.uk/search?q=mangetout+norli", "priceGBP": 3.29 }] }]
+    "varieties": [
+      {
+        "name": "Oregon Sugar Pod",
+        "why": "Heavy cropper, stringless flat pods. Classic mangetout — eat whole pod before peas develop.",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=mangetout+oregon+sugar+pod",
+            "priceGBP": 3.49,
+            "recommended": true
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://www.mr-fothergills.co.uk/search?q=mangetout",
+            "priceGBP": 2.99
+          }
+        ]
+      },
+      {
+        "name": "Norli",
+        "why": "Dwarf variety, no staking needed. Perfect for small spaces.",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/search?q=mangetout+norli",
+            "priceGBP": 3.29
+          }
+        ]
+      }
+    ]
   },
   {
     "slug": "marrow",
     "commonName": "Marrow",
-    "varieties": [{ "name": "Tiger Cross", "why": "RHS AGM. Striped skin, reliable cropper, good disease resistance. Classic British garden staple.", "context": "inground", "sellers": [{ "seller": "Thompson & Morgan", "url": "https://www.thompson-morgan.com/search?searchTerm=marrow+tiger+cross", "priceGBP": 2.99, "badge": "RHS AGM", "recommended": true }, { "seller": "Suttons Seeds", "url": "https://www.suttons.co.uk/search?q=marrow", "priceGBP": 2.79 }] }, { "name": "Long Green Bush", "why": "Compact bush habit — more manageable than trailing types for smaller gardens.", "context": "inground", "sellers": [{ "seller": "Mr Fothergill's", "url": "https://www.mr-fothergills.co.uk/search?q=marrow", "priceGBP": 2.49 }] }]
+    "varieties": [
+      {
+        "name": "Tiger Cross",
+        "why": "RHS AGM. Striped skin, reliable cropper, good disease resistance. Classic British garden staple.",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=marrow+tiger+cross",
+            "priceGBP": 2.99,
+            "badge": "RHS AGM",
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/search?q=marrow",
+            "priceGBP": 2.79
+          }
+        ]
+      },
+      {
+        "name": "Long Green Bush",
+        "why": "Compact bush habit — more manageable than trailing types for smaller gardens.",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://www.mr-fothergills.co.uk/search?q=marrow",
+            "priceGBP": 2.49
+          }
+        ]
+      }
+    ]
   },
   {
     "slug": "sweet-marjoram",
     "commonName": "Sweet Marjoram",
-    "varieties": [{ "name": "Sweet Marjoram", "why": "Sweeter, milder cousin of oregano. Essential in Mediterranean cooking. Dries beautifully.", "context": "inground", "sellers": [{ "seller": "Thompson & Morgan", "url": "https://www.thompson-morgan.com/search?searchTerm=sweet+marjoram", "priceGBP": 1.99, "recommended": true }, { "seller": "Mr Fothergill's", "url": "https://www.mr-fothergills.co.uk/search?q=marjoram", "priceGBP": 1.89 }] }]
+    "varieties": [
+      {
+        "name": "Sweet Marjoram",
+        "why": "Sweeter, milder cousin of oregano. Essential in Mediterranean cooking. Dries beautifully.",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=sweet+marjoram",
+            "priceGBP": 1.99,
+            "recommended": true
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://www.mr-fothergills.co.uk/search?q=marjoram",
+            "priceGBP": 1.89
+          }
+        ]
+      }
+    ]
   },
   {
     "slug": "alpine-strawberry",
     "commonName": "Alpine Strawberry",
-    "varieties": [{ "name": "Alexandria", "why": "Compact, no runners, intense wild strawberry flavour. Perfect edging plant.", "context": "inground", "sellers": [{ "seller": "Thompson & Morgan", "url": "https://www.thompson-morgan.com/search?searchTerm=alpine+strawberry", "priceGBP": 2.49, "recommended": true }, { "seller": "Crocus", "url": "https://www.crocus.co.uk/search/_/alpine+strawberry/", "priceGBP": 5.99, "badge": "Potted plant" }] }]
+    "varieties": [
+      {
+        "name": "Alexandria",
+        "why": "Compact, no runners, intense wild strawberry flavour. Perfect edging plant.",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=alpine+strawberry",
+            "priceGBP": 2.49,
+            "recommended": true
+          },
+          {
+            "seller": "Crocus",
+            "url": "https://www.crocus.co.uk/search/_/alpine+strawberry/",
+            "priceGBP": 5.99,
+            "badge": "Potted plant"
+          }
+        ]
+      }
+    ]
   },
   {
     "slug": "comfrey",
     "commonName": "Comfrey",
-    "varieties": [{ "name": "Bocking 14", "why": "Sterile cultivar — no self-seeding. Supreme compost activator and liquid feed source.", "context": "inground", "sellers": [{ "seller": "Thompson & Morgan", "url": "https://www.thompson-morgan.com/search?searchTerm=comfrey+bocking", "priceGBP": 8.99, "badge": "Root cuttings", "recommended": true }] }]
+    "varieties": [
+      {
+        "name": "Bocking 14",
+        "why": "Sterile cultivar — no self-seeding. Supreme compost activator and liquid feed source.",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=comfrey+bocking",
+            "priceGBP": 8.99,
+            "badge": "Root cuttings",
+            "recommended": true
+          }
+        ]
+      }
+    ]
   },
   {
     "slug": "cosmos",
     "commonName": "Cosmos",
-    "varieties": [{ "name": "Sensation Mixed", "why": "Classic cottage garden annual. Tall, airy, attracts pollinators all summer.", "context": "inground", "sellers": [{ "seller": "Thompson & Morgan", "url": "https://www.thompson-morgan.com/search?searchTerm=cosmos+sensation", "priceGBP": 2.49, "recommended": true }, { "seller": "Suttons Seeds", "url": "https://www.suttons.co.uk/search?q=cosmos+sensation", "priceGBP": 2.29 }] }]
+    "varieties": [
+      {
+        "name": "Sensation Mixed",
+        "why": "Classic cottage garden annual. Tall, airy, attracts pollinators all summer.",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=cosmos+sensation",
+            "priceGBP": 2.49,
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/search?q=cosmos+sensation",
+            "priceGBP": 2.29
+          }
+        ]
+      }
+    ]
   },
   {
     "slug": "crimson-clover",
     "commonName": "Crimson Clover",
-    "varieties": [{ "name": "Crimson Clover", "why": "Green manure — fixes nitrogen, suppresses weeds, beautiful crimson flowers for pollinators.", "context": "inground", "sellers": [{ "seller": "Kings Seeds", "url": "https://www.kingsseeds.com/search?q=crimson+clover", "priceGBP": 2.99, "recommended": true }, { "seller": "Thompson & Morgan", "url": "https://www.thompson-morgan.com/search?searchTerm=crimson+clover", "priceGBP": 3.49 }] }]
+    "varieties": [
+      {
+        "name": "Crimson Clover",
+        "why": "Green manure — fixes nitrogen, suppresses weeds, beautiful crimson flowers for pollinators.",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/search?q=crimson+clover",
+            "priceGBP": 2.99,
+            "recommended": true
+          },
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=crimson+clover",
+            "priceGBP": 3.49
+          }
+        ]
+      }
+    ]
   },
   {
     "slug": "forget-me-not",
     "commonName": "Forget-me-not",
-    "varieties": [{ "name": "Blue Ball", "why": "Compact, dense habit. Perfect sky-blue groundcover. Self-seeds freely for years.", "context": "inground", "sellers": [{ "seller": "Thompson & Morgan", "url": "https://www.thompson-morgan.com/search?searchTerm=forget+me+not", "priceGBP": 1.99, "recommended": true }, { "seller": "Mr Fothergill's", "url": "https://www.mr-fothergills.co.uk/search?q=forget+me+not", "priceGBP": 1.89 }] }]
+    "varieties": [
+      {
+        "name": "Blue Ball",
+        "why": "Compact, dense habit. Perfect sky-blue groundcover. Self-seeds freely for years.",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=forget+me+not",
+            "priceGBP": 1.99,
+            "recommended": true
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://www.mr-fothergills.co.uk/search?q=forget+me+not",
+            "priceGBP": 1.89
+          }
+        ]
+      }
+    ]
   },
   {
     "slug": "phacelia",
     "commonName": "Phacelia",
-    "varieties": [{ "name": "Phacelia tanacetifolia", "why": "Top bee-attracting green manure. Beautiful lavender flowers. Dig in to improve soil structure.", "context": "inground", "sellers": [{ "seller": "Kings Seeds", "url": "https://www.kingsseeds.com/search?q=phacelia", "priceGBP": 2.49, "recommended": true }, { "seller": "Thompson & Morgan", "url": "https://www.thompson-morgan.com/search?searchTerm=phacelia", "priceGBP": 2.99 }] }]
+    "varieties": [
+      {
+        "name": "Phacelia tanacetifolia",
+        "why": "Top bee-attracting green manure. Beautiful lavender flowers. Dig in to improve soil structure.",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/search?q=phacelia",
+            "priceGBP": 2.49,
+            "recommended": true
+          },
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=phacelia",
+            "priceGBP": 2.99
+          }
+        ]
+      }
+    ]
   },
   {
     "slug": "sweet-cicely",
     "commonName": "Sweet Cicely",
-    "varieties": [{ "name": "Sweet Cicely", "why": "Anise-flavoured herb. Natural sugar substitute — use leaves to sweeten stewed fruit. Shade-tolerant.", "context": "inground", "sellers": [{ "seller": "Thompson & Morgan", "url": "https://www.thompson-morgan.com/search?searchTerm=sweet+cicely", "priceGBP": 2.49, "recommended": true }, { "seller": "Suttons Seeds", "url": "https://www.suttons.co.uk/search?q=sweet+cicely", "priceGBP": 2.29 }] }]
+    "varieties": [
+      {
+        "name": "Sweet Cicely",
+        "why": "Anise-flavoured herb. Natural sugar substitute — use leaves to sweeten stewed fruit. Shade-tolerant.",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=sweet+cicely",
+            "priceGBP": 2.49,
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/search?q=sweet+cicely",
+            "priceGBP": 2.29
+          }
+        ]
+      }
+    ]
   },
   {
     "slug": "busy-lizzy",
     "commonName": "Busy Lizzy",
-    "varieties": [{ "name": "Beacon Mixed", "why": "Imara series — downy mildew resistant. Reliable shade colour all summer.", "context": "inground", "sellers": [{ "seller": "Thompson & Morgan", "url": "https://www.thompson-morgan.com/search?searchTerm=impatiens+beacon", "priceGBP": 3.99, "badge": "Plug plants", "recommended": true }, { "seller": "Suttons Seeds", "url": "https://www.suttons.co.uk/search?q=impatiens+plugs", "priceGBP": 4.49, "badge": "Plug plants" }] }]
+    "varieties": [
+      {
+        "name": "Beacon Mixed",
+        "why": "Imara series — downy mildew resistant. Reliable shade colour all summer.",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=impatiens+beacon",
+            "priceGBP": 3.99,
+            "badge": "Plug plants",
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/search?q=impatiens+plugs",
+            "priceGBP": 4.49,
+            "badge": "Plug plants"
+          }
+        ]
+      }
+    ]
   },
   {
     "slug": "chocolate-cosmos",
     "commonName": "Chocolate Cosmos",
-    "varieties": [{ "name": "Cosmos atrosanguineus", "why": "Deep maroon flowers with genuine chocolate scent. Tuberous perennial — lift tubers in autumn.", "context": "inground", "sellers": [{ "seller": "Crocus", "url": "https://www.crocus.co.uk/search/_/chocolate+cosmos/", "priceGBP": 9.99, "badge": "Potted plant", "recommended": true }, { "seller": "Thompson & Morgan", "url": "https://www.thompson-morgan.com/search?searchTerm=chocolate+cosmos", "priceGBP": 7.99 }] }]
+    "varieties": [
+      {
+        "name": "Cosmos atrosanguineus",
+        "why": "Deep maroon flowers with genuine chocolate scent. Tuberous perennial — lift tubers in autumn.",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Crocus",
+            "url": "https://www.crocus.co.uk/search/_/chocolate+cosmos/",
+            "priceGBP": 9.99,
+            "badge": "Potted plant",
+            "recommended": true
+          },
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=chocolate+cosmos",
+            "priceGBP": 7.99
+          }
+        ]
+      }
+    ]
   },
   {
     "slug": "dwarf-lemon",
     "commonName": "Dwarf Lemon",
-    "varieties": [{ "name": "Meyer Improved", "why": "Most cold-tolerant citrus. Fragrant flowers, edible fruit. Must overwinter in conservatory.", "context": "inground", "sellers": [{ "seller": "Thompson & Morgan", "url": "https://www.thompson-morgan.com/search?searchTerm=lemon+tree+meyer", "priceGBP": 29.99, "badge": "Potted tree", "recommended": true }, { "seller": "Crocus", "url": "https://www.crocus.co.uk/search/_/citrus+meyer/", "priceGBP": 34.99, "badge": "Potted tree" }] }]
+    "varieties": [
+      {
+        "name": "Meyer Improved",
+        "why": "Most cold-tolerant citrus. Fragrant flowers, edible fruit. Must overwinter in conservatory.",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=lemon+tree+meyer",
+            "priceGBP": 29.99,
+            "badge": "Potted tree",
+            "recommended": true
+          },
+          {
+            "seller": "Crocus",
+            "url": "https://www.crocus.co.uk/search/_/citrus+meyer/",
+            "priceGBP": 34.99,
+            "badge": "Potted tree"
+          }
+        ]
+      }
+    ]
   },
   {
     "slug": "dwarf-olive",
     "commonName": "Dwarf Olive",
-    "varieties": [{ "name": "Arbequina", "why": "Self-fertile, compact habit. Ornamental silvery foliage. Needs winter protection in Surrey.", "context": "inground", "sellers": [{ "seller": "Crocus", "url": "https://www.crocus.co.uk/search/_/olea+europaea/", "priceGBP": 24.99, "badge": "Potted tree", "recommended": true }, { "seller": "Thompson & Morgan", "url": "https://www.thompson-morgan.com/search?searchTerm=olive+tree", "priceGBP": 19.99, "badge": "Potted tree" }] }]
+    "varieties": [
+      {
+        "name": "Arbequina",
+        "why": "Self-fertile, compact habit. Ornamental silvery foliage. Needs winter protection in Surrey.",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Crocus",
+            "url": "https://www.crocus.co.uk/search/_/olea+europaea/",
+            "priceGBP": 24.99,
+            "badge": "Potted tree",
+            "recommended": true
+          },
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=olive+tree",
+            "priceGBP": 19.99,
+            "badge": "Potted tree"
+          }
+        ]
+      }
+    ]
   },
   {
     "slug": "fern-hardy",
     "commonName": "Hardy Fern",
-    "varieties": [{ "name": "Dryopteris filix-mas", "why": "Native male fern. Bulletproof in shade. Elegant arching fronds.", "context": "inground", "sellers": [{ "seller": "Crocus", "url": "https://www.crocus.co.uk/search/_/dryopteris+filix-mas/", "priceGBP": 8.99, "badge": "Potted plant", "recommended": true }, { "seller": "RHS Plants", "url": "https://www.rhs.org.uk/plants/search-results?query=dryopteris", "priceGBP": 9.99 }] }]
+    "varieties": [
+      {
+        "name": "Dryopteris filix-mas",
+        "why": "Native male fern. Bulletproof in shade. Elegant arching fronds.",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Crocus",
+            "url": "https://www.crocus.co.uk/search/_/dryopteris+filix-mas/",
+            "priceGBP": 8.99,
+            "badge": "Potted plant",
+            "recommended": true
+          },
+          {
+            "seller": "RHS Plants",
+            "url": "https://www.rhs.org.uk/plants/search-results?query=dryopteris",
+            "priceGBP": 9.99
+          }
+        ]
+      }
+    ]
   },
   {
     "slug": "fern-shuttlecock",
     "commonName": "Shuttlecock Fern",
-    "varieties": [{ "name": "Matteuccia struthiopteris", "why": "Dramatic shuttlecock shape. Spreads gently via rhizomes. Stunning in damp shade.", "context": "inground", "sellers": [{ "seller": "Crocus", "url": "https://www.crocus.co.uk/search/_/matteuccia+struthiopteris/", "priceGBP": 9.99, "badge": "Potted plant", "recommended": true }] }]
+    "varieties": [
+      {
+        "name": "Matteuccia struthiopteris",
+        "why": "Dramatic shuttlecock shape. Spreads gently via rhizomes. Stunning in damp shade.",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Crocus",
+            "url": "https://www.crocus.co.uk/search/_/matteuccia+struthiopteris/",
+            "priceGBP": 9.99,
+            "badge": "Potted plant",
+            "recommended": true
+          }
+        ]
+      }
+    ]
   },
   {
     "slug": "fern-copper-shield",
     "commonName": "Copper Shield Fern",
-    "varieties": [{ "name": "Dryopteris erythrosora", "why": "RHS AGM. Copper-tinted new fronds fade to green. Evergreen in mild winters.", "context": "inground", "sellers": [{ "seller": "Crocus", "url": "https://www.crocus.co.uk/search/_/dryopteris+erythrosora/", "priceGBP": 8.99, "badge": "RHS AGM", "recommended": true }, { "seller": "RHS Plants", "url": "https://www.rhs.org.uk/plants/search-results?query=dryopteris+erythrosora", "priceGBP": 9.99 }] }]
+    "varieties": [
+      {
+        "name": "Dryopteris erythrosora",
+        "why": "RHS AGM. Copper-tinted new fronds fade to green. Evergreen in mild winters.",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Crocus",
+            "url": "https://www.crocus.co.uk/search/_/dryopteris+erythrosora/",
+            "priceGBP": 8.99,
+            "badge": "RHS AGM",
+            "recommended": true
+          },
+          {
+            "seller": "RHS Plants",
+            "url": "https://www.rhs.org.uk/plants/search-results?query=dryopteris+erythrosora",
+            "priceGBP": 9.99
+          }
+        ]
+      }
+    ]
   },
   {
     "slug": "hosta",
     "commonName": "Hosta",
-    "varieties": [{ "name": "Sum and Substance", "why": "RHS AGM. Giant golden leaves, slug-resistant due to thick foliage. Spectacular specimen plant.", "context": "inground", "sellers": [{ "seller": "Crocus", "url": "https://www.crocus.co.uk/search/_/hosta+sum+and+substance/", "priceGBP": 9.99, "badge": "RHS AGM", "recommended": true }, { "seller": "Thompson & Morgan", "url": "https://www.thompson-morgan.com/search?searchTerm=hosta", "priceGBP": 7.99 }] }]
+    "varieties": [
+      {
+        "name": "Sum and Substance",
+        "why": "RHS AGM. Giant golden leaves, slug-resistant due to thick foliage. Spectacular specimen plant.",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Crocus",
+            "url": "https://www.crocus.co.uk/search/_/hosta+sum+and+substance/",
+            "priceGBP": 9.99,
+            "badge": "RHS AGM",
+            "recommended": true
+          },
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=hosta",
+            "priceGBP": 7.99
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "shallots",
+    "commonName": "Shallots",
+    "varieties": [
+      {
+        "name": "Golden Gourmet",
+        "why": "Most popular UK shallot sets, reliable heavy crops of golden-skinned bulbs with excellent storage life",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=shallot%20golden%20gourmet",
+            "priceGBP": 5.99,
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/search?q=shallot%20golden%20gourmet",
+            "priceGBP": 4.99
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/search?q=Golden+Gourmet+Shallot",
+            "priceGBP": 3.99
+          }
+        ]
+      },
+      {
+        "name": "Red Sun",
+        "why": "Attractive red-skinned shallot sets, mild sweet flavour, stores well through winter",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=shallot%20red%20sun",
+            "priceGBP": 5.99,
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/search?q=shallot%20red%20sun",
+            "priceGBP": 4.99
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/search?q=Red+Sun+Shallot",
+            "priceGBP": 3.99
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "pak-choy",
+    "commonName": "Pak Choy",
+    "varieties": [
+      {
+        "name": "Joi Choi",
+        "why": "Bolt-resistant F1 hybrid with thick white stems, reliable through variable UK weather, excellent stir-fry quality",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=pak%20choi%20joi%20choi",
+            "priceGBP": 2.49,
+            "recommended": true
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/search?q=Joi+Choi+Pak+Choi",
+            "priceGBP": 2.29
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/search?q=Joi+Choi+Pak+Choi",
+            "priceGBP": 1.99
+          }
+        ]
+      },
+      {
+        "name": "Shanghai Green",
+        "why": "Baby pak choy, ready in just 30 days, compact rosettes with tender jade-green stems, perfect for succession sowing",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=pak%20choi%20shanghai%20green",
+            "priceGBP": 2.99,
+            "recommended": true
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/search?q=Shanghai+Green+Pak+Choi",
+            "priceGBP": 2.29
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/search?q=Shanghai+Green+Pak+Choi",
+            "priceGBP": 1.99
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "kohlrabi",
+    "commonName": "Kohlrabi",
+    "varieties": [
+      {
+        "name": "Purple Vienna",
+        "why": "Striking purple skin with crisp white flesh, kids love the colour, mild apple-turnip flavour eaten raw or cooked",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=kohlrabi%20purple%20vienna",
+            "priceGBP": 1.99,
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/search?q=kohlrabi%20purple%20vienna",
+            "priceGBP": 2.29
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/search?q=Purple+Vienna+Kohlrabi",
+            "priceGBP": 1.99
+          }
+        ]
+      },
+      {
+        "name": "White Vienna",
+        "why": "Pale green skin, very mild and tender, quick to mature, versatile in the kitchen raw or roasted",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=kohlrabi%20white%20vienna",
+            "priceGBP": 1.99,
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/search?q=kohlrabi%20white%20vienna",
+            "priceGBP": 2.29
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/search?q=White+Vienna+Kohlrabi",
+            "priceGBP": 1.99
+          }
+        ]
+      }
+    ]
   }
 ]

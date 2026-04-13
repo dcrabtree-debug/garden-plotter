@@ -539,8 +539,8 @@ export function SeedFinderPage() {
   const buySoonCount = plantsWithTiming.filter((p) => p.timing === 'buy-soon').length;
 
   return (
-    <div className="h-full overflow-y-auto">
-      <div className="max-w-7xl mx-auto px-4 py-6">
+    <div className="h-full overflow-y-auto overflow-x-hidden">
+      <div className="max-w-7xl mx-auto px-4 py-6 overflow-x-hidden">
         {/* Header */}
         <div className="mb-4">
           <h1 className="text-3xl font-bold tracking-tight text-stone-800 dark:text-stone-100">Shopping</h1>
@@ -663,7 +663,7 @@ export function SeedFinderPage() {
         )}
 
         {/* Desktop 2-column layout: sidebar (list + supplies) + plant cards */}
-        <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] lg:gap-6">
+        <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] lg:gap-6 min-w-0">
         <div className="lg:space-y-5">
 
         {/* Shopping list summary */}
@@ -693,8 +693,8 @@ export function SeedFinderPage() {
             </div>
 
             {/* Compact table */}
-            <div className="bg-white dark:bg-stone-800 rounded-xl border border-violet-100 dark:border-stone-700 overflow-hidden">
-              <table className="w-full text-xs">
+            <div className="bg-white dark:bg-stone-800 rounded-xl border border-violet-100 dark:border-stone-700 overflow-x-auto">
+              <table className="w-full text-xs min-w-[400px]">
                 <thead>
                   <tr className="bg-violet-50 dark:bg-violet-900/30 text-[10px] uppercase tracking-wider text-stone-500">
                     <th className="text-left px-3 py-2">Plant</th>

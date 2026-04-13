@@ -617,9 +617,20 @@ export function GardenPage() {
     return Math.min(Math.floor(maxWidth / cols), isMobile ? 18 : 28);
   }, [cols]);
   const cellSize = Math.round(baseCellSize * zoom);
+
   // North-up rotation: rotate grid so true north points to screen top
-  const northUpAngle = 180 - facingAngle(config.facing);
-  const counterRotate = northUp ? `rotate(${-northUpAngle}deg)` : undefined;
+  // Grid "up" on screen = opposite of facing direction.
+  // For NE facing (45°), grid up = SW (225°). North is at screen angle 225° CW from top.
+  // To put north at top, rotate CW by that amount: 225° → but CSS rotate(225°) is CW.
+  // General formula: rotate = facingAngle + 180 (mod 360)
+  const northUpDeg = (facingAngle(config.facing) + 180) % 360;
+  const counterRotate = northUp ? `rotate(${-northUpDeg}deg)` : undefined;
+  // Bounding box of the rotated grid (width×height) to size the container
+  const gridW = cols * cellSize + cellSize * 1.5; // include row labels
+  const gridH = rows * cellSize + 14; // include col labels
+  const rad = (northUpDeg * Math.PI) / 180;
+  const rotatedW = Math.abs(gridW * Math.cos(rad)) + Math.abs(gridH * Math.sin(rad));
+  const rotatedH = Math.abs(gridW * Math.sin(rad)) + Math.abs(gridH * Math.cos(rad));
 
   const handleWheel = useCallback((e: ReactWheelEvent) => {
     if (e.ctrlKey || e.metaKey) {
@@ -1310,16 +1321,14 @@ export function GardenPage() {
           </p>
         </div>
 
-        {/* Direction indicator + compass (rotated to match garden orientation) */}
+        {/* Direction indicator + compass (rotated to match grid or north-up) */}
         <div className="mb-2 flex items-center gap-3 text-xs text-stone-400">
-          <span className="font-medium">House wall (south)</span>
+          <span className="font-medium">{northUp ? 'North up' : 'House wall (top)'}</span>
           <span className="flex-1 border-t border-dashed border-stone-300" />
           <span>Facing {config.facing}</span>
           {(() => {
-            // Rotate compass so cardinal directions match the grid orientation.
-            // Grid "up" = opposite of facing direction = (facing + 180)°
-            // Rotate the compass ring by that amount so each letter sits correctly.
-            const rot = -(facingAngle(config.facing) + 180);
+            // In north-up mode, compass shows N at top. In normal mode, match grid orientation.
+            const rot = northUp ? 0 : -(facingAngle(config.facing) + 180);
             const counterRot = -rot;
             return (
               <span
@@ -1379,14 +1388,23 @@ export function GardenPage() {
         {/* Standard grid view */}
         {viewMode === 'grid' && (<>
 
-        {/* Rotation wrapper for north-up mode */}
+        {/* Outer container: sized to fit the rotated bounding box so nothing overflows */}
+        <div
+          className="relative"
+          style={northUp ? {
+            width: Math.ceil(rotatedW) + 40,
+            height: Math.ceil(rotatedH) + 40,
+            margin: '0 auto',
+          } : {}}
+        >
+        {/* Inner rotation wrapper — positioned at center of the bounding box */}
         <div
           className="transition-transform duration-500 ease-in-out"
           style={northUp ? {
-            transform: `rotate(${180 - facingAngle(config.facing)}deg)`,
-            transformOrigin: 'center center',
-            // Ensure rotated grid has enough room — pad with the diagonal size
-            margin: `${Math.round((Math.sqrt(2) - 1) * (rows * cellSize + cols * cellSize) * 0.25)}px auto`,
+            position: 'absolute',
+            left: '50%',
+            top: '50%',
+            transform: `translate(-50%, -50%) rotate(${northUpDeg}deg)`,
           } : {}}
         >
 
@@ -1639,10 +1657,12 @@ export function GardenPage() {
                 hoveredZone={hoveredMicroclimateZone as any}
                 onHoverZone={(z) => setHoveredMicroclimateZone(z)}
               />
-              <MicroclimateLegend
-                hoveredZone={hoveredMicroclimateZone as any}
-                onHoverZone={(z) => setHoveredMicroclimateZone(z)}
-              />
+              <div style={{ transform: counterRotate }}>
+                <MicroclimateLegend
+                  hoveredZone={hoveredMicroclimateZone as any}
+                  onHoverZone={(z) => setHoveredMicroclimateZone(z)}
+                />
+              </div>
             </>
           )}
 
@@ -1668,6 +1688,7 @@ export function GardenPage() {
                     top: (avgRow - 0.8) * cellSize,
                     pointerEvents: 'none',
                     zIndex: 5,
+                    transform: counterRotate,
                   }}
                   className="flex flex-col items-center"
                 >
@@ -1741,6 +1762,7 @@ export function GardenPage() {
                 top: Math.max(0, tipTop - 20),
                 zIndex: 20,
                 pointerEvents: 'none',
+                transform: counterRotate,
               }}
               className="bg-white dark:bg-stone-800 rounded-xl shadow-xl border border-stone-200 dark:border-stone-700 p-3 w-56"
             >
@@ -1801,7 +1823,18 @@ export function GardenPage() {
           );
         })()}
 
-        </div>{/* end rotation wrapper */}
+        </div>{/* end inner rotation wrapper */}
+
+        {/* Compass labels at diamond edges (only in north-up mode) */}
+        {northUp && (
+          <>
+            <div className="absolute left-1/2 -translate-x-1/2 top-0 text-xs font-bold text-red-500 bg-white/80 dark:bg-stone-800/80 px-2 py-0.5 rounded-b-lg shadow-sm">N</div>
+            <div className="absolute left-1/2 -translate-x-1/2 bottom-0 text-xs font-bold text-stone-400 bg-white/80 dark:bg-stone-800/80 px-2 py-0.5 rounded-t-lg shadow-sm">S</div>
+            <div className="absolute top-1/2 -translate-y-1/2 left-0 text-xs font-bold text-stone-400 bg-white/80 dark:bg-stone-800/80 px-2 py-0.5 rounded-r-lg shadow-sm">W</div>
+            <div className="absolute top-1/2 -translate-y-1/2 right-0 text-xs font-bold text-stone-400 bg-white/80 dark:bg-stone-800/80 px-2 py-0.5 rounded-l-lg shadow-sm">E</div>
+          </>
+        )}
+        </div>{/* end outer bounding box */}
 
         {/* Scale indicator */}
         <div className="mt-2 flex items-center gap-3 text-[10px] text-stone-400">

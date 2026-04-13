@@ -1,0 +1,29 @@
+name: Auto-merge mobile branch
+
+on:
+  push:
+    branches:
+      - claude/iphone-friendly-garden-plotter-IYx8f
+
+permissions:
+  contents: write
+
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Merge mobile branch into main
+        run: |
+          git fetch origin claude/iphone-friendly-garden-plotter-IYx8f
+          git merge origin/claude/iphone-friendly-garden-plotter-IYx8f --no-edit -m "Auto-merge mobile branch into main"
+          git push origin main

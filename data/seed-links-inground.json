@@ -1,0 +1,2657 @@
+[
+  {
+    "slug": "asparagus",
+    "commonName": "Asparagus",
+    "varieties": [
+      {
+        "name": "Gijnlim",
+        "why": "RHS AGM, all-male hybrid producing heavy yields of thick succulent spears from mid-April to June, quick to establish",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/search?q=asparagus%20crowns%20gijnlim",
+            "priceGBP": 14.99,
+            "badge": "RHS AGM",
+            "recommended": true
+          },
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/vegetables/vegetable-plants/asparagus-crowns",
+            "priceGBP": 16.99
+          }
+        ]
+      },
+      {
+        "name": "Backlim",
+        "why": "Vigorous all-male variety, produces immaculate straight spears with firm tips, excellent for white and green asparagus",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/search?q=asparagus%20crowns%20backlim",
+            "priceGBP": 12.99,
+            "recommended": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "aubergine",
+    "commonName": "Aubergine",
+    "varieties": [
+      {
+        "name": "Black Beauty",
+        "why": "Classic reliable variety, heavy yields of glossy near-black skinned fruit, excellent for beginners",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=aubergine%20black%20beauty",
+            "priceGBP": 2.49,
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/vegetable-seeds/aubergine-seeds",
+            "priceGBP": 2.75
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/collections/aubergine-seeds",
+            "priceGBP": 2.49
+          }
+        ]
+      },
+      {
+        "name": "Galine F1",
+        "why": "Professional-grade F1 hybrid, early and prolific, adapts well to UK climate, glossy dark fruit",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/search?q=aubergine%20seeds%20f1%20galine",
+            "priceGBP": 3.49,
+            "recommended": true
+          },
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/vegetables/vegetable-seeds/aubergine-seeds",
+            "priceGBP": 3.99
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "bay-laurel",
+    "commonName": "Bay Laurel",
+    "varieties": [
+      {
+        "name": "Laurus nobilis",
+        "why": "RHS AGM, the classic culinary bay tree, aromatic evergreen leaves for cooking, attractive year-round structure",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=laurus%20nobilis",
+            "priceGBP": 14.99,
+            "badge": "RHS AGM",
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/flower-plants-shrubs/shrubs-trees/evergreen-shrubs",
+            "priceGBP": 17.99
+          }
+        ]
+      },
+      {
+        "name": "Laurus nobilis (Standard)",
+        "why": "Formally trained standard tree on clear stem, ideal for doorways and patios, same superb culinary leaves",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=laurus%20nobilis%20standard",
+            "priceGBP": 34.99,
+            "recommended": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "beetroot",
+    "commonName": "Beetroot",
+    "varieties": [
+      {
+        "name": "Boltardy",
+        "why": "RHS AGM, bolt resistant, early sowing, classic reliable variety",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=beetroot%20boltardy%20globe",
+            "priceGBP": 2.49,
+            "badge": "RHS AGM",
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/search?q=beetroot%20boltardy",
+            "priceGBP": 2.49
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/search?q=Boltardy",
+            "priceGBP": 1.89
+          }
+        ]
+      },
+      {
+        "name": "Chioggia",
+        "why": "Italian heirloom, stunning candy-stripe interior, kids love slicing them",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=beetroot%20chioggia",
+            "priceGBP": 2.49
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/search?q=Chioggia",
+            "priceGBP": 2.29
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/search?q=Chioggia",
+            "priceGBP": 1.89
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "blackberry",
+    "commonName": "Blackberry",
+    "varieties": [
+      {
+        "name": "Loch Ness",
+        "why": "RHS AGM, thornless, compact upright habit ideal for smaller gardens, heavy cropper up to 3.6kg per bush",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=blackberry%20loch%20ness",
+            "priceGBP": 12.99,
+            "badge": "RHS AGM",
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/vegetable-fruit-plants/soft-fruit/blackberry-plants",
+            "priceGBP": 14.99
+          }
+        ]
+      },
+      {
+        "name": "Triple Crown",
+        "why": "Thornless semi-erect canes, named for triple attributes of flavour, productivity and vigour, organic variety",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=blackberry%20triple%20crown%20organic",
+            "priceGBP": 11.99,
+            "recommended": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "blackcurrant",
+    "commonName": "Blackcurrant",
+    "varieties": [
+      {
+        "name": "Ben Connan",
+        "why": "RHS AGM, compact bush ideal for smaller gardens, large sweet berries, excellent disease resistance, heavy yields",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/fruit/fruit-plants/currant-plants",
+            "priceGBP": 12.99,
+            "badge": "RHS AGM",
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/vegetable-fruit-plants/soft-fruit/currant-plants",
+            "priceGBP": 14.99
+          }
+        ]
+      },
+      {
+        "name": "Summer Pearls Patio Black",
+        "why": "Bred to reach just 1m high, perfect for small gardens and containers, heavy-cropping compact bush",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/search?q=blackcurrant%20plant%20summer%20pearls%20patio%20black",
+            "priceGBP": 16.99,
+            "recommended": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "blueberry",
+    "commonName": "Blueberry",
+    "varieties": [
+      {
+        "name": "Bluecrop",
+        "why": "RHS AGM, the most reliable mid-season variety for UK gardens, abundant rich-flavoured fruit in August, good autumn colour",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=blueberry%20bluecrop",
+            "priceGBP": 14.99,
+            "badge": "RHS AGM",
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/vegetable-fruit-plants/soft-fruit/blueberry-plants",
+            "priceGBP": 16.99
+          }
+        ]
+      },
+      {
+        "name": "Duke",
+        "why": "Early-season variety, firm medium-sized sweet berries from July, vigorous and productive",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=blueberry%20duke",
+            "priceGBP": 14.99,
+            "recommended": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "broad-bean",
+    "commonName": "Broad Bean",
+    "varieties": [
+      {
+        "name": "Aquadulce Claudia",
+        "why": "RHS AGM, autumn sowing, very hardy, classic allotment variety",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=broad%20bean%20aquadulce%20claudia",
+            "priceGBP": 3.99,
+            "badge": "RHS AGM",
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/search?q=broad%20bean%20aquadulce%20claudia",
+            "priceGBP": 3.99
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/search?q=Aquadulce+Claudia",
+            "priceGBP": 3.49
+          }
+        ]
+      },
+      {
+        "name": "The Sutton",
+        "why": "Compact dwarf broad bean, 30cm tall, no staking needed",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/search?q=broad%20bean%20the%20sutton",
+            "priceGBP": 3.99
+          },
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=broad%20bean%20the%20sutton",
+            "priceGBP": 3.49
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/search?q=The+Sutton",
+            "priceGBP": 2.99
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "broccoli-sprouting",
+    "commonName": "Broccoli (Purple Sprouting)",
+    "varieties": [
+      {
+        "name": "Summer Purple",
+        "why": "British-bred, no winter chilling needed, crops July to November with regular picking, good heat tolerance",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=broccoli%20summer%20purple%20purple%20sprouting",
+            "priceGBP": 2.99,
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/vegetable-seeds/broccoli-seeds",
+            "priceGBP": 3.25
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/collections/broccoli-seeds",
+            "priceGBP": 2.89
+          }
+        ]
+      },
+      {
+        "name": "Purple Rain F1",
+        "why": "British-bred F1 hybrid, extended harvest from July to November, excellent vigour and uniformity",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=broccoli%20purple%20rain%20f1%20hybrid%20purple%20sprouting",
+            "priceGBP": 3.49,
+            "recommended": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "brussels-sprouts",
+    "commonName": "Brussels Sprouts",
+    "varieties": [
+      {
+        "name": "Brodie F1",
+        "why": "Supermarket favourite for Christmas, mild flavour, outperforms Trafalgar in garden trials, reliable heavy yields",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=brussels%20sprout%20brodie%20f1%20hybrid",
+            "priceGBP": 3.49,
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/vegetable-seeds/brussels-sprout-seeds",
+            "priceGBP": 3.75
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/collections/brussels-sprout-seeds",
+            "priceGBP": 3.29
+          }
+        ]
+      },
+      {
+        "name": "Marte F1",
+        "why": "RHS AGM, heavy yields of large rounded sprouts well-spaced on stem for easy picking, crops October to Christmas",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=brussels%20sprout%20marte%20f1%20hybrid",
+            "priceGBP": 3.29,
+            "badge": "RHS AGM",
+            "recommended": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "cabbage",
+    "commonName": "Cabbage",
+    "varieties": [
+      {
+        "name": "April (Spring)",
+        "why": "Reliable spring cabbage, withstands bolting better than other varieties, solid pointed heads, autumn-sown for spring harvest",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=cabbage%20april%20spring",
+            "priceGBP": 1.99,
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/vegetable-seeds/cabbage-seeds",
+            "priceGBP": 2.25
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/collections/cabbage-seeds",
+            "priceGBP": 1.99
+          }
+        ]
+      },
+      {
+        "name": "Marquess F1 (Sweetheart)",
+        "why": "Autumn sweetheart type with tender sweet leaves, compact pointed heads ideal for smaller families",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=cabbage%20marquess%20f1%20hybrid%20autumn%20sweetheart%20type",
+            "priceGBP": 3.49,
+            "recommended": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "carrot",
+    "commonName": "Carrot",
+    "varieties": [
+      {
+        "name": "Nantes 2",
+        "why": "Sweet cylindrical roots, deep root run suits open ground",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=carrot%20nantes%202",
+            "priceGBP": 2.49,
+            "recommended": true
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/search?q=Nantes+2",
+            "priceGBP": 2.49
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/search?q=Nantes+2",
+            "priceGBP": 1.89
+          }
+        ]
+      },
+      {
+        "name": "Autumn King 2",
+        "why": "RHS AGM, large maincrop, stores well, excellent for winter use",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=carrot%20autumn%20king%202",
+            "priceGBP": 2.49
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/search?q=carrot%20autumn%20king%202",
+            "priceGBP": 2.49
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/search?q=Autumn+King+2",
+            "priceGBP": 1.99
+          }
+        ]
+      },
+      {
+        "name": "Rainbow Mix",
+        "why": "Purple, yellow, white and orange roots, kids love pulling different colours",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=carrot%20rainbow%20mix",
+            "priceGBP": 2.99
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/search?q=Rainbow+Mix",
+            "priceGBP": 2.49
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/search?q=carrot%20rainbow%20mix",
+            "priceGBP": 2.99
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "cauliflower",
+    "commonName": "Cauliflower",
+    "varieties": [
+      {
+        "name": "All The Year Round",
+        "why": "One of the easiest cauliflowers to grow, large tight heads, suitable for successional sowings spring through summer",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=cauliflower%20all%20the%20year%20round%20spring%20summerautumn",
+            "priceGBP": 1.99,
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/vegetable-seeds/cauliflower-seeds",
+            "priceGBP": 2.25
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/collections/cauliflower-seeds",
+            "priceGBP": 1.89
+          }
+        ]
+      },
+      {
+        "name": "Boris F1",
+        "why": "High-quality F1 hybrid, large dense white curds, strong wrapper leaves protect heads, good disease tolerance",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=cauliflower%20boris%20f1%20hybrid",
+            "priceGBP": 3.49,
+            "recommended": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "celery",
+    "commonName": "Celery",
+    "varieties": [
+      {
+        "name": "Loretta",
+        "why": "Premium self-blanching hybrid, vigorous upright growth, consistently uniform sticks, sweet and less stringy than other varieties",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/vegetables/vegetable-seeds/celery-seeds",
+            "priceGBP": 2.99,
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/vegetable-seeds/celery-seeds",
+            "priceGBP": 2.75
+          }
+        ]
+      },
+      {
+        "name": "Blush",
+        "why": "Outstanding self-blanching variety with unusual rose-tinged stems, refreshing crispy bite, beautiful in the garden",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=celery%20blush%20self%20blanching",
+            "priceGBP": 2.99,
+            "recommended": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "pepper-chilli",
+    "commonName": "Chilli Pepper",
+    "varieties": [
+      {
+        "name": "Jalapeño",
+        "why": "Reliable outdoor variety in UK, medium heat, thick-walled, heavy yields",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=chilli%20pepper%20jalapeno",
+            "priceGBP": 2.99,
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/search?q=chilli%20jalapeno",
+            "priceGBP": 2.99
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/search?q=Jalapeño",
+            "priceGBP": 2.49
+          }
+        ]
+      },
+      {
+        "name": "Hungarian Hot Wax",
+        "why": "Prolific outdoors, long season, good for UK climate, medium heat",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=chilli%20hungarian%20hot%20wax",
+            "priceGBP": 2.99
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/search?q=Hungarian+Hot+Wax",
+            "priceGBP": 2.49
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/search?q=Hungarian+Hot+Wax",
+            "priceGBP": 2.29
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "courgette",
+    "commonName": "Courgette",
+    "varieties": [
+      {
+        "name": "Black Beauty",
+        "why": "Classic dark green, prolific cropper, bushy but needs 90cm spacing",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=courgette%20black%20beauty",
+            "priceGBP": 2.99,
+            "recommended": true
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/search?q=Black+Beauty",
+            "priceGBP": 2.49
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/search?q=courgette%20black%20beauty",
+            "priceGBP": 2.99
+          }
+        ]
+      },
+      {
+        "name": "F1 Defender",
+        "why": "All-female F1, no bitter fruits, excellent disease resistance",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/search?q=courgette%20f1%20defender",
+            "priceGBP": 3.49
+          },
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=courgette%20defender%20f1",
+            "priceGBP": 3.49
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/search?q=F1+Defender",
+            "priceGBP": 2.99
+          }
+        ]
+      },
+      {
+        "name": "Romanesco",
+        "why": "Ribbed Italian variety, nutty flavour, ornamental flowers are edible",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=courgette%20romanesco",
+            "priceGBP": 2.99
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/search?q=Romanesco",
+            "priceGBP": 2.49
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/search?q=Romanesco",
+            "priceGBP": 2.29
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "cucumber",
+    "commonName": "Cucumber",
+    "varieties": [
+      {
+        "name": "Marketmore",
+        "why": "Reliable outdoor ridge variety, disease resistant, heavy cropper",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=cucumber%20marketmore",
+            "priceGBP": 2.99,
+            "recommended": true
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/search?q=Marketmore",
+            "priceGBP": 2.49
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/search?q=Marketmore",
+            "priceGBP": 2.29
+          }
+        ]
+      },
+      {
+        "name": "Crystal Lemon",
+        "why": "Heritage round yellow fruits, vigorous trailing, prolific outdoor cropper",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=cucumber%20crystal%20lemon",
+            "priceGBP": 2.99
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/search?q=Crystal+Lemon",
+            "priceGBP": 2.49
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/search?q=cucumber%20crystal%20lemon",
+            "priceGBP": 2.99
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "apple-dwarf",
+    "commonName": "Dwarf Apple",
+    "varieties": [
+      {
+        "name": "Discovery",
+        "why": "RHS AGM, early-season British-bred eating apple, crisp and juicy with strawberry flush, excellent disease resistance",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=apple%20discovery",
+            "priceGBP": 29.99,
+            "badge": "RHS AGM",
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/vegetable-fruit-plants/fruit-trees/apple-trees",
+            "priceGBP": 32.99
+          }
+        ]
+      },
+      {
+        "name": "Braeburn",
+        "why": "Superb flavour, crisp texture, heavy cropper, stores well into winter, self-fertile",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=apple%20braeburn",
+            "priceGBP": 29.99,
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/vegetable-fruit-plants/fruit-trees/apple-trees",
+            "priceGBP": 34.99
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "dwarf-french-bean",
+    "commonName": "Dwarf French Bean",
+    "varieties": [
+      {
+        "name": "The Prince",
+        "why": "RHS AGM, flat pods, heavy cropper, classic British allotment variety",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=dwarf%20bean%20the%20prince",
+            "priceGBP": 3.49,
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/search?q=dwarf%20french%20bean%20the%20prince",
+            "priceGBP": 3.49
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/search?q=The+Prince",
+            "priceGBP": 2.49
+          }
+        ]
+      },
+      {
+        "name": "Cobra",
+        "why": "Climbing French bean, massive yields over long season, needs canes",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=climbing%20french%20bean%20cobra",
+            "priceGBP": 3.99
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/search?q=climbing%20french%20bean%20cobra",
+            "priceGBP": 3.99
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/search?q=Cobra",
+            "priceGBP": 3.49
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "strawberry-everbearing",
+    "commonName": "Everbearing Strawberry",
+    "varieties": [
+      {
+        "name": "Cambridge Favourite",
+        "why": "RHS AGM, classic British variety, outstanding flavour, heavy cropper",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=strawberry%20cambridge%20favourite",
+            "priceGBP": 11.99,
+            "badge": "RHS AGM",
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/search?q=strawberry%20cambridge%20favourite",
+            "priceGBP": 12.99
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/search?q=Cambridge+Favourite",
+            "priceGBP": 10.99
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/search?q=Cambridge+Favourite",
+            "priceGBP": 9.99
+          }
+        ]
+      },
+      {
+        "name": "Elsanta",
+        "why": "Commercial standard, firm fruit, excellent disease resistance",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=strawberry%20elsanta",
+            "priceGBP": 12.99
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/search?q=strawberry%20elsanta",
+            "priceGBP": 13.99
+          },
+          {
+            "seller": "RHS Shop",
+            "url": "https://www.rhsplants.co.uk/search?q=strawberry%20elsanta",
+            "priceGBP": 13.99,
+            "badge": "RHS Endorsed"
+          }
+        ]
+      },
+      {
+        "name": "Royal Sovereign",
+        "why": "Heritage variety since 1892, unmatched flavour, RHS recommended",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=strawberry%20royal%20sovereign",
+            "priceGBP": 12.99
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/search?q=Royal+Sovereign",
+            "priceGBP": 11.99
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/search?q=Royal+Sovereign",
+            "priceGBP": 10.99
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "fennel",
+    "commonName": "Fennel",
+    "varieties": [
+      {
+        "name": "Florence",
+        "why": "Classic Florence fennel for swollen bulb-like bases, delicate aniseed flavour, ferny foliage useful as herb garnish",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=fennel",
+            "priceGBP": 1.99,
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/vegetable-seeds/herb-seeds",
+            "priceGBP": 2.25
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/collections/herb-seeds",
+            "priceGBP": 1.89
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "fig",
+    "commonName": "Fig",
+    "varieties": [
+      {
+        "name": "Brown Turkey",
+        "why": "The most reliable fig for UK gardens, fully hardy outdoors, heavy crops of sweet juicy figs with deep red flesh",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=fig%20brown%20turkey",
+            "priceGBP": 17.99,
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/vegetable-fruit-plants/fruit-trees/fig-trees",
+            "priceGBP": 19.99
+          }
+        ]
+      },
+      {
+        "name": "Little Miss Figgy",
+        "why": "Naturally dwarf patio variety, RHS Chelsea shortlisted, produces two crops per year, reaches only 1.8m",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=fig%20little%20miss%20figgy",
+            "priceGBP": 24.99,
+            "recommended": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "garlic",
+    "commonName": "Garlic",
+    "varieties": [
+      {
+        "name": "Solent Wight",
+        "why": "UK bred, excellent for British climate, softneck type, stores well",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=garlic%20solent%20wight",
+            "priceGBP": 9.99,
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/search?q=garlic%20solent%20wight",
+            "priceGBP": 10.99
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/search?q=Solent+Wight",
+            "priceGBP": 8.99
+          }
+        ]
+      },
+      {
+        "name": "Elephant Garlic",
+        "why": "Giant mild cloves, kids amazed by the size, easy to peel",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=garlic%20elephant",
+            "priceGBP": 12.99
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/search?q=garlic%20elephant",
+            "priceGBP": 13.99
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/search?q=Elephant+Garlic",
+            "priceGBP": 10.99
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "gooseberry",
+    "commonName": "Gooseberry",
+    "varieties": [
+      {
+        "name": "Invicta",
+        "why": "RHS AGM, one of the heaviest-cropping gooseberries available, excellent mildew resistance, ideal for cooking and dessert",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=gooseberry%20invicta",
+            "priceGBP": 12.99,
+            "badge": "RHS AGM",
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/vegetable-fruit-plants/soft-fruit/gooseberry-plants",
+            "priceGBP": 14.99
+          }
+        ]
+      },
+      {
+        "name": "Hinnonmaki Red",
+        "why": "Sweet red dessert gooseberry with aromatic flavour, highly productive, good resistance to mildew",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=gooseberry%20hinnonmaki%20red",
+            "priceGBP": 12.99,
+            "recommended": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "kale",
+    "commonName": "Kale",
+    "varieties": [
+      {
+        "name": "Redbor",
+        "why": "Tall ornamental purple kale, dramatic 90cm plants, heavy yields",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=kale%20redbor%20f1",
+            "priceGBP": 2.99,
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/search?q=kale%20redbor%20f1",
+            "priceGBP": 2.99
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/search?q=Redbor",
+            "priceGBP": 2.49
+          }
+        ]
+      },
+      {
+        "name": "Cavolo Nero (Nero di Toscana)",
+        "why": "Italian heirloom, tall upright plant, superb flavour after frost",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=kale%20nero%20di%20toscana",
+            "priceGBP": 2.49
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/search?q=Cavolo+Nero+(Nero+di+Toscana)",
+            "priceGBP": 1.89
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/search?q=Cavolo+Nero+(Nero+di+Toscana)",
+            "priceGBP": 2.29
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "leek",
+    "commonName": "Leek",
+    "varieties": [
+      {
+        "name": "Musselburgh",
+        "why": "Heritage Scottish variety, heavy crops of short thick stems, excellent flavour, exceptionally hardy through coldest winters",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=leek%20musselburgh",
+            "priceGBP": 1.99,
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/vegetable-seeds/leek-seeds",
+            "priceGBP": 2.25
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/collections/leek-seeds",
+            "priceGBP": 1.89
+          }
+        ]
+      },
+      {
+        "name": "Northern Lights F1",
+        "why": "British-bred maincrop with excellent winter hardiness, blue-green leaves turn stunning purple in cold, robust flavour",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=leek%20northern%20lights%20f1%20hybrid",
+            "priceGBP": 2.99,
+            "recommended": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "lettuce",
+    "commonName": "Lettuce",
+    "varieties": [
+      {
+        "name": "Iceberg (Webb's Wonderful)",
+        "why": "Full-size crisphead, large hearts, classic British garden lettuce",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=lettuce%20webbs%20wonderful",
+            "priceGBP": 2.49,
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/search?q=lettuce%20webbs%20wonderful",
+            "priceGBP": 2.49
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/search?q=Iceberg+(Webbs+Wonderful)",
+            "priceGBP": 1.89
+          }
+        ]
+      },
+      {
+        "name": "All The Year Round",
+        "why": "RHS AGM, butterhead, sow almost year-round, reliable hearting",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=lettuce%20all%20year%20round",
+            "priceGBP": 2.29
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/search?q=All+The+Year+Round",
+            "priceGBP": 1.99
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/search?q=All+The+Year+Round",
+            "priceGBP": 1.89
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "onion-sets",
+    "commonName": "Onion (Sets)",
+    "varieties": [
+      {
+        "name": "Sturon",
+        "why": "RHS AGM, excellent keeper, large round bulbs, reliable cropper",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=onion%20sturon%20sets",
+            "priceGBP": 8.99,
+            "badge": "RHS AGM",
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/search?q=onion%20sturon",
+            "priceGBP": 9.99
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/search?q=Sturon",
+            "priceGBP": 7.99
+          }
+        ]
+      },
+      {
+        "name": "Red Baron",
+        "why": "Deep red skin, mild sweet flavour, stores well, attractive in salads",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=onion%20red%20baron%20sets",
+            "priceGBP": 8.99
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/search?q=onion%20red%20baron",
+            "priceGBP": 9.99
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/search?q=Red+Baron",
+            "priceGBP": 7.99
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "parsnip",
+    "commonName": "Parsnip",
+    "varieties": [
+      {
+        "name": "Tender and True",
+        "why": "RHS AGM, long smooth roots, canker resistant, excellent flavour after frost",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=parsnip%20tender%20and%20true",
+            "priceGBP": 2.49,
+            "badge": "RHS AGM",
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/search?q=parsnip%20tender%20and%20true",
+            "priceGBP": 2.49
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/search?q=Tender+and+True",
+            "priceGBP": 1.99
+          }
+        ]
+      },
+      {
+        "name": "Gladiator",
+        "why": "F1 hybrid, smooth skin, canker resistant, good on heavier soils",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=parsnip%20gladiator%20f1",
+            "priceGBP": 2.99
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/search?q=Gladiator",
+            "priceGBP": 2.29
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/search?q=parsnip%20gladiator%20f1",
+            "priceGBP": 2.99
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "pea",
+    "commonName": "Pea",
+    "varieties": [
+      {
+        "name": "Kelvedon Wonder",
+        "why": "RHS AGM, first early, heavy cropper, 45cm height, good disease resistance",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=pea%20kelvedon%20wonder",
+            "priceGBP": 3.99,
+            "badge": "RHS AGM",
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/search?q=pea%20kelvedon%20wonder",
+            "priceGBP": 3.99
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/search?q=Kelvedon+Wonder",
+            "priceGBP": 2.29
+          }
+        ]
+      },
+      {
+        "name": "Alderman (Tall Telegraph)",
+        "why": "Heritage tall variety 1.8m, huge pods, needs full support structure",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=pea%20alderman",
+            "priceGBP": 3.49
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/search?q=Alderman+(Tall+Telegraph)",
+            "priceGBP": 2.99
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/search?q=Alderman+(Tall+Telegraph)",
+            "priceGBP": 2.29
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "pear",
+    "commonName": "Pear",
+    "varieties": [
+      {
+        "name": "Conference",
+        "why": "RHS AGM, Britain's most popular pear, self-fertile, reliable heavy crops, juicy sweet flesh, stores well",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=pear%20conference",
+            "priceGBP": 29.99,
+            "badge": "RHS AGM",
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/vegetable-fruit-plants/fruit-trees/pear-trees",
+            "priceGBP": 32.99
+          }
+        ]
+      },
+      {
+        "name": "Family Pear Tree",
+        "why": "Three varieties grafted on one tree for cross-pollination and extended season, space-saving for small gardens",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=pear%20family%20pear%20tree",
+            "priceGBP": 34.99,
+            "recommended": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "perpetual-spinach",
+    "commonName": "Perpetual Spinach",
+    "varieties": [
+      {
+        "name": "Perpetual Spinach",
+        "why": "Huge yields in open ground, cut-and-come-again over full season",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=spinach%20perpetual%20spinach%20beet",
+            "priceGBP": 2.49,
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/vegetable-seeds/spinach-seeds/spinach-perpetual_MH883",
+            "priceGBP": 2.49
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/search?q=Perpetual+Spinach",
+            "priceGBP": 1.99
+          }
+        ]
+      },
+      {
+        "name": "Giant Winter",
+        "why": "Large leaves, excellent cold hardiness, overwinters well in open ground",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=spinach%20giant%20winter",
+            "priceGBP": 2.49
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/search?q=Giant+Winter",
+            "priceGBP": 1.89
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/search?q=Giant+Winter",
+            "priceGBP": 1.99
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "plum",
+    "commonName": "Plum",
+    "varieties": [
+      {
+        "name": "Victoria",
+        "why": "Britain's best-known plum, self-fertile, heavy crops of sweet egg-shaped fruits, ideal for eating fresh, pies and jams",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=plum%20victoria",
+            "priceGBP": 29.99,
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/vegetable-fruit-plants/fruit-trees/plum-trees",
+            "priceGBP": 32.99
+          }
+        ]
+      },
+      {
+        "name": "Wonder Tree Victoria (Patio)",
+        "why": "Naturally compact patio plum needing almost no pruning, same great Victoria flavour on a much smaller tree",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=plum%20wonder%20tree%20victoria%20patio%20plum",
+            "priceGBP": 34.99,
+            "recommended": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "potato-early",
+    "commonName": "Potato (Early)",
+    "varieties": [
+      {
+        "name": "Charlotte",
+        "why": "RHS AGM, waxy salad potato, excellent flavour, reliable first early",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=potato%20charlotte%20seed%20potatoes",
+            "priceGBP": 9.99,
+            "badge": "RHS AGM",
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/search?q=potato%20charlotte",
+            "priceGBP": 10.99
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/search?q=Charlotte",
+            "priceGBP": 8.99
+          }
+        ]
+      },
+      {
+        "name": "Rocket",
+        "why": "Fastest first early, 10-12 weeks to harvest, great for impatient kids",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=potato%20rocket%20seed%20potatoes",
+            "priceGBP": 9.99
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/search?q=potato%20rocket",
+            "priceGBP": 10.99
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/search?q=Rocket",
+            "priceGBP": 8.99
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "potato-maincrop",
+    "commonName": "Potato (Maincrop)",
+    "varieties": [
+      {
+        "name": "Maris Piper",
+        "why": "Britain's favourite chip shop potato since the 1960s, dry floury texture, superb for roasting and mashing, reliable yields",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=potato%20maris%20piper",
+            "priceGBP": 8.99,
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/vegetable-fruit-plants/seed-potatoes/maincrop-seed-potatoes",
+            "priceGBP": 9.99
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/collections/seed-potatoes",
+            "priceGBP": 8.49
+          }
+        ]
+      },
+      {
+        "name": "Sarpo Mira",
+        "why": "Unprecedented blight resistance, huge yields of tasty floury tubers, stores exceptionally well, ideal for organic growers",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=potato%20sarpo%20mira",
+            "priceGBP": 8.99,
+            "recommended": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "pumpkin",
+    "commonName": "Pumpkin",
+    "varieties": [
+      {
+        "name": "Jack O'Lantern",
+        "why": "Classic carving pumpkin, 4-5kg fruits, kids love growing these for Halloween",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=pumpkin%20jack%20o%20lantern",
+            "priceGBP": 2.99,
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/search?q=pumpkin%20jack%20o%20lantern",
+            "priceGBP": 2.99
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/search?q=Jack+OLantern",
+            "priceGBP": 2.49
+          }
+        ]
+      },
+      {
+        "name": "Atlantic Giant",
+        "why": "Competition variety, can reach 100kg+, ultimate fun for kids",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=pumpkin%20atlantic%20giant",
+            "priceGBP": 2.99
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/search?q=Atlantic+Giant",
+            "priceGBP": 2.49
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/search?q=Atlantic+Giant",
+            "priceGBP": 2.29
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "radish",
+    "commonName": "Radish",
+    "varieties": [
+      {
+        "name": "Scarlet Globe",
+        "why": "Classic round red, 25-day crop, vigorous grower in open ground",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=radish%20scarlet%20globe",
+            "priceGBP": 2.29,
+            "recommended": true
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/search?q=Scarlet+Globe",
+            "priceGBP": 1.99
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/search?q=Scarlet+Globe",
+            "priceGBP": 1.89
+          }
+        ]
+      },
+      {
+        "name": "Mooli (April Cross)",
+        "why": "Japanese daikon, long white roots, needs deep soil, mild sweet flavour",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=radish%20mooli%20april%20cross",
+            "priceGBP": 2.49
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/search?q=Mooli+(April+Cross)",
+            "priceGBP": 2.29
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/search?q=Mooli+(April+Cross)",
+            "priceGBP": 1.89
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "raspberry",
+    "commonName": "Raspberry",
+    "varieties": [
+      {
+        "name": "Glen Ample",
+        "why": "RHS AGM, exceptional high-yielding mid-season variety, large deep red succulent berries, superb flavour, spine-free canes",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/fruit/fruit-plants/raspberry-plants",
+            "priceGBP": 12.99,
+            "badge": "RHS AGM",
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/vegetable-fruit-plants/soft-fruit/raspberry-plants",
+            "priceGBP": 14.99
+          }
+        ]
+      },
+      {
+        "name": "Autumn Bliss",
+        "why": "RHS AGM, one of the best autumn-fruiting varieties, large attractive red berries from late August to mid-October",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/fruit/fruit-plants/raspberry-plants",
+            "priceGBP": 12.99,
+            "badge": "RHS AGM",
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/vegetable-fruit-plants/soft-fruit/raspberry-plants",
+            "priceGBP": 14.99
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "redcurrant",
+    "commonName": "Redcurrant",
+    "varieties": [
+      {
+        "name": "Rovada",
+        "why": "Exceptionally heavy cropper yielding up to 2.5kg per plant, long strings of large berries for easy harvesting, crops July-August",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=redcurrant%20rovada",
+            "priceGBP": 12.99,
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/vegetable-fruit-plants/soft-fruit/currant-plants",
+            "priceGBP": 14.99
+          }
+        ]
+      },
+      {
+        "name": "Jonkheer van Tets",
+        "why": "Heavy-cropping early variety, large sweet berries, reliable and rewarding, excellent for jams, jellies and fresh eating",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=redcurrant%20jonkheer%20van%20tets",
+            "priceGBP": 12.99,
+            "recommended": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "rhubarb",
+    "commonName": "Rhubarb",
+    "varieties": [
+      {
+        "name": "Victoria",
+        "why": "Traditional heritage variety, excellent balance of sweetness and acidity, reliable heavy cropper year after year",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=rhubarb%20victoria%20springautumn%20planting",
+            "priceGBP": 8.99,
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/vegetable-fruit-plants/fruit-plants/rhubarb-plants",
+            "priceGBP": 9.99
+          }
+        ]
+      },
+      {
+        "name": "Champagne",
+        "why": "Early forcing variety producing long slender pink-tinged stalks, excellent flavour, ideal for early spring harvests",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=rhubarb%20champagne%20springautumn%20planting",
+            "priceGBP": 8.99,
+            "recommended": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "rocket",
+    "commonName": "Rocket / Arugula",
+    "varieties": [
+      {
+        "name": "Cultivated Rocket",
+        "why": "Fast-growing rows, succession sow every 3 weeks for continuous supply",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=rocket",
+            "priceGBP": 2.29,
+            "recommended": true
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/search?q=Cultivated+Rocket",
+            "priceGBP": 1.99
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/search?q=Cultivated+Rocket",
+            "priceGBP": 1.89
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "runner-bean",
+    "commonName": "Runner Bean",
+    "varieties": [
+      {
+        "name": "Scarlet Emperor",
+        "why": "Heritage classic, red flowers, heavy yields, needs 2m cane structure",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=runner%20bean%20scarlet%20emperor",
+            "priceGBP": 3.99,
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/search?q=runner%20bean%20scarlet%20emperor",
+            "priceGBP": 3.99
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/search?q=Scarlet+Emperor",
+            "priceGBP": 3.49
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/search?q=Scarlet+Emperor",
+            "priceGBP": 2.99
+          }
+        ]
+      },
+      {
+        "name": "Enorma",
+        "why": "Exhibition variety, stringless 30cm pods, vigorous climbing habit",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=runner%20bean%20enorma",
+            "priceGBP": 3.99
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/search?q=runner%20bean%20enorma",
+            "priceGBP": 3.99
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/search?q=Enorma",
+            "priceGBP": 3.49
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "spring-onion",
+    "commonName": "Spring Onion",
+    "varieties": [
+      {
+        "name": "White Lisbon Winter Hardy",
+        "why": "Overwinter sowing, very hardy, extends the season into early spring",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=spring%20onion%20white%20lisbon%20winter%20hardy",
+            "priceGBP": 2.49,
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/search?q=spring%20onion%20white%20lisbon%20winter%20hardy",
+            "priceGBP": 2.49
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/search?q=White+Lisbon+Winter+Hardy",
+            "priceGBP": 1.89
+          }
+        ]
+      },
+      {
+        "name": "Lilia",
+        "why": "Red-skinned spring onion, mild sweet flavour, attractive in salads",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=spring%20onion%20lilia",
+            "priceGBP": 2.49
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/search?q=Lilia",
+            "priceGBP": 2.29
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/search?q=Lilia",
+            "priceGBP": 1.89
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "squash",
+    "commonName": "Squash (Winter)",
+    "varieties": [
+      {
+        "name": "Butternut Waltham",
+        "why": "Classic butternut, stores 3+ months, sweet flesh, vigorous trailing",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=squash%20butternut%20waltham",
+            "priceGBP": 2.99,
+            "recommended": true
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/search?q=Butternut+Waltham",
+            "priceGBP": 2.49
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/search?q=Butternut+Waltham",
+            "priceGBP": 2.29
+          }
+        ]
+      },
+      {
+        "name": "Crown Prince",
+        "why": "Blue-grey skin, orange flesh, exceptional sweet flavour, stores well",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=squash%20crown%20prince",
+            "priceGBP": 2.99
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/search?q=squash%20crown%20prince",
+            "priceGBP": 2.99
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/search?q=Crown+Prince",
+            "priceGBP": 2.49
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "sunflower",
+    "commonName": "Sunflower",
+    "varieties": [
+      {
+        "name": "Giant Single",
+        "why": "Classic tall sunflower 2m+, huge seed heads, race to grow the tallest",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=sunflower%20giant%20single",
+            "priceGBP": 2.49,
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/search?q=sunflower%20giant%20yellow",
+            "priceGBP": 2.49
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/search?q=Giant+Single",
+            "priceGBP": 1.99
+          }
+        ]
+      },
+      {
+        "name": "Russian Giant",
+        "why": "Can reach 3m+, edible seeds, traditional variety, kids love the scale",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=sunflower%20russian%20giant",
+            "priceGBP": 2.49
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/search?q=Russian+Giant",
+            "priceGBP": 1.99
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/search?q=Russian+Giant",
+            "priceGBP": 1.89
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "basil-sweet",
+    "commonName": "Sweet Basil",
+    "varieties": [
+      {
+        "name": "Sweet Genovese",
+        "why": "Large-leaf Italian classic, best for pesto, full-size garden plant",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=basil%20sweet%20genovese",
+            "priceGBP": 2.49,
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/search?q=basil%20sweet%20genovese",
+            "priceGBP": 2.49
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/search?q=Sweet+Genovese",
+            "priceGBP": 1.99
+          }
+        ]
+      },
+      {
+        "name": "Lettuce Leaf",
+        "why": "Extra-large leaves up to 10cm, vigorous grower, needs garden space",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=basil%20lettuce%20leaf",
+            "priceGBP": 2.49
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/search?q=Lettuce+Leaf",
+            "priceGBP": 1.99
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/search?q=Lettuce+Leaf",
+            "priceGBP": 2.29
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "pepper-sweet",
+    "commonName": "Sweet Pepper",
+    "varieties": [
+      {
+        "name": "Red King F1",
+        "why": "Huge sweet-flavoured red peppers, wide blocky shape perfect for stuffing and roasting, heavy yields under glass",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=sweet%20pepper%20red%20king%20f1%20hybrid",
+            "priceGBP": 3.49,
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/vegetable-seeds/pepper-seeds",
+            "priceGBP": 3.75
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/collections/pepper-seeds",
+            "priceGBP": 3.29
+          }
+        ]
+      },
+      {
+        "name": "Thor F1",
+        "why": "Produces impressive pods up to 25cm long, delicious sweet flavour, excellent for UK greenhouse or warm sheltered spot",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=sweet%20pepper%20thor%20f1%20hybrid",
+            "priceGBP": 3.49,
+            "recommended": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "sweetcorn",
+    "commonName": "Sweetcorn",
+    "varieties": [
+      {
+        "name": "Swift",
+        "why": "Early F1, matures in UK climate, supersweet, reliable in Surrey",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=sweetcorn%20swift%20f1",
+            "priceGBP": 3.99,
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/search?q=sweetcorn%20swift%20f1",
+            "priceGBP": 3.99
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/search?q=Swift",
+            "priceGBP": 3.49
+          }
+        ]
+      },
+      {
+        "name": "Lark",
+        "why": "Supersweet F1, good cold tolerance, plant in blocks for wind pollination",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=sweetcorn%20lark%20f1",
+            "priceGBP": 3.99
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/search?q=Lark",
+            "priceGBP": 2.99
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/search?q=sweetcorn%20lark%20f1",
+            "priceGBP": 3.99
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "swiss-chard",
+    "commonName": "Swiss Chard",
+    "varieties": [
+      {
+        "name": "Fordhook Giant",
+        "why": "Large vigorous plant, heavy yields, thick white stems, needs space",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=swiss%20chard%20fordhook%20giant",
+            "priceGBP": 2.49,
+            "recommended": true
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/search?q=Fordhook+Giant",
+            "priceGBP": 1.99
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/search?q=Fordhook+Giant",
+            "priceGBP": 1.89
+          }
+        ]
+      },
+      {
+        "name": "Rhubarb Chard",
+        "why": "Deep crimson stems, ornamental kitchen garden classic, vigorous",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=swiss%20chard%20rhubarb%20chard",
+            "priceGBP": 2.49
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/search?q=chard%20rhubarb",
+            "priceGBP": 2.49
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/search?q=Rhubarb+Chard",
+            "priceGBP": 2.29
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "tomato-tumbling",
+    "commonName": "Tomato (Garden Varieties)",
+    "varieties": [
+      {
+        "name": "Gardener's Delight",
+        "why": "RHS AGM, sweetest cherry tomato, indeterminate cordon, massive yields",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=tomato%20gardeners%20delight",
+            "priceGBP": 2.99,
+            "badge": "RHS AGM",
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/search?q=tomato%20gardeners%20delight",
+            "priceGBP": 2.99
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/search?q=Gardeners+Delight",
+            "priceGBP": 2.49
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/search?q=Gardeners+Delight",
+            "priceGBP": 2.29
+          }
+        ]
+      },
+      {
+        "name": "Moneymaker",
+        "why": "Heritage classic, reliable heavy cropper, cordon type, good disease tolerance",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=tomato%20moneymaker",
+            "priceGBP": 2.49
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/search?q=Moneymaker",
+            "priceGBP": 1.99
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/search?q=Moneymaker",
+            "priceGBP": 1.89
+          }
+        ]
+      },
+      {
+        "name": "Sungold",
+        "why": "RHS AGM, orange cherry, intensely sweet, incredibly productive",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=tomato%20sungold%20f1",
+            "priceGBP": 3.99,
+            "badge": "RHS AGM"
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/search?q=tomato%20sungold%20f1",
+            "priceGBP": 3.99
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/search?q=Sungold",
+            "priceGBP": 3.49
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "turnip",
+    "commonName": "Turnip",
+    "varieties": [
+      {
+        "name": "Sweetbell F1",
+        "why": "Outstanding salad turnip, attractive purple tops with sweet succulent white flesh, can be eaten raw or cooked",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=turnip%20sweetbell%20f1%20hybrid",
+            "priceGBP": 2.99,
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/vegetable-seeds/turnip-seeds",
+            "priceGBP": 3.25
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/collections/turnip-seeds",
+            "priceGBP": 2.89
+          }
+        ]
+      },
+      {
+        "name": "Atlantic (Kew Collection)",
+        "why": "Flat globe-shaped roots ideal as baby turnips, dark green erect leaves make excellent steamed greens, good for containers",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=turnip%20atlantic%20kew%20collection",
+            "priceGBP": 2.99,
+            "recommended": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "lemon-balm",
+    "commonName": "Lemon Balm",
+    "varieties": [
+      {
+        "name": "Common Lemon Balm",
+        "why": "Genuinely clay-tolerant fragrant herb — one of the few that thrives on heavy Surrey soil. Lemon-mint tea, bee magnet, practically indestructible.",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=lemon%20balm",
+            "priceGBP": 2.49,
+            "recommended": true
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/search?q=Common+Lemon+Balm",
+            "priceGBP": 2.25
+          }
+        ]
+      },
+      {
+        "name": "All Gold",
+        "why": "Golden-leaved ornamental variety. Slightly less vigorous but same lemon fragrance with better visual impact.",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Crocus",
+            "url": "https://www.crocus.co.uk/plants/_/melissa-officinalis-all-gold/classid.2000010792/",
+            "priceGBP": 7.99,
+            "recommended": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "corsican-mint",
+    "commonName": "Corsican Mint",
+    "varieties": [
+      {
+        "name": "Corsican Mint",
+        "why": "The best walk-on fragrance for Surrey clay. Thread-thin carpet between stepping stones, powerful peppermint scent when stepped on.",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Crocus",
+            "url": "https://www.crocus.co.uk/plants/_/mentha-requienii/classid.2000025946/",
+            "priceGBP": 6.99,
+            "badge": "Buy as plug plant",
+            "recommended": true
+          },
+          {
+            "seller": "Herb Farm",
+            "url": "https://www.herbfarm.co.uk/?s=Corsican+Mint",
+            "priceGBP": 4.5
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "dianthus",
+    "commonName": "Garden Pinks",
+    "varieties": [
+      {
+        "name": "Gran's Favourite",
+        "why": "RHS AGM. Old-fashioned clove-scented cottage garden flower. White with reddish-purple lacing. Edible flowers.",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Crocus",
+            "url": "https://www.crocus.co.uk/plants/_/dianthus-grans-favourite/classid.2000002987/",
+            "priceGBP": 7.99,
+            "badge": "RHS AGM",
+            "recommended": true
+          },
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/p/dianthus-plants",
+            "priceGBP": 8.99
+          }
+        ]
+      },
+      {
+        "name": "Mrs Sinkins",
+        "why": "Heritage variety with legendary clove fragrance. White double flowers. Slightly untidy form but the scent is extraordinary.",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Crocus",
+            "url": "https://www.crocus.co.uk/plants/_/dianthus-mrs-sinkins/classid.2000003001/",
+            "priceGBP": 7.99
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "nicotiana",
+    "commonName": "Woodland Tobacco Plant",
+    "varieties": [
+      {
+        "name": "Nicotiana sylvestris",
+        "why": "RHS AGM. Towering 1.5m white trumpets, intensely jasmine-fragrant at dusk. One of the few fragrant annuals that loves clay soil.",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=nicotiana%20sylvestris",
+            "priceGBP": 2.49,
+            "badge": "RHS AGM",
+            "recommended": true
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/search?q=Nicotiana+sylvestris",
+            "priceGBP": 2.49
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "night-scented-stock",
+    "commonName": "Night-Scented Stock",
+    "varieties": [
+      {
+        "name": "Night-Scented Stock",
+        "why": "Scatter seeds along paths and near seating. Unremarkable by day but at dusk releases one of the most intoxicating fragrances of any garden annual.",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=stocks%20night%20scented",
+            "priceGBP": 1.79,
+            "recommended": true
+          },
+          {
+            "seller": "Mr Fothergill's",
+            "url": "https://mr-fothergills.co.uk/search?q=Night-Scented+Stock",
+            "priceGBP": 1.99
+          },
+          {
+            "seller": "Kings Seeds",
+            "url": "https://www.kingsseeds.com/search?q=Night-Scented+Stock",
+            "priceGBP": 1.49
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "chamomile",
+    "commonName": "Chamomile",
+    "varieties": [
+      {
+        "name": "Double-Flowered",
+        "why": "Apple-sweet scented flowers for chamomile tea. Traditional 'plant doctor' companion. Raised bed only on clay soil.",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Thompson & Morgan",
+            "url": "https://www.thompson-morgan.com/search?searchTerm=chamomile",
+            "priceGBP": 2.49,
+            "recommended": true
+          },
+          {
+            "seller": "Suttons Seeds",
+            "url": "https://www.suttons.co.uk/herb-seeds/chamomile",
+            "priceGBP": 2.29
+          }
+        ]
+      },
+      {
+        "name": "Treneague",
+        "why": "Non-flowering ground cover with apple-sweet fragrance when walked on. For fragrant paths in raised beds.",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Crocus",
+            "url": "https://www.crocus.co.uk/plants/_/chamaemelum-nobile-treneague/classid.2000001770/",
+            "priceGBP": 5.99,
+            "badge": "Buy as plugs",
+            "recommended": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "lemon-verbena",
+    "commonName": "Lemon Verbena",
+    "varieties": [
+      {
+        "name": "Common Lemon Verbena",
+        "why": "The most intensely citrus-scented plant you can grow. Electric lemon fragrance when leaves are rubbed. Outstanding herbal tea. Grow against warm south wall.",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Crocus",
+            "url": "https://www.crocus.co.uk/plants/_/aloysia-citrodora/classid.2000000324/",
+            "priceGBP": 12.99,
+            "badge": "Buy as plant",
+            "recommended": true
+          },
+          {
+            "seller": "Herb Farm",
+            "url": "https://www.herbfarm.co.uk/?s=Common+Lemon+Verbena",
+            "priceGBP": 5.95
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "scented-geranium",
+    "commonName": "Scented Geranium",
+    "varieties": [
+      {
+        "name": "Attar of Roses",
+        "why": "RHS AGM. Deep rose fragrance from foliage. Overwinter indoors. The most rewarding scented-leaf plant you can grow.",
+        "context": "inground",
+        "sellers": [
+          {
+            "seller": "Crocus",
+            "url": "https://www.crocus.co.uk/plants/_/pelargonium-attar-of-roses/classid.2000038262/",
+            "priceGBP": 6.99,
+            "badge": "RHS AGM",
+            "recommended": true
+          }
+        ]
+      }
+    ]
+  }
+]

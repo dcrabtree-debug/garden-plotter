@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/garden-plotter/favicon.svg" />
+    <link rel="manifest" href="/garden-plotter/manifest.json" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#3d2b1f" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <title>Garden Plotter</title>
+    <script type="module" crossorigin src="/garden-plotter/assets/index-CROR7QEr.js"></script>
+    <link rel="stylesheet" crossorigin href="/garden-plotter/assets/index-CC_eb4qb.css">
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register(new URL('/garden-plotter/sw.js', location.origin).pathname).catch(() => {});
+        });
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,972 @@
+[
+  {
+    "slug": "strawberry-everbearing",
+    "commonName": "Everbearing Strawberry",
+    "botanicalName": "Fragaria × ananassa",
+    "category": "fruit",
+    "emoji": "🍓",
+    "sun": "full-sun",
+    "water": "moderate",
+    "spacingCm": 25,
+    "depthCm": 15,
+    "growthHabit": "trailing",
+    "daysToHarvest": [60, 90],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": null,
+      "transplant": [10, 4],
+      "harvest": [2, 9]
+    },
+    "greenstalkSuitability": "ideal",
+    "greenstalkNotes": "Trailing habit cascades beautifully from top tiers. Elevated position protects from slugs and ground pests.",
+    "idealTiers": [1, 2],
+    "varieties": [
+      { "name": "Albion", "notes": "Day-neutral, heavy yields, excellent flavor", "containerFriendly": true },
+      { "name": "Seascape", "notes": "Bred for coastal CA, outstanding producer", "containerFriendly": true },
+      { "name": "San Andreas", "notes": "UC Davis variety, heat tolerant", "containerFriendly": true }
+    ],
+    "notes": "Plant bare-root crowns Oct-Dec or transplants in spring. SoCal's mild winters allow near year-round production. Two harvest windows: Feb-Jun and May-Sep.",
+    "sources": ["https://ucanr.edu/sites/gardenweb/Vegetables/Strawberries/", "https://cagardenweb.ucanr.edu/"]
+  },
+  {
+    "slug": "tomato-tumbling",
+    "commonName": "Tumbling Tom Tomato",
+    "botanicalName": "Solanum lycopersicum",
+    "category": "vegetable",
+    "emoji": "🍅",
+    "sun": "full-sun",
+    "water": "high",
+    "spacingCm": 30,
+    "depthCm": 20,
+    "growthHabit": "trailing",
+    "daysToHarvest": [60, 70],
+    "plantingWindow": {
+      "sowIndoors": [12, 3],
+      "sowOutdoors": null,
+      "transplant": [2, 5],
+      "harvest": [5, 10]
+    },
+    "greenstalkSuitability": "ideal",
+    "greenstalkNotes": "Determinate trailing variety bred for containers. Will not snap pockets like indeterminate types.",
+    "idealTiers": [2, 3],
+    "varieties": [
+      { "name": "Tumbling Tom Red", "notes": "Classic cherry tomato, very productive", "containerFriendly": true },
+      { "name": "Patio Choice Yellow", "notes": "Compact golden cherry, sweet flavor", "containerFriendly": true },
+      { "name": "Tiny Tim", "notes": "Ultra-dwarf, 12 inches tall", "containerFriendly": true }
+    ],
+    "notes": "Start seeds indoors Dec-Mar in SoCal. Transplant out Feb-May after last frost risk. Determinate/trailing varieties only for GreenStalks.",
+    "sources": ["https://ucanr.edu/sites/gardenweb/Vegetables/Tomatoes/", "https://mg.ucanr.edu/"]
+  },
+  {
+    "slug": "basil-sweet",
+    "commonName": "Sweet Basil",
+    "botanicalName": "Ocimum basilicum",
+    "category": "herb",
+    "emoji": "🌿",
+    "sun": "full-sun",
+    "water": "moderate",
+    "spacingCm": 20,
+    "depthCm": 10,
+    "growthHabit": "bushy",
+    "daysToHarvest": [50, 75],
+    "plantingWindow": {
+      "sowIndoors": [1, 3],
+      "sowOutdoors": [3, 6],
+      "transplant": [3, 6],
+      "harvest": [5, 11]
+    },
+    "greenstalkSuitability": "ideal",
+    "greenstalkNotes": "Compact root system fits perfectly in pockets. Plant alongside tomatoes for classic companion planting.",
+    "idealTiers": [2, 3],
+    "varieties": [
+      { "name": "Genovese", "notes": "Classic Italian, large leaves, best for pesto", "containerFriendly": true },
+      { "name": "Spicy Globe", "notes": "Compact mound, ideal for small pockets", "containerFriendly": true },
+      { "name": "Thai Basil", "notes": "Anise-flavored, heat tolerant", "containerFriendly": true }
+    ],
+    "notes": "Thrives in SoCal warmth. Tuck into the same pocket as tomatoes — improves flavor and repels whiteflies. Pinch flowers to extend harvest.",
+    "sources": ["https://ucanr.edu/sites/gardenweb/Herbs/Basil/", "https://mg.ucanr.edu/"]
+  },
+  {
+    "slug": "bush-bean",
+    "commonName": "Bush Bean",
+    "botanicalName": "Phaseolus vulgaris",
+    "category": "legume",
+    "emoji": "🫘",
+    "sun": "full-sun",
+    "water": "moderate",
+    "spacingCm": 15,
+    "depthCm": 15,
+    "growthHabit": "bushy",
+    "daysToHarvest": [50, 60],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": [3, 6],
+      "transplant": null,
+      "harvest": [5, 12]
+    },
+    "greenstalkSuitability": "ideal",
+    "greenstalkNotes": "Compact and highly productive in 10-inch pockets with zero support needed.",
+    "idealTiers": [4, 5],
+    "varieties": [
+      { "name": "Blue Lake Bush", "notes": "Classic American variety, stringless, heavy yields", "containerFriendly": true },
+      { "name": "Contender", "notes": "Heat tolerant, fast producer", "containerFriendly": true },
+      { "name": "Royal Burgundy", "notes": "Purple pods easy to spot for picking", "containerFriendly": true }
+    ],
+    "notes": "Two planting windows in Manhattan Beach: spring (Mar-Jun) and fall (Aug-Oct). Fixes nitrogen in soil benefiting neighboring plants. Great for kids to pick.",
+    "sources": ["https://ucanr.edu/sites/gardenweb/Vegetables/Beans/", "https://anrcatalog.ucanr.edu/"]
+  },
+  {
+    "slug": "perpetual-spinach",
+    "commonName": "Spinach",
+    "botanicalName": "Spinacia oleracea",
+    "category": "vegetable",
+    "emoji": "🥬",
+    "sun": "partial-shade",
+    "water": "moderate",
+    "spacingCm": 15,
+    "depthCm": 15,
+    "growthHabit": "rosette",
+    "daysToHarvest": [40, 50],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": [10, 2],
+      "transplant": null,
+      "harvest": [11, 4]
+    },
+    "greenstalkSuitability": "ideal",
+    "greenstalkNotes": "Cut-and-come-again harvesting maximizes yield from a single pocket.",
+    "idealTiers": [1, 2],
+    "varieties": [
+      { "name": "Bloomsdale Long Standing", "notes": "Savoy type, slow to bolt, heat tolerant", "containerFriendly": true },
+      { "name": "Space", "notes": "Smooth leaf, excellent for containers", "containerFriendly": true }
+    ],
+    "notes": "Cool-season crop in SoCal — sow Oct-Feb for winter/spring harvest. Bolts quickly in heat. Partial shade from upper tiers helps extend the season.",
+    "sources": ["https://ucanr.edu/sites/gardenweb/Vegetables/Spinach/", "https://anrcatalog.ucanr.edu/"]
+  },
+  {
+    "slug": "swiss-chard",
+    "commonName": "Swiss Chard",
+    "botanicalName": "Beta vulgaris subsp. cicla",
+    "category": "vegetable",
+    "emoji": "🥬",
+    "sun": "partial-shade",
+    "water": "moderate",
+    "spacingCm": 25,
+    "depthCm": 15,
+    "growthHabit": "rosette",
+    "daysToHarvest": [55, 65],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": [9, 3],
+      "transplant": [1, 3],
+      "harvest": [11, 6]
+    },
+    "greenstalkSuitability": "ideal",
+    "greenstalkNotes": "Colorful stems add visual interest. Cut-and-come-again harvesting works perfectly.",
+    "idealTiers": [1, 2],
+    "varieties": [
+      { "name": "Bright Lights", "notes": "Multi-colored stems, ornamental and edible", "containerFriendly": true },
+      { "name": "Fordhook Giant", "notes": "Large leaves, heavy yields, heat tolerant", "containerFriendly": true }
+    ],
+    "notes": "One of the most heat-tolerant greens for SoCal. Sow fall through early spring. Rainbow stems from Bright Lights are a hit with kids.",
+    "sources": ["https://ucanr.edu/sites/gardenweb/Vegetables/Swiss_Chard/", "https://mg.ucanr.edu/"]
+  },
+  {
+    "slug": "thyme",
+    "commonName": "Thyme",
+    "botanicalName": "Thymus vulgaris",
+    "category": "herb",
+    "emoji": "🌿",
+    "sun": "full-sun",
+    "water": "low",
+    "spacingCm": 20,
+    "depthCm": 10,
+    "growthHabit": "bushy",
+    "daysToHarvest": [80, 100],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": null,
+      "transplant": [2, 5],
+      "harvest": [4, 12]
+    },
+    "greenstalkSuitability": "ideal",
+    "greenstalkNotes": "GreenStalk drainage mimics Mediterranean conditions these woody herbs prefer.",
+    "idealTiers": [3, 4],
+    "varieties": [
+      { "name": "Common Thyme", "notes": "Best for cooking, very drought tolerant", "containerFriendly": true },
+      { "name": "Lemon Thyme", "notes": "Citrus notes, good with fish", "containerFriendly": true }
+    ],
+    "notes": "Evergreen perennial — thrives year-round in Manhattan Beach climate. Excellent drainage in GreenStalk suits it perfectly. Almost no frost risk in Zone 10b.",
+    "sources": ["https://ucanr.edu/sites/gardenweb/Herbs/Thyme/", "https://mg.ucanr.edu/"]
+  },
+  {
+    "slug": "oregano",
+    "commonName": "Oregano",
+    "botanicalName": "Origanum vulgare",
+    "category": "herb",
+    "emoji": "🌿",
+    "sun": "full-sun",
+    "water": "low",
+    "spacingCm": 25,
+    "depthCm": 10,
+    "growthHabit": "bushy",
+    "daysToHarvest": [80, 100],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": null,
+      "transplant": [2, 5],
+      "harvest": [4, 12]
+    },
+    "greenstalkSuitability": "ideal",
+    "greenstalkNotes": "Thrives in the well-drained conditions of vertical planters.",
+    "idealTiers": [3, 4],
+    "varieties": [
+      { "name": "Greek Oregano", "notes": "Strongest flavor for cooking", "containerFriendly": true },
+      { "name": "Italian Oregano", "notes": "Milder, good all-purpose", "containerFriendly": true }
+    ],
+    "notes": "Hardy perennial that thrives in SoCal heat. Excellent drainage in GreenStalk suits it perfectly. Cut back hard in late winter to refresh growth.",
+    "sources": ["https://ucanr.edu/sites/gardenweb/Herbs/Oregano/", "https://mg.ucanr.edu/"]
+  },
+  {
+    "slug": "parsley",
+    "commonName": "Parsley",
+    "botanicalName": "Petroselinum crispum",
+    "category": "herb",
+    "emoji": "🌿",
+    "sun": "partial-shade",
+    "water": "moderate",
+    "spacingCm": 20,
+    "depthCm": 15,
+    "growthHabit": "rosette",
+    "daysToHarvest": [70, 90],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": [9, 3],
+      "transplant": null,
+      "harvest": [12, 6]
+    },
+    "greenstalkSuitability": "good",
+    "greenstalkNotes": "Deeper tap root than other herbs but works well in middle tiers.",
+    "idealTiers": [3, 4],
+    "varieties": [
+      { "name": "Italian Flat Leaf", "notes": "Better flavor for cooking", "containerFriendly": true },
+      { "name": "Curly", "notes": "Classic garnish variety", "containerFriendly": true }
+    ],
+    "notes": "Cool-season herb in SoCal — sow fall through early spring. Biennial that will bolt in second year. Replace annually for best results.",
+    "sources": ["https://ucanr.edu/sites/gardenweb/Herbs/Parsley/", "https://mg.ucanr.edu/"]
+  },
+  {
+    "slug": "nasturtium",
+    "commonName": "Nasturtium",
+    "botanicalName": "Tropaeolum majus",
+    "category": "flower",
+    "emoji": "🌺",
+    "sun": "full-sun",
+    "water": "low",
+    "spacingCm": 25,
+    "depthCm": 10,
+    "growthHabit": "trailing",
+    "daysToHarvest": [50, 65],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": [9, 3],
+      "transplant": null,
+      "harvest": [11, 5]
+    },
+    "greenstalkSuitability": "ideal",
+    "greenstalkNotes": "Trailing habit cascades from bottom tiers. Sacrificial trap crop draws aphids away from vegetables.",
+    "idealTiers": [5],
+    "varieties": [
+      { "name": "Empress of India", "notes": "Dark leaves, scarlet flowers, compact", "containerFriendly": true },
+      { "name": "Alaska Mix", "notes": "Variegated leaves, multi-color blooms", "containerFriendly": true }
+    ],
+    "notes": "Entirely edible — peppery flowers and leaves for salads. Acts as trap crop for aphids. Thrives in SoCal's cool season with minimal care.",
+    "sources": ["https://ucanr.edu/sites/gardenweb/Flowers/Nasturtiums/", "https://mg.ucanr.edu/"]
+  },
+  {
+    "slug": "dwarf-sweet-pea",
+    "commonName": "Dwarf Sweet Pea",
+    "botanicalName": "Lathyrus odoratus",
+    "category": "flower",
+    "emoji": "🌸",
+    "sun": "full-sun",
+    "water": "moderate",
+    "spacingCm": 15,
+    "depthCm": 15,
+    "growthHabit": "bushy",
+    "daysToHarvest": [70, 85],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": [10, 12],
+      "transplant": null,
+      "harvest": [1, 5]
+    },
+    "greenstalkSuitability": "good",
+    "greenstalkNotes": "Must use dwarf varieties like Cupid. Standard sweet peas need climbing support and are unsuitable.",
+    "idealTiers": [4, 5],
+    "varieties": [
+      { "name": "Cupid", "notes": "True dwarf, cascading habit, fragrant", "containerFriendly": true },
+      { "name": "Bijou Mix", "notes": "Bushy, no support needed, mixed colors", "containerFriendly": true }
+    ],
+    "notes": "Sow in fall for winter/spring bloom in SoCal. Sweet peas love coastal SoCal's cool winters. Beautiful fragrance. Only dwarf varieties for GreenStalks.",
+    "sources": ["https://ucanr.edu/sites/gardenweb/Flowers/Sweet_Peas/", "https://mg.ucanr.edu/"]
+  },
+  {
+    "slug": "lettuce",
+    "commonName": "Lettuce",
+    "botanicalName": "Lactuca sativa",
+    "category": "vegetable",
+    "emoji": "🥬",
+    "sun": "partial-shade",
+    "water": "moderate",
+    "spacingCm": 20,
+    "depthCm": 10,
+    "growthHabit": "rosette",
+    "daysToHarvest": [30, 60],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": [9, 3],
+      "transplant": [1, 3],
+      "harvest": [11, 5]
+    },
+    "greenstalkSuitability": "ideal",
+    "greenstalkNotes": "Shallow roots perfect for pockets. Cut-and-come-again loose leaf varieties maximize harvests.",
+    "idealTiers": [1, 2, 3],
+    "varieties": [
+      { "name": "Salad Bowl", "notes": "Loose leaf, cut-and-come-again", "containerFriendly": true },
+      { "name": "Buttercrunch", "notes": "Heat-tolerant butterhead, compact", "containerFriendly": true },
+      { "name": "Black Seeded Simpson", "notes": "Fast growing, classic American variety", "containerFriendly": true }
+    ],
+    "notes": "Cool-season crop — sow Sep-Mar in Manhattan Beach. Succession sow every 2-3 weeks for continuous supply. Bolts quickly in summer heat.",
+    "sources": ["https://ucanr.edu/sites/gardenweb/Vegetables/Lettuce/", "https://anrcatalog.ucanr.edu/"]
+  },
+  {
+    "slug": "chives",
+    "commonName": "Chives",
+    "botanicalName": "Allium schoenoprasum",
+    "category": "herb",
+    "emoji": "🧅",
+    "sun": "full-sun",
+    "water": "moderate",
+    "spacingCm": 15,
+    "depthCm": 10,
+    "growthHabit": "upright",
+    "daysToHarvest": [60, 90],
+    "plantingWindow": {
+      "sowIndoors": [1, 3],
+      "sowOutdoors": [2, 5],
+      "transplant": null,
+      "harvest": [5, 12]
+    },
+    "greenstalkSuitability": "ideal",
+    "greenstalkNotes": "Compact clumps fit perfectly. Purple flowers are edible and attract pollinators.",
+    "idealTiers": [3, 4],
+    "varieties": [
+      { "name": "Common Chives", "notes": "Onion flavor, purple flowers", "containerFriendly": true },
+      { "name": "Garlic Chives", "notes": "Mild garlic flavor, white flowers", "containerFriendly": true }
+    ],
+    "notes": "Perennial — comes back each year, nearly evergreen in Zone 10b. Excellent companion to deter aphids. Edible flowers.",
+    "sources": ["https://ucanr.edu/sites/gardenweb/Herbs/Chives/", "https://mg.ucanr.edu/"]
+  },
+  {
+    "slug": "mint",
+    "commonName": "Mint",
+    "botanicalName": "Mentha spicata",
+    "category": "herb",
+    "emoji": "🌿",
+    "sun": "partial-shade",
+    "water": "high",
+    "spacingCm": 30,
+    "depthCm": 15,
+    "growthHabit": "trailing",
+    "daysToHarvest": [60, 90],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": null,
+      "transplant": [3, 6],
+      "harvest": [4, 11]
+    },
+    "greenstalkSuitability": "good",
+    "greenstalkNotes": "GreenStalk pockets naturally contain mint's invasive runners — actually an advantage here.",
+    "idealTiers": [4, 5],
+    "varieties": [
+      { "name": "Spearmint", "notes": "Classic mint for drinks and cooking", "containerFriendly": true },
+      { "name": "Mojito Mint", "notes": "Cuban mint, perfect for cocktails", "containerFriendly": true },
+      { "name": "Peppermint", "notes": "Stronger flavor, good for tea", "containerFriendly": true }
+    ],
+    "notes": "Invasive in ground — GreenStalk pockets actually contain it well. Nearly evergreen in Manhattan Beach climate. Keep separate from other herbs.",
+    "sources": ["https://ucanr.edu/sites/gardenweb/Herbs/Mint/", "https://mg.ucanr.edu/"]
+  },
+  {
+    "slug": "marigold",
+    "commonName": "French Marigold",
+    "botanicalName": "Tagetes patula",
+    "category": "flower",
+    "emoji": "🌻",
+    "sun": "full-sun",
+    "water": "moderate",
+    "spacingCm": 20,
+    "depthCm": 10,
+    "growthHabit": "bushy",
+    "daysToHarvest": [50, 60],
+    "plantingWindow": {
+      "sowIndoors": [1, 3],
+      "sowOutdoors": [3, 6],
+      "transplant": null,
+      "harvest": [5, 11]
+    },
+    "greenstalkSuitability": "ideal",
+    "greenstalkNotes": "Compact habit perfect for pockets. Strong scent deters whitefly and other pests.",
+    "idealTiers": [3, 4, 5],
+    "varieties": [
+      { "name": "Bonanza Mix", "notes": "Dwarf, multi-color, crested doubles", "containerFriendly": true },
+      { "name": "Durango", "notes": "Compact, large blooms, heat tolerant", "containerFriendly": true }
+    ],
+    "notes": "Classic companion plant. Strong scent deters whitefly, aphids, and nematodes. Thrives in SoCal heat. Long bloom season.",
+    "sources": ["https://ucanr.edu/sites/gardenweb/Flowers/Marigolds/", "https://mg.ucanr.edu/"]
+  },
+  {
+    "slug": "radish",
+    "commonName": "Radish",
+    "botanicalName": "Raphanus sativus",
+    "category": "vegetable",
+    "emoji": "🫑",
+    "sun": "full-sun",
+    "water": "moderate",
+    "spacingCm": 5,
+    "depthCm": 10,
+    "growthHabit": "rosette",
+    "daysToHarvest": [25, 35],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": [9, 3],
+      "transplant": null,
+      "harvest": [10, 5]
+    },
+    "greenstalkSuitability": "ideal",
+    "greenstalkNotes": "Fast crop — can fit 6-8 radishes per pocket. Great for filling gaps between slower plants.",
+    "idealTiers": [1, 2, 3, 4, 5],
+    "varieties": [
+      { "name": "Cherry Belle", "notes": "Classic round red, very fast", "containerFriendly": true },
+      { "name": "French Breakfast", "notes": "Elongated, mild flavor", "containerFriendly": true },
+      { "name": "Easter Egg Mix", "notes": "Multi-colored, fun for kids", "containerFriendly": true }
+    ],
+    "notes": "Fastest vegetable — harvest in 4 weeks. Cool-season crop, sow Sep-Mar in SoCal. Perfect beginner plant for kids. Sow in gaps between transplants.",
+    "sources": ["https://ucanr.edu/sites/gardenweb/Vegetables/Radishes/", "https://anrcatalog.ucanr.edu/"]
+  },
+  {
+    "slug": "arugula",
+    "commonName": "Arugula",
+    "botanicalName": "Eruca vesicaria",
+    "category": "vegetable",
+    "emoji": "🥬",
+    "sun": "partial-shade",
+    "water": "moderate",
+    "spacingCm": 15,
+    "depthCm": 8,
+    "growthHabit": "rosette",
+    "daysToHarvest": [21, 40],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": [9, 4],
+      "transplant": null,
+      "harvest": [10, 5]
+    },
+    "greenstalkSuitability": "ideal",
+    "greenstalkNotes": "Shallow roots ideal for pockets. Cut-and-come-again for weeks of harvests.",
+    "idealTiers": [1, 2, 3],
+    "varieties": [
+      { "name": "Astro", "notes": "Fast growing, mild peppery flavor", "containerFriendly": true },
+      { "name": "Wild Arugula", "notes": "Perennial, stronger peppery flavor", "containerFriendly": true }
+    ],
+    "notes": "Cool-season green — sow Sep-Apr in Manhattan Beach. Bolts quickly in summer heat. Shade from upper tiers helps extend the season.",
+    "sources": ["https://ucanr.edu/sites/gardenweb/Vegetables/Arugula/", "https://anrcatalog.ucanr.edu/"]
+  },
+  {
+    "slug": "spring-onion",
+    "commonName": "Green Onion",
+    "botanicalName": "Allium cepa",
+    "category": "vegetable",
+    "emoji": "🧅",
+    "sun": "full-sun",
+    "water": "moderate",
+    "spacingCm": 5,
+    "depthCm": 10,
+    "growthHabit": "upright",
+    "daysToHarvest": [60, 80],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": [9, 3],
+      "transplant": null,
+      "harvest": [12, 5]
+    },
+    "greenstalkSuitability": "ideal",
+    "greenstalkNotes": "Slim upright habit means you can pack 8-10 per pocket. Allium scent deters pests.",
+    "idealTiers": [2, 3, 4],
+    "varieties": [
+      { "name": "Evergreen Hardy White", "notes": "Classic bunching onion, very reliable", "containerFriendly": true },
+      { "name": "Tokyo Long White", "notes": "Longer white shanks, mild", "containerFriendly": true }
+    ],
+    "notes": "Pack densely in pockets. Cool-season crop in SoCal, sow Sep-Mar. The allium scent helps deter carrot fly and aphids.",
+    "sources": ["https://ucanr.edu/sites/gardenweb/Vegetables/Onions/", "https://anrcatalog.ucanr.edu/"]
+  },
+  {
+    "slug": "kale",
+    "commonName": "Kale",
+    "botanicalName": "Brassica oleracea var. sabellica",
+    "category": "vegetable",
+    "emoji": "🥬",
+    "sun": "full-sun",
+    "water": "moderate",
+    "spacingCm": 30,
+    "depthCm": 20,
+    "growthHabit": "rosette",
+    "daysToHarvest": [55, 75],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": [9, 2],
+      "transplant": [9, 1],
+      "harvest": [11, 5]
+    },
+    "greenstalkSuitability": "good",
+    "greenstalkNotes": "Dwarf varieties fit well. Larger types may outgrow pockets — harvest frequently to manage size.",
+    "idealTiers": [2, 3],
+    "varieties": [
+      { "name": "Lacinato (Dinosaur)", "notes": "Tuscan type, heat tolerant, great for SoCal", "containerFriendly": true },
+      { "name": "Dwarf Blue Curled", "notes": "Compact, perfect for containers", "containerFriendly": true },
+      { "name": "Red Russian", "notes": "Purple-red leaves, tender", "containerFriendly": true }
+    ],
+    "notes": "Cool-season crop — sow Sep-Feb in Manhattan Beach. Lacinato (Tuscan) kale handles SoCal warmth better than curly types. Use dwarf varieties in GreenStalks.",
+    "sources": ["https://ucanr.edu/sites/gardenweb/Vegetables/Kale/", "https://anrcatalog.ucanr.edu/"]
+  },
+  {
+    "slug": "pepper-chilli",
+    "commonName": "Chili Pepper",
+    "botanicalName": "Capsicum annuum",
+    "category": "vegetable",
+    "emoji": "🌶️",
+    "sun": "full-sun",
+    "water": "moderate",
+    "spacingCm": 30,
+    "depthCm": 20,
+    "growthHabit": "bushy",
+    "daysToHarvest": [70, 100],
+    "plantingWindow": {
+      "sowIndoors": [12, 3],
+      "sowOutdoors": null,
+      "transplant": [3, 5],
+      "harvest": [6, 11]
+    },
+    "greenstalkSuitability": "good",
+    "greenstalkNotes": "Compact dwarf varieties work well. SoCal heat is ideal for peppers.",
+    "idealTiers": [2, 3],
+    "varieties": [
+      { "name": "Thai Hot", "notes": "Prolific, compact, extreme heat", "containerFriendly": true },
+      { "name": "Basket of Fire", "notes": "Ornamental and edible, trailing habit", "containerFriendly": true },
+      { "name": "Jalapeno", "notes": "Classic American chili, medium heat", "containerFriendly": true }
+    ],
+    "notes": "Start indoors Dec-Mar. SoCal warmth is perfect for chilis — much easier here than in cooler climates. Long harvest season Jun-Nov.",
+    "sources": ["https://ucanr.edu/sites/gardenweb/Vegetables/Peppers/", "https://anrcatalog.ucanr.edu/"]
+  },
+  {
+    "slug": "pea",
+    "commonName": "Garden Pea",
+    "botanicalName": "Pisum sativum",
+    "category": "vegetable",
+    "emoji": "🟢",
+    "sun": "full-sun",
+    "water": "moderate",
+    "spacingCm": 8,
+    "depthCm": 15,
+    "growthHabit": "climbing",
+    "daysToHarvest": [60, 80],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": [10, 2],
+      "transplant": null,
+      "harvest": [1, 5]
+    },
+    "greenstalkSuitability": "poor",
+    "greenstalkNotes": "Most varieties need support netting and reach 1m+. Only dwarf varieties could work but yields are low.",
+    "idealTiers": [],
+    "varieties": [
+      { "name": "Sugar Snap", "notes": "Edible pods, sweet, kids love them", "containerFriendly": true },
+      { "name": "Tom Thumb", "notes": "True dwarf at 25cm, no support needed", "containerFriendly": true },
+      { "name": "Little Marvel", "notes": "Compact, sweet shelling pea", "containerFriendly": true }
+    ],
+    "notes": "Cool-season crop in SoCal — sow Oct-Feb for winter/spring harvest. Peas love Manhattan Beach's mild winter weather. Kids love picking sugar snaps off the vine.",
+    "sources": ["https://ucanr.edu/sites/gardenweb/Vegetables/Peas/", "https://anrcatalog.ucanr.edu/"]
+  },
+  {
+    "slug": "zucchini",
+    "commonName": "Zucchini",
+    "botanicalName": "Cucurbita pepo",
+    "category": "vegetable",
+    "emoji": "🥒",
+    "sun": "full-sun",
+    "water": "high",
+    "spacingCm": 90,
+    "depthCm": 25,
+    "growthHabit": "bushy",
+    "daysToHarvest": [45, 60],
+    "plantingWindow": {
+      "sowIndoors": [2, 3],
+      "sowOutdoors": [3, 6],
+      "transplant": [3, 5],
+      "harvest": [5, 9]
+    },
+    "greenstalkSuitability": "unsuitable",
+    "greenstalkNotes": "Enormous leaves and 90cm spread make this impossible in pockets. Needs ground or very large containers.",
+    "idealTiers": [],
+    "varieties": [
+      { "name": "Black Beauty", "notes": "Dark green, classic variety, heavy cropper", "containerFriendly": false },
+      { "name": "Golden Zucchini", "notes": "Bright yellow, mild flavor, fun for kids", "containerFriendly": false },
+      { "name": "Patio Star", "notes": "Compact bush, bred for containers", "containerFriendly": true }
+    ],
+    "notes": "Incredibly productive — two plants can feed a family. Harvest at 6 inches for best flavor. Sow on edge to prevent rot. Thrives in SoCal warmth.",
+    "sources": ["https://ucanr.edu/sites/gardenweb/Vegetables/Squash/", "https://anrcatalog.ucanr.edu/"]
+  },
+  {
+    "slug": "cucumber",
+    "commonName": "Cucumber",
+    "botanicalName": "Cucumis sativus",
+    "category": "vegetable",
+    "emoji": "🥒",
+    "sun": "full-sun",
+    "water": "high",
+    "spacingCm": 60,
+    "depthCm": 20,
+    "growthHabit": "climbing",
+    "daysToHarvest": [50, 70],
+    "plantingWindow": {
+      "sowIndoors": [2, 3],
+      "sowOutdoors": [3, 6],
+      "transplant": [3, 5],
+      "harvest": [5, 9]
+    },
+    "greenstalkSuitability": "unsuitable",
+    "greenstalkNotes": "Vigorous vining habit and large leaf canopy far too expansive for pockets. Needs trellis or large container.",
+    "idealTiers": [],
+    "varieties": [
+      { "name": "Marketmore 76", "notes": "Classic slicer, disease resistant", "containerFriendly": false },
+      { "name": "Spacemaster", "notes": "Compact bush type, great for containers", "containerFriendly": true },
+      { "name": "Lemon Cucumber", "notes": "Round yellow fruit, mild, fun for kids", "containerFriendly": true }
+    ],
+    "notes": "Loves SoCal warmth. Sow indoors Feb-Mar or direct sow after soil warms. Bush varieties work in large pots. Keep well watered in summer heat.",
+    "sources": ["https://ucanr.edu/sites/gardenweb/Vegetables/Cucumbers/", "https://anrcatalog.ucanr.edu/"]
+  },
+  {
+    "slug": "carrot",
+    "commonName": "Carrot",
+    "botanicalName": "Daucus carota",
+    "category": "vegetable",
+    "emoji": "🥕",
+    "sun": "full-sun",
+    "water": "moderate",
+    "spacingCm": 8,
+    "depthCm": 20,
+    "growthHabit": "rosette",
+    "daysToHarvest": [70, 100],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": [9, 4],
+      "transplant": null,
+      "harvest": [12, 6]
+    },
+    "greenstalkSuitability": "good",
+    "greenstalkNotes": "Short-rooted varieties essential for pockets. Elevated position helps deter carrot fly which flies low.",
+    "idealTiers": [2, 3, 4],
+    "varieties": [
+      { "name": "Danvers Half Long", "notes": "Classic American variety, adapts to heavy soil", "containerFriendly": true },
+      { "name": "Paris Market", "notes": "Round roots ideal for shallow containers", "containerFriendly": true },
+      { "name": "Chantenay Red Cored", "notes": "Short stumpy roots, excellent flavor", "containerFriendly": true }
+    ],
+    "notes": "Cool-season root crop — sow Sep-Apr in Manhattan Beach. Use short-rooted types in containers. Companion plant with onion family to deter pests.",
+    "sources": ["https://ucanr.edu/sites/gardenweb/Vegetables/Carrots/", "https://anrcatalog.ucanr.edu/"]
+  },
+  {
+    "slug": "beet",
+    "commonName": "Beet",
+    "botanicalName": "Beta vulgaris",
+    "category": "vegetable",
+    "emoji": "🟣",
+    "sun": "full-sun",
+    "water": "moderate",
+    "spacingCm": 10,
+    "depthCm": 15,
+    "growthHabit": "rosette",
+    "daysToHarvest": [55, 80],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": [9, 4],
+      "transplant": null,
+      "harvest": [11, 6]
+    },
+    "greenstalkSuitability": "good",
+    "greenstalkNotes": "Baby beet varieties work well in pockets. Pull at golf-ball size for best results in limited depth.",
+    "idealTiers": [3, 4, 5],
+    "varieties": [
+      { "name": "Detroit Dark Red", "notes": "Classic American beet, deep red, reliable", "containerFriendly": true },
+      { "name": "Chioggia", "notes": "Candy-stripe interior, mild and sweet", "containerFriendly": true },
+      { "name": "Bull's Blood", "notes": "Deep red leaves, ornamental and edible", "containerFriendly": true }
+    ],
+    "notes": "Soak seed clusters overnight before sowing. Each cluster produces 2-3 seedlings — thin to strongest. Leaves also edible as beet greens. Sow Sep-Apr in SoCal.",
+    "sources": ["https://ucanr.edu/sites/gardenweb/Vegetables/Beets/", "https://anrcatalog.ucanr.edu/"]
+  },
+  {
+    "slug": "eggplant",
+    "commonName": "Eggplant",
+    "botanicalName": "Solanum melongena",
+    "category": "vegetable",
+    "emoji": "🍆",
+    "sun": "full-sun",
+    "water": "moderate",
+    "spacingCm": 45,
+    "depthCm": 25,
+    "growthHabit": "bushy",
+    "daysToHarvest": [70, 100],
+    "plantingWindow": {
+      "sowIndoors": [12, 2],
+      "sowOutdoors": null,
+      "transplant": [3, 5],
+      "harvest": [6, 11]
+    },
+    "greenstalkSuitability": "poor",
+    "greenstalkNotes": "Heavy fruit and large root system. Compact varieties may manage in top tiers but yields will be limited.",
+    "idealTiers": [1, 2],
+    "varieties": [
+      { "name": "Ichiban", "notes": "Japanese long type, prolific in warm climates", "containerFriendly": true },
+      { "name": "Fairy Tale", "notes": "Compact patio type, striped mini fruits", "containerFriendly": true },
+      { "name": "Black Beauty", "notes": "Classic globe type, heavy cropper", "containerFriendly": false }
+    ],
+    "notes": "Eggplant thrives in SoCal heat — much easier here than in cooler climates. Start indoors Dec-Feb. Long harvest season Jun-Nov. Restrict to 4-5 fruits per plant for best size.",
+    "sources": ["https://ucanr.edu/sites/gardenweb/Vegetables/Eggplant/", "https://anrcatalog.ucanr.edu/"]
+  },
+  {
+    "slug": "bell-pepper",
+    "commonName": "Bell Pepper",
+    "botanicalName": "Capsicum annuum",
+    "category": "vegetable",
+    "emoji": "🫑",
+    "sun": "full-sun",
+    "water": "moderate",
+    "spacingCm": 40,
+    "depthCm": 20,
+    "growthHabit": "bushy",
+    "daysToHarvest": [60, 90],
+    "plantingWindow": {
+      "sowIndoors": [12, 3],
+      "sowOutdoors": null,
+      "transplant": [3, 5],
+      "harvest": [6, 10]
+    },
+    "greenstalkSuitability": "poor",
+    "greenstalkNotes": "Large bushy plants with heavy fruit. Compact patio varieties may work in top tiers with support.",
+    "idealTiers": [1, 2],
+    "varieties": [
+      { "name": "California Wonder", "notes": "Classic bell, bred for warm climates", "containerFriendly": true },
+      { "name": "Redskin", "notes": "Dwarf patio variety, no staking needed", "containerFriendly": true },
+      { "name": "Lunchbox Mix", "notes": "Mini sweet peppers, snack-sized, kids love them", "containerFriendly": true }
+    ],
+    "notes": "Start indoors Dec-Mar. SoCal warmth is ideal — much longer season than cooler regions. Green peppers are just unripe — leave to turn red for sweeter flavor.",
+    "sources": ["https://ucanr.edu/sites/gardenweb/Vegetables/Peppers/", "https://anrcatalog.ucanr.edu/"]
+  },
+  {
+    "slug": "sweet-potato",
+    "commonName": "Sweet Potato",
+    "botanicalName": "Ipomoea batatas",
+    "category": "vegetable",
+    "emoji": "🍠",
+    "sun": "full-sun",
+    "water": "moderate",
+    "spacingCm": 30,
+    "depthCm": 20,
+    "growthHabit": "trailing",
+    "daysToHarvest": [90, 120],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": null,
+      "transplant": [4, 6],
+      "harvest": [9, 11]
+    },
+    "greenstalkSuitability": "unsuitable",
+    "greenstalkNotes": "Extensive trailing vines and deep root run needed for tuber formation. Too vigorous for pockets.",
+    "idealTiers": [],
+    "varieties": [
+      { "name": "Beauregard", "notes": "Most popular US variety, reliable in SoCal", "containerFriendly": false },
+      { "name": "Georgia Jet", "notes": "Fast maturing, good for shorter seasons", "containerFriendly": false },
+      { "name": "Bush Porto Rico", "notes": "Compact vines, best for containers", "containerFriendly": true }
+    ],
+    "notes": "Plant slips (rooted cuttings) Apr-Jun. SoCal's long warm season is ideal for sweet potatoes. Harvest before first cool weather. Cure for 10 days before eating.",
+    "sources": ["https://ucanr.edu/sites/gardenweb/Vegetables/Sweet_Potatoes/", "https://anrcatalog.ucanr.edu/"]
+  },
+  {
+    "slug": "rosemary",
+    "commonName": "Rosemary",
+    "botanicalName": "Salvia rosmarinus",
+    "category": "herb",
+    "emoji": "🌿",
+    "sun": "full-sun",
+    "water": "low",
+    "spacingCm": 45,
+    "depthCm": 20,
+    "growthHabit": "bushy",
+    "daysToHarvest": [90, 120],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": null,
+      "transplant": [2, 5],
+      "harvest": [1, 12]
+    },
+    "greenstalkSuitability": "poor",
+    "greenstalkNotes": "Woody shrub that eventually grows large. Young plants fit pockets but will outgrow them within a season.",
+    "idealTiers": [1, 2],
+    "varieties": [
+      { "name": "Tuscan Blue", "notes": "Upright, strong flavor, classic culinary type", "containerFriendly": true },
+      { "name": "Prostratus", "notes": "Trailing habit, beautiful cascading over walls", "containerFriendly": true }
+    ],
+    "notes": "Evergreen perennial that thrives in SoCal's Mediterranean climate. Harvest year-round. Hates wet feet — needs excellent drainage. Nearly indestructible in Zone 10b.",
+    "sources": ["https://ucanr.edu/sites/gardenweb/Herbs/Rosemary/", "https://mg.ucanr.edu/"]
+  },
+  {
+    "slug": "cilantro",
+    "commonName": "Cilantro",
+    "botanicalName": "Coriandrum sativum",
+    "category": "herb",
+    "emoji": "🌿",
+    "sun": "partial-shade",
+    "water": "moderate",
+    "spacingCm": 15,
+    "depthCm": 10,
+    "growthHabit": "upright",
+    "daysToHarvest": [40, 60],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": [9, 3],
+      "transplant": null,
+      "harvest": [10, 5]
+    },
+    "greenstalkSuitability": "ideal",
+    "greenstalkNotes": "Shallow roots and quick growth cycle perfect for pockets. Succession sow for continuous supply.",
+    "idealTiers": [2, 3, 4],
+    "varieties": [
+      { "name": "Slow Bolt", "notes": "Extended leaf harvest, heat tolerant", "containerFriendly": true },
+      { "name": "Santo", "notes": "Slow-bolting, good for SoCal conditions", "containerFriendly": true }
+    ],
+    "notes": "Bolts fast in heat — strictly a cool-season herb in SoCal. Sow Sep-Mar and succession sow every 3 weeks. Direct sow as it hates root disturbance.",
+    "sources": ["https://ucanr.edu/sites/gardenweb/Herbs/Cilantro/", "https://mg.ucanr.edu/"]
+  },
+  {
+    "slug": "dill",
+    "commonName": "Dill",
+    "botanicalName": "Anethum graveolens",
+    "category": "herb",
+    "emoji": "🌿",
+    "sun": "full-sun",
+    "water": "moderate",
+    "spacingCm": 20,
+    "depthCm": 10,
+    "growthHabit": "upright",
+    "daysToHarvest": [40, 60],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": [9, 4],
+      "transplant": null,
+      "harvest": [10, 5]
+    },
+    "greenstalkSuitability": "good",
+    "greenstalkNotes": "Compact varieties work in pockets. Tall flowering stems may need pinching. Do not plant near fennel — they cross-pollinate.",
+    "idealTiers": [2, 3],
+    "varieties": [
+      { "name": "Fernleaf", "notes": "Dwarf variety bred for containers, AAS winner", "containerFriendly": true },
+      { "name": "Bouquet", "notes": "Compact, heavy leaf production", "containerFriendly": true }
+    ],
+    "notes": "Cool-season herb in SoCal — sow Sep-Apr. Direct sow as dill hates transplanting. Keep away from fennel. Both leaves and seeds are useful.",
+    "sources": ["https://ucanr.edu/sites/gardenweb/Herbs/Dill/", "https://mg.ucanr.edu/"]
+  },
+  {
+    "slug": "sage",
+    "commonName": "Sage",
+    "botanicalName": "Salvia officinalis",
+    "category": "herb",
+    "emoji": "🌿",
+    "sun": "full-sun",
+    "water": "low",
+    "spacingCm": 40,
+    "depthCm": 15,
+    "growthHabit": "bushy",
+    "daysToHarvest": [75, 100],
+    "plantingWindow": {
+      "sowIndoors": [1, 3],
+      "sowOutdoors": null,
+      "transplant": [3, 6],
+      "harvest": [5, 12]
+    },
+    "greenstalkSuitability": "good",
+    "greenstalkNotes": "Young plants work well in pockets with good drainage. Prune regularly to prevent it becoming leggy.",
+    "idealTiers": [2, 3],
+    "varieties": [
+      { "name": "Common Sage", "notes": "Grey-green leaves, classic culinary sage", "containerFriendly": true },
+      { "name": "Purple Sage", "notes": "Purple-flushed leaves, ornamental and edible", "containerFriendly": true }
+    ],
+    "notes": "Evergreen sub-shrub that thrives in SoCal's dry heat. Replace every 3-4 years as plants become woody. Blue flowers attract bees. Harvest lightly in first year.",
+    "sources": ["https://ucanr.edu/sites/gardenweb/Herbs/Sage/", "https://mg.ucanr.edu/"]
+  },
+  {
+    "slug": "sunflower",
+    "commonName": "Sunflower",
+    "botanicalName": "Helianthus annuus",
+    "category": "flower",
+    "emoji": "🌻",
+    "sun": "full-sun",
+    "water": "moderate",
+    "spacingCm": 30,
+    "depthCm": 15,
+    "growthHabit": "upright",
+    "daysToHarvest": [60, 90],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": [3, 6],
+      "transplant": null,
+      "harvest": [6, 10]
+    },
+    "greenstalkSuitability": "unsuitable",
+    "greenstalkNotes": "Most varieties far too tall (1-3m) with deep tap roots. Only micro/dwarf varieties might fit pockets.",
+    "idealTiers": [],
+    "varieties": [
+      { "name": "Teddy Bear", "notes": "Dwarf at 24 inches, fluffy double blooms", "containerFriendly": true },
+      { "name": "Sunspot", "notes": "Dwarf with full-size 10-inch heads", "containerFriendly": true },
+      { "name": "Mammoth", "notes": "Classic giant type, grow in ground only", "containerFriendly": false }
+    ],
+    "notes": "Kids love growing sunflowers — great for measuring contests. Sow direct Mar-Jun in SoCal. Dwarf types work in containers. Attracts pollinators.",
+    "sources": ["https://ucanr.edu/sites/gardenweb/Flowers/Sunflowers/", "https://mg.ucanr.edu/"]
+  },
+  {
+    "slug": "calendula",
+    "commonName": "Calendula",
+    "botanicalName": "Calendula officinalis",
+    "category": "flower",
+    "emoji": "🌼",
+    "sun": "full-sun",
+    "water": "low",
+    "spacingCm": 20,
+    "depthCm": 10,
+    "growthHabit": "bushy",
+    "daysToHarvest": [45, 65],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": [9, 2],
+      "transplant": null,
+      "harvest": [11, 5]
+    },
+    "greenstalkSuitability": "ideal",
+    "greenstalkNotes": "Compact habit perfect for pockets. Edible petals and strong companion planting benefits.",
+    "idealTiers": [3, 4, 5],
+    "varieties": [
+      { "name": "Pacific Beauty Mix", "notes": "Large double flowers, mixed orange and yellow", "containerFriendly": true },
+      { "name": "Resina", "notes": "Bred for medicinal use, high resin content", "containerFriendly": true }
+    ],
+    "notes": "Cool-season flower in SoCal — sow Sep-Feb for winter/spring bloom. Edible petals add color to salads. Attracts beneficial insects. Self-seeds readily.",
+    "sources": ["https://ucanr.edu/sites/gardenweb/Flowers/Calendula/", "https://mg.ucanr.edu/"]
+  }
+]

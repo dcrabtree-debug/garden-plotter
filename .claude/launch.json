@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "garden-plotter",
+      "runtimeExecutable": "/Users/davidcrabtree/garden-plotter/.claude/start-dev.sh",
+      "runtimeArgs": [],
+      "port": 5173
+    }
+  ]
+}

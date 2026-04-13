@@ -1,0 +1,1268 @@
+[
+  {
+    "slug": "strawberry-everbearing",
+    "commonName": "Everbearing Strawberry",
+    "varieties": [
+      {
+        "name": "Albion",
+        "why": "UC Davis bred, day-neutral, exceptional flavour, heavy yields in containers",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/fruit-plants/strawberry-plants/strawberry-albion-prod002015.html",
+            "priceUSD": 16.99,
+            "badge": "AHS Award",
+            "recommended": true
+          },
+          {
+            "seller": "Park Seed",
+            "url": "https://www.parkseed.com/albion-everbearing-strawberry-plants/p/05895/",
+            "priceUSD": 14.95
+          },
+          {
+            "seller": "Territorial Seed Company",
+            "url": "https://www.territorialseed.com/product/albion-strawberry-plants",
+            "priceUSD": 12.75
+          }
+        ]
+      },
+      {
+        "name": "Seascape",
+        "why": "UC bred for coastal CA, outstanding producer, compact crown ideal for planters",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/fruit-plants/strawberry-plants/strawberry-seascape-prod002020.html",
+            "priceUSD": 16.99,
+            "recommended": true
+          },
+          {
+            "seller": "Territorial Seed Company",
+            "url": "https://www.territorialseed.com/product/seascape-strawberry-plants",
+            "priceUSD": 12.75
+          },
+          {
+            "seller": "Park Seed",
+            "url": "https://www.parkseed.com/seascape-everbearing-strawberry/p/05897/",
+            "priceUSD": 14.95
+          }
+        ]
+      },
+      {
+        "name": "San Andreas",
+        "why": "UC Davis heat-tolerant variety, ideal for SoCal containers, firm sweet fruit",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/fruit-plants/strawberry-plants/strawberry-san-andreas-prod002025.html",
+            "priceUSD": 17.99
+          },
+          {
+            "seller": "Territorial Seed Company",
+            "url": "https://www.territorialseed.com/product/san-andreas-strawberry-plants",
+            "priceUSD": 13.75
+          },
+          {
+            "seller": "Park Seed",
+            "url": "https://www.parkseed.com/san-andreas-strawberry-plants/p/05899/",
+            "priceUSD": 15.95
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "tomato-tumbling",
+    "commonName": "Tumbling Tom Tomato",
+    "varieties": [
+      {
+        "name": "Tumbling Tom Red",
+        "why": "Determinate trailing, bred for hanging baskets and vertical planters",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/tomato-tumbling-tom-red-hybrid-prod000782.html",
+            "priceUSD": 5.95,
+            "recommended": true
+          },
+          {
+            "seller": "Park Seed",
+            "url": "https://www.parkseed.com/tumbling-tom-red-tomato-seeds/p/05267/",
+            "priceUSD": 5.95
+          },
+          {
+            "seller": "Johnny's Selected Seeds",
+            "url": "https://www.johnnyseeds.com/vegetables/tomatoes/cherry-tomatoes/tumbling-tom-red-f1-tomato-seed-2467.html",
+            "priceUSD": 5.45,
+            "badge": "USDA Organic"
+          }
+        ]
+      },
+      {
+        "name": "Tiny Tim",
+        "why": "Ultra-dwarf 12 inches, perfect pocket size, USDA trial proven",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rareseeds.com/tiny-tim-tomato",
+            "priceUSD": 2.75,
+            "badge": "Non-GMO Pledge"
+          },
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/tomato-tiny-tim-prod000785.html",
+            "priceUSD": 5.49
+          },
+          {
+            "seller": "Park Seed",
+            "url": "https://www.parkseed.com/tiny-tim-tomato-seeds/p/05270/",
+            "priceUSD": 4.95
+          }
+        ]
+      },
+      {
+        "name": "Patio Choice Yellow",
+        "why": "Compact golden cherry, sweet mild flavour, cascading habit suits planters",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/tomato-patio-choice-yellow-prod000790.html",
+            "priceUSD": 5.95
+          },
+          {
+            "seller": "Johnny's Selected Seeds",
+            "url": "https://www.johnnyseeds.com/vegetables/tomatoes/cherry-tomatoes/patio-choice-yellow-tomato-seed-2470.html",
+            "priceUSD": 5.45
+          },
+          {
+            "seller": "Park Seed",
+            "url": "https://www.parkseed.com/patio-choice-yellow-tomato-seeds/p/05272/",
+            "priceUSD": 4.95
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "basil-sweet",
+    "commonName": "Sweet Basil",
+    "varieties": [
+      {
+        "name": "Spicy Globe",
+        "why": "Compact mounding habit, perfect for small pockets, intense flavour",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rareseeds.com/spicy-globe-basil",
+            "priceUSD": 2.5,
+            "badge": "Non-GMO Pledge",
+            "recommended": true
+          },
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/herbs/basil/basil-spicy-globe-prod000486.html",
+            "priceUSD": 5.49
+          },
+          {
+            "seller": "Johnny's Selected Seeds",
+            "url": "https://www.johnnyseeds.com/herbs/basil/sweet-basil/spicy-globe-basil-seed-975.html",
+            "priceUSD": 4.25
+          }
+        ]
+      },
+      {
+        "name": "Dolce Fresca",
+        "why": "AAS Winner, compact bushy habit, slow to bolt, bred for containers",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Johnny's Selected Seeds",
+            "url": "https://www.johnnyseeds.com/herbs/basil/sweet-basil/dolce-fresca-basil-seed-4350.html",
+            "priceUSD": 4.75,
+            "badge": "AAS Winner"
+          },
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/herbs/basil/basil-dolce-fresca-prod003210.html",
+            "priceUSD": 5.95
+          },
+          {
+            "seller": "Park Seed",
+            "url": "https://www.parkseed.com/dolce-fresca-basil-seeds/p/05632/",
+            "priceUSD": 4.95
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "bush-bean",
+    "commonName": "Bush Bean",
+    "varieties": [
+      {
+        "name": "Contender",
+        "why": "Heat tolerant, fast 50-day maturity, compact bush, AAS Winner",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rareseeds.com/contender-bush-bean",
+            "priceUSD": 3.5,
+            "badge": "Non-GMO Pledge",
+            "recommended": true
+          },
+          {
+            "seller": "Johnny's Selected Seeds",
+            "url": "https://www.johnnyseeds.com/vegetables/beans/bush-beans/contender-bush-bean-seed-2040.html",
+            "priceUSD": 5.25
+          },
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/bean-bush-contender-prod000105.html",
+            "priceUSD": 5.95
+          }
+        ]
+      },
+      {
+        "name": "Royal Burgundy",
+        "why": "Purple pods easy for kids to spot against foliage, compact bush habit",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rareseeds.com/royal-burgundy-bush-bean",
+            "priceUSD": 3.5,
+            "badge": "Non-GMO Pledge"
+          },
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/bean-bush-royal-burgundy-prod000110.html",
+            "priceUSD": 5.95
+          },
+          {
+            "seller": "Johnny's Selected Seeds",
+            "url": "https://www.johnnyseeds.com/vegetables/beans/bush-beans/royal-burgundy-bush-bean-seed-2050.html",
+            "priceUSD": 5.75
+          }
+        ]
+      },
+      {
+        "name": "Mascotte",
+        "why": "AAS Winner, bred specifically for containers, compact 16-inch plants",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Johnny's Selected Seeds",
+            "url": "https://www.johnnyseeds.com/vegetables/beans/bush-beans/mascotte-bush-bean-seed-2055.html",
+            "priceUSD": 5.95,
+            "badge": "AAS Winner"
+          },
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/bean-bush-mascotte-prod003215.html",
+            "priceUSD": 6.49
+          },
+          {
+            "seller": "Park Seed",
+            "url": "https://www.parkseed.com/mascotte-bush-bean-seeds/p/05155/",
+            "priceUSD": 5.45
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "perpetual-spinach",
+    "commonName": "Spinach",
+    "varieties": [
+      {
+        "name": "Space",
+        "why": "Smooth leaf, AAS Winner, bred for containers, slow bolting",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Johnny's Selected Seeds",
+            "url": "https://www.johnnyseeds.com/vegetables/greens/spinach/space-spinach-seed-2830.html",
+            "priceUSD": 4.25,
+            "badge": "AAS Winner",
+            "recommended": true
+          },
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/spinach-space-prod000445.html",
+            "priceUSD": 5.95
+          },
+          {
+            "seller": "Territorial Seed Company",
+            "url": "https://www.territorialseed.com/product/space-spinach-seeds",
+            "priceUSD": 3.95
+          }
+        ]
+      },
+      {
+        "name": "Bloomsdale Long Standing",
+        "why": "Heritage savoy type, heat tolerant, slow bolt, compact rosette",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rareseeds.com/bloomsdale-long-standing-spinach",
+            "priceUSD": 2.5,
+            "badge": "Non-GMO Pledge"
+          },
+          {
+            "seller": "Johnny's Selected Seeds",
+            "url": "https://www.johnnyseeds.com/vegetables/greens/spinach/bloomsdale-long-standing-spinach-seed-2835.html",
+            "priceUSD": 3.95
+          },
+          {
+            "seller": "Territorial Seed Company",
+            "url": "https://www.territorialseed.com/product/bloomsdale-spinach-seeds",
+            "priceUSD": 3.45
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "swiss-chard",
+    "commonName": "Swiss Chard",
+    "varieties": [
+      {
+        "name": "Bright Lights",
+        "why": "AAS Winner, multi-coloured stems, ornamental and edible, kids love the rainbow",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/swiss-chard-bright-lights-blend-prod000577.html",
+            "priceUSD": 5.95,
+            "badge": "AAS Winner",
+            "recommended": true
+          },
+          {
+            "seller": "Johnny's Selected Seeds",
+            "url": "https://www.johnnyseeds.com/vegetables/greens/chard-swiss/bright-lights-organic-swiss-chard-seed-2850G.html",
+            "priceUSD": 4.75,
+            "badge": "USDA Organic"
+          },
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rareseeds.com/five-color-silverbeet-swiss-chard",
+            "priceUSD": 2.75
+          }
+        ]
+      },
+      {
+        "name": "Peppermint",
+        "why": "Striking red-and-white striped stems, compact grower, heat tolerant",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Johnny's Selected Seeds",
+            "url": "https://www.johnnyseeds.com/vegetables/greens/chard-swiss/peppermint-swiss-chard-seed-2855.html",
+            "priceUSD": 4.75
+          },
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rareseeds.com/peppermint-swiss-chard",
+            "priceUSD": 2.75
+          },
+          {
+            "seller": "Territorial Seed Company",
+            "url": "https://www.territorialseed.com/product/peppermint-swiss-chard-seeds",
+            "priceUSD": 3.95
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "arugula",
+    "commonName": "Arugula",
+    "varieties": [
+      {
+        "name": "Astro",
+        "why": "Fast-growing, mild peppery flavour, cut-and-come-again, compact growth",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Johnny's Selected Seeds",
+            "url": "https://www.johnnyseeds.com/vegetables/greens/arugula/astro-organic-arugula-seed-476G.html",
+            "priceUSD": 3.95,
+            "badge": "USDA Organic",
+            "recommended": true
+          },
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rareseeds.com/arugula-rocket-salad",
+            "priceUSD": 2.5
+          },
+          {
+            "seller": "Territorial Seed Company",
+            "url": "https://www.territorialseed.com/product/astro-arugula-seeds",
+            "priceUSD": 3.45
+          }
+        ]
+      },
+      {
+        "name": "Sylvetta (Wild)",
+        "why": "Perennial wild arugula, stronger flavour, slower bolting in SoCal heat",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Johnny's Selected Seeds",
+            "url": "https://www.johnnyseeds.com/vegetables/greens/arugula/sylvetta-wild-arugula-seed-478.html",
+            "priceUSD": 4.25
+          },
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rareseeds.com/wild-arugula",
+            "priceUSD": 2.5
+          },
+          {
+            "seller": "Territorial Seed Company",
+            "url": "https://www.territorialseed.com/product/sylvetta-wild-arugula-seeds",
+            "priceUSD": 3.45
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "radish",
+    "commonName": "Radish",
+    "varieties": [
+      {
+        "name": "French Breakfast",
+        "why": "Quick 25-day crop, elongated shape suits shallow pockets, mild flavour",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rareseeds.com/french-breakfast-radish",
+            "priceUSD": 2.5,
+            "badge": "Non-GMO Pledge",
+            "recommended": true
+          },
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/radish-french-breakfast-prod000413.html",
+            "priceUSD": 5.25
+          },
+          {
+            "seller": "Johnny's Selected Seeds",
+            "url": "https://www.johnnyseeds.com/vegetables/radishes/french-breakfast-organic-radish-seed-2596G.html",
+            "priceUSD": 3.75
+          }
+        ]
+      },
+      {
+        "name": "Cherry Belle",
+        "why": "AAS Winner, round shape, 22-day maturity, compact roots for shallow containers",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rareseeds.com/cherry-belle-radish",
+            "priceUSD": 2.5
+          },
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/radish-cherry-belle-prod000415.html",
+            "priceUSD": 4.95
+          },
+          {
+            "seller": "Territorial Seed Company",
+            "url": "https://www.territorialseed.com/product/cherry-belle-radish-seeds",
+            "priceUSD": 3.25
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "lettuce",
+    "commonName": "Lettuce (Mixed)",
+    "varieties": [
+      {
+        "name": "Buttercrunch",
+        "why": "AAS Winner, compact butterhead, heat tolerant, perfect single-pocket size",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rareseeds.com/buttercrunch-lettuce",
+            "priceUSD": 2.5,
+            "badge": "AAS Winner",
+            "recommended": true
+          },
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/lettuce-buttercrunch-prod000340.html",
+            "priceUSD": 5.25
+          },
+          {
+            "seller": "Johnny's Selected Seeds",
+            "url": "https://www.johnnyseeds.com/vegetables/lettuce/butterhead-lettuce/buttercrunch-organic-lettuce-seed-2750G.html",
+            "priceUSD": 4.25
+          }
+        ]
+      },
+      {
+        "name": "Salad Bowl (Red & Green)",
+        "why": "Loose-leaf, cut-and-come-again, no heading needed, maximises pocket yield",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Johnny's Selected Seeds",
+            "url": "https://www.johnnyseeds.com/vegetables/lettuce/lettuce-mixes/allstar-organic-lettuce-mix-seed-2756G.html",
+            "priceUSD": 4.75,
+            "badge": "USDA Organic"
+          },
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/lettuce-gourmet-blend-mesclun-prod000341.html",
+            "priceUSD": 5.95
+          },
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rareseeds.com/gourmet-mix-lettuce",
+            "priceUSD": 2.75
+          }
+        ]
+      },
+      {
+        "name": "Tom Thumb",
+        "why": "Miniature butterhead, tennis-ball size, perfect for single pockets",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rareseeds.com/tom-thumb-lettuce",
+            "priceUSD": 2.5
+          },
+          {
+            "seller": "Territorial Seed Company",
+            "url": "https://www.territorialseed.com/product/tom-thumb-lettuce-seeds",
+            "priceUSD": 3.45
+          },
+          {
+            "seller": "Park Seed",
+            "url": "https://www.parkseed.com/tom-thumb-lettuce-seeds/p/05320/",
+            "priceUSD": 4.95
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "spring-onion",
+    "commonName": "Green Onion / Scallion",
+    "varieties": [
+      {
+        "name": "Evergreen Hardy White",
+        "why": "Classic bunching onion, slender roots suit pocket depth, cold hardy",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rareseeds.com/evergreen-bunching-onion",
+            "priceUSD": 2.5,
+            "badge": "Non-GMO Pledge",
+            "recommended": true
+          },
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/onion-evergreen-hardy-white-bunching-prod000385.html",
+            "priceUSD": 5.25
+          },
+          {
+            "seller": "Johnny's Selected Seeds",
+            "url": "https://www.johnnyseeds.com/vegetables/onions/scallions/evergreen-hardy-white-organic-scallion-seed-2371G.html",
+            "priceUSD": 4.25
+          }
+        ]
+      },
+      {
+        "name": "Tokyo Long White",
+        "why": "Japanese variety, single-stalk bunching, no bulb, tight container spacing",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Johnny's Selected Seeds",
+            "url": "https://www.johnnyseeds.com/vegetables/onions/scallions/tokyo-long-white-scallion-seed-2375.html",
+            "priceUSD": 4.5
+          },
+          {
+            "seller": "Territorial Seed Company",
+            "url": "https://www.territorialseed.com/product/tokyo-long-white-bunching-onion-seeds",
+            "priceUSD": 3.75
+          },
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rareseeds.com/tokyo-long-white-bunching-onion",
+            "priceUSD": 2.75
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "kale",
+    "commonName": "Kale",
+    "varieties": [
+      {
+        "name": "Dwarf Blue Curled Scotch",
+        "why": "Compact 18-inch plants, curly leaves, very cold hardy, USDA recommended",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rareseeds.com/dwarf-blue-curled-scotch-kale",
+            "priceUSD": 2.5,
+            "badge": "Non-GMO Pledge",
+            "recommended": true
+          },
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/kale-dwarf-blue-curled-prod000332.html",
+            "priceUSD": 5.25
+          },
+          {
+            "seller": "Territorial Seed Company",
+            "url": "https://www.territorialseed.com/product/dwarf-blue-curled-scotch-kale-seeds",
+            "priceUSD": 3.75
+          }
+        ]
+      },
+      {
+        "name": "Lacinato (Dinosaur)",
+        "why": "Upright habit suits pockets, pick outer leaves continuously, heat tolerant",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rareseeds.com/lacinato-kale",
+            "priceUSD": 2.5
+          },
+          {
+            "seller": "Johnny's Selected Seeds",
+            "url": "https://www.johnnyseeds.com/vegetables/kale/lacinato-organic-kale-seed-2203G.html",
+            "priceUSD": 4.25,
+            "badge": "USDA Organic"
+          },
+          {
+            "seller": "Territorial Seed Company",
+            "url": "https://www.territorialseed.com/product/lacinato-kale-seeds",
+            "priceUSD": 3.75
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "pepper-chilli",
+    "commonName": "Hot Pepper",
+    "varieties": [
+      {
+        "name": "Thai Hot",
+        "why": "Compact 18-inch plants, prolific upright fruits, perfect for containers",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rareseeds.com/thai-hot-pepper",
+            "priceUSD": 2.75,
+            "badge": "Non-GMO Pledge",
+            "recommended": true
+          },
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/pepper-hot-thai-prod000405.html",
+            "priceUSD": 5.49
+          },
+          {
+            "seller": "Park Seed",
+            "url": "https://www.parkseed.com/thai-hot-pepper-seeds/p/05455/",
+            "priceUSD": 4.95
+          }
+        ]
+      },
+      {
+        "name": "Basket of Fire",
+        "why": "AAS Winner, trailing habit, ornamental and edible, bred for hanging planters",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/pepper-hot-basket-of-fire-prod003220.html",
+            "priceUSD": 5.95,
+            "badge": "AAS Winner"
+          },
+          {
+            "seller": "Park Seed",
+            "url": "https://www.parkseed.com/basket-of-fire-pepper-seeds/p/05460/",
+            "priceUSD": 5.45
+          },
+          {
+            "seller": "Johnny's Selected Seeds",
+            "url": "https://www.johnnyseeds.com/vegetables/peppers/hot-peppers/basket-of-fire-pepper-seed-2420.html",
+            "priceUSD": 5.25
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "pea",
+    "commonName": "Pea",
+    "varieties": [
+      {
+        "name": "Tom Thumb",
+        "why": "Heritage dwarf 8 inches tall, no support needed, sweet flavour",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rareseeds.com/tom-thumb-pea",
+            "priceUSD": 3.5,
+            "badge": "Non-GMO Pledge",
+            "recommended": true
+          },
+          {
+            "seller": "Territorial Seed Company",
+            "url": "https://www.territorialseed.com/product/tom-thumb-pea-seeds",
+            "priceUSD": 4.25
+          },
+          {
+            "seller": "Johnny's Selected Seeds",
+            "url": "https://www.johnnyseeds.com/vegetables/peas/shelling-peas/tom-thumb-pea-seed-2540.html",
+            "priceUSD": 4.95
+          }
+        ]
+      },
+      {
+        "name": "Patio Pride",
+        "why": "Ultra-dwarf sugar snap, only 10 inches, bred for containers and planters",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Johnny's Selected Seeds",
+            "url": "https://www.johnnyseeds.com/vegetables/peas/snap-peas/patio-pride-pea-seed-2545.html",
+            "priceUSD": 5.75
+          },
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/pea-patio-pride-prod003225.html",
+            "priceUSD": 6.49
+          },
+          {
+            "seller": "Park Seed",
+            "url": "https://www.parkseed.com/patio-pride-snap-pea-seeds/p/05380/",
+            "priceUSD": 5.45
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "thyme",
+    "commonName": "Thyme",
+    "varieties": [
+      {
+        "name": "English Thyme",
+        "why": "Compact evergreen, thrives in GreenStalk drainage, year-round in Zone 10b",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/herbs/thyme/thyme-english-prod000506.html",
+            "priceUSD": 5.49,
+            "recommended": true
+          },
+          {
+            "seller": "Johnny's Selected Seeds",
+            "url": "https://www.johnnyseeds.com/herbs/thyme/english-thyme-seed-2931.html",
+            "priceUSD": 4.25
+          },
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rareseeds.com/english-thyme",
+            "priceUSD": 2.5
+          }
+        ]
+      },
+      {
+        "name": "Lemon Thyme",
+        "why": "Citrus fragrance, low spreading habit, ornamental and culinary",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/herbs/thyme/thyme-lemon-prod000508.html",
+            "priceUSD": 5.49
+          },
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rareseeds.com/lemon-thyme",
+            "priceUSD": 2.75
+          },
+          {
+            "seller": "Park Seed",
+            "url": "https://www.parkseed.com/lemon-thyme-seeds/p/05680/",
+            "priceUSD": 4.95
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "oregano",
+    "commonName": "Oregano",
+    "varieties": [
+      {
+        "name": "Greek Oregano",
+        "why": "Compact bushy habit, strongest culinary flavour, drought tolerant",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Johnny's Selected Seeds",
+            "url": "https://www.johnnyseeds.com/herbs/oregano/greek-oregano-seed-802.html",
+            "priceUSD": 4.5,
+            "recommended": true
+          },
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rareseeds.com/greek-oregano",
+            "priceUSD": 2.5
+          },
+          {
+            "seller": "Park Seed",
+            "url": "https://www.parkseed.com/greek-oregano-seeds/p/05660/",
+            "priceUSD": 4.95
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "parsley",
+    "commonName": "Parsley",
+    "varieties": [
+      {
+        "name": "Triple Curled",
+        "why": "Compact bushy growth, dense curled leaves, good container variety",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/herbs/parsley/parsley-triple-curled-prod000497.html",
+            "priceUSD": 5.49,
+            "recommended": true
+          },
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rareseeds.com/triple-curled-parsley",
+            "priceUSD": 2.5
+          },
+          {
+            "seller": "Johnny's Selected Seeds",
+            "url": "https://www.johnnyseeds.com/herbs/parsley/triple-curled-parsley-seed-4215.html",
+            "priceUSD": 3.95
+          }
+        ]
+      },
+      {
+        "name": "Italian Giant (Flat Leaf)",
+        "why": "Stronger flavour, compact rosette, cut-and-come-again",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rareseeds.com/italian-giant-parsley",
+            "priceUSD": 2.5
+          },
+          {
+            "seller": "Johnny's Selected Seeds",
+            "url": "https://www.johnnyseeds.com/herbs/parsley/italian-giant-organic-parsley-seed-4216G.html",
+            "priceUSD": 3.95,
+            "badge": "USDA Organic"
+          },
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/herbs/parsley/parsley-italian-flat-leaf-prod000496.html",
+            "priceUSD": 5.49
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "chives",
+    "commonName": "Chives",
+    "varieties": [
+      {
+        "name": "Common Chives",
+        "why": "Compact perennial clumps, attractive purple flowers, easy for pots",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/herbs/chives/chive-common-prod000487.html",
+            "priceUSD": 5.49,
+            "recommended": true
+          },
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rareseeds.com/common-chives",
+            "priceUSD": 2.5
+          },
+          {
+            "seller": "Territorial Seed Company",
+            "url": "https://www.territorialseed.com/product/common-chives-seeds",
+            "priceUSD": 3.45
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "mint",
+    "commonName": "Mint",
+    "varieties": [
+      {
+        "name": "Peppermint",
+        "why": "Classic flavour, vigorous in pots, GreenStalk contains its spreading roots",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/herbs/mint/mint-peppermint-prod000493.html",
+            "priceUSD": 5.49,
+            "recommended": true
+          },
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rareseeds.com/peppermint",
+            "priceUSD": 2.75
+          },
+          {
+            "seller": "Park Seed",
+            "url": "https://www.parkseed.com/peppermint-seeds/p/05650/",
+            "priceUSD": 4.95
+          }
+        ]
+      },
+      {
+        "name": "Chocolate Mint",
+        "why": "After-dinner-mint aroma, compact spreader, fun for kids to smell",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/herbs/mint/mint-chocolate-prod000495.html",
+            "priceUSD": 12.99
+          },
+          {
+            "seller": "Park Seed",
+            "url": "https://www.parkseed.com/chocolate-mint-plant/p/05655/",
+            "priceUSD": 11.95
+          },
+          {
+            "seller": "Territorial Seed Company",
+            "url": "https://www.territorialseed.com/product/chocolate-mint-plants",
+            "priceUSD": 9.95
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "nasturtium",
+    "commonName": "Nasturtium (Mixed)",
+    "varieties": [
+      {
+        "name": "Jewel Mix",
+        "why": "Compact mounding habit, bright edible flowers, easy for kids, AAS Winner",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rareseeds.com/jewel-mix-nasturtium",
+            "priceUSD": 2.75,
+            "badge": "Non-GMO Pledge",
+            "recommended": true
+          },
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/nasturtium-jewel-mix-prod000240.html",
+            "priceUSD": 5.95
+          },
+          {
+            "seller": "Park Seed",
+            "url": "https://www.parkseed.com/jewel-mix-nasturtium-seeds/p/05742/",
+            "priceUSD": 4.95
+          }
+        ]
+      },
+      {
+        "name": "Alaska Mix",
+        "why": "Variegated foliage, compact habit, edible flowers and leaves",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rareseeds.com/alaska-nasturtium",
+            "priceUSD": 2.75
+          },
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/nasturtium-alaska-mix-prod000242.html",
+            "priceUSD": 5.49
+          },
+          {
+            "seller": "Territorial Seed Company",
+            "url": "https://www.territorialseed.com/product/alaska-nasturtium-seeds",
+            "priceUSD": 3.95
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "marigold",
+    "commonName": "Marigold (French, Mixed)",
+    "varieties": [
+      {
+        "name": "Petite Mix",
+        "why": "Ultra-dwarf 8 inches, prolific blooms, excellent companion for pest control",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/marigold-french-petite-mix-prod000227.html",
+            "priceUSD": 5.49,
+            "recommended": true
+          },
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rareseeds.com/french-marigold-petite-mix",
+            "priceUSD": 2.5
+          },
+          {
+            "seller": "Park Seed",
+            "url": "https://www.parkseed.com/petite-mix-french-marigold-seeds/p/05110/",
+            "priceUSD": 4.95
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "dwarf-sweet-pea",
+    "commonName": "Dwarf Sweet Pea",
+    "varieties": [
+      {
+        "name": "Bijou Mix",
+        "why": "Only 12 inches tall, no support needed, fragrant multicolour blooms",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/sweet-pea-bijou-mix-prod000269.html",
+            "priceUSD": 6.95,
+            "recommended": true
+          },
+          {
+            "seller": "Park Seed",
+            "url": "https://www.parkseed.com/bijou-mix-dwarf-sweet-pea-seeds/p/05164/",
+            "priceUSD": 5.95
+          },
+          {
+            "seller": "Territorial Seed Company",
+            "url": "https://www.territorialseed.com/product/bijou-mix-sweet-pea-seeds",
+            "priceUSD": 4.95
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "sunflower",
+    "commonName": "Sunflower",
+    "varieties": [
+      {
+        "name": "Teddy Bear",
+        "why": "Dwarf 24 inches, fluffy double blooms, no staking, perfect for kids",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rareseeds.com/teddy-bear-sunflower",
+            "priceUSD": 2.75,
+            "badge": "Non-GMO Pledge",
+            "recommended": true
+          },
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/sunflower-teddy-bear-prod000262.html",
+            "priceUSD": 5.95
+          },
+          {
+            "seller": "Park Seed",
+            "url": "https://www.parkseed.com/teddy-bear-sunflower-seeds/p/05082/",
+            "priceUSD": 4.95
+          }
+        ]
+      },
+      {
+        "name": "Elf",
+        "why": "Ultra-dwarf 16 inches, single bloom per plant, perfect pocket size",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/sunflower-elf-prod000265.html",
+            "priceUSD": 5.49
+          },
+          {
+            "seller": "Park Seed",
+            "url": "https://www.parkseed.com/elf-sunflower-seeds/p/05085/",
+            "priceUSD": 4.95
+          },
+          {
+            "seller": "Territorial Seed Company",
+            "url": "https://www.territorialseed.com/product/elf-sunflower-seeds",
+            "priceUSD": 3.95
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "cilantro",
+    "commonName": "Cilantro",
+    "varieties": [
+      {
+        "name": "Calypso",
+        "why": "Slowest bolting cilantro, compact bushy habit, bred for warm climates",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Johnny's Selected Seeds",
+            "url": "https://www.johnnyseeds.com/herbs/cilantro/calypso-cilantro-seed-4200.html",
+            "priceUSD": 4.5,
+            "recommended": true
+          },
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/herbs/cilantro/cilantro-calypso-prod000490.html",
+            "priceUSD": 5.49
+          },
+          {
+            "seller": "Territorial Seed Company",
+            "url": "https://www.territorialseed.com/product/calypso-cilantro-seeds",
+            "priceUSD": 3.95
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "dill",
+    "commonName": "Dill",
+    "varieties": [
+      {
+        "name": "Fernleaf",
+        "why": "AAS Winner, dwarf 18 inches, bushy habit bred for containers, slow bolting",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Johnny's Selected Seeds",
+            "url": "https://www.johnnyseeds.com/herbs/dill/fernleaf-dill-seed-4180.html",
+            "priceUSD": 3.95,
+            "badge": "AAS Winner",
+            "recommended": true
+          },
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rareseeds.com/fernleaf-dill",
+            "priceUSD": 2.5
+          },
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/herbs/dill/dill-fernleaf-prod000489.html",
+            "priceUSD": 5.49
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "calendula",
+    "commonName": "Pot Marigold (Calendula)",
+    "varieties": [
+      {
+        "name": "Fiesta Gitana",
+        "why": "Dwarf 12 inches, double flowers, compact habit, edible petals",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Baker Creek Heirloom",
+            "url": "https://www.rareseeds.com/fiesta-gitana-calendula",
+            "priceUSD": 2.75,
+            "badge": "Non-GMO Pledge",
+            "recommended": true
+          },
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/calendula-fiesta-gitana-prod000215.html",
+            "priceUSD": 5.49
+          },
+          {
+            "seller": "Park Seed",
+            "url": "https://www.parkseed.com/fiesta-gitana-calendula-seeds/p/05010/",
+            "priceUSD": 4.95
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "rosemary",
+    "commonName": "Rosemary",
+    "varieties": [
+      {
+        "name": "Blue Spires",
+        "why": "Upright compact habit, intense flavour, thrives in free-draining planters",
+        "context": "greenstalk",
+        "sellers": [
+          {
+            "seller": "Burpee",
+            "url": "https://www.burpee.com/herbs/rosemary/rosemary-blue-spires-prod000500.html",
+            "priceUSD": 5.49,
+            "recommended": true
+          },
+          {
+            "seller": "Park Seed",
+            "url": "https://www.parkseed.com/blue-spires-rosemary-seeds/p/05670/",
+            "priceUSD": 4.95
+          },
+          {
+            "seller": "Johnny's Selected Seeds",
+            "url": "https://www.johnnyseeds.com/herbs/rosemary/blue-spires-rosemary-seed-2920.html",
+            "priceUSD": 4.5
+          }
+        ]
+      }
+    ]
+  }
+]

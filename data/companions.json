@@ -1370,5 +1370,509 @@
     "relationship": "friend",
     "reason": "Aromatic herbs deter aphids from peppers. Both enjoy warm conditions.",
     "source": "https://www.rhs.org.uk/companion-planting"
+  },
+  {
+    "plantA": "tomato-tumbling",
+    "plantB": "cucumber",
+    "relationship": "foe",
+    "reason": "Can spread disease between plants; keep separated",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "tomato-tumbling",
+    "plantB": "rosemary",
+    "relationship": "foe",
+    "reason": "Rosemary inhibits tomato growth — different moisture needs",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "tomato-tumbling",
+    "plantB": "celery",
+    "relationship": "friend",
+    "reason": "Celery deters whitefly from tomatoes",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "cucumber",
+    "plantB": "sweetcorn",
+    "relationship": "friend",
+    "reason": "Corn provides windbreak and partial shade for cucumbers",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "cucumber",
+    "plantB": "coriander",
+    "relationship": "friend",
+    "reason": "Coriander deters aphids from cucumbers",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "cucumber",
+    "plantB": "fennel",
+    "relationship": "friend",
+    "reason": "Florence fennel grows well near cucumbers",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "cucumber",
+    "plantB": "potato-maincrop",
+    "relationship": "foe",
+    "reason": "Both susceptible to blight — keep separated",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "carrot",
+    "plantB": "sage",
+    "relationship": "friend",
+    "reason": "Sage deters carrot fly",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "carrot",
+    "plantB": "beetroot",
+    "relationship": "foe",
+    "reason": "Both compete for similar nutrients in heavy soil",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "carrot",
+    "plantB": "parsnip",
+    "relationship": "foe",
+    "reason": "Same family — attract same pests (carrot fly)",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "potato-early",
+    "plantB": "sweetcorn",
+    "relationship": "friend",
+    "reason": "Good use of space — different root depths",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "potato-early",
+    "plantB": "broad-bean",
+    "relationship": "friend",
+    "reason": "Broad beans fix nitrogen for potatoes",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "potato-early",
+    "plantB": "sunflower",
+    "relationship": "foe",
+    "reason": "Sunflowers compete for nutrients",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "potato-maincrop",
+    "plantB": "sweetcorn",
+    "relationship": "friend",
+    "reason": "Good use of space — different root depths",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "potato-maincrop",
+    "plantB": "broad-bean",
+    "relationship": "friend",
+    "reason": "Broad beans fix nitrogen for potatoes",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "potato-maincrop",
+    "plantB": "sunflower",
+    "relationship": "foe",
+    "reason": "Sunflowers compete for nutrients",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "garlic",
+    "plantB": "beetroot",
+    "relationship": "friend",
+    "reason": "Garlic deters pests from beetroot",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "garlic",
+    "plantB": "cucumber",
+    "relationship": "friend",
+    "reason": "Garlic repels cucumber beetles",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "garlic",
+    "plantB": "parsnip",
+    "relationship": "friend",
+    "reason": "Garlic deters carrot root fly from parsnips",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "beetroot",
+    "plantB": "perpetual-spinach",
+    "relationship": "foe",
+    "reason": "Same family (Amaranthaceae) — compete for nutrients and attract same pests",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "beetroot",
+    "plantB": "sweetcorn",
+    "relationship": "foe",
+    "reason": "Sweetcorn shades beetroot too heavily",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "lettuce",
+    "plantB": "borage",
+    "relationship": "friend",
+    "reason": "Borage deters slugs and attracts pollinators near lettuce",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "lettuce",
+    "plantB": "celery",
+    "relationship": "foe",
+    "reason": "Both need high moisture — compete in shared beds",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "lettuce",
+    "plantB": "parsley",
+    "relationship": "foe",
+    "reason": "Can encourage lettuce to bolt early",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "fennel",
+    "plantB": "runner-bean",
+    "relationship": "foe",
+    "reason": "Fennel is allelopathic — inhibits bean growth",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "fennel",
+    "plantB": "broccoli-sprouting",
+    "relationship": "foe",
+    "reason": "Fennel inhibits brassica growth",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "fennel",
+    "plantB": "pepper-sweet",
+    "relationship": "foe",
+    "reason": "Fennel inhibits pepper growth",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "fennel",
+    "plantB": "coriander",
+    "relationship": "foe",
+    "reason": "Cross-pollination can spoil both herbs",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "onion-sets",
+    "plantB": "lemon-balm",
+    "relationship": "friend",
+    "reason": "Lemon balm attracts pollinators near onions",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "spring-onion",
+    "plantB": "lemon-balm",
+    "relationship": "friend",
+    "reason": "Lemon balm attracts pollinators near alliums",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "swiss-chard",
+    "plantB": "lavender",
+    "relationship": "friend",
+    "reason": "Lavender deters pests from chard",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "swiss-chard",
+    "plantB": "parsnip",
+    "relationship": "friend",
+    "reason": "Different root depths — good space sharing",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "parsnip",
+    "plantB": "pea",
+    "relationship": "friend",
+    "reason": "Peas fix nitrogen that parsnips use",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "parsnip",
+    "plantB": "celery",
+    "relationship": "foe",
+    "reason": "Same family — attract same pests",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "turnip",
+    "plantB": "chives",
+    "relationship": "friend",
+    "reason": "Chives repel flea beetle from turnips",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "turnip",
+    "plantB": "perpetual-spinach",
+    "relationship": "friend",
+    "reason": "Different root depths — good companions",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "turnip",
+    "plantB": "potato-early",
+    "relationship": "foe",
+    "reason": "Both heavy feeders — compete for nutrients",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "rosemary",
+    "plantB": "sage",
+    "relationship": "friend",
+    "reason": "Both Mediterranean herbs — same conditions, mutual benefit",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "rosemary",
+    "plantB": "potato-early",
+    "relationship": "foe",
+    "reason": "Different watering needs cause problems",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "oregano",
+    "plantB": "broccoli-sprouting",
+    "relationship": "friend",
+    "reason": "Oregano repels cabbage butterfly",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "borage",
+    "plantB": "squash",
+    "relationship": "friend",
+    "reason": "Borage attracts pollinators essential for squash fruit set",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "sunflower",
+    "plantB": "squash",
+    "relationship": "friend",
+    "reason": "Classic three sisters companion — shade and support",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "thyme",
+    "plantB": "cabbage",
+    "relationship": "friend",
+    "reason": "Thyme deters cabbage whitefly",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "thyme",
+    "plantB": "aubergine",
+    "relationship": "friend",
+    "reason": "Thyme repels pests from aubergines",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "shallots",
+    "plantB": "carrot",
+    "relationship": "friend",
+    "reason": "Shallots deter carrot fly; carrots deter onion fly",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "shallots",
+    "plantB": "beetroot",
+    "relationship": "friend",
+    "reason": "Good companions — different root depths",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "shallots",
+    "plantB": "lettuce",
+    "relationship": "friend",
+    "reason": "Shallots deter slugs from lettuce",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "shallots",
+    "plantB": "borage",
+    "relationship": "friend",
+    "reason": "Borage attracts pollinators near alliums",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "shallots",
+    "plantB": "pea",
+    "relationship": "foe",
+    "reason": "Alliums stunt legume growth",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "shallots",
+    "plantB": "broad-bean",
+    "relationship": "foe",
+    "reason": "Alliums stunt legume growth",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "pumpkin",
+    "plantB": "sweetcorn",
+    "relationship": "friend",
+    "reason": "Three sisters: pumpkin shades soil, corn provides structure",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "pumpkin",
+    "plantB": "runner-bean",
+    "relationship": "friend",
+    "reason": "Three sisters: beans fix nitrogen for hungry pumpkins",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "pumpkin",
+    "plantB": "nasturtium",
+    "relationship": "friend",
+    "reason": "Nasturtiums trap aphids away from pumpkins",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "pumpkin",
+    "plantB": "borage",
+    "relationship": "friend",
+    "reason": "Borage attracts pollinators essential for pumpkin fruit set",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "pumpkin",
+    "plantB": "potato-early",
+    "relationship": "foe",
+    "reason": "Both heavy feeders — compete for nutrients",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "pumpkin",
+    "plantB": "potato-maincrop",
+    "relationship": "foe",
+    "reason": "Both heavy feeders — compete for nutrients",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "pak-choy",
+    "plantB": "dwarf-french-bean",
+    "relationship": "friend",
+    "reason": "Beans fix nitrogen for leafy brassicas",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "pak-choy",
+    "plantB": "beetroot",
+    "relationship": "friend",
+    "reason": "Different root depths — good space sharing",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "pak-choy",
+    "plantB": "cucumber",
+    "relationship": "friend",
+    "reason": "Both enjoy moisture — compatible neighbours",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "pak-choy",
+    "plantB": "nasturtium",
+    "relationship": "friend",
+    "reason": "Nasturtiums trap cabbage white butterflies",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "pak-choy",
+    "plantB": "onion-sets",
+    "relationship": "friend",
+    "reason": "Onions deter flea beetle from pak choy",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "pak-choy",
+    "plantB": "aubergine",
+    "relationship": "foe",
+    "reason": "Nightshades can harbour brassica pests",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "pak-choy",
+    "plantB": "pepper-chilli",
+    "relationship": "foe",
+    "reason": "Different feeding needs cause competition",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "pak-choy",
+    "plantB": "tomato-tumbling",
+    "relationship": "foe",
+    "reason": "Tomatoes can harbour brassica diseases",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "kohlrabi",
+    "plantB": "beetroot",
+    "relationship": "friend",
+    "reason": "Good companions — different root depths",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "kohlrabi",
+    "plantB": "cucumber",
+    "relationship": "friend",
+    "reason": "Both enjoy moisture — compatible neighbours",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "kohlrabi",
+    "plantB": "nasturtium",
+    "relationship": "friend",
+    "reason": "Nasturtiums trap cabbage white butterflies",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "kohlrabi",
+    "plantB": "onion-sets",
+    "relationship": "friend",
+    "reason": "Onions deter flea beetle from kohlrabi",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "kohlrabi",
+    "plantB": "dill",
+    "relationship": "friend",
+    "reason": "Dill attracts beneficial insects for brassicas",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "kohlrabi",
+    "plantB": "runner-bean",
+    "relationship": "foe",
+    "reason": "Climbing beans shade kohlrabi too heavily",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "kohlrabi",
+    "plantB": "aubergine",
+    "relationship": "foe",
+    "reason": "Nightshades can harbour brassica pests",
+    "source": "Plant Seasons MCP (validated)"
+  },
+  {
+    "plantA": "kohlrabi",
+    "plantB": "tomato-tumbling",
+    "relationship": "foe",
+    "reason": "Tomatoes can harbour brassica diseases",
+    "source": "Plant Seasons MCP (validated)"
   }
 ]

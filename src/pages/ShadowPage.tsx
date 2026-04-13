@@ -46,39 +46,79 @@ function SunHoursChart({ analysis }: { analysis: ZoneSunAnalysis }) {
   );
 }
 
-// ─── Shadow timeline (hour-by-hour for a specific month) ──────────────────────
+// ─── Shadow timeline (half-hour resolution strip) ───────────────────────────
+
+function formatHourLabel(h: number): string {
+  if (h === 0 || h === 24) return '12am';
+  if (h === 12) return '12pm';
+  if (h < 12) return `${h}am`;
+  return `${h - 12}pm`;
+}
 
 function ShadowTimeline({ analysis, month }: { analysis: ZoneSunAnalysis; month: number }) {
   const result = analysis.monthlyResults.find((r) => r.month === month);
   if (!result) return null;
 
-  // Group by full hours
-  const hourSlots = new Map<number, { inShadow: boolean; elevation: number; azimuth: number }>();
-  for (const sp of result.shadowProfile) {
-    const h = Math.floor(sp.hour);
-    if (!hourSlots.has(h) || sp.hour === h) {
-      hourSlots.set(h, { inShadow: sp.inShadow, elevation: sp.sunElevation, azimuth: sp.sunAzimuth });
-    }
-  }
+  // Use all 30-min slots at full resolution, sorted by time
+  const slots = [...result.shadowProfile].sort((a, b) => a.hour - b.hour);
+  if (slots.length === 0) return null;
 
-  const hours = Array.from(hourSlots.entries()).sort((a, b) => a[0] - b[0]);
+  const sunSlots = slots.filter((s) => !s.inShadow).length;
+  const sunHours = (sunSlots * 0.5);
+
+  // Determine which whole-hours to label (every 3 hours for readability)
+  const firstHour = Math.floor(slots[0].hour);
+  const lastHour = Math.ceil(slots[slots.length - 1].hour);
+  const labelHours = new Set<number>();
+  for (let h = firstHour; h <= lastHour; h += 3) labelHours.add(h);
+  // Always label first and last
+  labelHours.add(firstHour);
+  labelHours.add(lastHour);
 
   return (
-    <div className="flex gap-0.5 items-end">
-      {hours.map(([h, data]) => (
-        <div key={h} className="flex flex-col items-center">
-          <div
-            className={`w-5 rounded-t transition-colors ${
-              data.inShadow
-                ? 'bg-stone-400 dark:bg-stone-600'
-                : 'bg-amber-400 dark:bg-amber-500'
-            }`}
-            style={{ height: `${Math.max(data.elevation * 0.8, 4)}px` }}
-            title={`${h}:00 — ${data.inShadow ? 'SHADOW' : 'SUN'} (elevation: ${data.elevation}°, azimuth: ${data.azimuth}°)`}
-          />
-          <span className="text-[7px] text-stone-400 mt-0.5">{h}</span>
-        </div>
-      ))}
+    <div>
+      {/* Timeline strip */}
+      <div className="flex items-stretch rounded-lg overflow-hidden h-7">
+        {slots.map((sp, i) => {
+          const isHalfHour = sp.hour % 1 !== 0;
+          return (
+            <div
+              key={i}
+              className={`flex-1 transition-colors border-r last:border-r-0 ${
+                sp.inShadow
+                  ? 'bg-stone-300 dark:bg-stone-600 border-stone-400/30 dark:border-stone-500/30'
+                  : 'bg-amber-400 dark:bg-amber-500 border-amber-500/30 dark:border-amber-400/30'
+              } ${isHalfHour ? 'opacity-90' : ''}`}
+              title={`${Math.floor(sp.hour)}:${sp.hour % 1 === 0 ? '00' : '30'} — ${sp.inShadow ? 'SHADOW' : 'SUN'}\nElevation: ${sp.sunElevation}°  Azimuth: ${sp.sunAzimuth}°`}
+            />
+          );
+        })}
+      </div>
+
+      {/* Time labels */}
+      <div className="flex mt-0.5" style={{ position: 'relative' }}>
+        {slots.map((sp, i) => {
+          const wholeHour = Math.floor(sp.hour);
+          const isOnTheHour = sp.hour === wholeHour;
+          const showLabel = isOnTheHour && labelHours.has(wholeHour);
+          return (
+            <div key={i} className="flex-1 text-center">
+              {showLabel && (
+                <span className="text-[8px] text-stone-400">{formatHourLabel(wholeHour)}</span>
+              )}
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Summary */}
+      <div className="mt-1.5 text-[10px] text-stone-500 dark:text-stone-400">
+        <span className="inline-block w-2.5 h-2.5 rounded-sm bg-amber-400 dark:bg-amber-500 mr-1 align-middle" />
+        {sunHours}h direct sun
+        <span className="mx-2">·</span>
+        <span className="inline-block w-2.5 h-2.5 rounded-sm bg-stone-300 dark:bg-stone-600 mr-1 align-middle" />
+        {(slots.length * 0.5 - sunHours)}h shadow
+      </div>
     </div>
   );
 }

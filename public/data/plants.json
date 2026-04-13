@@ -7,7 +7,7 @@
     "emoji": "🍓",
     "sun": "full-sun",
     "water": "moderate",
-    "spacingCm": 25,
+    "spacingCm": 40,
     "depthCm": 15,
     "growthHabit": "trailing",
     "daysToHarvest": [
@@ -37,6 +37,11 @@
     ],
     "varieties": [
       {
+        "name": "Cambridge Favourite",
+        "notes": "RHS top pick for family gardens, reliable cropper",
+        "containerFriendly": true
+      },
+      {
         "name": "Mara des Bois",
         "notes": "Exceptional flavour, fruits June-Sept",
         "containerFriendly": true
@@ -47,13 +52,16 @@
         "containerFriendly": true
       }
     ],
-    "notes": "Plant at top tiers to keep fruit away from slugs. Perfect picking height for children.",
+    "notes": "Plant at top tiers to keep fruit away from slugs. Perfect picking height for children. Space 35-45cm apart in ground.",
     "sources": [
       "https://www.rhs.org.uk/fruit/strawberries/grow-your-own"
     ],
+    "childSafe": true,
+    "petSafe": true,
+    "kidActivity": "Children love searching among the leaves to find bright, treasure-like ripe fruits.",
     "inGround": {
-      "rowSpacingCm": 40,
-      "plantSpacingCm": 25,
+      "rowSpacingCm": 45,
+      "plantSpacingCm": 40,
       "sowDepthCm": 0,
       "bedType": "either",
       "expectedYieldPerM2": "2-3 kg/m2",
@@ -159,7 +167,9 @@
       ],
       "type": "Fertile, well-drained",
       "notes": "Grows well in most garden soils improved with organic matter."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "basil-sweet",
@@ -241,7 +251,9 @@
       ],
       "type": "Fertile, well-drained",
       "notes": "Grows well in most garden soils improved with organic matter."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "dwarf-french-bean",
@@ -321,7 +333,9 @@
       ],
       "type": "Fertile, well-drained",
       "notes": "Grows well in most garden soils improved with organic matter."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "perpetual-spinach",
@@ -392,7 +406,9 @@
       ],
       "type": "Fertile, well-drained",
       "notes": "Grows well in most garden soils improved with organic matter."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "swiss-chard",
@@ -475,7 +491,9 @@
       ],
       "type": "Fertile, well-drained",
       "notes": "Grows well in most garden soils improved with organic matter."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "thyme",
@@ -554,7 +572,9 @@
       ],
       "type": "Well-drained, poor to moderate",
       "notes": "Mediterranean herbs prefer lean alkaline soil with good drainage."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "oregano",
@@ -628,7 +648,9 @@
       ],
       "type": "Well-drained, poor to moderate",
       "notes": "Mediterranean herbs prefer lean alkaline soil with good drainage."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "parsley",
@@ -710,7 +732,9 @@
       ],
       "type": "Fertile, well-drained",
       "notes": "Grows well in most garden soils improved with organic matter."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "nasturtium",
@@ -762,10 +786,14 @@
         "containerFriendly": true
       }
     ],
-    "notes": "Entirely edible - peppery flowers and leaves for salads. Acts as trap crop for aphids.",
+    "notes": "Entirely edible — flowers and leaves have a peppery, watercress-like kick. Large seeds are easy for small hands. Sow in poor soil; rich soil produces leaves at the expense of flowers. Acts as trap crop for aphids.",
     "sources": [
       "https://www.rhs.org.uk/plants/nasturtiums"
     ],
+    "childSafe": true,
+    "petSafe": true,
+    "kidActivity": "Children can pick and eat flowers and leaves straight from the plant. Large seeds are easy for small hands to sow directly.",
+    "soilTipSurrey": "Sow directly after late April in poor soil for best flowering. Rich soil produces more leaves than flowers.",
     "inGround": {
       "rowSpacingCm": 30,
       "plantSpacingCm": 25,
@@ -786,8 +814,8 @@
         6,
         7
       ],
-      "type": "Fertile, well-drained",
-      "notes": "Grows well in most garden soils improved with organic matter."
+      "type": "Poor to moderate, well-drained",
+      "notes": "Thrives in poor soil — rich soil produces leaves at the expense of flowers."
     }
   },
   {
@@ -871,7 +899,9 @@
       ],
       "type": "Fertile, well-drained",
       "notes": "Grows well in most garden soils improved with organic matter."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "lettuce",
@@ -956,7 +986,9 @@
       ],
       "type": "Fertile, well-drained",
       "notes": "Grows well in most garden soils improved with organic matter."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "chives",
@@ -964,7 +996,7 @@
     "botanicalName": "Allium schoenoprasum",
     "category": "herb",
     "emoji": "🧅",
-    "sun": "full-sun",
+    "sun": "partial-shade",
     "water": "moderate",
     "spacingCm": 15,
     "depthCm": 10,
@@ -1009,10 +1041,13 @@
         "containerFriendly": true
       }
     ],
-    "notes": "Perennial - comes back each year. Excellent companion to deter aphids.",
+    "notes": "Perennial - comes back each year. Excellent companion to deter aphids. Grows well in both full sun and partial shade.",
     "sources": [
       "https://www.rhs.org.uk/herbs/chives/grow-your-own"
     ],
+    "childSafe": true,
+    "petSafe": true,
+    "kidActivity": "Children love the purple pom-pom flowers and can snip the grass-like leaves with child-safe scissors for cooking.",
     "inGround": {
       "rowSpacingCm": 20,
       "plantSpacingCm": 15,
@@ -1111,7 +1146,9 @@
       ],
       "type": "Fertile, well-drained",
       "notes": "Grows well in most garden soils improved with organic matter."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "marigold",
@@ -1188,7 +1225,9 @@
       ],
       "type": "Fertile, well-drained",
       "notes": "Grows well in most garden soils improved with organic matter."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "radish",
@@ -1265,7 +1304,9 @@
       ],
       "type": "Fertile, well-drained",
       "notes": "Grows well in most garden soils improved with organic matter."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "rocket",
@@ -1337,7 +1378,9 @@
       ],
       "type": "Fertile, well-drained",
       "notes": "Grows well in most garden soils improved with organic matter."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "spring-onion",
@@ -1413,7 +1456,9 @@
       ],
       "type": "Fertile, well-drained",
       "notes": "Grows well in most garden soils improved with organic matter."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "kale",
@@ -1497,7 +1542,9 @@
       ],
       "type": "Fertile, well-drained",
       "notes": "Grows well in most garden soils improved with organic matter."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "pepper-chilli",
@@ -1577,7 +1624,9 @@
       ],
       "type": "Fertile, well-drained",
       "notes": "Grows well in most garden soils improved with organic matter."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "runner-bean",
@@ -1662,7 +1711,9 @@
       ],
       "type": "Fertile, well-drained",
       "notes": "Grows well in most garden soils improved with organic matter."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "broad-bean",
@@ -1697,7 +1748,7 @@
         7
       ]
     },
-    "greenstalkSuitability": "poor",
+    "greenstalkSuitability": "unsuitable",
     "greenstalkNotes": "Tall stems (90cm+) and deep tap roots make this unsuitable for pockets. Better in ground or deep raised beds.",
     "idealTiers": [],
     "varieties": [
@@ -1743,7 +1794,9 @@
       ],
       "type": "Fertile, well-drained",
       "notes": "Grows well in most garden soils improved with organic matter."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "pea",
@@ -1778,7 +1831,7 @@
         9
       ]
     },
-    "greenstalkSuitability": "poor",
+    "greenstalkSuitability": "unsuitable",
     "greenstalkNotes": "Most varieties need support netting and reach 1m+. Only dwarf varieties could work but yields are low.",
     "idealTiers": [],
     "varieties": [
@@ -1829,7 +1882,9 @@
       ],
       "type": "Fertile, well-drained",
       "notes": "Grows well in most garden soils improved with organic matter."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "courgette",
@@ -1909,7 +1964,9 @@
       ],
       "type": "Fertile, well-drained",
       "notes": "Grows well in most garden soils improved with organic matter."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "cucumber",
@@ -1987,7 +2044,9 @@
       ],
       "type": "Fertile, well-drained",
       "notes": "Grows well in most garden soils improved with organic matter."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "beetroot",
@@ -2068,7 +2127,9 @@
       ],
       "type": "Fertile, well-drained",
       "notes": "Grows well in most garden soils improved with organic matter."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "carrot",
@@ -2147,7 +2208,9 @@
       ],
       "type": "Fertile, well-drained",
       "notes": "Grows well in most garden soils improved with organic matter."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "parsnip",
@@ -2220,7 +2283,9 @@
       ],
       "type": "Fertile, well-drained",
       "notes": "Grows well in most garden soils improved with organic matter."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "potato-early",
@@ -2295,7 +2360,9 @@
       ],
       "type": "Fertile, well-drained",
       "notes": "Grows well in most garden soils improved with organic matter."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "potato-maincrop",
@@ -2371,7 +2438,9 @@
       ],
       "type": "Fertile, well-drained",
       "notes": "Grows well in most garden soils improved with organic matter."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "onion-sets",
@@ -2450,7 +2519,9 @@
       ],
       "type": "Fertile, well-drained",
       "notes": "Grows well in most garden soils improved with organic matter."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "garlic",
@@ -2527,7 +2598,9 @@
       ],
       "type": "Fertile, well-drained",
       "notes": "Grows well in most garden soils improved with organic matter."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "leek",
@@ -2562,7 +2635,7 @@
         3
       ]
     },
-    "greenstalkSuitability": "poor",
+    "greenstalkSuitability": "unsuitable",
     "greenstalkNotes": "Needs deep planting and earthing up for white stems. Pocket depth insufficient for blanching.",
     "idealTiers": [],
     "varieties": [
@@ -2608,7 +2681,9 @@
       ],
       "type": "Fertile, well-drained",
       "notes": "Grows well in most garden soils improved with organic matter."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "sweetcorn",
@@ -2687,7 +2762,9 @@
       ],
       "type": "Fertile, well-drained",
       "notes": "Grows well in most garden soils improved with organic matter."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "broccoli-sprouting",
@@ -2768,7 +2845,9 @@
       ],
       "type": "Fertile, well-drained",
       "notes": "Grows well in most garden soils improved with organic matter."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "cauliflower",
@@ -2851,7 +2930,9 @@
       ],
       "type": "Fertile, well-drained",
       "notes": "Grows well in most garden soils improved with organic matter."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "cabbage",
@@ -2933,7 +3014,9 @@
       ],
       "type": "Fertile, well-drained",
       "notes": "Grows well in most garden soils improved with organic matter."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "brussels-sprouts",
@@ -3015,7 +3098,9 @@
       ],
       "type": "Fertile, well-drained",
       "notes": "Grows well in most garden soils improved with organic matter."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "turnip",
@@ -3093,7 +3178,9 @@
       ],
       "type": "Fertile, well-drained",
       "notes": "Grows well in most garden soils improved with organic matter."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "squash",
@@ -3171,7 +3258,9 @@
       ],
       "type": "Fertile, well-drained",
       "notes": "Grows well in most garden soils improved with organic matter."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "celery",
@@ -3203,7 +3292,7 @@
         11
       ]
     },
-    "greenstalkSuitability": "poor",
+    "greenstalkSuitability": "unsuitable",
     "greenstalkNotes": "Requires constantly moist, rich soil and is typically trenched or wrapped for blanching. Difficult in pockets.",
     "idealTiers": [],
     "varieties": [
@@ -3249,7 +3338,9 @@
       ],
       "type": "Fertile, well-drained",
       "notes": "Grows well in most garden soils improved with organic matter."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "pepper-sweet",
@@ -3281,7 +3372,7 @@
         10
       ]
     },
-    "greenstalkSuitability": "poor",
+    "greenstalkSuitability": "unsuitable",
     "greenstalkNotes": "Large bushy plants with heavy fruit. Compact patio varieties may work in top tiers with support.",
     "idealTiers": [
       1,
@@ -3330,7 +3421,9 @@
       ],
       "type": "Fertile, well-drained",
       "notes": "Grows well in most garden soils improved with organic matter."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "aubergine",
@@ -3362,7 +3455,7 @@
         10
       ]
     },
-    "greenstalkSuitability": "poor",
+    "greenstalkSuitability": "unsuitable",
     "greenstalkNotes": "Heavy fruit and large root system. Compact varieties may manage in top tiers but yields will be limited.",
     "idealTiers": [
       1,
@@ -3410,7 +3503,9 @@
       ],
       "type": "Fertile, well-drained",
       "notes": "Grows well in most garden soils improved with organic matter."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "asparagus",
@@ -3487,7 +3582,9 @@
       ],
       "type": "Fertile, well-drained",
       "notes": "Grows well in most garden soils improved with organic matter."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "rosemary",
@@ -3522,7 +3619,7 @@
         12
       ]
     },
-    "greenstalkSuitability": "poor",
+    "greenstalkSuitability": "unsuitable",
     "greenstalkNotes": "Woody shrub that eventually grows large. Young plants fit pockets but will outgrow them within a season.",
     "idealTiers": [
       1,
@@ -3568,7 +3665,9 @@
       ],
       "type": "Well-drained, poor to moderate",
       "notes": "Mediterranean herbs prefer lean alkaline soil with good drainage."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "sage",
@@ -3650,7 +3749,9 @@
       ],
       "type": "Well-drained, poor to moderate",
       "notes": "Mediterranean herbs prefer lean alkaline soil with good drainage."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "coriander",
@@ -3729,7 +3830,9 @@
       ],
       "type": "Fertile, well-drained",
       "notes": "Grows well in most garden soils improved with organic matter."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "dill",
@@ -3806,7 +3909,9 @@
       ],
       "type": "Fertile, well-drained",
       "notes": "Grows well in most garden soils improved with organic matter."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "bay-laurel",
@@ -3879,7 +3984,9 @@
       ],
       "type": "Fertile, well-drained",
       "notes": "Grows well in most garden soils improved with organic matter."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "fennel",
@@ -3908,7 +4015,7 @@
         10
       ]
     },
-    "greenstalkSuitability": "poor",
+    "greenstalkSuitability": "unsuitable",
     "greenstalkNotes": "Herb fennel grows tall (1.5m). Florence fennel bulbs need deep soil. Both challenging in pockets.",
     "idealTiers": [],
     "varieties": [
@@ -3949,7 +4056,9 @@
       ],
       "type": "Fertile, well-drained",
       "notes": "Grows well in most garden soils improved with organic matter."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "raspberry",
@@ -4025,7 +4134,9 @@
       ],
       "type": "Fertile, well-drained",
       "notes": "Grows well in most garden soils improved with organic matter."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "blackberry",
@@ -4099,7 +4210,9 @@
       ],
       "type": "Fertile, well-drained",
       "notes": "Grows well in most garden soils improved with organic matter."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "blueberry",
@@ -4172,7 +4285,9 @@
       ],
       "type": "Acid, moist, well-drained",
       "notes": "Must have ericaceous compost. Test pH before planting."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "gooseberry",
@@ -4245,7 +4360,9 @@
       ],
       "type": "Fertile, well-drained",
       "notes": "Grows well in most garden soils improved with organic matter."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "blackcurrant",
@@ -4320,7 +4437,9 @@
       ],
       "type": "Fertile, well-drained",
       "notes": "Grows well in most garden soils improved with organic matter."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "redcurrant",
@@ -4395,7 +4514,9 @@
       ],
       "type": "Fertile, well-drained",
       "notes": "Grows well in most garden soils improved with organic matter."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "apple-dwarf",
@@ -4473,7 +4594,9 @@
       ],
       "type": "Fertile, well-drained",
       "notes": "Grows well in most garden soils improved with organic matter."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "pear",
@@ -4549,7 +4672,9 @@
       ],
       "type": "Fertile, well-drained",
       "notes": "Grows well in most garden soils improved with organic matter."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "plum",
@@ -4625,7 +4750,9 @@
       ],
       "type": "Fertile, well-drained",
       "notes": "Grows well in most garden soils improved with organic matter."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "fig",
@@ -4695,7 +4822,9 @@
       ],
       "type": "Fertile, well-drained",
       "notes": "Grows well in most garden soils improved with organic matter."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "rhubarb",
@@ -4739,10 +4868,13 @@
         "containerFriendly": false
       }
     ],
-    "notes": "Plant crowns with bud tip at soil surface. Do not harvest in first year. Pull (do not cut) stems. Leaves are poisonous.",
+    "notes": "Plant crowns with bud tip at soil surface. Do not harvest in first year. Pull (do not cut) stems. ⚠️ LEAVES ARE TOXIC — stalks are edible when cooked but leaves contain oxalic acid. Teach children the difference.",
     "sources": [
       "https://www.rhs.org.uk/fruit/rhubarb/grow-your-own"
     ],
+    "childSafe": false,
+    "petSafe": false,
+    "toxicWarning": "Rhubarb leaves are toxic — contain high levels of oxalic acid. Stalks are safe when cooked. Teach children to only eat the stalks and never the leaves.",
     "inGround": {
       "rowSpacingCm": 90,
       "plantSpacingCm": 90,
@@ -4851,7 +4983,9 @@
       ],
       "type": "Fertile, well-drained",
       "notes": "Grows well in most garden soils improved with organic matter."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "borage",
@@ -4925,7 +5059,9 @@
       ],
       "type": "Fertile, well-drained",
       "notes": "Grows well in most garden soils improved with organic matter."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "sunflower",
@@ -4960,7 +5096,7 @@
         9
       ]
     },
-    "greenstalkSuitability": "poor",
+    "greenstalkSuitability": "unsuitable",
     "greenstalkNotes": "Dwarf varieties only. Standard sunflowers (1.5m+) are far too tall and top-heavy for pockets.",
     "idealTiers": [
       1,
@@ -4985,7 +5121,7 @@
     "inGround": {
       "rowSpacingCm": 60,
       "plantSpacingCm": 45,
-      "sowDepthCm": 2.5,
+      "sowDepthCm": 2,
       "bedType": "flat",
       "expectedYieldPerM2": "N/A — ornamental",
       "rotation": "any",
@@ -5007,7 +5143,10 @@
       ],
       "type": "Fertile, well-drained",
       "notes": "Grows well in most garden soils improved with organic matter."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true,
+    "kidActivity": "Children can race sunflowers for height — growth can hit 30cm per week. Feed birds from the ripe seedheads in autumn."
   },
   {
     "slug": "lavender",
@@ -5086,7 +5225,11 @@
       ],
       "type": "Well-drained, poor to moderate",
       "notes": "Mediterranean herbs prefer lean alkaline soil with good drainage."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true,
+    "kidActivity": "Flowers can be dried for lavender bags — an RHS-recommended family activity — or used in baking.",
+    "soilTipSurrey": "Add grit to clay soil and avoid overfeeding. Surrey's London Clay needs extra drainage for lavender to thrive."
   },
   {
     "slug": "cornflower",
@@ -5163,7 +5306,9 @@
       ],
       "type": "Fertile, well-drained",
       "notes": "Grows well in most garden soils improved with organic matter."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "sweet-william",
@@ -5247,7 +5392,9 @@
       ],
       "type": "Fertile, well-drained",
       "notes": "Grows well in most garden soils improved with organic matter."
-    }
+    },
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "lemon-balm",
@@ -5324,7 +5471,9 @@
     "notes": "Outstanding clay-tolerant fragrant herb. Releases lemon-mint scent when brushed. Makes excellent herbal tea. Attracts bees aggressively. Practically indestructible once established.",
     "sources": [
       "https://www.rhs.org.uk/herbs/lemon-balm/grow-your-own"
-    ]
+    ],
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "corsican-mint",
@@ -5390,7 +5539,9 @@
     "notes": "The best walk-on fragrance plant for Surrey clay. Forms a 1-3cm carpet that smells powerfully of peppermint when stepped on. Best between stepping stones or in shaded GreenStalk tiers.",
     "sources": [
       "https://www.rhs.org.uk/plants/mentha-requienii"
-    ]
+    ],
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "dianthus",
@@ -5470,7 +5621,9 @@
     "notes": "Old-fashioned cottage garden fragrance — warm clove scent that carries on the air. Evergreen silvery foliage looks good year-round. Edible flowers. Excellent pollinator plant.",
     "sources": [
       "https://www.rhs.org.uk/plants/dianthus"
-    ]
+    ],
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "scented-geranium",
@@ -5548,7 +5701,9 @@
     "notes": "Not hardy in Surrey — treat as summer patio/GreenStalk plant May-October, overwinter on a bright windowsill. The foliage fragrance is extraordinary — every brush releases perfume. Scent may repel mosquitoes.",
     "sources": [
       "https://www.rhs.org.uk/plants/pelargonium"
-    ]
+    ],
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "night-scented-stock",
@@ -5624,7 +5779,9 @@
     "notes": "The classic evening-scented annual. Unremarkable by day but at dusk releases an intoxicating sweet-spice fragrance. Sow direct in April-May. Dirt cheap seeds — scatter everywhere near seating areas and paths.",
     "sources": [
       "https://www.rhs.org.uk/plants/matthiola-longipetala"
-    ]
+    ],
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "nicotiana",
@@ -5700,7 +5857,9 @@
     "notes": "Towering white trumpet flowers that look spectacular by day and smell incredible at dusk. One of the few fragrant annuals that thrives on clay. Major moth attractor. Architectural statement plant for back of border.",
     "sources": [
       "https://www.rhs.org.uk/plants/nicotiana-sylvestris"
-    ]
+    ],
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "chamomile",
@@ -5777,7 +5936,9 @@
     "notes": "Traditional 'plant doctor' said to improve the health of nearby plants. Apple-sweet fragrance released when walked on or brushed. Makes excellent herbal tea (double-flowered form). Needs free-draining soil.",
     "sources": [
       "https://www.rhs.org.uk/herbs/chamomile/grow-your-own"
-    ]
+    ],
+    "childSafe": true,
+    "petSafe": true
   },
   {
     "slug": "lemon-verbena",
@@ -5840,6 +6001,1105 @@
     "notes": "The most intensely lemon-scented plant you can grow. When rubbed, the leaves release an almost electric citrus fragrance that no other herb matches. Makes outstanding herbal tea. Grow against a warm south-facing wall in Surrey.",
     "sources": [
       "https://www.rhs.org.uk/herbs/lemon-verbena/grow-your-own"
-    ]
+    ],
+    "childSafe": true,
+    "petSafe": true
+  },
+  {
+    "slug": "dwarf-olive",
+    "commonName": "Dwarf Olive",
+    "botanicalName": "Olea europaea (compact)",
+    "category": "fruit",
+    "emoji": "🫒",
+    "sun": "partial-shade",
+    "water": "low",
+    "spacingCm": 80,
+    "depthCm": 20,
+    "growthHabit": "bushy",
+    "daysToHarvest": [365, 730],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": null,
+      "transplant": [4, 5],
+      "harvest": [9, 11]
+    },
+    "hardiness": "H4",
+    "soil": {
+      "phRange": [6.5, 8],
+      "type": "Well-drained, tolerates poor soil",
+      "notes": "Excellent in pots. Tolerates clay if drainage is good. Drought-tolerant once established."
+    },
+    "inGround": {
+      "rowSpacingCm": 100,
+      "plantSpacingCm": 80,
+      "sowDepthCm": 20,
+      "bedType": "either",
+      "expectedYieldPerM2": "Ornamental; may fruit in warm conservatory",
+      "rotation": "permanent",
+      "feeding": "Balanced liquid feed monthly spring-summer",
+      "pests": ["scale insect"],
+      "diseases": [],
+      "commonProblems": "Needs winter protection below -5°C. May not fruit in UK without warm conservatory or south wall."
+    },
+    "greenstalkSuitability": "unsuitable",
+    "greenstalkNotes": "Too large and slow-growing for GreenStalk. Best in a large pot in the conservatory or on a sunny patio.",
+    "idealTiers": [],
+    "varieties": [
+      {
+        "name": "Arbequina",
+        "notes": "Compact, self-fertile, most likely to fruit in UK conservatory",
+        "containerFriendly": true
+      },
+      {
+        "name": "Cipressino",
+        "notes": "Narrow columnar habit, architectural, very hardy",
+        "containerFriendly": true
+      }
+    ],
+    "notes": "Beautiful architectural plant for a conservatory or sheltered patio. Evergreen silver-green leaves. Tolerates filtered light better than citrus. May produce small olives in a warm conservatory after 3-5 years. Hardy to -10°C when established.",
+    "sources": [
+      "https://www.rhs.org.uk/plants/olives/grow-your-own"
+    ],
+    "childSafe": true,
+    "petSafe": true
+  },
+  {
+    "slug": "dwarf-lemon",
+    "commonName": "Dwarf Lemon",
+    "botanicalName": "Citrus × limon (dwarf)",
+    "category": "fruit",
+    "emoji": "🍋",
+    "sun": "full-sun",
+    "water": "moderate",
+    "spacingCm": 80,
+    "depthCm": 20,
+    "growthHabit": "bushy",
+    "daysToHarvest": [180, 365],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": null,
+      "transplant": [5, 6],
+      "harvest": [10, 3]
+    },
+    "hardiness": "H2",
+    "soil": {
+      "phRange": [5.5, 6.5],
+      "type": "Ericaceous, well-drained",
+      "notes": "Use citrus-specific compost. Needs acidic soil — do NOT use garden soil or multi-purpose."
+    },
+    "inGround": {
+      "rowSpacingCm": 100,
+      "plantSpacingCm": 80,
+      "sowDepthCm": 20,
+      "bedType": "raised",
+      "expectedYieldPerM2": "10-20 lemons/year in ideal conditions",
+      "rotation": "permanent",
+      "feeding": "Citrus feed fortnightly spring-summer, monthly autumn-winter",
+      "pests": ["scale insect", "mealybug", "red spider mite"],
+      "diseases": [],
+      "commonProblems": "Needs minimum 10°C in winter — conservatory essential in Surrey. Leaf drop if temperature fluctuates. Yellow leaves = overwatering or iron deficiency."
+    },
+    "greenstalkSuitability": "unsuitable",
+    "greenstalkNotes": "Too large and requires specific citrus compost. Must overwinter in conservatory.",
+    "idealTiers": [],
+    "varieties": [
+      {
+        "name": "Meyer",
+        "notes": "Most cold-tolerant citrus, sweeter fruit, compact — best for UK conservatory",
+        "containerFriendly": true
+      },
+      {
+        "name": "Improved Dwarf",
+        "notes": "Stays under 1.5m in pot, fruits reliably in warm conservatory",
+        "containerFriendly": true
+      }
+    ],
+    "notes": "Challenging but rewarding in a Surrey conservatory. Needs 6+ hours of light (supplement with grow light in winter). Move outside to sunny patio May-September. Fragrant flowers are a bonus. Meyer lemon is the most forgiving variety for UK conditions.",
+    "sources": [
+      "https://www.rhs.org.uk/plants/citrus/grow-your-own"
+    ],
+    "childSafe": true,
+    "petSafe": true
+  },
+  {
+    "slug": "fern-hardy",
+    "commonName": "Hardy Fern",
+    "botanicalName": "Dryopteris filix-mas",
+    "category": "fern",
+    "emoji": "🌿",
+    "sun": "full-shade",
+    "water": "moderate",
+    "spacingCm": 45,
+    "depthCm": 10,
+    "growthHabit": "rosette",
+    "daysToHarvest": [90, 120],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": null,
+      "transplant": [3, 5],
+      "harvest": [4, 10]
+    },
+    "hardiness": "H7",
+    "soil": {
+      "phRange": [5, 7],
+      "type": "Moist, humus-rich",
+      "notes": "Thrives in shade and damp conditions. Add leaf mould or compost."
+    },
+    "inGround": {
+      "rowSpacingCm": 50,
+      "plantSpacingCm": 45,
+      "sowDepthCm": 5,
+      "bedType": "either",
+      "expectedYieldPerM2": "Ornamental — fills shady gaps beautifully",
+      "rotation": "permanent",
+      "feeding": "Mulch annually with leaf mould",
+      "pests": [],
+      "diseases": [],
+      "commonProblems": "None — one of the most trouble-free garden plants. Deciduous but reliable."
+    },
+    "greenstalkSuitability": "unsuitable",
+    "greenstalkNotes": "Too large and shade-dependent for GreenStalk.",
+    "idealTiers": [],
+    "varieties": [
+      {
+        "name": "Male Fern",
+        "notes": "Shuttlecock form, 90cm tall, bombproof reliable",
+        "containerFriendly": true
+      },
+      {
+        "name": "Polystichum setiferum",
+        "notes": "Soft shield fern — evergreen, elegant arching fronds",
+        "containerFriendly": true
+      }
+    ],
+    "notes": "Perfect for the darkest corners of a conservatory or shady border. Requires zero sun. Elegant architectural foliage. Native to UK — fully hardy and maintenance-free.",
+    "sources": [
+      "https://www.rhs.org.uk/plants/ferns"
+    ],
+    "childSafe": true,
+    "petSafe": true,
+    "kidActivity": "Children find the spring unfurling of fiddleheads mesmerising. The young fiddleheads are edible (taste between asparagus, broccoli, and spinach)."
+  },
+  {
+    "slug": "comfrey",
+    "commonName": "Comfrey",
+    "botanicalName": "Symphytum × uplandicum",
+    "category": "herb",
+    "emoji": "🌱",
+    "sun": "partial-shade",
+    "water": "moderate",
+    "spacingCm": 60,
+    "depthCm": 10,
+    "growthHabit": "bushy",
+    "daysToHarvest": [60, 90],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": [3, 5],
+      "transplant": [3, 5],
+      "harvest": [5, 10]
+    },
+    "hardiness": "H7",
+    "soil": {
+      "phRange": [5, 7.5],
+      "type": "Any — thrives in clay",
+      "notes": "Grows in almost any soil including heavy clay. Deep roots break up compacted subsoil and mine minerals."
+    },
+    "inGround": {
+      "rowSpacingCm": 80,
+      "plantSpacingCm": 60,
+      "sowDepthCm": 5,
+      "bedType": "either",
+      "expectedYieldPerM2": "4-5 cuts of leaves per season for mulch/feed",
+      "rotation": "permanent",
+      "feeding": "None needed — it feeds everything else",
+      "pests": [],
+      "diseases": [],
+      "commonProblems": "Extremely vigorous — very difficult to remove once established. Use Bocking 14 cultivar (sterile, no self-seeding). GROW IN A POT if renting."
+    },
+    "greenstalkSuitability": "unsuitable",
+    "greenstalkNotes": "Far too large and vigorous for GreenStalk. Grow in a large pot or dedicated corner.",
+    "idealTiers": [],
+    "varieties": [
+      {
+        "name": "Bocking 14",
+        "notes": "Sterile cultivar — won't self-seed. THE one to grow. High potassium leaves.",
+        "containerFriendly": true
+      }
+    ],
+    "notes": "The ultimate soil improver. Deep taproot mines potassium, nitrogen, and phosphorus from subsoil. Cut leaves 4-5 times/season for: (1) liquid feed — steep in water for 4 weeks, (2) mulch around tomatoes and fruit, (3) compost activator. MUST grow Bocking 14 cultivar (sterile). RENTER WARNING: Grow in a large pot — near-impossible to remove from ground.",
+    "sources": [
+      "https://www.rhs.org.uk/soil-composts-mulches/comfrey"
+    ],
+    "childSafe": true,
+    "petSafe": true
+  },
+  {
+    "slug": "crimson-clover",
+    "commonName": "Crimson Clover",
+    "botanicalName": "Trifolium incarnatum",
+    "category": "flower",
+    "emoji": "🍀",
+    "sun": "full-sun",
+    "water": "low",
+    "spacingCm": 15,
+    "depthCm": 5,
+    "growthHabit": "spreading",
+    "daysToHarvest": [60, 90],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": [3, 5],
+      "transplant": null,
+      "harvest": [5, 10]
+    },
+    "hardiness": "H5",
+    "soil": {
+      "phRange": [5.5, 7.5],
+      "type": "Any — improves all soil types",
+      "notes": "Fixes atmospheric nitrogen into the soil. Dig in before flowering as green manure."
+    },
+    "inGround": {
+      "rowSpacingCm": 20,
+      "plantSpacingCm": 15,
+      "sowDepthCm": 1,
+      "bedType": "either",
+      "expectedYieldPerM2": "Green manure — adds ~50g nitrogen per m² when dug in",
+      "rotation": "legumes",
+      "feeding": "None needed — it IS the feed",
+      "pests": [],
+      "diseases": [],
+      "commonProblems": "Can become invasive if allowed to self-seed. Cut and dig in before seed heads form."
+    },
+    "greenstalkSuitability": "marginal",
+    "greenstalkNotes": "Can be used as a winter cover crop in empty GreenStalk pockets to fix nitrogen between seasons.",
+    "idealTiers": [3, 4, 5],
+    "varieties": [
+      {
+        "name": "Common Crimson",
+        "notes": "Beautiful red flower spikes. Sow autumn for spring nitrogen boost.",
+        "containerFriendly": true
+      }
+    ],
+    "notes": "Sow as a green manure after clearing summer crops. Fixes nitrogen from the air into the soil via root nodules. Dig in before flowering (about 8 weeks after sowing). Beautiful crimson flower spikes attract pollinators. Also works as a winter cover crop in GreenStalk pockets between seasons.",
+    "sources": [
+      "https://www.rhs.org.uk/soil-composts-mulches/green-manures"
+    ],
+    "childSafe": true,
+    "petSafe": true
+  },
+  {
+    "slug": "phacelia",
+    "commonName": "Phacelia",
+    "botanicalName": "Phacelia tanacetifolia",
+    "category": "flower",
+    "emoji": "💜",
+    "sun": "full-sun",
+    "water": "low",
+    "spacingCm": 15,
+    "depthCm": 5,
+    "growthHabit": "upright",
+    "daysToHarvest": [45, 60],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": [3, 9],
+      "transplant": null,
+      "harvest": [5, 10]
+    },
+    "hardiness": "H3",
+    "soil": {
+      "phRange": [5.5, 8],
+      "type": "Any — improves soil structure",
+      "notes": "Dense root network breaks up compacted soil and improves drainage. Excellent for clay."
+    },
+    "inGround": {
+      "rowSpacingCm": 20,
+      "plantSpacingCm": 15,
+      "sowDepthCm": 1,
+      "bedType": "either",
+      "expectedYieldPerM2": "Green manure — improves soil structure, attracts beneficial insects",
+      "rotation": "any",
+      "feeding": "None needed",
+      "pests": [],
+      "diseases": [],
+      "commonProblems": "Frost-tender (H3) — dies back in autumn which is ideal for digging in as green manure."
+    },
+    "greenstalkSuitability": "marginal",
+    "greenstalkNotes": "Quick filler for empty pockets — attracts pollinators to the tower.",
+    "idealTiers": [3, 4, 5],
+    "varieties": [
+      {
+        "name": "Common Phacelia",
+        "notes": "Lavender-blue flowers, the #1 bee plant in the UK",
+        "containerFriendly": true
+      }
+    ],
+    "notes": "The single best green manure for Surrey clay soil. Grows fast (6-8 weeks to flower), breaks up compacted clay with its dense root network, and is THE top-rated bee and pollinator plant in the UK. Not related to any vegetable family so fits anywhere in crop rotation. Sow on any bare soil March-September, dig in before flowering or let it bloom for the bees.",
+    "sources": [
+      "https://www.rhs.org.uk/soil-composts-mulches/green-manures"
+    ],
+    "childSafe": true,
+    "petSafe": true
+  },
+  {
+    "slug": "cosmos",
+    "commonName": "Cosmos",
+    "botanicalName": "Cosmos bipinnatus",
+    "category": "flower",
+    "emoji": "🌸",
+    "sun": "full-sun",
+    "water": "low",
+    "spacingCm": 30,
+    "depthCm": 10,
+    "growthHabit": "upright",
+    "daysToHarvest": [70, 84],
+    "plantingWindow": {
+      "sowIndoors": [3, 4],
+      "sowOutdoors": [4, 5],
+      "transplant": [5, 6],
+      "harvest": [6, 10]
+    },
+    "greenstalkSuitability": "unsuitable",
+    "greenstalkNotes": "Grows 60-120cm tall — too large for GreenStalk pockets.",
+    "idealTiers": [],
+    "varieties": [
+      {
+        "name": "Sensation Mix",
+        "notes": "Classic daisy-form, white and pink, 90cm tall",
+        "containerFriendly": true
+      },
+      {
+        "name": "Purity",
+        "notes": "Pure white single flowers, elegant cut flower",
+        "containerFriendly": true
+      }
+    ],
+    "notes": "Grows from seed to flower in just 12 weeks — easy and satisfying for children. Dead-head regularly for continuous blooming. Attracts pollinators. The RHS calls it 'easy and satisfying to raise.'",
+    "sources": [
+      "https://www.rhs.org.uk/plants/cosmos"
+    ],
+    "inGround": {
+      "rowSpacingCm": 35,
+      "plantSpacingCm": 30,
+      "sowDepthCm": 1,
+      "bedType": "either",
+      "expectedYieldPerM2": "N/A — ornamental/cut flower",
+      "rotation": "any",
+      "feeding": "No feeding — poor soil produces more flowers",
+      "pests": ["aphids", "slugs"],
+      "diseases": [],
+      "commonProblems": "Rich soil produces foliage at the expense of flowers. Stake tall varieties."
+    },
+    "hardiness": "H2",
+    "soil": {
+      "phRange": [6, 7],
+      "type": "Poor to moderate, well-drained",
+      "notes": "Like nasturtiums, cosmos flower best in poor soil. Avoid overfeeding."
+    },
+    "childSafe": true,
+    "petSafe": true,
+    "kidActivity": "Seed to flower in 12 weeks — fast enough to keep children engaged. Great for cutting gardens and bouquets."
+  },
+  {
+    "slug": "chocolate-cosmos",
+    "commonName": "Chocolate Cosmos",
+    "botanicalName": "Cosmos atrosanguineus",
+    "category": "flower",
+    "emoji": "🍫",
+    "sun": "full-sun",
+    "water": "moderate",
+    "spacingCm": 30,
+    "depthCm": 10,
+    "growthHabit": "upright",
+    "daysToHarvest": [90, 120],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": null,
+      "transplant": [4, 5],
+      "harvest": [6, 10]
+    },
+    "greenstalkSuitability": "unsuitable",
+    "greenstalkNotes": "Tuberous perennial — needs ground planting or large container.",
+    "idealTiers": [],
+    "varieties": [
+      {
+        "name": "Chocamocha",
+        "notes": "Compact form, rich chocolate scent, ideal for containers",
+        "containerFriendly": true
+      }
+    ],
+    "notes": "Remarkable chocolate-vanilla scent — a huge hit with children. This is a tuberous perennial (not grown from seed like regular cosmos). Plant tubers in spring, lift and store over winter in cold areas. The RHS School Gardening sensory guide calls it 'a big hit with the kids.'",
+    "sources": [
+      "https://www.rhs.org.uk/plants/cosmos"
+    ],
+    "inGround": {
+      "rowSpacingCm": 35,
+      "plantSpacingCm": 30,
+      "sowDepthCm": 8,
+      "bedType": "either",
+      "expectedYieldPerM2": "N/A — ornamental/sensory",
+      "rotation": "any",
+      "feeding": "Monthly liquid feed during growing season",
+      "pests": ["slugs"],
+      "diseases": [],
+      "commonProblems": "Not fully hardy — lift tubers in autumn and store frost-free, or mulch heavily."
+    },
+    "hardiness": "H3",
+    "soil": {
+      "phRange": [6, 7],
+      "type": "Fertile, well-drained",
+      "notes": "Needs good drainage. Add grit to clay soil."
+    },
+    "childSafe": true,
+    "petSafe": true,
+    "kidActivity": "The chocolate-vanilla scent is a major sensory hit — children love smelling the flowers. Great for sensory gardens.",
+    "soilTipSurrey": "Add grit to Surrey clay for drainage. Lift tubers in autumn or mulch heavily."
+  },
+  {
+    "slug": "alpine-strawberry",
+    "commonName": "Alpine Strawberry",
+    "botanicalName": "Fragaria vesca",
+    "category": "fruit",
+    "emoji": "🍓",
+    "sun": "partial-shade",
+    "water": "moderate",
+    "spacingCm": 25,
+    "depthCm": 5,
+    "growthHabit": "spreading",
+    "daysToHarvest": [90, 120],
+    "plantingWindow": {
+      "sowIndoors": [2, 3],
+      "sowOutdoors": [3, 5],
+      "transplant": [4, 6],
+      "harvest": [6, 10]
+    },
+    "greenstalkSuitability": "good",
+    "greenstalkNotes": "Compact enough for pockets. Fruits in partial shade — good for lower tiers.",
+    "idealTiers": [3, 4, 5],
+    "varieties": [
+      {
+        "name": "Alexandria",
+        "notes": "Most popular everbearing alpine, intense flavour, no runners",
+        "containerFriendly": true
+      },
+      {
+        "name": "Mignonette",
+        "notes": "Small intensely aromatic berries, classic variety",
+        "containerFriendly": true
+      }
+    ],
+    "notes": "UK native that fruits reliably even in light shade, producing small, intensely aromatic berries from June through early autumn. Spreads by runners, teaching children about plant propagation. The RHS says they can be 'left to fend for themselves.'",
+    "sources": [
+      "https://www.rhs.org.uk/fruit/strawberries/wild"
+    ],
+    "inGround": {
+      "rowSpacingCm": 30,
+      "plantSpacingCm": 25,
+      "sowDepthCm": 0,
+      "bedType": "either",
+      "expectedYieldPerM2": "0.5-1 kg/m2 (small but intensely flavoured)",
+      "rotation": "any",
+      "feeding": "Light feed in spring",
+      "pests": ["slugs", "birds"],
+      "diseases": [],
+      "commonProblems": "Fruit is small — manage expectations. Plant along path edges for easy picking."
+    },
+    "hardiness": "H6",
+    "soil": {
+      "phRange": [5.5, 7],
+      "type": "Humus-rich, moist",
+      "notes": "Tolerates most soils. Woodland-edge plant that prefers some organic matter."
+    },
+    "childSafe": true,
+    "petSafe": true,
+    "kidActivity": "Children love foraging for tiny, intensely sweet berries among the leaves. Runners teach propagation — pot up babies as gifts."
+  },
+  {
+    "slug": "sweet-cicely",
+    "commonName": "Sweet Cicely",
+    "botanicalName": "Myrrhis odorata",
+    "category": "herb",
+    "emoji": "🌿",
+    "sun": "partial-shade",
+    "water": "moderate",
+    "spacingCm": 60,
+    "depthCm": 10,
+    "growthHabit": "bushy",
+    "daysToHarvest": [90, 120],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": [3, 4],
+      "transplant": [3, 5],
+      "harvest": [4, 10]
+    },
+    "greenstalkSuitability": "unsuitable",
+    "greenstalkNotes": "Grows to 90cm+ — far too large for GreenStalk pockets.",
+    "idealTiers": [],
+    "varieties": [
+      {
+        "name": "Common Sweet Cicely",
+        "notes": "UK native woodland herb, entire plant edible, aniseed flavour",
+        "containerFriendly": false
+      }
+    ],
+    "notes": "Native woodland-edge herb featured at the Kitchen Garden at RHS Bridgewater. Seed pods have a clean aniseed flavour and can be 'eaten raw straight from the plant' per the RHS. The fern-like foliage is beautiful and tactile, and the whole plant — leaves, seeds, roots — is edible.",
+    "sources": [
+      "https://www.rhs.org.uk/herbs/sweet-cicely"
+    ],
+    "inGround": {
+      "rowSpacingCm": 70,
+      "plantSpacingCm": 60,
+      "sowDepthCm": 1,
+      "bedType": "either",
+      "expectedYieldPerM2": "Herb/ornamental — harvest leaves and seeds as needed",
+      "rotation": "permanent",
+      "feeding": "Mulch with compost annually",
+      "pests": [],
+      "diseases": [],
+      "commonProblems": "Seeds need cold stratification to germinate — sow in autumn or cold-treat seed. Self-seeds freely once established."
+    },
+    "hardiness": "H7",
+    "soil": {
+      "phRange": [5.5, 7.5],
+      "type": "Moist, humus-rich",
+      "notes": "Woodland-edge conditions — moist, organic-rich soil in dappled shade."
+    },
+    "childSafe": true,
+    "petSafe": true,
+    "kidActivity": "Entire plant is edible — children can eat the aniseed-flavoured seeds straight from the plant. Beautiful fern-like foliage is tactile."
+  },
+  {
+    "slug": "fern-shuttlecock",
+    "commonName": "Shuttlecock Fern",
+    "botanicalName": "Matteuccia struthiopteris",
+    "category": "fern",
+    "emoji": "🌿",
+    "sun": "full-shade",
+    "water": "high",
+    "spacingCm": 60,
+    "depthCm": 10,
+    "growthHabit": "rosette",
+    "daysToHarvest": [90, 120],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": null,
+      "transplant": [3, 5],
+      "harvest": [4, 10]
+    },
+    "greenstalkSuitability": "unsuitable",
+    "greenstalkNotes": "Grows to 1.5m tall with vase-shaped crowns — needs open ground in shade.",
+    "idealTiers": [],
+    "varieties": [
+      {
+        "name": "Common Shuttlecock",
+        "notes": "Native woodland fern, dramatic vase-shaped crowns to 1.5m, edible fiddleheads",
+        "containerFriendly": false
+      }
+    ],
+    "notes": "The showpiece shade plant. Creates dramatic, vase-shaped crowns up to 1.5m tall. Young unfurling 'fiddleheads' are edible — taste between asparagus, broccoli, and spinach. Children find the spring unfurling mesmerising. The RHS features it as a shade-loving edible.",
+    "sources": [
+      "https://www.rhs.org.uk/plants/ferns"
+    ],
+    "inGround": {
+      "rowSpacingCm": 70,
+      "plantSpacingCm": 60,
+      "sowDepthCm": 5,
+      "bedType": "either",
+      "expectedYieldPerM2": "Ornamental — edible fiddleheads in spring",
+      "rotation": "permanent",
+      "feeding": "Mulch with leaf mould annually",
+      "pests": [],
+      "diseases": [],
+      "commonProblems": "Must not dry out — plant in rich, moist soil with generous organic matter."
+    },
+    "hardiness": "H7",
+    "soil": {
+      "phRange": [5, 7],
+      "type": "Rich, moist, humus-heavy",
+      "notes": "Needs permanently moist, humus-rich soil. Add generous organic matter. Never let it dry out."
+    },
+    "childSafe": true,
+    "petSafe": true,
+    "kidActivity": "Children find the spring unfurling of fiddleheads mesmerising. Young fiddleheads are edible — taste between asparagus, broccoli, and spinach."
+  },
+  {
+    "slug": "fern-copper-shield",
+    "commonName": "Copper Shield Fern",
+    "botanicalName": "Dryopteris erythrosora 'Brilliance'",
+    "category": "fern",
+    "emoji": "🍂",
+    "sun": "full-shade",
+    "water": "moderate",
+    "spacingCm": 45,
+    "depthCm": 10,
+    "growthHabit": "rosette",
+    "daysToHarvest": [90, 120],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": null,
+      "transplant": [3, 5],
+      "harvest": [4, 10]
+    },
+    "greenstalkSuitability": "unsuitable",
+    "greenstalkNotes": "Shade-dependent perennial — needs ground planting in shade.",
+    "idealTiers": [],
+    "varieties": [
+      {
+        "name": "Brilliance",
+        "notes": "RHS award-winner. Fronds emerge copper-pink, mature to glossy green, bright orange-red spores beneath in autumn",
+        "containerFriendly": true
+      }
+    ],
+    "notes": "One of the RHS's ten award-winning starter ferns. Colour-changing magic: fronds emerge copper-pink in spring, mature to glossy green, and display bright orange-red spores beneath in autumn. Semi-evergreen in mild Surrey winters.",
+    "sources": [
+      "https://www.rhs.org.uk/plants/ferns"
+    ],
+    "inGround": {
+      "rowSpacingCm": 50,
+      "plantSpacingCm": 45,
+      "sowDepthCm": 5,
+      "bedType": "either",
+      "expectedYieldPerM2": "Ornamental — spectacular colour-changing foliage",
+      "rotation": "permanent",
+      "feeding": "Mulch with leaf mould annually",
+      "pests": [],
+      "diseases": [],
+      "commonProblems": "None — very trouble-free. Semi-evergreen in mild areas."
+    },
+    "hardiness": "H4",
+    "soil": {
+      "phRange": [5, 7],
+      "type": "Moist, humus-rich",
+      "notes": "Thrives in shade and damp conditions. Add leaf mould or compost."
+    },
+    "childSafe": true,
+    "petSafe": true,
+    "kidActivity": "Watch fronds change colour through the seasons — copper-pink in spring, green in summer, orange-red spores in autumn. Nature's colour wheel."
+  },
+  {
+    "slug": "hosta",
+    "commonName": "Hosta",
+    "botanicalName": "Hosta spp.",
+    "category": "flower",
+    "emoji": "🍃",
+    "sun": "full-shade",
+    "water": "moderate",
+    "spacingCm": 45,
+    "depthCm": 10,
+    "growthHabit": "rosette",
+    "daysToHarvest": [90, 120],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": null,
+      "transplant": [3, 5],
+      "harvest": [4, 10]
+    },
+    "greenstalkSuitability": "unsuitable",
+    "greenstalkNotes": "Large foliage clumps need ground planting. Also very slug-prone — GreenStalk elevation won't fully protect.",
+    "idealTiers": [],
+    "varieties": [
+      {
+        "name": "Sum and Substance",
+        "notes": "Giant chartreuse leaves, slug-resistant, up to 1m across",
+        "containerFriendly": true
+      },
+      {
+        "name": "Halcyon",
+        "notes": "Blue-grey leaves, slug-resistant, compact mound",
+        "containerFriendly": true
+      }
+    ],
+    "notes": "Bold, sculptural foliage for shade. Eaten as a vegetable in Japan — rolled-up spring 'hostons' can be harvested and fried. Children love stroking the huge leaves and watching water bead across them. Raised containers help significantly with slug protection.",
+    "sources": [
+      "https://www.rhs.org.uk/plants/hostas"
+    ],
+    "inGround": {
+      "rowSpacingCm": 50,
+      "plantSpacingCm": 45,
+      "sowDepthCm": 5,
+      "bedType": "either",
+      "expectedYieldPerM2": "Ornamental — edible spring hostons (Japanese delicacy)",
+      "rotation": "permanent",
+      "feeding": "General fertiliser in spring, mulch annually",
+      "pests": ["slugs", "snails", "vine weevil"],
+      "diseases": ["crown rot in wet conditions"],
+      "commonProblems": "Slugs are the main enemy. Use wool pellets, copper tape, beer traps, or raised containers."
+    },
+    "hardiness": "H7",
+    "soil": {
+      "phRange": [5.5, 7.5],
+      "type": "Rich, moist, well-drained",
+      "notes": "Rich soil in shade. Add organic matter annually."
+    },
+    "childSafe": true,
+    "petSafe": false,
+    "toxicWarning": "Hostas are toxic to dogs and cats due to saponins. Skip these if you have pets.",
+    "kidActivity": "Children love stroking the huge sculptural leaves and watching water bead across them."
+  },
+  {
+    "slug": "busy-lizzy",
+    "commonName": "Busy Lizzy",
+    "botanicalName": "Impatiens walleriana",
+    "category": "flower",
+    "emoji": "💥",
+    "sun": "full-shade",
+    "water": "moderate",
+    "spacingCm": 25,
+    "depthCm": 5,
+    "growthHabit": "bushy",
+    "daysToHarvest": [60, 90],
+    "plantingWindow": {
+      "sowIndoors": [2, 3],
+      "sowOutdoors": null,
+      "transplant": [5, 6],
+      "harvest": [6, 10]
+    },
+    "greenstalkSuitability": "good",
+    "greenstalkNotes": "Compact, shade-tolerant, and colourful — works well in lower tiers with less light.",
+    "idealTiers": [4, 5],
+    "varieties": [
+      {
+        "name": "Super Elfin Mix",
+        "notes": "Compact, huge colour range, disease resistant",
+        "containerFriendly": true
+      },
+      {
+        "name": "Beacon",
+        "notes": "Downy mildew resistant series, reliable",
+        "containerFriendly": true
+      }
+    ],
+    "notes": "Delivers vivid colour in deep shade where little else blooms. The real magic for children is the exploding seed pods — ripe pods burst dramatically when touched, which is how the genus got its name (Impatiens means 'impatient'). Plant out after all frost risk passes.",
+    "sources": [
+      "https://www.rhs.org.uk/plants/busy-lizzy"
+    ],
+    "inGround": {
+      "rowSpacingCm": 30,
+      "plantSpacingCm": 25,
+      "sowDepthCm": 0,
+      "bedType": "either",
+      "expectedYieldPerM2": "N/A — ornamental",
+      "rotation": "any",
+      "feeding": "Liquid feed fortnightly when flowering",
+      "pests": ["aphids"],
+      "diseases": ["downy mildew"],
+      "commonProblems": "Very frost-tender — don't plant out until late May. Downy mildew can be a problem — choose resistant varieties."
+    },
+    "hardiness": "H2",
+    "soil": {
+      "phRange": [6, 7],
+      "type": "Moist, humus-rich",
+      "notes": "Keep moist but not waterlogged. Rich soil produces better flowering."
+    },
+    "childSafe": true,
+    "petSafe": true,
+    "kidActivity": "The exploding seed pods are irresistible — ripe pods burst dramatically when touched. Children can collect and sow seeds. Impatiens means 'impatient'!"
+  },
+  {
+    "slug": "forget-me-not",
+    "commonName": "Forget-me-not",
+    "botanicalName": "Myosotis sylvatica",
+    "category": "flower",
+    "emoji": "💙",
+    "sun": "full-shade",
+    "water": "moderate",
+    "spacingCm": 15,
+    "depthCm": 5,
+    "growthHabit": "spreading",
+    "daysToHarvest": [60, 90],
+    "plantingWindow": {
+      "sowIndoors": null,
+      "sowOutdoors": [3, 5],
+      "transplant": null,
+      "harvest": [4, 6]
+    },
+    "greenstalkSuitability": "marginal",
+    "greenstalkNotes": "Can fill empty pockets in partial shade but self-seeding habit is messy in containers.",
+    "idealTiers": [4, 5],
+    "varieties": [
+      {
+        "name": "Blue Ball",
+        "notes": "Compact, dense sky-blue flowers, ideal for edging",
+        "containerFriendly": true
+      },
+      {
+        "name": "Sylva Blue",
+        "notes": "Taller variety, naturalises beautifully",
+        "containerFriendly": true
+      }
+    ],
+    "notes": "UK native that self-seeds freely in shady spots, creating carpets of sky-blue flowers requiring almost zero maintenance. Children love the tiny, perfect blooms and the story behind the name. Near-zero maintenance once established.",
+    "sources": [
+      "https://www.rhs.org.uk/plants/forget-me-not"
+    ],
+    "inGround": {
+      "rowSpacingCm": 20,
+      "plantSpacingCm": 15,
+      "sowDepthCm": 0,
+      "bedType": "either",
+      "expectedYieldPerM2": "N/A — ornamental groundcover",
+      "rotation": "any",
+      "feeding": "No feeding needed",
+      "pests": [],
+      "diseases": ["powdery mildew"],
+      "commonProblems": "Self-seeds prolifically — can become invasive. Pull unwanted seedlings. Biennial — sow each year or let self-seed."
+    },
+    "hardiness": "H7",
+    "soil": {
+      "phRange": [5.5, 7.5],
+      "type": "Any moist soil",
+      "notes": "Thrives in most conditions. Prefers moist shade but tolerates most situations."
+    },
+    "childSafe": true,
+    "petSafe": true,
+    "kidActivity": "Children love the tiny, perfect sky-blue blooms. Tell them the legend behind the name. Self-seeds freely — 'plant once, enjoy forever'."
+  },
+  {
+    "slug": "mizuna",
+    "commonName": "Mizuna",
+    "botanicalName": "Brassica rapa var. nipponosinica",
+    "category": "vegetable",
+    "emoji": "🥬",
+    "sun": "partial-shade",
+    "water": "moderate",
+    "spacingCm": 20,
+    "depthCm": 8,
+    "growthHabit": "rosette",
+    "daysToHarvest": [21, 40],
+    "plantingWindow": {
+      "sowIndoors": [3, 4],
+      "sowOutdoors": [4, 9],
+      "transplant": [4, 5],
+      "harvest": [5, 11]
+    },
+    "greenstalkSuitability": "ideal",
+    "greenstalkNotes": "Shallow roots and compact rosette habit perfect for pockets. Cut-and-come-again harvesting extends season.",
+    "idealTiers": [1, 2, 3],
+    "varieties": [
+      {
+        "name": "Mizuna Green",
+        "notes": "Classic serrated leaves, mild peppery flavour",
+        "containerFriendly": true
+      },
+      {
+        "name": "Mizuna Red",
+        "notes": "Purple-tinged leaves, slightly stronger flavour, ornamental",
+        "containerFriendly": true
+      }
+    ],
+    "notes": "Fast-growing Asian green, ready in 3 weeks as baby leaf. Very cold-tolerant — can sow successionally April through September. Bolts slower than rocket in heat.",
+    "sources": [
+      "https://www.rhs.org.uk/vegetables/oriental-salads/grow-your-own"
+    ],
+    "inGround": {
+      "rowSpacingCm": 25,
+      "plantSpacingCm": 20,
+      "sowDepthCm": 1,
+      "bedType": "either",
+      "expectedYieldPerM2": "1-2 kg/m2",
+      "rotation": "brassicas",
+      "feeding": "Light feed only — too much nitrogen makes leaves bitter",
+      "pests": ["flea beetle", "slugs", "aphids"],
+      "diseases": ["clubroot", "downy mildew"],
+      "commonProblems": "Flea beetle makes tiny holes in leaves — cover with fleece early season. Bolts in prolonged heat."
+    },
+    "hardiness": "H5",
+    "soil": {
+      "phRange": [6, 7.5],
+      "type": "Moist, fertile, well-drained",
+      "notes": "Tolerates most soils. Add compost to clay. Does well in partial shade — NE-facing gardens actually suit it."
+    },
+    "childSafe": true,
+    "petSafe": true,
+    "kidActivity": "Quick grower — kids can see results in under a month. Great for salad-bowl picking.",
+    "soilTipSurrey": "London Clay is fine once improved with compost. Mizuna actually prefers cooler roots, so clay's moisture retention helps."
+  },
+  {
+    "slug": "snow-pea",
+    "commonName": "Snow Pea (Mangetout)",
+    "botanicalName": "Pisum sativum var. saccharatum",
+    "category": "legume",
+    "emoji": "🫛",
+    "sun": "full-sun",
+    "water": "moderate",
+    "spacingCm": 8,
+    "depthCm": 15,
+    "growthHabit": "climbing",
+    "daysToHarvest": [55, 75],
+    "plantingWindow": {
+      "sowIndoors": [2, 3],
+      "sowOutdoors": [3, 6],
+      "transplant": [4, 5],
+      "harvest": [6, 9]
+    },
+    "greenstalkSuitability": "unsuitable",
+    "greenstalkNotes": "Climbing habit needs support netting. Too tall for pockets.",
+    "idealTiers": [],
+    "varieties": [
+      {
+        "name": "Oregon Sugar Pod",
+        "notes": "Heavy cropper, stringless flat pods, 1m tall",
+        "containerFriendly": false
+      },
+      {
+        "name": "Delikett",
+        "notes": "Compact at 60cm, good for smaller spaces",
+        "containerFriendly": true
+      },
+      {
+        "name": "Norli",
+        "notes": "Dwarf variety, no staking needed, early cropper",
+        "containerFriendly": true
+      }
+    ],
+    "notes": "Eat the whole pod flat before peas develop — sweeter than garden peas. Direct sow now (April) for summer harvest. Needs support sticks or netting.",
+    "sources": [
+      "https://www.rhs.org.uk/vegetables/peas/grow-your-own"
+    ],
+    "inGround": {
+      "rowSpacingCm": 45,
+      "plantSpacingCm": 8,
+      "sowDepthCm": 5,
+      "bedType": "either",
+      "expectedYieldPerM2": "1-2 kg/m2",
+      "rotation": "legumes",
+      "feeding": "No nitrogen needed — fixes own. Liquid feed when flowering.",
+      "pests": ["pea moth", "birds", "mice", "slugs"],
+      "diseases": ["powdery mildew", "pea wilt"],
+      "commonProblems": "Mice eat seeds — start in guttering or loo rolls indoors. Birds attack seedlings — cover with netting."
+    },
+    "hardiness": "H5",
+    "soil": {
+      "phRange": [6, 7.5],
+      "type": "Fertile, well-drained",
+      "notes": "Tolerates most soils. Add organic matter to heavy clay."
+    },
+    "childSafe": true,
+    "petSafe": true,
+    "kidActivity": "Kids love eating pods straight off the plant — sweet and crunchy. Easy to pick.",
+    "soilTipSurrey": "Clay soil is fine for peas. Add grit to planting trench if drainage is poor."
+  },
+  {
+    "slug": "marrow",
+    "commonName": "Marrow",
+    "botanicalName": "Cucurbita pepo",
+    "category": "vegetable",
+    "emoji": "🟢",
+    "sun": "full-sun",
+    "water": "high",
+    "spacingCm": 120,
+    "depthCm": 25,
+    "growthHabit": "trailing",
+    "daysToHarvest": [70, 90],
+    "plantingWindow": {
+      "sowIndoors": [4, 5],
+      "sowOutdoors": [5, 6],
+      "transplant": [5, 6],
+      "harvest": [8, 10]
+    },
+    "greenstalkSuitability": "unsuitable",
+    "greenstalkNotes": "Enormous trailing plant with 120cm+ spread. Needs ground or very large containers.",
+    "idealTiers": [],
+    "varieties": [
+      {
+        "name": "Long Green Bush",
+        "notes": "Classic British marrow, bushy habit, more compact than trailing types",
+        "containerFriendly": false
+      },
+      {
+        "name": "Tiger Cross",
+        "notes": "RHS AGM, striped skin, reliable cropper, good disease resistance",
+        "containerFriendly": false
+      },
+      {
+        "name": "Badger Cross",
+        "notes": "Compact bush type, good for smaller gardens",
+        "containerFriendly": false
+      }
+    ],
+    "notes": "Sow indoors now (April) on edge to prevent seed rot. Plant out after last frost (late May in Surrey). Enormous yields — one plant is usually enough. Classic stuffed marrow is a British garden staple.",
+    "sources": [
+      "https://www.rhs.org.uk/vegetables/marrows/grow-your-own"
+    ],
+    "inGround": {
+      "rowSpacingCm": 120,
+      "plantSpacingCm": 90,
+      "sowDepthCm": 3,
+      "bedType": "flat",
+      "expectedYieldPerM2": "3-5 fruits per plant",
+      "rotation": "any",
+      "feeding": "Heavy feeder — liquid feed fortnightly once fruits set. Plant on compost mound.",
+      "pests": ["slugs", "aphids", "cucumber beetle"],
+      "diseases": ["powdery mildew", "grey mould"],
+      "commonProblems": "Slugs destroy young plants — protect with cloches or slug pellets until established. Hand-pollinate if fruits rot at tip (poor pollination)."
+    },
+    "hardiness": "H2",
+    "soil": {
+      "phRange": [5.5, 7],
+      "type": "Rich, moisture-retentive",
+      "notes": "Hungry plant — dig in plenty of compost. Plant on a raised mound to improve drainage on clay."
+    },
+    "childSafe": true,
+    "petSafe": true,
+    "kidActivity": "Kids love the giant fruits — can grow to enormous sizes for competitions. Fun to stuff and bake together.",
+    "soilTipSurrey": "London Clay retains moisture well for marrows but drainage is key. Plant on a raised mound of compost mixed with garden soil."
+  },
+  {
+    "slug": "sweet-marjoram",
+    "commonName": "Sweet Marjoram",
+    "botanicalName": "Origanum majorana",
+    "category": "herb",
+    "emoji": "🌿",
+    "sun": "full-sun",
+    "water": "low",
+    "spacingCm": 25,
+    "depthCm": 10,
+    "growthHabit": "bushy",
+    "daysToHarvest": [60, 90],
+    "plantingWindow": {
+      "sowIndoors": [3, 4],
+      "sowOutdoors": [5, 6],
+      "transplant": [5, 6],
+      "harvest": [6, 10]
+    },
+    "greenstalkSuitability": "good",
+    "greenstalkNotes": "Compact bushy herb, suits middle tiers. Similar to oregano but more tender — benefits from GreenStalk's sheltered environment.",
+    "idealTiers": [2, 3, 4],
+    "varieties": [
+      {
+        "name": "Sweet Marjoram",
+        "notes": "Classic culinary variety, sweeter and milder than oregano",
+        "containerFriendly": true
+      },
+      {
+        "name": "Compact Marjoram",
+        "notes": "Dwarf form, excellent for containers and small spaces",
+        "containerFriendly": true
+      }
+    ],
+    "notes": "Sweeter, milder cousin of oregano. Tender perennial treated as annual in UK. Sow indoors now — needs warmth to germinate. Essential in Mediterranean cooking. Dries beautifully.",
+    "sources": [
+      "https://www.rhs.org.uk/herbs/marjoram/grow-your-own"
+    ],
+    "inGround": {
+      "rowSpacingCm": 30,
+      "plantSpacingCm": 25,
+      "sowDepthCm": 0,
+      "bedType": "either",
+      "expectedYieldPerM2": "N/A — harvest as needed",
+      "rotation": "permanent",
+      "feeding": "Light feed in spring. Over-feeding reduces flavour.",
+      "pests": ["aphids"],
+      "diseases": [],
+      "commonProblems": "Not reliably hardy in Surrey winters (H3). Treat as annual or bring indoors over winter. Needs good drainage."
+    },
+    "hardiness": "H3",
+    "soil": {
+      "phRange": [6.5, 7.5],
+      "type": "Light, well-drained",
+      "notes": "Prefers poor to moderate soil — too rich reduces essential oil content. Add grit to clay soils."
+    },
+    "childSafe": true,
+    "petSafe": true,
+    "kidActivity": "Rub leaves between fingers to release the sweet scent — kids love the smell. Good for pizza herb mixes.",
+    "soilTipSurrey": "London Clay is too heavy without amendment. Add generous grit and sharp sand to planting area. Mediterranean herbs need drainage above all else."
   }
 ]

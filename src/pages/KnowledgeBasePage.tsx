@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { usePlantDb } from '../data/use-plant-db';
 import { useCompanionDb } from '../data/use-companion-db';
 import { useRegion } from '../data/use-region';
@@ -6,6 +6,19 @@ import { usePlannerStore } from '../state/planner-store';
 import { PlantDetail } from '../components/plant-palette/PlantDetail';
 import type { Plant, PlantCategory } from '../types/plant';
 import { isInWindow, getMonthName } from '../lib/calendar-utils';
+
+type SortOption = 'a-z' | 'sow-now' | 'fastest' | 'greenstalk' | 'category';
+
+const SORT_OPTIONS: { value: SortOption; label: string }[] = [
+  { value: 'a-z', label: 'A–Z' },
+  { value: 'sow-now', label: 'Sow now first' },
+  { value: 'fastest', label: 'Fastest harvest' },
+  { value: 'greenstalk', label: 'Best for GreenStalk' },
+  { value: 'category', label: 'By category' },
+];
+
+const GS_RANK: Record<string, number> = { ideal: 0, good: 1, marginal: 2, unsuitable: 3 };
+const CAT_RANK: Record<string, number> = { vegetable: 0, legume: 1, herb: 2, fruit: 3, flower: 4, fern: 5 };
 
 const categories: { value: PlantCategory | 'all'; label: string }[] = [
   { value: 'all', label: 'All Plants' },
@@ -125,26 +138,56 @@ export function KnowledgeBasePage() {
   const { companionMap } = useCompanionDb();
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState<PlantCategory | 'all'>('all');
+  const [sortBy, setSortBy] = useState<SortOption>('a-z');
   const [selectedPlant, setSelectedPlant] = useState<Plant | null>(null);
   const childFriendlyMode = usePlannerStore((s) => s.settings.childFriendlyMode ?? false);
 
-  const filtered = (() => {
-    let result = search ? searchPlants(search) : plants;
+  const currentMonth = new Date().getMonth() + 1;
+
+  const filtered = useMemo(() => {
+    let result = search ? searchPlants(search) : [...plants];
     if (category !== 'all') {
       result = result.filter((p) => p.category === category);
     }
-    if (childFriendlyMode) {
-      // Sort safe plants first, unsafe plants last (but still show them with warnings)
-      result = [...result].sort((a, b) => {
+
+    // Apply sort
+    result.sort((a, b) => {
+      // Child-friendly mode always pushes unsafe plants to bottom
+      if (childFriendlyMode) {
         const aUnsafe = a.childSafe === false ? 1 : 0;
         const bUnsafe = b.childSafe === false ? 1 : 0;
-        return aUnsafe - bUnsafe;
-      });
-    }
-    return result;
-  })();
+        if (aUnsafe !== bUnsafe) return aUnsafe - bUnsafe;
+      }
 
-  const currentMonth = new Date().getMonth() + 1;
+      switch (sortBy) {
+        case 'sow-now': {
+          const aSow = isInWindow(currentMonth, a.plantingWindow.sowIndoors) || isInWindow(currentMonth, a.plantingWindow.sowOutdoors) ? 0 : 1;
+          const bSow = isInWindow(currentMonth, b.plantingWindow.sowIndoors) || isInWindow(currentMonth, b.plantingWindow.sowOutdoors) ? 0 : 1;
+          if (aSow !== bSow) return aSow - bSow;
+          return a.commonName.localeCompare(b.commonName);
+        }
+        case 'fastest':
+          return a.daysToHarvest[0] - b.daysToHarvest[0];
+        case 'greenstalk': {
+          const aRank = GS_RANK[a.greenstalkSuitability] ?? 9;
+          const bRank = GS_RANK[b.greenstalkSuitability] ?? 9;
+          if (aRank !== bRank) return aRank - bRank;
+          return a.commonName.localeCompare(b.commonName);
+        }
+        case 'category': {
+          const aCat = CAT_RANK[a.category] ?? 9;
+          const bCat = CAT_RANK[b.category] ?? 9;
+          if (aCat !== bCat) return aCat - bCat;
+          return a.commonName.localeCompare(b.commonName);
+        }
+        case 'a-z':
+        default:
+          return a.commonName.localeCompare(b.commonName);
+      }
+    });
+
+    return result;
+  }, [plants, search, category, sortBy, childFriendlyMode, currentMonth, searchPlants]);
   const childSafeCount = plants.filter((p) => p.childSafe === true).length;
 
   return (
@@ -194,6 +237,17 @@ export function KnowledgeBasePage() {
             </button>
           ))}
         </div>
+        <select
+          value={sortBy}
+          onChange={(e) => setSortBy(e.target.value as SortOption)}
+          className="px-3 py-2 text-xs border border-stone-200 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-700 dark:text-stone-100 focus:outline-none focus:border-stone-400 dark:focus:border-stone-500 sm:ml-auto"
+        >
+          {SORT_OPTIONS.map((opt) => (
+            <option key={opt.value} value={opt.value}>
+              Sort: {opt.label}
+            </option>
+          ))}
+        </select>
       </div>
 
       {/* Mobile card view */}
@@ -245,11 +299,17 @@ export function KnowledgeBasePage() {
         <table className="w-full">
           <thead>
             <tr className="bg-stone-50 dark:bg-stone-700 text-left">
-              <th className="px-4 py-2 text-xs font-medium text-stone-500 dark:text-stone-400">
-                Plant
+              <th
+                className="px-4 py-2 text-xs font-medium text-stone-500 dark:text-stone-400 cursor-pointer hover:text-stone-700 dark:hover:text-stone-200 select-none"
+                onClick={() => setSortBy('a-z')}
+              >
+                Plant {sortBy === 'a-z' && '↓'}
               </th>
-              <th className="px-4 py-2 text-xs font-medium text-stone-500 dark:text-stone-400">
-                Type
+              <th
+                className="px-4 py-2 text-xs font-medium text-stone-500 dark:text-stone-400 cursor-pointer hover:text-stone-700 dark:hover:text-stone-200 select-none"
+                onClick={() => setSortBy('category')}
+              >
+                Type {sortBy === 'category' && '↓'}
               </th>
               <th className="px-4 py-2 text-xs font-medium text-stone-500 dark:text-stone-400">
                 Sun
@@ -257,11 +317,17 @@ export function KnowledgeBasePage() {
               <th className="px-4 py-2 text-xs font-medium text-stone-500 dark:text-stone-400">
                 Water
               </th>
-              <th className="px-4 py-2 text-xs font-medium text-stone-500 dark:text-stone-400">
-                GreenStalk
+              <th
+                className="px-4 py-2 text-xs font-medium text-stone-500 dark:text-stone-400 cursor-pointer hover:text-stone-700 dark:hover:text-stone-200 select-none"
+                onClick={() => setSortBy('greenstalk')}
+              >
+                GreenStalk {sortBy === 'greenstalk' && '↓'}
               </th>
-              <th className="px-4 py-2 text-xs font-medium text-stone-500 dark:text-stone-400">
-                Now
+              <th
+                className="px-4 py-2 text-xs font-medium text-stone-500 dark:text-stone-400 cursor-pointer hover:text-stone-700 dark:hover:text-stone-200 select-none"
+                onClick={() => setSortBy('sow-now')}
+              >
+                Now {sortBy === 'sow-now' && '↓'}
               </th>
             </tr>
           </thead>

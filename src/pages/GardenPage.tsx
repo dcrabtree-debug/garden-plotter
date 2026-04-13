@@ -1648,22 +1648,14 @@ export function GardenPage() {
             />
           )}
 
-          {/* Microclimate zone overlay + floating legend */}
+          {/* Microclimate zone overlay (legend moved below grid) */}
           {showMicroclimate && microclimateGrid && (
-            <>
               <MicroclimateOverlayGrid
                 microclimateGrid={microclimateGrid}
                 cellSize={cellSize}
                 hoveredZone={hoveredMicroclimateZone as any}
                 onHoverZone={(z) => setHoveredMicroclimateZone(z)}
               />
-              <div style={{ transform: counterRotate }}>
-                <MicroclimateLegend
-                  hoveredZone={hoveredMicroclimateZone as any}
-                  onHoverZone={(z) => setHoveredMicroclimateZone(z)}
-                />
-              </div>
-            </>
           )}
 
           {/* GreenStalk tower labels (positioned above grid) */}
@@ -1713,6 +1705,16 @@ export function GardenPage() {
           <span>← {(cols * config.cellSizeM).toFixed(0)}m →</span>
           <span>E (23A)</span>
         </div>
+
+        {/* Microclimate legend — below the grid, not overlapping */}
+        {showMicroclimate && microclimateGrid && (
+          <div className="mt-2" style={{ marginLeft: cellSize * 1.5 }}>
+            <MicroclimateLegend
+              hoveredZone={hoveredMicroclimateZone as any}
+              onHoverZone={(z) => setHoveredMicroclimateZone(z)}
+            />
+          </div>
+        )}
 
         {/* Rich tooltip on hover */}
         {hoveredCell && (() => {

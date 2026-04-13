@@ -308,7 +308,7 @@ export function MicroclimateOverlayGrid({ microclimateGrid, cellSize, hoveredZon
   );
 }
 
-// ── Floating legend overlay — positioned over the map ──
+// ── Legend — rendered below the grid in normal flow ──
 
 export function MicroclimateLegend({
   hoveredZone,
@@ -323,39 +323,36 @@ export function MicroclimateLegend({
   ];
 
   return (
-    <div className="absolute top-2 right-2 z-20 bg-white/95 dark:bg-stone-800/95 backdrop-blur-sm rounded-xl border border-stone-200 dark:border-stone-700 shadow-lg p-3 max-w-[200px]">
-      <h3 className="text-[11px] font-bold text-stone-700 dark:text-stone-200 mb-1.5">
-        Microclimate Zones
-      </h3>
-      <div className="space-y-1">
+    <div className="bg-white/95 dark:bg-stone-800/95 backdrop-blur-sm rounded-xl border border-stone-200 dark:border-stone-700 shadow-sm p-3">
+      <div className="flex items-center gap-3 flex-wrap">
+        <h3 className="text-[11px] font-bold text-stone-700 dark:text-stone-200 shrink-0">
+          Microclimate Zones
+        </h3>
         {displayZones.map((zone) => (
           <div
             key={zone}
-            className={`flex items-start gap-1.5 cursor-pointer rounded-lg px-1.5 py-1 transition-colors ${
+            className={`relative flex items-center gap-1.5 cursor-pointer rounded-lg px-1.5 py-1 transition-colors ${
               hoveredZone === zone ? 'bg-stone-100 dark:bg-stone-700' : ''
             }`}
             onMouseEnter={() => onHoverZone(zone)}
             onMouseLeave={() => onHoverZone(null)}
           >
             <span
-              className="w-2.5 h-2.5 rounded-sm mt-0.5 shrink-0"
+              className="w-2.5 h-2.5 rounded-sm shrink-0"
               style={{ backgroundColor: ZONE_COLORS[zone].replace(/\d{2}$/, 'ff') }}
             />
-            <div className="min-w-0">
-              <div className="text-[10px] font-medium text-stone-700 dark:text-stone-200 leading-tight">
-                {ZONE_LABELS[zone]}
+            <span className="text-[10px] font-medium text-stone-700 dark:text-stone-200 whitespace-nowrap">
+              {ZONE_LABELS[zone]}
+            </span>
+            {hoveredZone === zone && (
+              <div
+                className="absolute left-0 top-full mt-1 bg-stone-900/90 text-white text-[9px] px-2 py-1.5 rounded-md shadow-lg whitespace-nowrap z-30"
+              >
+                {ZONE_ADVICE[zone]}
               </div>
-              {hoveredZone === zone && (
-                <div className="text-[8px] text-stone-400 leading-snug mt-0.5">
-                  {ZONE_ADVICE[zone]}
-                </div>
-              )}
-            </div>
+            )}
           </div>
         ))}
-      </div>
-      <div className="mt-2 pt-1.5 border-t border-stone-200 dark:border-stone-700 text-[8px] text-stone-400 leading-snug">
-        Hover a zone for planting advice. Grey = neutral conditions.
       </div>
     </div>
   );

@@ -16,7 +16,8 @@ export function usePlantDb(region: 'uk' | 'us' = 'uk') {
       return;
     }
 
-    const paths = ['/data/plants-us.json', '/garden-plotter/data/plants-us.json'];
+    const base = import.meta.env.BASE_URL || '/';
+    const paths = [`${base}data/plants-us.json`];
 
     async function tryFetch() {
       for (const path of paths) {

@@ -136,8 +136,9 @@ export function useSeedLinks(
     }
 
     const file = fileForContext(region, context);
+    const base = import.meta.env.BASE_URL || '/';
     const paths = [
-      `/data/${file}`, `/garden-plotter/data/${file}`,
+      `${base}data/${file}`,
     ];
 
     async function tryFetch() {

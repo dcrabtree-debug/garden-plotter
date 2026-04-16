@@ -38,9 +38,25 @@ export function PlantPalette({ plants, onSelectPlant, onInfoClick, activePlantSl
   const [category, setCategory] = useState<PlantCategory | 'all'>('all');
   const [sortMode, setSortMode] = useState<SortMode>(context === 'greenstalk' ? 'best-fit' : 'a-z');
   const [tierFilter, setTierFilter] = useState<number | null>(null);
+  // GreenStalk-only: hide plants rated marginal/unsuitable by default
+  // so the palette isn't cluttered with things that won't work in a tower.
+  // Garden (in-ground) context shows everything since suitability differs.
+  const [showUnsuitable, setShowUnsuitable] = useState(false);
+
+  const hiddenUnsuitableCount = useMemo(() => {
+    if (context !== 'greenstalk') return 0;
+    return plants.filter(
+      (p) => p.greenstalkSuitability === 'marginal' || p.greenstalkSuitability === 'unsuitable'
+    ).length;
+  }, [plants, context]);
 
   const filtered = useMemo(() => {
     let result = plants;
+    if (context === 'greenstalk' && !showUnsuitable) {
+      result = result.filter(
+        (p) => p.greenstalkSuitability === 'ideal' || p.greenstalkSuitability === 'good'
+      );
+    }
     if (category !== 'all') {
       result = result.filter((p) => p.category === category);
     }
@@ -168,6 +184,22 @@ export function PlantPalette({ plants, onSelectPlant, onInfoClick, activePlantSl
           <div className="text-center text-sm text-stone-400 py-8">
             No plants match your search
           </div>
+        )}
+        {context === 'greenstalk' && !showUnsuitable && hiddenUnsuitableCount > 0 && (
+          <button
+            onClick={() => setShowUnsuitable(true)}
+            className="w-full mt-2 py-1.5 text-[10px] text-stone-400 hover:text-stone-600 dark:hover:text-stone-300 border border-dashed border-stone-200 dark:border-stone-700 rounded transition-colors"
+          >
+            Show {hiddenUnsuitableCount} plant{hiddenUnsuitableCount === 1 ? '' : 's'} not suited to GreenStalk
+          </button>
+        )}
+        {context === 'greenstalk' && showUnsuitable && (
+          <button
+            onClick={() => setShowUnsuitable(false)}
+            className="w-full mt-2 py-1.5 text-[10px] text-stone-400 hover:text-stone-600 dark:hover:text-stone-300 border border-dashed border-stone-200 dark:border-stone-700 rounded transition-colors"
+          >
+            Hide unsuitable plants
+          </button>
         )}
       </div>
       <div className="p-2 border-t border-stone-200 dark:border-stone-700 text-[10px] text-stone-400 text-center">

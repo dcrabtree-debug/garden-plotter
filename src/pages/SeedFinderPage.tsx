@@ -7,6 +7,7 @@ import { useGardenStore } from '../state/garden-store';
 import { getMonthName, isInWindow } from '../lib/calendar-utils';
 import type { Plant } from '../types/plant';
 import { getUKExpertKnowledge } from '../data/expert-uk-knowledge';
+import { GEAR_ARRIVES } from '../lib/priority-tasks';
 
 /**
  * Count expert endorsements for a plant — used to sort the SeedFinder plant
@@ -473,7 +474,29 @@ export function SeedFinderPage() {
       bestSeller: string;
       bestUrl: string;
       buyAs: string;
+      urgency: 'last-chance' | 'late-for-gear' | 'good-to-go' | null;
+      urgencyNote: string | null;
     }[] = [];
+
+    // ── Date helpers for urgency badges ────────────────────────────────────
+    const now = new Date();
+    const daysUntilGear = Math.max(
+      0,
+      Math.floor((GEAR_ARRIVES.getTime() - now.getTime()) / (1000 * 60 * 60 * 24))
+    );
+    const daysLeftInSowWindow = (window: [number, number] | null): number | null => {
+      if (!window) return null;
+      // Cross-year window (e.g., Nov–Feb) — treat as always open if currently inside
+      const m = now.getMonth() + 1;
+      if (!isInWindow(m, window)) return null;
+      // Compute last day of the window's end month
+      const endMonth = window[1];
+      const year = endMonth >= m ? now.getFullYear() : now.getFullYear() + 1;
+      const endDate = new Date(year, endMonth, 0); // day 0 of next month = last day of endMonth
+      endDate.setHours(23, 59, 59, 999);
+      const diff = Math.floor((endDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
+      return Math.max(0, diff);
+    };
 
     for (const slug of allSlugs) {
       const plant = plants.find((p) => p.slug === slug);
@@ -538,7 +561,35 @@ export function SeedFinderPage() {
         }
       }
 
-      items.push({ slug, plant, gsQty, igQty, totalQty, source, seedProduct: sp, bestPrice, bestSeller, bestUrl, buyAs });
+      // ── Urgency — "last chance to sow" + gear-arrival awareness ────────
+      let urgency: 'last-chance' | 'late-for-gear' | 'good-to-go' | null = null;
+      let urgencyNote: string | null = null;
+      if (plant && !buyAs.startsWith('🪴') && !buyAs.startsWith('🌿') && !buyAs.startsWith('⏰') && !buyAs.startsWith('🍓')) {
+        // Only show urgency if we're still recommending seed
+        const pw = plant.plantingWindow;
+        const indoorsLeft = daysLeftInSowWindow(pw.sowIndoors);
+        const outdoorsLeft = daysLeftInSowWindow(pw.sowOutdoors);
+        const shortest = [indoorsLeft, outdoorsLeft].filter((v): v is number => v !== null).sort((a, b) => a - b)[0];
+
+        if (shortest !== undefined && shortest <= 14) {
+          urgency = 'last-chance';
+          urgencyNote = `${shortest}d left to sow`;
+        } else if (daysUntilGear > 0 && plant.daysToHarvest[0] > 60 && indoorsLeft !== null) {
+          // Seeds need ~6 weeks to be transplant-ready.
+          // If gear arrives after transplant-readiness, great. If before, also great.
+          // Flag only if seed sown NOW wouldn't be transplant-ready by a practical window.
+          const daysToTransplantReady = 42; // ~6 weeks from indoor sow
+          if (daysToTransplantReady > daysUntilGear + 14) {
+            // Seeds would still be indoors when gear's been sitting idle for 2+ weeks — fine
+          } else if (daysToTransplantReady < daysUntilGear - 21) {
+            // Seeds would be transplant-ready 3+ weeks before gear arrives — buy as plug instead
+            urgency = 'late-for-gear';
+            urgencyNote = `Seeds ready before gear arrives (${daysUntilGear}d)`;
+          }
+        }
+      }
+
+      items.push({ slug, plant, gsQty, igQty, totalQty, source, seedProduct: sp, bestPrice, bestSeller, bestUrl, buyAs, urgency, urgencyNote });
     }
 
     // Sort: plants with pricing first, then by total quantity desc
@@ -767,7 +818,23 @@ export function SeedFinderPage() {
                         {item.totalQty}
                       </td>
                       <td className="px-2 py-1.5 text-[10px] text-stone-500 dark:text-stone-400 hidden sm:table-cell">
-                        {item.buyAs}
+                        <div>{item.buyAs}</div>
+                        {item.urgency === 'last-chance' && (
+                          <div
+                            className="mt-0.5 inline-block text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300"
+                            title={item.urgencyNote ?? undefined}
+                          >
+                            ⏰ Last chance
+                          </div>
+                        )}
+                        {item.urgency === 'late-for-gear' && (
+                          <div
+                            className="mt-0.5 inline-block text-[9px] font-bold px-1.5 py-0.5 rounded bg-rose-100 dark:bg-rose-900/40 text-rose-700 dark:text-rose-300"
+                            title={item.urgencyNote ?? undefined}
+                          >
+                            📦 Buy plug instead
+                          </div>
+                        )}
                       </td>
                       <td className="px-2 py-1.5">
                         {item.bestSeller ? (

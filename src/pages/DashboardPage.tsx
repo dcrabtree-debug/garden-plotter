@@ -1113,6 +1113,64 @@ export function DashboardPage({ onNavigate }: { onNavigate?: (tab: string, view?
                 );
               })}
             </div>
+            {(() => {
+              // Actionable advice line — picks the most urgent situation.
+              // Priority: hard frost > frost risk > heavy rain > heat > dry warm > perfect > default.
+              const days = forecast.days;
+              if (days.length === 0) return null;
+              const hardFrostDay = days.find((d) => d.minTemp <= 0);
+              const frostDay = days.find((d) => d.minTemp > 0 && d.minTemp <= 3);
+              const heavyRainDay = days.find((d) => d.precipMm > 10);
+              const moderateRainDay = days.find((d) => d.precipMm > 5);
+              const hotDays = days.filter((d) => d.maxTemp > 25).length;
+              const sunnyDry = days.filter((d) => d.maxTemp >= 15 && d.precipMm < 1).length;
+              const windyDay = days.find((d) => d.maxGustKph > 50);
+
+              type Tone = 'warn' | 'info' | 'good';
+              let advice: { tone: Tone; text: string } | null = null;
+
+              const labelFor = (iso: string) => {
+                const d = new Date(iso);
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                const tomorrow = new Date(today);
+                tomorrow.setDate(tomorrow.getDate() + 1);
+                if (d.toDateString() === today.toDateString()) return 'tonight';
+                if (d.toDateString() === tomorrow.toDateString()) return 'tomorrow night';
+                return d.toLocaleDateString('en-GB', { weekday: 'long' }) + ' night';
+              };
+
+              if (hardFrostDay) {
+                advice = { tone: 'warn', text: `Hard frost ${labelFor(hardFrostDay.date)} (${hardFrostDay.minTemp.toFixed(0)}°C). Cover tender plants with fleece or move pots inside.` };
+              } else if (frostDay) {
+                advice = { tone: 'warn', text: `Frost risk ${labelFor(frostDay.date)} (${frostDay.minTemp.toFixed(0)}°C). Cover tender plants with fleece.` };
+              } else if (heavyRainDay) {
+                advice = { tone: 'info', text: `Heavy rain ${new Date(heavyRainDay.date).toLocaleDateString('en-GB', { weekday: 'long' })} (${heavyRainDay.precipMm.toFixed(0)}mm). Skip watering, check drainage on GreenStalks.` };
+              } else if (hotDays >= 2) {
+                advice = { tone: 'warn', text: `🌡️ Hot spell ahead (${hotDays} days > 25°C). Water GreenStalks twice daily, shade lettuce and spinach.` };
+              } else if (windyDay) {
+                advice = { tone: 'warn', text: `💨 Windy ${new Date(windyDay.date).toLocaleDateString('en-GB', { weekday: 'long' })} (gusts ${windyDay.maxGustKph.toFixed(0)} km/h). Stake tall plants, secure pots.` };
+              } else if (moderateRainDay) {
+                advice = { tone: 'info', text: `Rain ${new Date(moderateRainDay.date).toLocaleDateString('en-GB', { weekday: 'long' })} — nature's watering day, skip the watering can.` };
+              } else if (sunnyDry >= 3) {
+                advice = { tone: 'good', text: '☀️ Perfect planting weather this week. Great time to sow outdoors or transplant.' };
+              } else {
+                advice = { tone: 'good', text: 'Steady growing weather. Keep an eye on soil moisture; water if the top 2cm feels dry.' };
+              }
+
+              const toneClass =
+                advice.tone === 'warn'
+                  ? 'text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-900/20 border-amber-200 dark:border-amber-800/50'
+                  : advice.tone === 'info'
+                  ? 'text-sky-700 dark:text-sky-300 bg-sky-50 dark:bg-sky-900/20 border-sky-200 dark:border-sky-800/50'
+                  : 'text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-900/20 border-emerald-200 dark:border-emerald-800/50';
+
+              return (
+                <div className={`mt-2 text-[11px] font-medium px-2.5 py-1.5 rounded-lg border ${toneClass}`}>
+                  {advice.text}
+                </div>
+              );
+            })()}
           </div>
         )}
 

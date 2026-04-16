@@ -694,24 +694,42 @@ function BadgesSection() {
         </div>
       )}
 
-      {/* Locked badges with progress */}
+      {/* Locked badges with progress — show "X/Y" count so kids see a target */}
       <div className="grid grid-cols-2 gap-2">
-        {locked.map((badge) => (
-          <div
-            key={badge.id}
-            className="flex items-center gap-2 px-2.5 py-2 rounded-xl bg-stone-800/50 border border-stone-700/50 opacity-60"
-          >
-            <span className="text-lg grayscale">{badge.emoji}</span>
-            <div className="flex-1 min-w-0">
-              <div className="text-[10px] font-medium text-stone-400">{badge.name}</div>
-              {badge.progress !== undefined && badge.target && (
-                <div className="h-1 bg-stone-700 rounded-full mt-0.5 overflow-hidden">
-                  <div className="h-full bg-stone-500 rounded-full" style={{ width: `${badge.progress * 100}%` }} />
+        {locked.map((badge) => {
+          const current =
+            badge.progress !== undefined && badge.target
+              ? Math.round(badge.progress * badge.target)
+              : null;
+          return (
+            <div
+              key={badge.id}
+              className="flex items-center gap-2 px-2.5 py-2 rounded-xl bg-stone-800/50 border border-stone-700/50 opacity-60"
+            >
+              <span className="text-lg grayscale">{badge.emoji}</span>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center justify-between gap-1">
+                  <div className="text-[10px] font-medium text-stone-400 truncate">{badge.name}</div>
+                  {current !== null && badge.target && (
+                    <div className="text-[9px] font-bold text-stone-300 tabular-nums shrink-0">
+                      {current}/{badge.target}
+                    </div>
+                  )}
                 </div>
-              )}
+                {badge.progress !== undefined && badge.target && (
+                  <div className="h-1 bg-stone-700 rounded-full mt-0.5 overflow-hidden">
+                    <div
+                      className={`h-full rounded-full ${
+                        badge.progress >= 0.5 ? 'bg-amber-400' : 'bg-stone-500'
+                      }`}
+                      style={{ width: `${badge.progress * 100}%` }}
+                    />
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );

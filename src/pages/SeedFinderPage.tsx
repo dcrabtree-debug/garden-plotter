@@ -6,6 +6,23 @@ import { usePlannerStore } from '../state/planner-store';
 import { useGardenStore } from '../state/garden-store';
 import { getMonthName, isInWindow } from '../lib/calendar-utils';
 import type { Plant } from '../types/plant';
+import { getUKExpertKnowledge } from '../data/expert-uk-knowledge';
+
+/**
+ * Count expert endorsements for a plant — used to sort the SeedFinder plant
+ * list so crops with the most UK expert backing (RHS AGM awards + named
+ * varieties + attributed tips) bubble to the top within each timing tier.
+ */
+function computeExpertScore(slug: string): { score: number; agmCount: number; tipCount: number; varietyCount: number } {
+  const uk = getUKExpertKnowledge(slug);
+  if (!uk) return { score: 0, agmCount: 0, tipCount: 0, varietyCount: 0 };
+  const agmCount = uk.ukVarieties.filter((v) => v.expert === 'AGM').length;
+  const tipCount = uk.tips.length;
+  const varietyCount = uk.ukVarieties.length;
+  // AGM awards weighted heaviest (peer-reviewed UK trial winners), then tips, then any named variety.
+  const score = agmCount * 5 + tipCount * 1 + varietyCount * 1;
+  return { score, agmCount, tipCount, varietyCount };
+}
 
 type BuyTiming = 'buy-now' | 'buy-soon' | 'not-yet';
 
@@ -51,6 +68,7 @@ const SUPPLIES: Supply[] = [
   { id: 'watering-can', emoji: '🚿', name: 'Watering can with fine rose (9L)', reason: 'GreenStalks need daily watering. A fine rose avoids washing out seeds.', specific: 'Haws or similar long-reach can — fill the top reservoir, not individual pockets', price: '~£12-20', phases: ['setup'] },
   // LATE SEASON
   { id: 'green-manure', emoji: '🌿', name: 'Green manure seeds (crimson clover or phacelia)', reason: 'Sow on bare beds after harvest to fix nitrogen and protect soil over winter.', specific: 'Crimson clover for nitrogen; phacelia for pollinators + soil structure', price: '~£4-6', phases: ['late'] },
+  { id: 'straw-bale', emoji: '🌾', name: 'Straw bale (for mulching)', reason: 'Mulch paths and beds to suppress weeds, retain moisture, and build soil. Central to no-dig method.', specific: 'Barley or wheat straw — NOT hay (too many weed seeds). Available at Squire\'s or local farm shop.', price: '~£5-8', phases: ['setup', 'growing'] },
 ];
 
 // ─── Essentials: the must-have crops by context ──────────────────────────────
@@ -278,6 +296,7 @@ function SeedCard({
   seedProduct,
   sellerInfo,
   essentialReason,
+  essentialRank,
 }: {
   plant: Plant;
   timing: BuyTiming;
@@ -285,6 +304,7 @@ function SeedCard({
   seedProduct: SeedProduct | null;
   sellerInfo: Record<string, { name: string; badge: string; note: string }>;
   essentialReason?: string;
+  essentialRank?: number;
 }) {
   const [showVarieties, setShowVarieties] = useState(false);
   const varieties = seedProduct?.varieties ?? [];
@@ -317,6 +337,35 @@ function SeedCard({
                 BUY SOON
               </span>
             )}
+            {essentialRank !== undefined && essentialRank >= 0 && (
+              <span className="text-[9px] px-2 py-0.5 bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 rounded-full font-bold shrink-0">
+                #{essentialRank + 1} Expert Pick
+              </span>
+            )}
+            {(() => {
+              const score = computeExpertScore(plant.slug);
+              if (score.agmCount === 0 && score.tipCount === 0) return null;
+              return (
+                <>
+                  {score.agmCount > 0 && (
+                    <span
+                      className="text-[9px] px-2 py-0.5 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 rounded-full font-bold shrink-0"
+                      title={`${score.agmCount} RHS Award of Garden Merit variet${score.agmCount === 1 ? 'y' : 'ies'} recommended`}
+                    >
+                      🏆 {score.agmCount} AGM
+                    </span>
+                  )}
+                  {score.tipCount > 0 && (
+                    <span
+                      className="text-[9px] px-2 py-0.5 bg-stone-100 dark:bg-stone-700/40 text-stone-600 dark:text-stone-400 rounded-full font-medium shrink-0"
+                      title={`${score.tipCount} UK expert tip${score.tipCount === 1 ? '' : 's'}`}
+                    >
+                      🇬🇧 {score.tipCount} tips
+                    </span>
+                  )}
+                </>
+              );
+            })()}
           </div>
           <p className="text-xs text-stone-500 mt-0.5">{reason}</p>
           {essentialReason && (
@@ -368,7 +417,7 @@ export function SeedFinderPage() {
   const sellerInfo = isUS ? SELLER_INFO_US : SELLER_INFO_UK;
   const currentMonth = new Date().getMonth() + 1;
   const [selectedMonth, setSelectedMonth] = useState(currentMonth);
-  const [filter, setFilter] = useState<'shopping-list' | 'essentials' | 'all' | 'buy-now' | 'buy-soon'>('shopping-list');
+  const [filter, setFilter] = useState<'essentials' | 'all' | 'buy-now' | 'buy-soon'>('essentials');
 
   // Pick the right essentials list
   const essentialsDefs = useMemo(() => {
@@ -517,23 +566,30 @@ export function SeedFinderPage() {
         const order: Record<BuyTiming, number> = { 'buy-now': 0, 'buy-soon': 1, 'not-yet': 2 };
         const timingDiff = order[a.timing] - order[b.timing];
         if (timingDiff !== 0) return timingDiff;
-        // Secondary: plants with seed data first (actionable)
+        // Secondary: hardcoded essentials rank (explicit editorial picks)
+        const aRank = essentialsDefs.findIndex((e) => e.slug === a.plant.slug);
+        const bRank = essentialsDefs.findIndex((e) => e.slug === b.plant.slug);
+        const aEssential = aRank >= 0 ? aRank : 999;
+        const bEssential = bRank >= 0 ? bRank : 999;
+        if (aEssential !== bEssential) return aEssential - bEssential;
+        // Tertiary: UK expert endorsement score (AGM + tips + named varieties)
+        const aExpert = computeExpertScore(a.plant.slug).score;
+        const bExpert = computeExpertScore(b.plant.slug).score;
+        if (aExpert !== bExpert) return bExpert - aExpert; // higher score first
+        // Quaternary: plants with seed data first (actionable)
         const aHas = a.seedProduct ? 0 : 1;
         const bHas = b.seedProduct ? 0 : 1;
         if (aHas !== bHas) return aHas - bHas;
-        // Tertiary: alphabetical
+        // Quinary: alphabetical
         return a.plant.commonName.localeCompare(b.plant.commonName);
       });
   }, [plants, selectedMonth, seedLinks]);
 
-  const shoppingListSlugs = useMemo(() => new Set(shoppingList.items.map((i) => i.slug)), [shoppingList.items]);
-
   const filtered = useMemo(() => {
-    if (filter === 'shopping-list') return plantsWithTiming.filter((p) => shoppingListSlugs.has(p.plant.slug));
     if (filter === 'essentials') return plantsWithTiming.filter((p) => essentialSlugs.has(p.plant.slug));
     if (filter === 'all') return plantsWithTiming;
     return plantsWithTiming.filter((p) => p.timing === filter);
-  }, [plantsWithTiming, filter, essentialSlugs, shoppingListSlugs]);
+  }, [plantsWithTiming, filter, essentialSlugs]);
 
   const buyNowCount = plantsWithTiming.filter((p) => p.timing === 'buy-now').length;
   const buySoonCount = plantsWithTiming.filter((p) => p.timing === 'buy-soon').length;
@@ -591,14 +647,6 @@ export function SeedFinderPage() {
           </div>
 
           <div className="flex gap-1.5 flex-wrap">
-            <button
-              onClick={() => setFilter('shopping-list')}
-              className={`text-xs px-3 py-1.5 rounded-lg font-bold ${
-                filter === 'shopping-list' ? 'bg-violet-600 text-white shadow-sm' : 'bg-violet-50 dark:bg-violet-900/20 text-violet-700 dark:text-violet-400'
-              }`}
-            >
-              🛒 My List ({shoppingList.totalItems})
-            </button>
             <button
               onClick={() => setFilter('essentials')}
               className={`text-xs px-3 py-1.5 rounded-lg font-medium ${
@@ -662,12 +710,8 @@ export function SeedFinderPage() {
           </div>
         )}
 
-        {/* Desktop 2-column layout: sidebar (list + supplies) + plant cards */}
-        <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] lg:gap-6 min-w-0">
-        <div className="lg:space-y-5">
-
-        {/* Shopping list summary */}
-        {filter === 'shopping-list' && shoppingList.items.length > 0 && (
+        {/* ═══ MY SHOPPING LIST — always visible hero card ═══ */}
+        {shoppingList.items.length > 0 && (
           <div className="bg-gradient-to-br from-violet-50 to-indigo-50 dark:from-violet-900/20 dark:to-indigo-900/20 rounded-2xl border border-violet-200 dark:border-violet-800/40 p-4 sm:p-5 mb-5 lg:mb-0">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
               <div>
@@ -767,13 +811,9 @@ export function SeedFinderPage() {
           </div>
         )}
 
-        {filter === 'shopping-list' && shoppingList.items.length === 0 && (
-          <div className="text-center py-12 text-stone-400">
-            <div className="text-4xl mb-3">🛒</div>
-            <p>No plants in your plan yet.</p>
-            <p className="text-xs mt-1">Place plants on the GreenStalk or Garden page, then come back here for your shopping list.</p>
-          </div>
-        )}
+        {/* Desktop 2-column layout: supplies sidebar + plant cards */}
+        <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] lg:gap-6 min-w-0">
+        <div className="lg:space-y-5">
 
         {/* ── Supplies & Equipment ─────────────────────────────────── */}
         <div className="bg-white dark:bg-stone-800 rounded-2xl border border-stone-200 dark:border-stone-700 overflow-hidden mb-5 lg:mb-0">
@@ -792,6 +832,9 @@ export function SeedFinderPage() {
                   <p className="text-[10px] text-stone-500 dark:text-stone-400 mt-0.5">{supply.reason}</p>
                   {supply.specific && (
                     <p className="text-[10px] text-emerald-600 dark:text-emerald-400 mt-0.5 font-medium">{supply.specific}</p>
+                  )}
+                  {!isUS && ['compost', 'perlite', 'seed-trays', 'slow-release', 'fleece', 'netting', 'straw-bale', 'watering-can'].includes(supply.id) && (
+                    <p className="text-[9px] text-teal-600 dark:text-teal-400 mt-0.5">Also at Squire's Hersham or RHS Wisley</p>
                   )}
                 </div>
                 <div className="shrink-0 flex flex-col items-end gap-1">
@@ -823,7 +866,8 @@ export function SeedFinderPage() {
               reason={reason}
               seedProduct={seedProduct}
               sellerInfo={sellerInfo}
-              essentialReason={filter === 'essentials' ? essentialReasonMap.get(plant.slug) : undefined}
+              essentialReason={essentialReasonMap.get(plant.slug)}
+              essentialRank={essentialsDefs.findIndex((e) => e.slug === plant.slug)}
             />
           ))}
         </div>

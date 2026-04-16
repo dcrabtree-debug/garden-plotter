@@ -125,6 +125,155 @@ export function shadowProjection(
   return { length, direction };
 }
 
+// ─── Obstacle-based shadow for garden grid ──────────────────────────────────
+
+/** A shadow obstacle relative to the garden's coordinate system */
+export interface GardenObstacle {
+  id: string;
+  heightM: number;
+  /** Compass bearing FROM the garden center TO the obstacle (0=N, 90=E, 180=S, 270=W) */
+  bearingDeg: number;
+  /** Distance from obstacle to nearest garden edge, in metres */
+  distanceM: number;
+  /** Angular width of obstacle as seen from garden centre, in degrees */
+  widthDeg: number;
+}
+
+/**
+ * Pre-configured obstacles for 21 Esher Avenue garden.
+ * Based on handoff photos and shadow-engine.ts verified data.
+ */
+export const ESHER_OBSTACLES: GardenObstacle[] = [
+  {
+    id: 'laurel-hedge',
+    heightM: 3.5,
+    bearingDeg: 315,   // NW of garden
+    distanceM: 3,
+    widthDeg: 59,      // atan2(5, 3) ≈ 59° — wide 10m hedge at 3m
+  },
+  {
+    id: 'house',
+    heightM: 7,
+    bearingDeg: 135,   // SE of garden (house behind)
+    distanceM: 8,
+    widthDeg: 27,      // atan2(4, 8) — 8m wide wall at 8m distance
+  },
+  {
+    id: 'rhododendron',
+    heightM: 3,
+    bearingDeg: 270,   // W of garden
+    distanceM: 3,
+    widthDeg: 27,      // 3m bush at 3m
+  },
+  {
+    id: 'neighbour-trees',
+    heightM: 15,
+    bearingDeg: 0,     // N — behind back fence
+    distanceM: 5,
+    widthDeg: 39,      // 8m canopy at 5m
+  },
+  {
+    id: 'right-fence',
+    heightM: 1.8,
+    bearingDeg: 90,    // E fence
+    distanceM: 0.5,
+    widthDeg: 84,      // 10m fence at 0.5m — very wide angle
+  },
+  {
+    id: 'cordylines',
+    heightM: 2.5,
+    bearingDeg: 90,    // E — along fence
+    distanceM: 0.3,
+    widthDeg: 79,      // 3m spread at 0.3m
+  },
+];
+
+/**
+ * Check if an obstacle blocks the sun from reaching a specific cell.
+ * Uses the same algorithm as shadow-engine.ts isInShadow().
+ */
+function isObstacleBlocking(
+  obstacle: GardenObstacle,
+  sunElevation: number,
+  sunAzimuth: number,
+  cellDistanceFromObstacle: number,
+): boolean {
+  if (sunElevation <= 0) return false;
+
+  const shadowLength = obstacle.heightM / Math.tan(sunElevation * DEG);
+
+  // Sun must be roughly behind the obstacle (from cell's perspective)
+  let angleDiff = Math.abs(sunAzimuth - obstacle.bearingDeg);
+  if (angleDiff > 180) angleDiff = 360 - angleDiff;
+
+  const halfWidth = obstacle.widthDeg / 2;
+  return angleDiff < halfWidth && shadowLength >= cellDistanceFromObstacle;
+}
+
+/**
+ * Calculate real-time shadow grid using obstacle-based approach.
+ * Each cell is checked against all obstacles for the given sun position.
+ */
+export function calculateObstacleShadowGrid(
+  widthCells: number,
+  depthCells: number,
+  cellSizeM: number,
+  gardenFacing: string,
+  obstacles: GardenObstacle[],
+  sunElev: number,
+  sunAz: number,
+): boolean[][] {
+  const grid: boolean[][] = Array.from({ length: depthCells }, () =>
+    new Array(widthCells).fill(false)
+  );
+
+  if (sunElev <= 0) {
+    // Sun below horizon — everything in shadow
+    return grid.map(row => row.map(() => true));
+  }
+
+  const gardenAngle = facingAngle(gardenFacing);
+  const gardenWidthM = widthCells * cellSizeM;
+  const gardenDepthM = depthCells * cellSizeM;
+
+  for (let row = 0; row < depthCells; row++) {
+    for (let col = 0; col < widthCells; col++) {
+      const cx = (col + 0.5) * cellSizeM;
+      const cy = (row + 0.5) * cellSizeM;
+
+      for (const obs of obstacles) {
+        // Estimate distance from this cell to the obstacle.
+        // Obstacles at different bearings affect cells differently based on position.
+        // For boundary obstacles (fences, hedges), cells closer to that edge are closer.
+        const relBearing = ((obs.bearingDeg - gardenAngle + 360) % 360);
+
+        let cellDist = obs.distanceM;
+        // Adjust distance based on cell position relative to obstacle direction
+        if (relBearing >= 315 || relBearing < 45) {
+          // Obstacle to "back" (row 0 side) — cells further from row 0 are further away
+          cellDist += cy;
+        } else if (relBearing >= 45 && relBearing < 135) {
+          // Obstacle to "right" side — cells further from right edge are further away
+          cellDist += (gardenWidthM - cx);
+        } else if (relBearing >= 135 && relBearing < 225) {
+          // Obstacle to "front" (high row side) — cells further from bottom are further
+          cellDist += (gardenDepthM - cy);
+        } else {
+          // Obstacle to "left" side — cells further from left edge are further away
+          cellDist += cx;
+        }
+
+        if (isObstacleBlocking(obs, sunElev, sunAz, cellDist)) {
+          grid[row][col] = true;
+          break; // no need to check more obstacles
+        }
+      }
+    }
+  }
+
+  return grid;
+}
+
 // Garden facing angle conversion
 const FACING_ANGLES: Record<string, number> = {
   N: 0, NE: 45, E: 90, SE: 135,

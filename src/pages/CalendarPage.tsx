@@ -3,6 +3,7 @@ import { usePlannerStore } from '../state/planner-store';
 import { useGardenStore } from '../state/garden-store';
 import { usePlantDb } from '../data/use-plant-db';
 import { useRegion } from '../data/use-region';
+import { SeasonalTimeline } from '../components/SeasonalTimeline';
 import {
   getMonthName,
   isInWindow,
@@ -10,6 +11,9 @@ import {
   SURREY_LAST_FROST_MONTH,
   SURREY_FIRST_FROST_MONTH,
 } from '../lib/calendar-utils';
+
+// Note: "What to do now" / monthly actions have moved to the Dashboard to-do list
+// and the Care page. This page focuses on the year-at-a-glance visualisation.
 
 const MONTHS = Array.from({ length: 12 }, (_, i) => i + 1);
 
@@ -80,71 +84,6 @@ export function CalendarPage() {
     .filter(Boolean)
     .sort((a, b) => a!.commonName.localeCompare(b!.commonName));
 
-  // Grouped actions for this month
-  interface CalendarAction {
-    emoji: string;
-    name: string;
-    timing: 'last-chance' | 'all-month' | 'just-started';
-  }
-
-  interface ActionGroup {
-    id: string;
-    title: string;
-    icon: string;
-    headingClass: string;
-    chipClass: string;
-    actions: CalendarAction[];
-  }
-
-  const actionGroups = useMemo(() => {
-    const sowIndoors: CalendarAction[] = [];
-    const sowOutdoors: CalendarAction[] = [];
-    const transplant: CalendarAction[] = [];
-    const harvest: CalendarAction[] = [];
-    const comingNext: CalendarAction[] = [];
-    const nextMonth = currentMonth === 12 ? 1 : currentMonth + 1;
-
-    const getTiming = (w: [number, number] | null): 'last-chance' | 'all-month' | 'just-started' => {
-      if (!w) return 'all-month';
-      if (currentMonth === w[1]) return 'last-chance';
-      if (currentMonth === w[0]) return 'just-started';
-      return 'all-month';
-    };
-
-    for (const plant of plantedPlants) {
-      if (!plant) continue;
-      const pw = plant.plantingWindow;
-      const base = { emoji: plant.emoji, name: plant.commonName };
-
-      if (isInWindow(currentMonth, pw.sowIndoors)) sowIndoors.push({ ...base, timing: getTiming(pw.sowIndoors) });
-      if (isInWindow(currentMonth, pw.sowOutdoors)) sowOutdoors.push({ ...base, timing: getTiming(pw.sowOutdoors) });
-      if (isInWindow(currentMonth, pw.transplant)) transplant.push({ ...base, timing: getTiming(pw.transplant) });
-      if (isInWindow(currentMonth, pw.harvest)) harvest.push({ ...base, timing: getTiming(pw.harvest) });
-
-      if (!isInWindow(currentMonth, pw.sowIndoors) && isInWindow(nextMonth, pw.sowIndoors)) comingNext.push({ ...base, timing: 'all-month' });
-      if (!isInWindow(currentMonth, pw.transplant) && isInWindow(nextMonth, pw.transplant)) comingNext.push({ ...base, timing: 'all-month' });
-    }
-
-    const sortByUrgency = (a: CalendarAction, b: CalendarAction) => {
-      const order = { 'last-chance': 0, 'just-started': 1, 'all-month': 2 };
-      return order[a.timing] - order[b.timing];
-    };
-
-    sowIndoors.sort(sortByUrgency);
-    sowOutdoors.sort(sortByUrgency);
-    transplant.sort(sortByUrgency);
-    harvest.sort(sortByUrgency);
-
-    const groups: ActionGroup[] = [];
-    if (sowIndoors.length > 0) groups.push({ id: 'sow-indoors', title: 'Sow Indoors', icon: '🏠', headingClass: 'text-sky-700 dark:text-sky-300', chipClass: 'bg-sky-50 dark:bg-sky-900/20 border-sky-200 dark:border-sky-800', actions: sowIndoors });
-    if (sowOutdoors.length > 0) groups.push({ id: 'sow-outdoors', title: 'Direct Sow Outdoors', icon: '🌤️', headingClass: 'text-emerald-700 dark:text-emerald-300', chipClass: 'bg-emerald-50 dark:bg-emerald-900/20 border-emerald-200 dark:border-emerald-800', actions: sowOutdoors });
-    if (transplant.length > 0) groups.push({ id: 'transplant', title: 'Transplant Out', icon: '🪴', headingClass: 'text-amber-700 dark:text-amber-300', chipClass: 'bg-amber-50 dark:bg-amber-900/20 border-amber-200 dark:border-amber-800', actions: transplant });
-    if (harvest.length > 0) groups.push({ id: 'harvest', title: 'Ready to Harvest', icon: '🍎', headingClass: 'text-rose-700 dark:text-rose-300', chipClass: 'bg-rose-50 dark:bg-rose-900/20 border-rose-200 dark:border-rose-800', actions: harvest });
-    if (comingNext.length > 0) groups.push({ id: 'coming-next', title: `Coming in ${getMonthName(nextMonth)}`, icon: '📅', headingClass: 'text-stone-500 dark:text-stone-400', chipClass: 'bg-stone-50 dark:bg-stone-700/50 border-stone-200 dark:border-stone-700', actions: comingNext });
-
-    return groups;
-  }, [plantedPlants, currentMonth]);
-
   if (plantedPlants.length === 0) {
     return (
       <div className="flex items-center justify-center h-full text-stone-400 dark:text-stone-500">
@@ -164,47 +103,21 @@ export function CalendarPage() {
         Seasonal Calendar
       </h1>
       <p className="text-sm text-stone-400 mb-4">
-        Surrey, UK growing season — {plantedPlants.length} crops from GreenStalk towers + garden map
+        Surrey, UK growing season — {plantedPlants.length} crops from GreenStalk towers + garden map.
+        {' '}<span className="text-stone-500">What to do this week lives on the <strong>Dashboard</strong>; how-to guidance on <strong>Care</strong>.</span>
       </p>
 
-      {/* This month action panel — grouped by action type */}
-      {actionGroups.length > 0 && (
-        <div className="bg-emerald-50 dark:bg-emerald-900/20 rounded-xl border border-emerald-200 dark:border-emerald-800 p-4 mb-4">
-          <h2 className="text-sm font-bold text-emerald-800 dark:text-emerald-300 mb-3">
-            📋 {getMonthName(currentMonth)} — What to do now
-          </h2>
-          <div className="space-y-3">
-            {actionGroups.map((group) => (
-              <div key={group.id}>
-                <h3 className={`text-xs font-semibold ${group.headingClass} mb-1.5`}>
-                  {group.icon} {group.title}
-                </h3>
-                <div className="flex flex-wrap gap-1.5">
-                  {group.actions.map((a, i) => (
-                    <span
-                      key={`${group.id}-${i}`}
-                      className={`inline-flex items-center gap-1 text-[11px] px-2 py-1 rounded-full border ${
-                        a.timing === 'last-chance'
-                          ? 'bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 font-semibold'
-                          : `${group.chipClass} text-stone-700 dark:text-stone-200`
-                      }`}
-                    >
-                      <span>{a.emoji}</span>
-                      <span>{a.name}</span>
-                      {a.timing === 'last-chance' && (
-                        <span className="text-[8px] ml-0.5 text-red-500">last chance</span>
-                      )}
-                      {a.timing === 'just-started' && (
-                        <span className="text-[8px] ml-0.5 text-emerald-500 font-medium">new</span>
-                      )}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
+      {/* Seasonal Timeline — visual year-at-a-glance for all planted crops */}
+      <SeasonalTimeline
+        cells={garden.cells}
+        plantMap={plantMap}
+        towerPlants={towers
+          .flatMap((t) => t.tiers)
+          .flatMap((ti) => ti.pockets)
+          .filter((p) => p.plantSlug !== null)
+          .map((p) => ({ slug: p.plantSlug!, tierNumber: 0 }))
+        }
+      />
 
       <div className="bg-white dark:bg-stone-800 rounded-2xl shadow-sm border border-stone-200 dark:border-stone-700 overflow-hidden overflow-x-auto">
         <div className="min-w-[480px]">

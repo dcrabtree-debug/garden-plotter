@@ -8,10 +8,24 @@ import {
   getMonthName,
   isInWindow,
   getCurrentMonth,
-  SURREY_LAST_FROST_MONTH,
-  SURREY_FIRST_FROST_MONTH,
 } from '../lib/calendar-utils';
 import type { Plant } from '../types/plant';
+import { groupPlantingActions } from '../lib/planting-actions';
+import { getCurrentWeeklyMethods } from '../data/expert-weekly-methods';
+
+// ─── Section divider ────────────────────────────────────────────────────────
+function SectionDivider({ label, subtitle }: { label: string; subtitle: string }) {
+  return (
+    <div className="lg:col-span-2 pt-2 pb-1">
+      <div className="flex items-baseline gap-3 border-b border-stone-200 dark:border-stone-700 pb-2">
+        <h2 className="font-serif text-2xl tracking-tight text-stone-800 dark:text-stone-100">
+          {label}
+        </h2>
+        <span className="text-xs text-stone-500 dark:text-stone-400">{subtitle}</span>
+      </div>
+    </div>
+  );
+}
 
 // ─── Expert-sourced monthly tasks (RHS / BBC Gardeners' World) ───────────────
 // These are generic tasks NOT tied to specific planted crops.
@@ -352,6 +366,15 @@ export function CarePage() {
   const frost = getFrostGuidance(selectedMonth, isUS);
   const monthTasks = MONTHLY_TASKS[selectedMonth] ?? [];
 
+  // Derived planting actions for the selected month (sow indoors/out, transplant, harvest)
+  const plantingActionGroups = useMemo(() => {
+    const nextMonth = selectedMonth === 12 ? 1 : selectedMonth + 1;
+    return groupPlantingActions(plantedPlants, selectedMonth, getMonthName(nextMonth));
+  }, [plantedPlants, selectedMonth]);
+
+  // Current fortnightly expert window (used in "How" section)
+  const weeklyMethod = useMemo(() => getCurrentWeeklyMethods(new Date()), []);
+
   return (
     <div className="h-full overflow-y-auto">
       <div className="max-w-6xl mx-auto px-4 py-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -361,7 +384,7 @@ export function CarePage() {
             Monthly Care Guide
           </h1>
           <p className="text-sm text-stone-400 mt-1">
-            Expert-sourced guidance for your garden this month
+            Structured as <strong className="text-stone-500">What → How → When</strong>. The fortnightly expert technique also lives on your Dashboard.
           </p>
 
           <div className="flex items-center gap-3 mt-4">
@@ -477,10 +500,91 @@ export function CarePage() {
           </section>
         )}
 
-        {/* 🌱 What to sow / plant this month */}
+        {/* ═══ WHAT ═══ */}
+        <SectionDivider label="What to do" subtitle="Tasks calibrated to your planted crops and the month" />
+
+        {/* 📋 Combined action list: generic month tasks + derived planting actions */}
+        {(plantingActionGroups.length > 0 || monthTasks.length > 0) && (
+          <section className="lg:col-span-2 bg-white dark:bg-stone-800 rounded-2xl shadow-sm border border-stone-200 dark:border-stone-700 p-5">
+            <h2 className="text-lg font-semibold text-stone-800 dark:text-stone-100 flex items-center gap-2 mb-1">
+              <span>📋</span> {getMonthName(selectedMonth)} Action List
+            </h2>
+            <p className="text-xs text-stone-400 mb-4">
+              Sourced from RHS, BBC Gardeners' World, and your planted crops
+            </p>
+
+            {/* Derived crop-specific actions (from planted crops) */}
+            {plantingActionGroups.length > 0 && (
+              <div className="mb-5">
+                <h3 className="text-[11px] font-bold uppercase tracking-wide text-stone-500 dark:text-stone-400 mb-2">
+                  For Your Planted Crops
+                </h3>
+                <div className="space-y-3">
+                  {plantingActionGroups.map((group) => (
+                    <div key={group.id}>
+                      <h4 className={`text-xs font-semibold ${group.headingClass} mb-1.5`}>
+                        {group.icon} {group.title}
+                      </h4>
+                      <div className="flex flex-wrap gap-1.5">
+                        {group.actions.map((a, i) => (
+                          <span
+                            key={`${group.id}-${i}`}
+                            className={`inline-flex items-center gap-1 text-[11px] px-2 py-1 rounded-full border ${
+                              a.timing === 'last-chance'
+                                ? 'bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 font-semibold'
+                                : `${group.chipClass} text-stone-700 dark:text-stone-200`
+                            }`}
+                          >
+                            <span>{a.emoji}</span>
+                            <span>{a.plantName}</span>
+                            {a.timing === 'last-chance' && (
+                              <span className="text-[8px] ml-0.5 text-red-500">last chance</span>
+                            )}
+                            {a.timing === 'just-started' && (
+                              <span className="text-[8px] ml-0.5 text-emerald-500 font-medium">new</span>
+                            )}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Generic month tasks (not tied to specific crops) */}
+            {monthTasks.length > 0 && (
+              <div>
+                <h3 className="text-[11px] font-bold uppercase tracking-wide text-stone-500 dark:text-stone-400 mb-2">
+                  General Jobs
+                </h3>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
+                  {monthTasks.map((task, i) => (
+                    <div
+                      key={i}
+                      className="flex items-start gap-3 px-3 py-2.5 rounded-xl bg-stone-50 dark:bg-stone-700/50 border border-stone-100 dark:border-stone-700"
+                    >
+                      <span className="text-lg mt-0.5">{task.emoji}</span>
+                      <div>
+                        <div className="text-xs font-semibold text-stone-700 dark:text-stone-200">
+                          {task.task}
+                        </div>
+                        <div className="text-[10px] text-stone-500 dark:text-stone-400 mt-0.5">
+                          {task.detail}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </section>
+        )}
+
+        {/* 🌱 What to sow / plant this month — plant encyclopedia view */}
         <section className="bg-white dark:bg-stone-800 rounded-2xl shadow-sm border border-stone-200 dark:border-stone-700 p-5">
           <h2 className="text-lg font-semibold text-stone-800 dark:text-stone-100 flex items-center gap-2">
-            <span>🌱</span> Sow & Plant This Month
+            <span>🌱</span> In-Season Crop Catalogue
           </h2>
           <p className="text-xs text-stone-400 mt-0.5 mb-3">
             {sowNow.length} plants in season for {getMonthName(selectedMonth)}
@@ -518,6 +622,54 @@ export function CarePage() {
           ) : (
             <p className="text-sm text-stone-400 italic">Nothing to sow this month.</p>
           )}
+        </section>
+
+        {/* ═══ HOW ═══ */}
+        <SectionDivider label="How to do it" subtitle="Techniques, protocols, and expert methods" />
+
+        {/* Expert technique of the fortnight (from weekly methods) */}
+        <section className="lg:col-span-2 bg-gradient-to-br from-amber-50 to-emerald-50 dark:from-amber-900/10 dark:to-emerald-900/10 rounded-2xl border border-amber-200/60 dark:border-amber-800/40 p-5">
+          <h2 className="text-lg font-semibold text-stone-800 dark:text-stone-100 flex items-center gap-2 mb-1">
+            <span>🌿</span> Featured Technique — {weeklyMethod.dateLabel}
+          </h2>
+          <p className="text-xs text-stone-500 dark:text-stone-400 mb-3">{weeklyMethod.headline}</p>
+
+          <div className="bg-white/70 dark:bg-stone-800/60 rounded-xl p-4 border border-amber-200/50 dark:border-amber-800/30">
+            <h3 className="text-sm font-bold text-amber-800 dark:text-amber-300 mb-1.5">
+              {weeklyMethod.dowding.technique.title}
+            </h3>
+            <p className="text-xs text-stone-600 dark:text-stone-300 leading-relaxed">
+              {weeklyMethod.dowding.technique.detail}
+            </p>
+            <div className="mt-3 pt-3 border-t border-amber-200/40 dark:border-amber-800/30">
+              <p className="text-[11px] italic text-amber-700 dark:text-amber-400">
+                💡 {weeklyMethod.dowding.keyTip}
+              </p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
+            <div className="bg-white/50 dark:bg-stone-800/50 rounded-lg p-3">
+              <h4 className="text-[11px] font-bold text-emerald-700 dark:text-emerald-400 mb-1">
+                Fukuoka: Natural Farming
+              </h4>
+              <p className="text-[11px] text-stone-600 dark:text-stone-400 leading-snug">
+                {weeklyMethod.fukuoka.practice}
+              </p>
+            </div>
+            <div className="bg-white/50 dark:bg-stone-800/50 rounded-lg p-3">
+              <h4 className="text-[11px] font-bold text-stone-700 dark:text-stone-300 mb-1">
+                Hessayon: {weeklyMethod.hessayon.focus.split('.')[0]}
+              </h4>
+              <p className="text-[11px] text-stone-600 dark:text-stone-400 leading-snug">
+                {weeklyMethod.hessayon.reference}
+              </p>
+            </div>
+          </div>
+
+          <p className="text-[10px] text-stone-400 mt-3">
+            A different technique is featured each fortnight on your Dashboard.
+          </p>
         </section>
 
         {/* 💧 Watering guide */}
@@ -698,6 +850,9 @@ export function CarePage() {
           </section>
         )}
 
+        {/* ═══ WHEN ═══ */}
+        <SectionDivider label="When to act" subtitle="Time-sensitive watches and windows" />
+
         {/* 🐛 Pest & disease watch */}
         {activePests.length > 0 && (
           <section className="bg-white dark:bg-stone-800 rounded-2xl shadow-sm border border-stone-200 dark:border-stone-700 p-5">
@@ -805,29 +960,22 @@ export function CarePage() {
           );
         })()}
 
-        {/* 📋 Monthly tasks */}
+        {/* Recommended Reading */}
         <section className="lg:col-span-2 bg-white dark:bg-stone-800 rounded-2xl shadow-sm border border-stone-200 dark:border-stone-700 p-5">
-          <h2 className="text-lg font-semibold text-stone-800 dark:text-stone-100 flex items-center gap-2">
-            <span>📋</span> {getMonthName(selectedMonth)} Tasks
-          </h2>
-          <p className="text-xs text-stone-400 mt-0.5 mb-3">
-            Expert guidance from RHS and BBC Gardeners' World
-          </p>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
-            {monthTasks.map((task, i) => (
-              <div
-                key={i}
-                className="flex items-start gap-3 px-3 py-2.5 rounded-xl bg-stone-50 dark:bg-stone-700/50 border border-stone-100 dark:border-stone-700"
-              >
-                <span className="text-lg mt-0.5">{task.emoji}</span>
-                <div>
-                  <div className="text-xs font-semibold text-stone-700 dark:text-stone-200">
-                    {task.task}
-                  </div>
-                  <div className="text-[10px] text-stone-500 dark:text-stone-400 mt-0.5">
-                    {task.detail}
-                  </div>
-                </div>
+          <h2 className="text-sm font-semibold text-stone-800 dark:text-stone-100 mb-2">📚 Recommended Reading</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+            {[
+              { title: 'No Dig', author: 'Charles Dowding', note: 'The definitive guide. Start here. Especially valuable for Surrey clay.' },
+              { title: 'The One-Straw Revolution', author: 'Masanobu Fukuoka', note: 'Philosophy of natural farming. Changes how you think about intervention.' },
+              { title: 'The Vegetable & Herb Expert', author: 'Dr. D.G. Hessayon', note: 'UK reference standard (53M copies). Use his data + visual pest ID with no-dig methods.' },
+              { title: 'The Container Expert', author: 'Dr. D.G. Hessayon', note: 'Directly applicable to GreenStalk: compost mixes, watering, feeding schedules.' },
+              { title: 'The Lawn Expert', author: 'Dr. D.G. Hessayon', note: 'Essential for new house. Monthly care, clay soil fixes, new lawn establishment.' },
+              { title: "Charles Dowding's Veg Journal", author: 'Charles Dowding', note: 'Month-by-month no-dig tasks. The practical companion to No Dig.' },
+            ].map((book) => (
+              <div key={book.title} className="px-3 py-2 rounded-lg bg-stone-50 dark:bg-stone-700/50 text-[10px]">
+                <div className="font-semibold text-stone-700 dark:text-stone-200">{book.title}</div>
+                <div className="text-stone-400 italic">{book.author}</div>
+                <div className="text-stone-500 dark:text-stone-400 mt-0.5">{book.note}</div>
               </div>
             ))}
           </div>
@@ -835,7 +983,7 @@ export function CarePage() {
 
         {/* Source attribution */}
         <p className="lg:col-span-2 text-[10px] text-stone-400 text-center pb-4">
-          Guidance based on RHS growing advice, BBC Gardeners' World monthly tasks, and Garden Organic best practice.
+          Guidance from RHS, BBC Gardeners' World, Charles Dowding (No Dig), Masanobu Fukuoka (Natural Farming), and Dr. D.G. Hessayon (The Expert series).
           Frost dates calibrated for Surrey (Walton-on-Thames, RHS H5 / USDA 8b).
         </p>
       </div>

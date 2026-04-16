@@ -28,6 +28,24 @@ import {
   getPhase, daysBetween,
   loadChecklist, saveChecklist,
 } from '../lib/priority-tasks';
+import { groupPlantingActions, type PlantingActionGroup } from '../lib/planting-actions';
+import {
+  getCurrentWeeklyMethods,
+  getNextWeeklyMethods,
+  type WeeklyExpertWindow,
+} from '../data/expert-weekly-methods';
+import {
+  useSowEventStore,
+  computeSuccessionReminders,
+  type SuccessionReminder,
+  type SowActionType,
+} from '../state/sow-event-store';
+import {
+  getUKExpertKnowledge,
+  getExpertProfile,
+  EXPERT_COLORS,
+  type UKExpertId,
+} from '../data/expert-uk-knowledge';
 
 // ── Care data (condensed from CarePage) ─────────────────────────────────────
 
@@ -64,23 +82,10 @@ function getFrostGuidance(month: number): { level: 'safe' | 'caution' | 'frost';
   return { level: 'safe', message: 'Frost-free. Focus on watering and feeding.' };
 }
 
-// ── Setup reference data ────────────────────────────────────────────────────
-
-interface SetupStep { emoji: string; title: string; detail: string; tip?: string; }
-
-const GREENSTALK_SETUP: SetupStep[] = [
-  { emoji: '🪣', title: 'Compost mix', detail: 'Peat-free compost + perlite 3:1. Do NOT use garden soil.', tip: 'Sylvagrow or Dalefoot wool compost recommended.' },
-  { emoji: '🧪', title: 'Slow-release fertiliser', detail: 'Mix Osmocote 14-14-14 granules at planting. Feeds 3-4 months.', tip: 'Switch to weekly liquid tomato feed once fruiting crops flower.' },
-  { emoji: '💧', title: 'Watering', detail: 'Fill top saucer. Summer: twice daily. Spring/autumn: once daily.', tip: '#1 failure cause is underwatering.' },
-  { emoji: '🌊', title: 'Drainage check', detail: 'Clear all pocket drainage holes before planting. Water through and check.', },
-  { emoji: '🌱', title: 'Planting density', detail: 'One plant per pocket. Exceptions: lettuce/rocket (2-3), radish/spring onion (4-5).', },
-  { emoji: '☀️', title: 'Positioning', detail: '6+ hours direct sun. Rotate 90° every 2 weeks.', tip: 'Afternoon shade for lettuce/spinach prevents bolting.' },
-];
-
 // Checklist persistence + CATEGORY_COLORS imported from ../lib/priority-tasks
 
 // ── Section collapse state ──────────────────────────────────────────────────
-type Section = 'overdue' | 'today' | 'care' | 'setup' | 'upcoming' | 'harvest';
+type Section = 'overdue' | 'today' | 'care' | 'upcoming' | 'harvest' | 'planting-actions';
 
 // ── Component ───────────────────────────────────────────────────────────────
 
@@ -221,12 +226,278 @@ export function DashboardPage({ onNavigate }: { onNavigate?: (tab: string, view?
     return plantedPlants.filter((p) => isInWindow(currentMonth, p.plantingWindow.harvest));
   }, [plantedPlants, currentMonth]);
 
+  // ── Harvest → Kitchen (Stephanie Hafferty angle) ─────────────────────────
+  // Pull Hafferty tips + any harvest/flavour-category tip for crops you're
+  // actively harvesting this month. Becomes the "What to cook" card.
+  const cookingTips = useMemo(() => {
+    const tips: { plantSlug: string; plantName: string; emoji: string; expert: string; tip: string; category: string }[] = [];
+    for (const plant of harvestNow) {
+      const uk = getUKExpertKnowledge(plant.slug);
+      if (!uk) continue;
+      for (const t of uk.tips) {
+        // Hafferty is the harvest-to-kitchen bridge; also include harvest/flavour tips from other experts.
+        if (t.expert === 'hafferty' || t.category === 'harvest' || t.category === 'flavour') {
+          tips.push({
+            plantSlug: plant.slug,
+            plantName: plant.commonName,
+            emoji: plant.emoji,
+            expert: t.expert,
+            tip: t.tip,
+            category: t.category,
+          });
+        }
+      }
+    }
+    // Prioritise Hafferty first (the harvest-to-kitchen specialist), then harvest, then flavour.
+    const expertOrder: Record<string, number> = { hafferty: 0, larkcom: 1, wong: 2, fowler: 3, monty: 4, flowerdew: 5, richards: 6, rhs: 7 };
+    tips.sort((a, b) => (expertOrder[a.expert] ?? 99) - (expertOrder[b.expert] ?? 99));
+    return tips;
+  }, [harvestNow]);
+
   const sowNow = useMemo(() => {
     return plants.filter((p) => {
       const pw = p.plantingWindow;
       return isInWindow(currentMonth, pw.sowIndoors) || isInWindow(currentMonth, pw.sowOutdoors) || isInWindow(currentMonth, pw.transplant);
     }).slice(0, 12);
   }, [plants, currentMonth]);
+
+  // ── Planting actions for the current month (sow/transplant/harvest) ──────
+  // Drives the "Planting Actions" card in the to-do column.
+  const plantingActionGroups = useMemo<PlantingActionGroup[]>(() => {
+    const nextMonth = currentMonth === 12 ? 1 : currentMonth + 1;
+    return groupPlantingActions(plantedPlants, currentMonth, getMonthName(nextMonth));
+  }, [plantedPlants, currentMonth]);
+
+  const totalPlantingActions = plantingActionGroups
+    .filter((g) => g.id !== 'coming-next')
+    .reduce((sum, g) => sum + g.actions.length, 0);
+
+  // ── Succession reminders (event-driven) ──────────────────────────────────
+  const sowEvents = useSowEventStore((s) => s.events);
+  const logSowEvent = useSowEventStore((s) => s.logEvent);
+
+  const successionReminders = useMemo<SuccessionReminder[]>(() => {
+    const candidates = plantedPlants
+      .map((p) => {
+        const uk = getUKExpertKnowledge(p.slug);
+        if (!uk?.successionDays) return null;
+        return { slug: p.slug, commonName: p.commonName, emoji: p.emoji, successionDays: uk.successionDays };
+      })
+      .filter(Boolean) as { slug: string; commonName: string; emoji: string; successionDays: number }[];
+    return computeSuccessionReminders(candidates, sowEvents, today);
+  }, [plantedPlants, sowEvents, today]);
+
+  // ── Unified Action Plan ──────────────────────────────────────────────────
+  // Merges priority tasks, planting actions, pest alerts, and watering into
+  // ONE prioritized list so the Dashboard has a single place to see "what
+  // needs doing, when, and why". See `UnifiedAction` for the shared shape.
+
+  type UnifiedTier = 'urgent' | 'this-week' | 'ongoing' | 'this-month';
+
+  interface UnifiedAction {
+    id: string;
+    tier: UnifiedTier;
+    sortKey: number;           // lower = higher in list
+    icon: string;              // leading emoji
+    label: string;             // what to do
+    when: string;              // short deadline/window chip text
+    why: string;               // one-line reasoning
+    chipClass: string;         // tailwind classes for the "when" chip
+    taskRef?: PriorityTask;    // if set, renders as checkable PriorityTask row
+    accentClass?: string;      // left-border accent
+  }
+
+  const unifiedActions = useMemo<UnifiedAction[]>(() => {
+    const items: UnifiedAction[] = [];
+    const isSummer = currentMonth >= 6 && currentMonth <= 8;
+
+    // 1. Priority tasks (one-time) — bucketed by deadline proximity
+    for (const task of todayTasks) {
+      if (completedTasks.has(task.id)) continue;
+      const daysUntil = task.deadlineDate
+        ? daysBetween(today, new Date(task.deadlineDate))
+        : 99;
+      const tier: UnifiedTier =
+        daysUntil <= 2 ? 'urgent' : daysUntil <= 7 ? 'this-week' : 'this-month';
+      items.push({
+        id: `task-${task.id}`,
+        tier,
+        sortKey: task.priority + (tier === 'urgent' ? 0 : tier === 'this-week' ? 100 : 300),
+        icon: task.category === 'shopping' ? '🛒' : task.category === 'planting' ? '🌱' : task.category === 'setup' ? '🧰' : '🔧',
+        label: task.label,
+        when: task.deadline ? `By ${task.deadline}` : 'This week',
+        why: task.detail,
+        chipClass: tier === 'urgent'
+          ? 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300'
+          : 'bg-rose-50 dark:bg-rose-900/20 text-rose-600 dark:text-rose-400',
+        taskRef: task,
+        accentClass: tier === 'urgent' ? 'border-l-red-400' : 'border-l-rose-300',
+      });
+    }
+
+    // 2. Last-chance planting actions — window closes THIS month. Critical.
+    const lastChancePlantingReasons: Record<string, string> = {
+      'sow-indoors': 'Window closes this month — sow now or skip the season for this crop.',
+      'sow-outdoors': 'Soil window closes this month — direct-sow now while soil temp still holds.',
+      'transplant': 'Last transplant slot — hardened-off seedlings need the ground now.',
+      'harvest': 'Peak picking — leaving crops on the plant past their window reduces flavour and yield.',
+    };
+    const justStartedReasons: Record<string, string> = {
+      'sow-indoors': 'Window just opened — starting now gives the longest growing window.',
+      'sow-outdoors': 'Soil is warm enough — direct-sow for an even, fast-germinating crop.',
+      'transplant': 'Safe to transplant — harden seedlings 7 days then move out.',
+      'harvest': 'First crops ready — pick early for concentrated flavour.',
+    };
+    const allMonthReasons: Record<string, string> = {
+      'sow-indoors': 'Active sowing window — stagger every 2 weeks for succession.',
+      'sow-outdoors': 'Active direct-sow window — succession sow for continuous harvest.',
+      'transplant': 'Active transplant window — move seedlings when roots fill their modules.',
+      'harvest': 'Picking window active — harvest little and often to keep plants producing.',
+    };
+    const kindMeta: Record<string, { icon: string; verb: string }> = {
+      'sow-indoors': { icon: '🏠', verb: 'Sow indoors' },
+      'sow-outdoors': { icon: '🌤️', verb: 'Direct-sow' },
+      'transplant': { icon: '🪴', verb: 'Transplant' },
+      'harvest': { icon: '🍎', verb: 'Harvest' },
+    };
+
+    for (const group of plantingActionGroups) {
+      if (group.id === 'coming-next') continue;
+      const meta = kindMeta[group.id as keyof typeof kindMeta];
+      for (const a of group.actions) {
+        const isLastChance = a.timing === 'last-chance';
+        const isJustStarted = a.timing === 'just-started';
+        const tier: UnifiedTier = isLastChance ? 'urgent' : isJustStarted ? 'this-week' : 'ongoing';
+        const whenText = isLastChance
+          ? `Closes ${getMonthName(currentMonth)}`
+          : isJustStarted
+            ? `New this ${getMonthName(currentMonth)}`
+            : `${getMonthName(currentMonth)} window`;
+        const reasons = isLastChance
+          ? lastChancePlantingReasons
+          : isJustStarted
+            ? justStartedReasons
+            : allMonthReasons;
+        items.push({
+          id: `plant-${a.plantSlug}-${a.kind}`,
+          tier,
+          sortKey: isLastChance ? 5 : isJustStarted ? 150 : 400,
+          icon: `${a.emoji}${meta.icon}`,
+          label: `${meta.verb}: ${a.plantName}`,
+          when: whenText,
+          why: reasons[a.kind as keyof typeof reasons],
+          chipClass: isLastChance
+            ? 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300'
+            : isJustStarted
+              ? 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400'
+              : 'bg-stone-100 dark:bg-stone-700/50 text-stone-600 dark:text-stone-300',
+          accentClass: isLastChance
+            ? 'border-l-red-400'
+            : isJustStarted
+              ? 'border-l-emerald-400'
+              : 'border-l-stone-300',
+        });
+      }
+    }
+
+    // 3. Pest alerts — actionable NOW, slotted as urgent/this-week.
+    for (const pest of activePests) {
+      items.push({
+        id: `pest-${pest.name}`,
+        tier: 'this-week',
+        sortKey: 50,
+        icon: '🐛',
+        label: `Pest watch: ${pest.name}`,
+        when: `${getMonthName(currentMonth)} risk`,
+        why: pest.advice,
+        chipClass: 'bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400',
+        accentClass: 'border-l-orange-400',
+      });
+    }
+
+    // 4. Watering — surfaced as ongoing rhythm, escalated in peak summer.
+    if (wateringSummary.daily.length > 0) {
+      const names = wateringSummary.daily.map((p) => `${p.emoji} ${p.commonName}`).join(', ');
+      items.push({
+        id: 'water-daily',
+        tier: isSummer ? 'urgent' : 'ongoing',
+        sortKey: isSummer ? 20 : 500,
+        icon: '💧',
+        label: isSummer ? 'Water daily (2× in heatwaves)' : 'Water daily',
+        when: 'Every day',
+        why: `${names} — high-water crops in small pockets dry out fast. Morning or evening, not midday.`,
+        chipClass: 'bg-sky-100 dark:bg-sky-900/30 text-sky-700 dark:text-sky-400',
+        accentClass: isSummer ? 'border-l-sky-500' : 'border-l-sky-300',
+      });
+    }
+    if (wateringSummary.regular.length > 0) {
+      const names = wateringSummary.regular.map((p) => `${p.emoji} ${p.commonName}`).join(', ');
+      items.push({
+        id: 'water-regular',
+        tier: 'ongoing',
+        sortKey: 520,
+        icon: '💧',
+        label: 'Water every 2-3 days',
+        when: 'Every 2-3d',
+        why: `${names} — check before watering. GreenStalk top tier dries faster than lower tiers.`,
+        chipClass: 'bg-sky-50 dark:bg-sky-900/20 text-sky-600 dark:text-sky-400',
+        accentClass: 'border-l-sky-200',
+      });
+    }
+
+    // 5. Recurring priority tasks (feeding, checks) — ongoing rhythm.
+    for (const task of recurringTasks) {
+      if (completedTasks.has(task.id)) continue;
+      items.push({
+        id: `recurring-${task.id}`,
+        tier: 'ongoing',
+        sortKey: 550 + task.priority,
+        icon: task.category === 'maintenance' ? '🔧' : '🔁',
+        label: task.label,
+        when: 'Recurring',
+        why: task.detail,
+        chipClass: 'bg-stone-100 dark:bg-stone-700/50 text-stone-600 dark:text-stone-300',
+        taskRef: task,
+        accentClass: 'border-l-stone-300',
+      });
+    }
+
+    // 6. Succession reminders — "Time to re-sow!" driven by actual sow events.
+    for (const r of successionReminders) {
+      const isVeryOverdue = r.daysOverdue > r.successionDays; // missed a whole cycle
+      items.push({
+        id: `succession-${r.slug}-${r.action}`,
+        tier: isVeryOverdue ? 'urgent' : 'this-week',
+        sortKey: isVeryOverdue ? 15 : 120,
+        icon: `${r.emoji}🔁`,
+        label: `Re-sow: ${r.plantName}`,
+        when: `${r.daysOverdue}d overdue`,
+        why: `Last sowed ${new Date(r.lastSowDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })} (${r.daysSinceLast}d ago). Larkcom interval: every ${r.successionDays} days for continuous harvest.`,
+        chipClass: isVeryOverdue
+          ? 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300'
+          : 'bg-lime-100 dark:bg-lime-900/30 text-lime-700 dark:text-lime-300',
+        accentClass: isVeryOverdue ? 'border-l-red-400' : 'border-l-lime-400',
+      });
+    }
+
+    items.sort((a, b) => a.sortKey - b.sortKey);
+    return items;
+  }, [todayTasks, recurringTasks, plantingActionGroups, activePests, wateringSummary, currentMonth, completedTasks, today, successionReminders]);
+
+  const actionsByTier = useMemo(() => {
+    const map: Record<UnifiedTier, UnifiedAction[]> = {
+      'urgent': [],
+      'this-week': [],
+      'ongoing': [],
+      'this-month': [],
+    };
+    for (const a of unifiedActions) map[a.tier].push(a);
+    return map;
+  }, [unifiedActions]);
+
+  // ── Fortnightly expert methods (date-aware) ──────────────────────────────
+  const weeklyMethod: WeeklyExpertWindow = useMemo(() => getCurrentWeeklyMethods(today), [today.toDateString()]);
+  const nextWeeklyMethod: WeeklyExpertWindow = useMemo(() => getNextWeeklyMethods(today), [today.toDateString()]);
 
   const frost = getFrostGuidance(currentMonth);
 
@@ -342,6 +613,106 @@ export function DashboardPage({ onNavigate }: { onNavigate?: (tab: string, view?
     );
   }
 
+  function renderUnifiedAction(item: UnifiedAction) {
+    // If the item wraps a real PriorityTask, keep the checkable behavior.
+    const isCheckable = !!item.taskRef;
+    const done = item.taskRef ? completedTasks.has(item.taskRef.id) : false;
+
+    return (
+      <div
+        key={item.id}
+        className={`px-3 py-2.5 flex items-start gap-3 border-l-4 ${item.accentClass ?? 'border-l-stone-200 dark:border-l-stone-700'} ${
+          isCheckable ? 'cursor-pointer transition-all hover:bg-stone-50 dark:hover:bg-stone-700/30' : ''
+        } ${done ? 'opacity-50' : ''}`}
+        onClick={isCheckable && item.taskRef ? () => toggleTask(item.taskRef!.id) : undefined}
+      >
+        {isCheckable ? (
+          <div className={`mt-0.5 w-5 h-5 rounded border-2 flex items-center justify-center shrink-0 transition-all ${
+            done ? 'bg-emerald-500 border-emerald-500 text-white' : 'border-stone-300 dark:border-stone-500'
+          }`}>
+            {done && <span className="text-xs">✓</span>}
+          </div>
+        ) : (
+          <div className="mt-0.5 w-5 h-5 flex items-center justify-center shrink-0 text-base" aria-hidden>
+            {item.icon}
+          </div>
+        )}
+
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className={`text-sm font-semibold ${done ? 'line-through text-stone-400' : 'text-stone-800 dark:text-stone-100'}`}>
+              {item.label}
+            </span>
+            <span className={`text-[11px] px-1.5 py-0.5 rounded-full ${item.chipClass}`}>
+              📅 {item.when}
+            </span>
+          </div>
+          <p className={`text-xs mt-0.5 ${done ? 'text-stone-300 dark:text-stone-600' : 'text-stone-500 dark:text-stone-400'}`}>
+            {item.why}
+          </p>
+          <div className="flex items-center gap-2 mt-1 flex-wrap">
+            {item.taskRef?.buyUrl && !done && (
+              <a
+                href={item.taskRef.buyUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[9px] px-1.5 py-0.5 rounded bg-violet-100 dark:bg-violet-900/20 text-violet-600 dark:text-violet-400 hover:bg-violet-200 transition-colors"
+                onClick={(e) => e.stopPropagation()}
+              >
+                🛒 Buy →
+              </a>
+            )}
+            {/* "I did this" button for planting actions and succession reminders */}
+            {(item.id.startsWith('plant-') || item.id.startsWith('succession-')) && (
+              <button
+                className="text-[9px] px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 hover:bg-emerald-200 dark:hover:bg-emerald-900/40 transition-colors font-medium"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  // Extract slug and action from item.id:
+                  // plant-{slug}-{action} or succession-{slug}-{action}
+                  const parts = item.id.split('-');
+                  const prefix = parts[0]; // 'plant' or 'succession'
+                  const actionPart = parts[parts.length - 1] as SowActionType; // last segment
+                  // slug is everything between prefix and action
+                  const slug = parts.slice(1, -1).join('-');
+                  // Only valid sow actions
+                  const validActions: SowActionType[] = ['sow-indoors', 'sow-outdoors', 'transplant', 'harvest'];
+                  // For compound action like "sow-indoors", the split creates extra parts.
+                  // Re-derive from the actual planting action groups instead:
+                  let resolvedSlug = slug;
+                  let resolvedAction: SowActionType = 'sow-outdoors';
+                  if (prefix === 'plant') {
+                    // item.id = "plant-{slug}-{kind}" where kind is like "sow-indoors"
+                    // But kind itself has a hyphen, so we have to parse carefully
+                    for (const kind of validActions) {
+                      if (item.id.endsWith(`-${kind}`)) {
+                        resolvedAction = kind;
+                        resolvedSlug = item.id.slice('plant-'.length, -(kind.length + 1));
+                        break;
+                      }
+                    }
+                  } else {
+                    // succession-{slug}-{action}
+                    for (const kind of validActions) {
+                      if (item.id.endsWith(`-${kind}`)) {
+                        resolvedAction = kind;
+                        resolvedSlug = item.id.slice('succession-'.length, -(kind.length + 1));
+                        break;
+                      }
+                    }
+                  }
+                  logSowEvent(resolvedSlug, resolvedAction);
+                }}
+              >
+                ✅ I did this today
+              </button>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   function SectionHeader({ section, title, count, color = 'text-stone-800 dark:text-stone-100' }: { section: Section; title: string; count: number; color?: string }) {
     const isOpen = !collapsed.has(section);
     return (
@@ -360,7 +731,7 @@ export function DashboardPage({ onNavigate }: { onNavigate?: (tab: string, view?
 
   return (
     <div className="h-full overflow-y-auto scroll-touch">
-      <div className="max-w-2xl mx-auto px-4 sm:px-6 py-5 sm:py-7 space-y-5">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-5 sm:py-7 space-y-5">
         {/* Header — refined hierarchy */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
           <div>
@@ -502,6 +873,123 @@ export function DashboardPage({ onNavigate }: { onNavigate?: (tab: string, view?
           );
         })()}
 
+        {/* ═══ FORTNIGHTLY EXPERT METHODS ═══ */}
+        <section className="bg-gradient-to-br from-amber-50 via-stone-50 to-emerald-50 dark:from-amber-900/15 dark:via-stone-800/40 dark:to-emerald-900/15 rounded-2xl border border-amber-200/60 dark:border-amber-800/40 overflow-hidden elevation-1">
+          <div className="px-4 sm:px-5 py-3 sm:py-4 border-b border-amber-200/40 dark:border-amber-800/30 flex items-baseline justify-between gap-3 flex-wrap">
+            <div>
+              <h2 className="text-sm sm:text-base font-bold text-stone-800 dark:text-stone-100 flex items-center gap-2">
+                <span>🌿</span> This Fortnight — {weeklyMethod.dateLabel}
+              </h2>
+              <p className="text-[11px] text-stone-500 dark:text-stone-400 mt-0.5">
+                {weeklyMethod.stage} · {weeklyMethod.title}
+              </p>
+            </div>
+            <span className="text-[10px] px-2 py-1 rounded-full bg-white/70 dark:bg-stone-800/70 text-stone-500 dark:text-stone-400 border border-stone-200 dark:border-stone-700">
+              Weeks {weeklyMethod.startWeek}–{weeklyMethod.endWeek}
+            </span>
+          </div>
+
+          <div className="px-4 sm:px-5 py-3 sm:py-4">
+            <p className="text-sm text-stone-700 dark:text-stone-200 leading-snug italic mb-4">
+              {weeklyMethod.headline}
+            </p>
+
+            {/* Featured technique — the hero of each fortnight */}
+            <div className="bg-white/80 dark:bg-stone-800/70 rounded-xl p-4 border border-amber-200/50 dark:border-amber-800/30 mb-4">
+              <div className="flex items-start gap-3">
+                <span className="text-2xl">🧑‍🌾</span>
+                <div className="flex-1 min-w-0">
+                  <div className="text-[10px] uppercase tracking-wide text-amber-700 dark:text-amber-400 font-bold mb-0.5">
+                    Dowding · Featured Technique
+                  </div>
+                  <h3 className="text-sm font-bold text-stone-800 dark:text-stone-100 mb-1.5">
+                    {weeklyMethod.dowding.technique.title}
+                  </h3>
+                  <p className="text-xs text-stone-600 dark:text-stone-300 leading-relaxed">
+                    {weeklyMethod.dowding.technique.detail}
+                  </p>
+                  <p className="text-[11px] italic text-amber-700 dark:text-amber-400 mt-2">
+                    💡 {weeklyMethod.dowding.keyTip}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Three-column expert grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+              {/* Dowding tasks */}
+              <div className="bg-white/60 dark:bg-stone-800/50 rounded-xl p-3 border border-amber-200/40 dark:border-amber-800/30">
+                <div className="text-[10px] uppercase tracking-wide font-bold text-amber-700 dark:text-amber-400 mb-1.5">
+                  Dowding · No-Dig Tasks
+                </div>
+                <ul className="space-y-1">
+                  {weeklyMethod.dowding.tasks.map((task, i) => (
+                    <li key={i} className="text-[11px] text-stone-600 dark:text-stone-300 flex gap-1.5">
+                      <span className="text-amber-500 shrink-0">▸</span>
+                      <span>{task}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Fukuoka */}
+              <div className="bg-white/60 dark:bg-stone-800/50 rounded-xl p-3 border border-emerald-200/40 dark:border-emerald-800/30">
+                <div className="text-[10px] uppercase tracking-wide font-bold text-emerald-700 dark:text-emerald-400 mb-1.5">
+                  Fukuoka · Natural Farming
+                </div>
+                <p className="text-[11px] text-stone-600 dark:text-stone-300 leading-relaxed italic mb-2">
+                  "{weeklyMethod.fukuoka.reflection}"
+                </p>
+                <p className="text-[11px] text-stone-700 dark:text-stone-200 font-medium leading-snug">
+                  🌱 {weeklyMethod.fukuoka.practice}
+                </p>
+              </div>
+
+              {/* Hessayon */}
+              <div className="bg-white/60 dark:bg-stone-800/50 rounded-xl p-3 border border-stone-200 dark:border-stone-700">
+                <div className="text-[10px] uppercase tracking-wide font-bold text-stone-600 dark:text-stone-300 mb-1.5">
+                  Hessayon · Reference
+                </div>
+                <p className="text-[11px] text-stone-600 dark:text-stone-300 leading-snug mb-2">
+                  {weeklyMethod.hessayon.focus}
+                </p>
+                <p className="text-[10px] text-stone-500 dark:text-stone-400 italic">
+                  📖 {weeklyMethod.hessayon.reference}
+                </p>
+              </div>
+            </div>
+
+            {/* Featured crop of the fortnight */}
+            {weeklyMethod.featuredCrop && (
+              <div className="mt-3 flex items-center gap-3 px-4 py-2.5 rounded-xl bg-white/70 dark:bg-stone-800/60 border border-stone-200 dark:border-stone-700">
+                <span className="text-2xl">{weeklyMethod.featuredCrop.emoji}</span>
+                <div className="flex-1 min-w-0">
+                  <div className="text-[10px] uppercase tracking-wide text-stone-500 dark:text-stone-400 font-bold">
+                    Featured Crop
+                  </div>
+                  <div className="text-sm font-semibold text-stone-800 dark:text-stone-100">
+                    {weeklyMethod.featuredCrop.name}
+                  </div>
+                  <div className="text-[11px] text-stone-500 dark:text-stone-400">
+                    {weeklyMethod.featuredCrop.action}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Next window preview */}
+            <div className="mt-3 text-[10px] text-stone-400 dark:text-stone-500">
+              Next fortnight ({nextWeeklyMethod.dateLabel}): <span className="text-stone-500 dark:text-stone-400 font-medium">{nextWeeklyMethod.title}</span>
+            </div>
+          </div>
+        </section>
+
+        {/* ═══ TWO-COLUMN GRID ON DESKTOP ═══ */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+
+        {/* ── LEFT COLUMN: Action Items ────────────────────────────────── */}
+        <div className="space-y-5">
+
         {/* ── OVERDUE ─────────────────────────────────────────────────────── */}
         {overdueTasks.length > 0 && (
           <div className="bg-white dark:bg-stone-800 rounded-2xl border-2 border-red-300 dark:border-red-700 overflow-hidden">
@@ -514,30 +1002,91 @@ export function DashboardPage({ onNavigate }: { onNavigate?: (tab: string, view?
           </div>
         )}
 
-        {/* ── YOUR TO-DO LIST ───────────────────────────────────────────── */}
-        {(todayTasks.length > 0 || recurringTasks.length > 0) && (
+        {/* ── UNIFIED ACTION PLAN ────────────────────────────────────────── */}
+        {/* Merges priority tasks, planting actions, pest alerts, and watering */}
+        {/* rhythm into ONE prioritized list. Each item: what · when · why. */}
+        {unifiedActions.length > 0 && (
           <div className="bg-white dark:bg-stone-800/80 rounded-2xl border border-stone-200/60 dark:border-stone-700/40 overflow-hidden elevation-1">
-            <SectionHeader section="today" title="📋 Your To-Do List" count={todayTasks.length + recurringTasks.length} />
+            <SectionHeader
+              section="today"
+              title={`🎯 Your ${getMonthName(currentMonth)} Action Plan`}
+              count={unifiedActions.length}
+            />
             {!collapsed.has('today') && (
-              <div className="divide-y divide-stone-50 dark:divide-stone-700/50">
-                {todayTasks.map((t) => renderTask(t))}
-                {recurringTasks.map((t) => renderTask(t))}
-              </div>
+              <>
+                <p className="px-4 pt-3 text-[11px] text-stone-500 dark:text-stone-400">
+                  One prioritized list: setup tasks, planting windows, pest alerts, and watering rhythm — merged and ranked by urgency.
+                </p>
+
+                {actionsByTier['urgent'].length > 0 && (
+                  <div className="mt-3">
+                    <div className="px-4 pb-1 text-[10px] font-bold uppercase tracking-wider text-red-600 dark:text-red-400">
+                      🚨 Do Now — urgent
+                    </div>
+                    <div className="divide-y divide-stone-50 dark:divide-stone-700/50">
+                      {actionsByTier['urgent'].map(renderUnifiedAction)}
+                    </div>
+                  </div>
+                )}
+
+                {actionsByTier['this-week'].length > 0 && (
+                  <div className="mt-3">
+                    <div className="px-4 pb-1 text-[10px] font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400">
+                      ⏰ This Week
+                    </div>
+                    <div className="divide-y divide-stone-50 dark:divide-stone-700/50">
+                      {actionsByTier['this-week'].map(renderUnifiedAction)}
+                    </div>
+                  </div>
+                )}
+
+                {actionsByTier['ongoing'].length > 0 && (
+                  <div className="mt-3">
+                    <div className="px-4 pb-1 text-[10px] font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400">
+                      🔁 Ongoing Rhythm
+                    </div>
+                    <div className="divide-y divide-stone-50 dark:divide-stone-700/50">
+                      {actionsByTier['ongoing'].map(renderUnifiedAction)}
+                    </div>
+                  </div>
+                )}
+
+                {actionsByTier['this-month'].length > 0 && (
+                  <div className="mt-3 border-t border-stone-100 dark:border-stone-700/50">
+                    <div className="px-4 pt-2 pb-1 text-[10px] font-bold uppercase tracking-wider text-stone-500 dark:text-stone-400">
+                      📅 Later This Month
+                    </div>
+                    <div className="divide-y divide-stone-50 dark:divide-stone-700/50">
+                      {actionsByTier['this-month'].map(renderUnifiedAction)}
+                    </div>
+                  </div>
+                )}
+
+                {upcomingTasks.length > 0 && (
+                  <div className="mt-3 border-t border-stone-100 dark:border-stone-700/50">
+                    <button
+                      onClick={() => toggleSection('upcoming')}
+                      className="w-full px-4 py-2 text-[10px] font-bold uppercase tracking-wider text-stone-500 dark:text-stone-400 flex items-center justify-between hover:bg-stone-50 dark:hover:bg-stone-700/30"
+                    >
+                      <span>🔮 Next Few Weeks ({upcomingTasks.length})</span>
+                      <span>{collapsed.has('upcoming') ? '▸' : '▾'}</span>
+                    </button>
+                    {!collapsed.has('upcoming') && (
+                      <div className="divide-y divide-stone-50 dark:divide-stone-700/50">
+                        {upcomingTasks.map((t) => renderTask(t))}
+                      </div>
+                    )}
+                  </div>
+                )}
+              </>
             )}
           </div>
         )}
 
-        {/* ── COMING UP ───────────────────────────────────────────────────── */}
-        {upcomingTasks.length > 0 && (
-          <div className="bg-white dark:bg-stone-800 rounded-2xl border border-stone-200 dark:border-stone-700 overflow-hidden">
-            <SectionHeader section="upcoming" title="📅 Coming Up" count={upcomingTasks.length} />
-            {!collapsed.has('upcoming') && (
-              <div className="divide-y divide-stone-50 dark:divide-stone-700/50">
-                {upcomingTasks.map((t) => renderTask(t))}
-              </div>
-            )}
-          </div>
-        )}
+        </div>{/* end left column */}
+
+        {/* ── RIGHT COLUMN: Data & Status ─────────────────────────────── */}
+        <div className="space-y-5">
 
         {/* ── 5-DAY WEATHER STRIP ──────────────────────────────────────── */}
         {forecast && (
@@ -672,100 +1221,95 @@ export function DashboardPage({ onNavigate }: { onNavigate?: (tab: string, view?
           </div>
         )}
 
-        {/* ── CARE SUMMARY ───────────────────────────────────────────────── */}
-        {plantedPlants.length > 0 && currentMonth >= 3 && currentMonth <= 10 && (
+        {/* ── IN-SEASON REFERENCE (not actions — those live in Action Plan) */}
+        {plantedPlants.length > 0 && currentMonth >= 3 && currentMonth <= 10 && sowNow.length > 0 && (
           <div className="bg-white dark:bg-stone-800 rounded-2xl border border-stone-200 dark:border-stone-700 overflow-hidden">
-            <SectionHeader section="care" title={`🩺 ${getMonthName(currentMonth)} Care`} count={wateringSummary.daily.length + wateringSummary.regular.length + activePests.length} />
-            {!collapsed.has('care') && (
-              <div className="px-4 py-3 space-y-3">
-                {/* Watering */}
-                {(wateringSummary.daily.length > 0 || wateringSummary.regular.length > 0) && (
-                  <div>
-                    <h3 className="text-[11px] font-bold text-stone-600 dark:text-stone-300 mb-1.5">💧 Watering</h3>
-                    {wateringSummary.daily.length > 0 && (
-                      <div className="mb-1.5">
-                        <span className="text-[10px] font-semibold text-red-600 dark:text-red-400">Daily{currentMonth >= 6 && currentMonth <= 8 ? ' (2x in heat)' : ''}: </span>
-                        <span className="text-[10px] text-stone-500">
-                          {wateringSummary.daily.map((p) => `${p.emoji} ${p.commonName}`).join(', ')}
-                        </span>
-                      </div>
-                    )}
-                    {wateringSummary.regular.length > 0 && (
-                      <div>
-                        <span className="text-[10px] font-semibold text-amber-600 dark:text-amber-400">Every 2-3 days: </span>
-                        <span className="text-[10px] text-stone-500">
-                          {wateringSummary.regular.map((p) => `${p.emoji} ${p.commonName}`).join(', ')}
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                )}
-
-                {/* Pest alerts */}
-                {activePests.length > 0 && (
-                  <div>
-                    <h3 className="text-[11px] font-bold text-stone-600 dark:text-stone-300 mb-1.5">🐛 Pest Watch</h3>
-                    <div className="space-y-1">
-                      {activePests.map((pest) => (
-                        <div key={pest.name} className="text-[10px] px-2 py-1.5 rounded-lg bg-red-50 dark:bg-red-900/10 border border-red-100 dark:border-red-900/30">
-                          <span className="font-semibold text-red-700 dark:text-red-300">{pest.name}</span>
-                          <span className="text-stone-500 dark:text-stone-400"> — {pest.advice}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* Sow now */}
-                {sowNow.length > 0 && (
-                  <div>
-                    <h3 className="text-[11px] font-bold text-stone-600 dark:text-stone-300 mb-1.5">🌱 In Season Now</h3>
-                    <div className="flex flex-wrap gap-1">
-                      {sowNow.map((p) => (
-                        <span key={p.slug} className={`inline-flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full border ${
-                          plantedSlugs.has(p.slug)
-                            ? 'bg-emerald-50 dark:bg-emerald-900/20 border-emerald-200 dark:border-emerald-800 text-emerald-700 dark:text-emerald-300'
-                            : 'bg-stone-50 dark:bg-stone-700/50 border-stone-100 dark:border-stone-700 text-stone-500'
-                        }`}>
-                          {p.emoji} {p.commonName}
-                          {plantedSlugs.has(p.slug) && <span className="text-emerald-500">✓</span>}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              {/* Full guide link */}
-                <button
-                  onClick={() => onNavigate?.('care')}
-                  className="mt-2 w-full text-[11px] py-2 rounded-lg border border-emerald-200 dark:border-emerald-800 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-colors font-medium"
-                >
-                  View Full Monthly Guide → Feeding, succession sowing, hardening off
-                </button>
+            <div className="px-4 py-3">
+              <h3 className="text-[11px] font-bold text-stone-600 dark:text-stone-300 mb-2">
+                🌱 In Season This {getMonthName(currentMonth)}
+              </h3>
+              <p className="text-[10px] text-stone-400 dark:text-stone-500 mb-2">
+                Reference only — actionable items for YOUR crops are in the Action Plan above.
+                Green ✓ = you already grow it.
+              </p>
+              <div className="flex flex-wrap gap-1">
+                {sowNow.map((p) => (
+                  <span key={p.slug} className={`inline-flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full border ${
+                    plantedSlugs.has(p.slug)
+                      ? 'bg-emerald-50 dark:bg-emerald-900/20 border-emerald-200 dark:border-emerald-800 text-emerald-700 dark:text-emerald-300'
+                      : 'bg-stone-50 dark:bg-stone-700/50 border-stone-100 dark:border-stone-700 text-stone-500'
+                  }`}>
+                    {p.emoji} {p.commonName}
+                    {plantedSlugs.has(p.slug) && <span className="text-emerald-500">✓</span>}
+                  </span>
+                ))}
               </div>
-            )}
+              <button
+                onClick={() => onNavigate?.('care')}
+                className="mt-3 w-full text-[11px] py-2 rounded-lg border border-emerald-200 dark:border-emerald-800 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-colors font-medium"
+              >
+                View Full Care Guide → Feeding, succession, hardening off
+              </button>
+            </div>
           </div>
         )}
 
-        {/* ── SETUP REFERENCE ────────────────────────────────────────────── */}
-        <div className="bg-white dark:bg-stone-800 rounded-2xl border border-stone-200 dark:border-stone-700 overflow-hidden">
-          <SectionHeader section="setup" title="🔧 Setup Reference" count={GREENSTALK_SETUP.length} />
-          {!collapsed.has('setup') && (
-            <div className="px-4 py-3 space-y-2">
-              {GREENSTALK_SETUP.map((step, i) => (
-                <div key={i} className="flex items-start gap-2 text-[11px]">
-                  <span className="text-base mt-0.5">{step.emoji}</span>
-                  <div>
-                    <span className="font-semibold text-stone-700 dark:text-stone-200">{step.title}: </span>
-                    <span className="text-stone-500 dark:text-stone-400">{step.detail}</span>
-                    {step.tip && (
-                      <span className="text-emerald-600 dark:text-emerald-400 ml-1">💡 {step.tip}</span>
-                    )}
-                  </div>
-                </div>
-              ))}
+        {/* ── WHAT TO COOK THIS WEEK (Hafferty harvest-to-kitchen angle) ── */}
+        {cookingTips.length > 0 && (
+          <div className="bg-gradient-to-br from-pink-50 to-rose-50 dark:from-pink-900/20 dark:to-rose-900/20 rounded-2xl border border-pink-200 dark:border-pink-800/50 overflow-hidden">
+            <div className="px-4 py-3">
+              <h3 className="text-[11px] font-bold text-pink-700 dark:text-pink-300 mb-2 flex items-center gap-1.5">
+                🍳 What to Cook This {getMonthName(currentMonth)}
+                <span className="text-[9px] font-normal text-stone-400 dark:text-stone-500">
+                  Hafferty · Larkcom · Wong
+                </span>
+              </h3>
+              <p className="text-[10px] text-stone-500 dark:text-stone-400 mb-3">
+                Harvest-to-kitchen guidance for the {harvestNow.length} crop{harvestNow.length === 1 ? '' : 's'} you're picking right now.
+              </p>
+              <div className="space-y-2">
+                {cookingTips.slice(0, 5).map((t, i) => {
+                  const colors = EXPERT_COLORS[t.expert as keyof typeof EXPERT_COLORS] ?? EXPERT_COLORS.rhs;
+                  const profile = getExpertProfile(t.expert as UKExpertId);
+                  return (
+                    <div
+                      key={`${t.plantSlug}-${i}`}
+                      className={`text-xs rounded-lg px-2.5 py-2 ring-1 bg-white/70 dark:bg-stone-800/40 ${colors.ring}`}
+                    >
+                      <div className="flex items-center gap-1.5 flex-wrap mb-0.5">
+                        <span className="text-sm">{t.emoji}</span>
+                        <span className="font-semibold text-stone-700 dark:text-stone-200">{t.plantName}</span>
+                        <span className={`text-[9px] px-1.5 py-0.5 rounded-full font-medium ${colors.bg} ${colors.text}`}>
+                          {profile?.name ?? t.expert} · {t.category}
+                        </span>
+                      </div>
+                      <div className="text-[11px] text-stone-600 dark:text-stone-300 leading-snug">{t.tip}</div>
+                    </div>
+                  );
+                })}
+                {cookingTips.length > 5 && (
+                  <p className="text-[10px] text-stone-400 italic">
+                    + {cookingTips.length - 5} more kitchen tips in the Plant Details for each crop.
+                  </p>
+                )}
+              </div>
             </div>
-          )}
-        </div>
+          </div>
+        )}
+
+        {/* Quick-link to GreenStalk Setup Guide (full version lives in Learn > Setup Guide) */}
+        <button
+          onClick={() => onNavigate?.('learn')}
+          className="w-full text-left bg-white dark:bg-stone-800 rounded-2xl border border-stone-200 dark:border-stone-700 px-4 py-3 hover:bg-stone-50 dark:hover:bg-stone-700/30 transition-colors"
+        >
+          <div className="flex items-center justify-between">
+            <span className="text-sm font-medium text-stone-700 dark:text-stone-200">📐 GreenStalk Setup Guide</span>
+            <span className="text-xs text-stone-400">Learn → Setup Guide →</span>
+          </div>
+        </button>
+
+        </div>{/* end right column */}
+        </div>{/* end grid */}
 
         {/* All done? */}
         {overdueTasks.length === 0 && todayTasks.length === 0 && recurringTasks.length === 0 && (

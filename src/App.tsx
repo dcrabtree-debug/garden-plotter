@@ -24,6 +24,7 @@ const topNav: { id: TopTab; label: string; icon: string }[] = [
   { id: 'coach', label: 'Coach', icon: '📸' },
   { id: 'plan', label: 'Plan', icon: '🗺️' },
   { id: 'calendar', label: 'Calendar', icon: '📅' },
+  { id: 'care', label: 'Care', icon: '🧑‍🌾' },
   { id: 'harvest', label: 'Harvest', icon: '🌾' },
   { id: 'learn', label: 'Learn', icon: '📚' },
   { id: 'seeds', label: 'Shopping', icon: '🛒' },
@@ -65,8 +66,8 @@ function SubNav({ items, active, onSelect }: { items: { id: string; label: strin
 const mobileNav: { id: TopTab; label: string; icon: string }[] = [
   { id: 'dashboard', label: 'Home', icon: '📋' },
   { id: 'plan', label: 'Plan', icon: '🗺️' },
+  { id: 'care', label: 'Care', icon: '🧑‍🌾' },
   { id: 'harvest', label: 'Harvest', icon: '🌾' },
-  { id: 'seeds', label: 'Shop', icon: '🛒' },
   { id: 'settings', label: 'More', icon: '⚙️' },
 ];
 
@@ -74,8 +75,8 @@ const mobileNav: { id: TopTab; label: string; icon: string }[] = [
 const moreItems: { id: TopTab; label: string; icon: string }[] = [
   { id: 'coach', label: 'Garden Coach', icon: '📸' },
   { id: 'calendar', label: 'Calendar', icon: '📅' },
+  { id: 'seeds', label: 'Shopping', icon: '🛒' },
   { id: 'learn', label: 'Learn', icon: '📚' },
-  { id: 'care', label: 'Monthly Care', icon: '🧑‍🌾' },
   { id: 'settings', label: 'Settings', icon: '⚙️' },
 ];
 

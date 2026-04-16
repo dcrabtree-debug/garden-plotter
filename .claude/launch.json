@@ -3,9 +3,10 @@
   "configurations": [
     {
       "name": "garden-plotter",
-      "runtimeExecutable": "/Users/davidcrabtree/garden-plotter/.claude/start-dev.sh",
-      "runtimeArgs": [],
-      "port": 5173
+      "runtimeExecutable": "/Users/davidcrabtree/garden-plotter/node_modules/.bin/vite",
+      "runtimeArgs": ["--host", "--port", "5173", "--config", "/Users/davidcrabtree/garden-plotter/vite.config.ts"],
+      "port": 5173,
+      "cwd": "/Users/davidcrabtree/garden-plotter"
     }
   ]
 }

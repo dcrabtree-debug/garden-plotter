@@ -1,6 +1,41 @@
+import { useState, useEffect } from 'react';
 import type { Plant } from '../../types/plant';
 import type { CompanionEdge, CompanionMap } from '../../types/companion';
 import { getMonthName, isInWindow } from '../../lib/calendar-utils';
+import { getExpertAdviceForCrop, EXPERTS } from '../../data/expert-knowledge';
+import {
+  getUKExpertKnowledge,
+  getExpertProfile,
+  EXPERT_COLORS,
+  CLAY_PERFORMANCE_LABEL,
+  POLLINATOR_LABEL,
+  UK_EXPERTS,
+  type UKExpertId,
+} from '../../data/expert-uk-knowledge';
+import { lookupVarietyBuyUrl } from '../../data/variety-buy-urls';
+
+// ── Expert filter persistence ──────────────────────────────────────────────
+const EXPERT_FILTER_KEY = 'garden-plotter-expert-filter';
+const ALL_EXPERTS: UKExpertId[] = ['monty', 'rhs', 'larkcom', 'wong', 'fowler', 'flowerdew', 'richards', 'hafferty'];
+
+function loadExpertFilter(): Set<UKExpertId> {
+  try {
+    const raw = localStorage.getItem(EXPERT_FILTER_KEY);
+    if (!raw) return new Set(ALL_EXPERTS);
+    const arr = JSON.parse(raw) as UKExpertId[];
+    return new Set(arr);
+  } catch {
+    return new Set(ALL_EXPERTS);
+  }
+}
+
+function saveExpertFilter(enabled: Set<UKExpertId>) {
+  try {
+    localStorage.setItem(EXPERT_FILTER_KEY, JSON.stringify(Array.from(enabled)));
+  } catch {
+    // localStorage full
+  }
+}
 
 interface PlantDetailProps {
   plant: Plant;
@@ -43,6 +78,27 @@ function WindowBar({
 }
 
 export function PlantDetail({ plant, companionMap, onClose }: PlantDetailProps) {
+  const [enabledExperts, setEnabledExperts] = useState<Set<UKExpertId>>(loadExpertFilter);
+
+  useEffect(() => {
+    saveExpertFilter(enabledExperts);
+  }, [enabledExperts]);
+
+  const toggleExpert = (id: UKExpertId) => {
+    setEnabledExperts((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
+  const toggleAll = () => {
+    setEnabledExperts((prev) =>
+      prev.size === ALL_EXPERTS.length ? new Set<UKExpertId>() : new Set(ALL_EXPERTS)
+    );
+  };
+
   const edges = companionMap.get(plant.slug);
   const friends: CompanionEdge[] = [];
   const foes: CompanionEdge[] = [];
@@ -301,6 +357,196 @@ export function PlantDetail({ plant, companionMap, onClose }: PlantDetailProps) 
               )}
             </div>
           )}
+
+          {/* UK Expert Knowledge — 8 UK experts, per-plant, filter-aware */}
+          {(() => {
+            const uk = getUKExpertKnowledge(plant.slug);
+            if (!uk) return null;
+
+            // Filter varieties by enabled experts (AGM always shows if enabled set includes 'rhs' OR any expert)
+            const visibleVarieties = (uk.ukVarieties ?? []).filter((v) => {
+              if (v.expert === 'AGM') return enabledExperts.size > 0;
+              return enabledExperts.has(v.expert);
+            });
+            const visibleTips = (uk.tips ?? []).filter((t) => enabledExperts.has(t.expert));
+
+            const hasClay = !!uk.claySoil;
+            const hasSurrey = !!uk.surreyNote;
+            const hasPoll = !!uk.pollinatorValue;
+            const hasGS = !!uk.greenstalkTier;
+            const hasSucc = !!uk.successionDays;
+            const hasAny = visibleVarieties.length > 0 || visibleTips.length > 0 || hasClay || hasSurrey || hasPoll || hasGS || hasSucc;
+            if (!hasAny && (uk.ukVarieties?.length ?? 0) === 0 && (uk.tips?.length ?? 0) === 0) return null;
+
+            return (
+              <div className="mb-4 rounded-xl border border-stone-200 dark:border-stone-700 bg-gradient-to-br from-white to-stone-50 dark:from-stone-800 dark:to-stone-800/60 p-3">
+                <div className="flex items-center justify-between mb-2">
+                  <h3 className="text-xs font-bold text-stone-700 dark:text-stone-200 flex items-center gap-1.5">
+                    🇬🇧 UK Expert Knowledge
+                  </h3>
+                  <button
+                    onClick={toggleAll}
+                    className="text-[9px] text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 underline"
+                  >
+                    {enabledExperts.size === ALL_EXPERTS.length ? 'Hide all' : 'Show all'}
+                  </button>
+                </div>
+
+                {/* Expert filter chips */}
+                <div className="flex flex-wrap gap-1 mb-3">
+                  {UK_EXPERTS.map((e) => {
+                    const active = enabledExperts.has(e.id);
+                    const colors = EXPERT_COLORS[e.id];
+                    return (
+                      <button
+                        key={e.id}
+                        onClick={() => toggleExpert(e.id)}
+                        title={e.title}
+                        className={`text-[10px] px-2 py-0.5 rounded-full font-medium transition-all ${
+                          active
+                            ? `${colors.bg} ${colors.text} ring-1 ${colors.ring}`
+                            : 'bg-stone-100 dark:bg-stone-700/40 text-stone-400 dark:text-stone-500 line-through'
+                        }`}
+                      >
+                        {e.name.replace('Royal Horticultural Society', 'RHS')}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Recommended UK varieties */}
+                {visibleVarieties.length > 0 && (
+                  <div className="mb-3">
+                    <div className="text-[10px] font-semibold uppercase tracking-wide text-stone-500 dark:text-stone-400 mb-1">
+                      Varieties for Surrey / UK
+                    </div>
+                    <div className="space-y-1.5">
+                      {visibleVarieties.map((v, i) => {
+                        const colors = EXPERT_COLORS[v.expert];
+                        const buyInfo = v.buyUrl
+                          ? { url: v.buyUrl, supplier: v.supplier ?? 'Thompson & Morgan' }
+                          : lookupVarietyBuyUrl(v.name, plant.commonName);
+                        return (
+                          <div key={`${v.name}-${i}`} className="text-xs text-stone-600 dark:text-stone-300">
+                            <div className="flex items-center gap-1.5 flex-wrap">
+                              <span className="font-semibold">{v.name}</span>
+                              <span className={`text-[9px] px-1.5 py-0.5 rounded-full ${colors.bg} ${colors.text} font-medium`}>
+                                {v.expert === 'AGM' ? '🏆 RHS AGM' : getExpertProfile(v.expert)?.name ?? v.expert}
+                              </span>
+                              <a
+                                href={buyInfo.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-[9px] px-1.5 py-0.5 rounded-full bg-violet-100 dark:bg-violet-900/20 text-violet-600 dark:text-violet-400 hover:bg-violet-200 dark:hover:bg-violet-900/40 transition-colors"
+                              >
+                                🛒 Buy at {buyInfo.supplier.split(' ')[0]} →
+                              </a>
+                            </div>
+                            <div className="text-[11px] text-stone-500 dark:text-stone-400 ml-0.5">{v.reason}</div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+
+                {/* Expert-attributed tips */}
+                {visibleTips.length > 0 && (
+                  <div className="mb-3 space-y-1.5">
+                    <div className="text-[10px] font-semibold uppercase tracking-wide text-stone-500 dark:text-stone-400 mb-1">
+                      Expert Tips
+                    </div>
+                    {visibleTips.map((t, i) => {
+                      const colors = EXPERT_COLORS[t.expert];
+                      const profile = getExpertProfile(t.expert);
+                      return (
+                        <div
+                          key={`${t.expert}-${i}`}
+                          className={`text-xs rounded-lg px-2.5 py-2 ring-1 ${colors.bg} ${colors.ring}`}
+                        >
+                          <div className={`text-[10px] font-bold mb-0.5 ${colors.text} flex items-center gap-1`}>
+                            <span>{profile?.name ?? t.expert}</span>
+                            <span className="font-normal text-stone-400 dark:text-stone-500">· {t.category}</span>
+                          </div>
+                          <div className="text-stone-700 dark:text-stone-200 leading-snug">{t.tip}</div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+
+                {/* Empty-filter hint */}
+                {enabledExperts.size === 0 && (
+                  <div className="text-[11px] text-stone-400 italic text-center py-2">
+                    All experts hidden. Tap a chip above to show their guidance.
+                  </div>
+                )}
+
+                {/* Inline fact strip: clay · succession · GreenStalk tier · pollinators */}
+                <div className="flex flex-wrap gap-1.5 mt-2">
+                  {hasClay && (
+                    <span className={`text-[10px] px-2 py-1 rounded-full bg-stone-100 dark:bg-stone-700/50 ${CLAY_PERFORMANCE_LABEL[uk.claySoil!.performance].className}`} title={uk.claySoil!.amendment}>
+                      {CLAY_PERFORMANCE_LABEL[uk.claySoil!.performance].emoji}{' '}
+                      {CLAY_PERFORMANCE_LABEL[uk.claySoil!.performance].label}
+                    </span>
+                  )}
+                  {hasSucc && (
+                    <span className="text-[10px] px-2 py-1 rounded-full bg-lime-50 dark:bg-lime-900/20 text-lime-700 dark:text-lime-300" title="Joy Larkcom succession interval">
+                      🔁 Sow every {uk.successionDays} days
+                    </span>
+                  )}
+                  {hasGS && (
+                    <span className="text-[10px] px-2 py-1 rounded-full bg-sky-50 dark:bg-sky-900/20 text-sky-700 dark:text-sky-300" title={uk.greenstalkTier!.reason}>
+                      🗼 GreenStalk: {uk.greenstalkTier!.tier} tier
+                    </span>
+                  )}
+                  {hasPoll && uk.pollinatorValue !== 'none' && (
+                    <span className="text-[10px] px-2 py-1 rounded-full bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-300" title={uk.pollinatorNote}>
+                      {POLLINATOR_LABEL[uk.pollinatorValue!]}
+                    </span>
+                  )}
+                </div>
+
+                {/* Surrey-specific practical note */}
+                {hasSurrey && (
+                  <div className="mt-2 text-[11px] text-stone-600 dark:text-stone-300 italic border-l-2 border-stone-300 dark:border-stone-600 pl-2">
+                    <span className="not-italic text-[9px] font-bold uppercase tracking-wider text-stone-500 mr-1">Surrey:</span>
+                    {uk.surreyNote}
+                  </div>
+                )}
+              </div>
+            );
+          })()}
+
+          {/* Expert Growing Advice */}
+          {(() => {
+            const expertAdvice = getExpertAdviceForCrop(plant.slug);
+            if (expertAdvice.length === 0) return null;
+            return (
+              <div className="mb-4">
+                <h3 className="text-xs font-semibold text-stone-600 dark:text-stone-300 mb-2">
+                  Expert Growing Tips
+                </h3>
+                <div className="space-y-2">
+                  {expertAdvice.map((advice) => {
+                    const expert = EXPERTS.find((e) => e.id === advice.expert);
+                    return (
+                      <div
+                        key={`${advice.expert}-${advice.slug}`}
+                        className="text-xs text-stone-600 dark:text-stone-400 bg-amber-50 dark:bg-amber-900/10 rounded-lg p-2.5 border border-amber-200/50 dark:border-amber-800/30"
+                      >
+                        <div className="text-[10px] font-bold text-amber-700 dark:text-amber-400 mb-1">
+                          {expert?.name ?? advice.expert}
+                          {advice.method && <span className="font-normal text-stone-400 ml-1">({advice.method})</span>}
+                        </div>
+                        {advice.advice}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            );
+          })()}
 
           {plant.notes && (
             <div className="text-sm text-stone-500 border-t border-stone-100 dark:border-stone-700 pt-3">

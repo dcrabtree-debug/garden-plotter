@@ -3,7 +3,7 @@ import { useGardenStore, getSpacingWarnings, getRotationWarnings, getCurrentSeas
 import { usePlantDb } from '../data/use-plant-db';
 import { PlantDetail } from '../components/plant-palette/PlantDetail';
 import { PlanViewIllustration } from '../components/PlanViewIllustration';
-import { SeasonalTimeline } from '../components/SeasonalTimeline';
+
 import { IsometricGarden } from '../components/IsometricGarden';
 import {
   calculateMicroclimate,
@@ -36,6 +36,8 @@ import {
   classifySunZone,
   SUN_ZONE_COLORS,
   sunHoursColor,
+  calculateObstacleShadowGrid,
+  ESHER_OBSTACLES,
 } from '../lib/solar-engine';
 import { getMonthName, isInWindow, getCurrentMonth } from '../lib/calendar-utils';
 
@@ -639,43 +641,19 @@ export function GardenPage() {
     }
   }, []);
 
-  // Real-time shadow grid for the selected hour
+  // Real-time shadow grid for the selected hour — obstacle-based approach
+  // Uses the same obstacle definitions as the Shadow Modeler (shadow-engine.ts)
   const shadowGrid = useMemo(() => {
     if (!showShadowOverlay) return null;
     const day = midMonthDay(selectedMonth);
     const pos = sunPosition(selectedMonth, day, selectedHour, config.latitude, config.longitude);
     if (pos.elevation <= 0) {
-      // Sun below horizon — everything in shadow
       return Array.from({ length: rows }, () => new Array(cols).fill(true));
     }
-    const gardenAngle = facingAngle(config.facing);
-    const houseShadow = shadowProjection(config.houseWallHeightM, pos.elevation, pos.azimuth);
-    const fenceShadow = shadowProjection(config.fenceHeightM, pos.elevation, pos.azimuth);
-    const gardenWidthM = cols * config.cellSizeM;
-
-    const grid: boolean[][] = Array.from({ length: rows }, () => new Array(cols).fill(false));
-    for (let row = 0; row < rows; row++) {
-      for (let col = 0; col < cols; col++) {
-        const cx = (col + 0.5) * config.cellSizeM;
-        const cy = (row + 0.5) * config.cellSizeM;
-        let inShadow = false;
-
-        if (houseShadow) {
-          const relAz = ((pos.azimuth - gardenAngle + 360) % 360);
-          const reachY = houseShadow.length * Math.cos((relAz - 180) * (Math.PI / 180));
-          if (reachY > 0 && cy < reachY) inShadow = true;
-        }
-        if (fenceShadow && !inShadow) {
-          const relAz = ((pos.azimuth - gardenAngle + 360) % 360);
-          const leftReach = fenceShadow.length * Math.sin((relAz - 90) * (Math.PI / 180));
-          if (leftReach > 0 && cx < leftReach) inShadow = true;
-          const rightReach = fenceShadow.length * Math.sin((relAz + 90) * (Math.PI / 180));
-          if (rightReach > 0 && (gardenWidthM - cx) < rightReach) inShadow = true;
-        }
-        grid[row][col] = inShadow;
-      }
-    }
-    return grid;
+    return calculateObstacleShadowGrid(
+      cols, rows, config.cellSizeM, config.facing,
+      ESHER_OBSTACLES, pos.elevation, pos.azimuth,
+    );
   }, [showShadowOverlay, selectedMonth, selectedHour, config, rows, cols]);
 
   // Sun position for the arrow indicator
@@ -1181,17 +1159,7 @@ export function GardenPage() {
 
         {/* Microclimate Legend — now rendered as floating overlay inside the map container */}
 
-        {/* Seasonal Timeline */}
-        <SeasonalTimeline
-          cells={cells}
-          plantMap={plantMap}
-          towerPlants={plannerTowers
-            .flatMap((t) => t.tiers)
-            .flatMap((ti) => ti.pockets)
-            .filter((p) => p.plantSlug !== null)
-            .map((p) => ({ slug: p.plantSlug!, tierNumber: 0 }))
-          }
-        />
+        {/* Seasonal Timeline moved to Calendar page */}
 
         {/* GreenStalk Placement Advisor */}
         {showGreenStalks && (
@@ -1751,17 +1719,25 @@ export function GardenPage() {
             }
           }
 
-          // Position tooltip near the hovered cell
-          const tipLeft = (hoveredCell.col + 1) * cellSize + 8;
-          const tipTop = hoveredCell.row * cellSize;
+          // Position tooltip near the hovered cell — quadrant-aware to avoid obscuring it
+          const tooltipW = 224; // w-56 = 14rem = 224px
+          const tooltipH = 200; // approximate height
+          const isRightHalf = hoveredCell.col > cols / 2;
+          const isBottomHalf = hoveredCell.row > rows / 2;
+          const tipLeft = isRightHalf
+            ? hoveredCell.col * cellSize - tooltipW - 8
+            : (hoveredCell.col + 1) * cellSize + 8;
+          const tipTop = isBottomHalf
+            ? hoveredCell.row * cellSize - tooltipH - 8
+            : hoveredCell.row * cellSize;
           const currentMonth = new Date().getMonth() + 1;
 
           return (
             <div
               style={{
                 position: 'absolute',
-                left: Math.min(tipLeft, cols * cellSize - 200),
-                top: Math.max(0, tipTop - 20),
+                left: Math.max(0, tipLeft),
+                top: Math.max(0, tipTop),
                 zIndex: 20,
                 pointerEvents: 'none',
                 transform: counterRotate,
@@ -1950,7 +1926,7 @@ export function GardenPage() {
       </div>
 
       {/* Right sidebar: Hover reasoning + Planted plants */}
-      <div className={`w-64 border-l border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 flex-shrink-0 overflow-y-auto p-3 ${
+      <div className={`w-80 xl:w-96 border-l border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 flex-shrink-0 overflow-y-auto p-3 ${
         mobilePanel === 'plants'
           ? 'fixed inset-y-0 right-0 z-40 shadow-2xl'
           : 'hidden md:block'

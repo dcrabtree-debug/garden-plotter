@@ -373,3 +373,39 @@ button, a, [role="button"], input, select, textarea {
     print-color-adjust: exact !important;
   }
 }
+
+/* ─── Warm Status Pills ─────────────────────────────────────────────────── */
+/* Reworked status colours that sit inside the warm-stone + leaf-emerald     */
+/* palette. Used by the dashboard alert pill rail.                           */
+
+.pill-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  line-height: 1.25;
+  font-weight: 500;
+  padding: 5px 10px;
+  border-radius: 9999px;
+  border: 1px solid;
+  letter-spacing: -0.005em;
+  white-space: nowrap;
+}
+.pill-status > b { font-weight: 600; }
+
+.pill-frost-hard { background: #fbf0ec; color: #8a3a1f; border-color: #e8c8b8; }
+.pill-frost      { background: #fcf4dc; color: #6e4f0b; border-color: #ebd697; }
+.pill-rain       { background: #eaeef2; color: #3b4d63; border-color: #c9d3df; }
+.pill-wind       { background: #efe9e0; color: #5b4838; border-color: #d6c9b6; }
+.pill-harvest    { background: #f9e5dc; color: #8a3a23; border-color: #ecc9b6; }
+.pill-pest       { background: #f5e1d2; color: #7a3818; border-color: #e3bfa3; }
+.pill-water      { background: #e3edde; color: #2d4a30; border-color: #c3d6bb; }
+
+.dark .pill-frost-hard { background: rgba(138,58,31,0.18);  color: #f0c8b8; border-color: rgba(232,200,184,0.25); }
+.dark .pill-frost      { background: rgba(110,79,11,0.20);  color: #ebd697; border-color: rgba(235,214,151,0.25); }
+.dark .pill-rain       { background: rgba(59,77,99,0.25);   color: #c9d3df; border-color: rgba(201,211,223,0.20); }
+.dark .pill-wind       { background: rgba(91,72,56,0.25);   color: #d6c9b6; border-color: rgba(214,201,182,0.20); }
+.dark .pill-harvest    { background: rgba(138,58,35,0.18);  color: #ecc9b6; border-color: rgba(236,201,182,0.25); }
+.dark .pill-pest       { background: rgba(122,56,24,0.20);  color: #e3bfa3; border-color: rgba(227,191,163,0.25); }
+.dark .pill-water      { background: rgba(45,74,48,0.25);   color: #c3d6bb; border-color: rgba(195,214,187,0.25); }
+

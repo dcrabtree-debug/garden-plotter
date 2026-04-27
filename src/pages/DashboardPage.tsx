@@ -771,40 +771,36 @@ export function DashboardPage({ onNavigate }: { onNavigate?: (tab: string, view?
           </div>
         )}
 
-        {/* Alerts row — refined gradient banners */}
-        <div className="flex flex-col gap-2.5">
-          {frostAlert && frostAlert.level !== 'none' && (
-            <div className={`text-[13px] px-4 py-2.5 rounded-xl font-medium border ${
-              frostAlert.level === 'hard'
-                ? 'bg-gradient-to-r from-red-50 to-red-50/50 dark:from-red-900/20 dark:to-red-900/10 text-red-700 dark:text-red-300 border-red-200/60 dark:border-red-800/40'
-                : 'bg-gradient-to-r from-amber-50 to-amber-50/50 dark:from-amber-900/20 dark:to-amber-900/10 text-amber-700 dark:text-amber-300 border-amber-200/60 dark:border-amber-800/40'
-            }`}>
-              {frostAlert.level === 'hard' ? '🥶' : '⚠️'} {frostAlert.message}
-            </div>
-          )}
-          {rainAlert?.message && (
-            <div className="text-[13px] px-4 py-2.5 bg-gradient-to-r from-sky-50 to-sky-50/50 dark:from-sky-900/20 dark:to-sky-900/10 text-sky-700 dark:text-sky-300 rounded-xl font-medium border border-sky-200/60 dark:border-sky-800/40">
-              {rainAlert.totalMm > 30 ? '🌧️' : '☀️'} {rainAlert.message}
-            </div>
-          )}
-          {windAlert?.message && (
-            <div className="text-xs px-3 py-2 bg-purple-50 dark:bg-purple-900/20 text-purple-700 dark:text-purple-300 rounded-lg font-medium">
-              💨 {windAlert.message}
-            </div>
-          )}
-          {frost && frost.level !== 'safe' && !frostAlert?.frostDays.length && (
-            <div className={`text-xs px-3 py-2 rounded-lg font-medium ${
-              frost.level === 'frost' ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300' : 'bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-300'
-            }`}>
-              {frost.level === 'frost' ? '❄️' : '⚠️'} {frost.message}
-            </div>
-          )}
-          {harvestNow.length > 0 && (
-            <div className="text-[13px] px-4 py-2.5 bg-gradient-to-r from-rose-50 to-orange-50/50 dark:from-rose-900/20 dark:to-orange-900/10 text-rose-700 dark:text-rose-300 rounded-xl font-medium border border-rose-200/60 dark:border-rose-800/40">
-              🍎 Harvest ready: {harvestNow.map((p) => `${p.emoji} ${p.commonName}`).join(', ')}
-            </div>
-          )}
-        </div>
+        {/* Alerts pill rail — compact inline status across weather + harvest */}
+        {(frostAlert?.level && frostAlert.level !== 'none') || rainAlert?.message || windAlert?.message || (frost && frost.level !== 'safe' && !frostAlert?.frostDays.length) || harvestNow.length > 0 ? (
+          <div className="flex flex-wrap gap-1.5">
+            {frostAlert && frostAlert.level !== 'none' && (
+              <span className={`pill-status ${frostAlert.level === 'hard' ? 'pill-frost-hard' : 'pill-frost'}`} title={frostAlert.message}>
+                {frostAlert.level === 'hard' ? '🥶' : '⚠️'} <b>{frostAlert.level === 'hard' ? 'Hard frost' : 'Frost watch'}</b>
+              </span>
+            )}
+            {rainAlert?.message && (
+              <span className="pill-status pill-rain" title={rainAlert.message}>
+                {rainAlert.totalMm > 30 ? '🌧️' : '☀️'} <b>{rainAlert.totalMm > 30 ? `${Math.round(rainAlert.totalMm)}mm rain` : 'Dry spell'}</b>
+              </span>
+            )}
+            {windAlert?.message && (
+              <span className="pill-status pill-wind" title={windAlert.message}>
+                💨 <b>Wind</b>
+              </span>
+            )}
+            {frost && frost.level !== 'safe' && !frostAlert?.frostDays.length && (
+              <span className={`pill-status ${frost.level === 'frost' ? 'pill-rain' : 'pill-frost'}`} title={frost.message}>
+                {frost.level === 'frost' ? '❄️' : '⚠️'} <b>{frost.level === 'frost' ? 'Frost season' : 'Caution'}</b>
+              </span>
+            )}
+            {harvestNow.length > 0 && (
+              <span className="pill-status pill-harvest" title={harvestNow.map((p) => `${p.emoji} ${p.commonName}`).join(', ')}>
+                🍎 <b>Harvest ready:</b> {harvestNow.slice(0, 4).map((p) => p.emoji).join(' ')}{harvestNow.length > 4 ? ` +${harvestNow.length - 4}` : ''}
+              </span>
+            )}
+          </div>
+        ) : null}
 
         {/* ── GARDEN CENTRE TRIPS ──────────────────────────────────────── */}
         {(() => {
